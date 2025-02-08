@@ -24,7 +24,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="RANSAC算法的FPGA实现">
 <meta property="og:url" content="http://example.com/2024/05/27/RANSAC%E7%AE%97%E6%B3%95%E7%9A%84FPGA%E5%AE%9E%E7%8E%B0/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Switch">
 <meta property="og:description" content="目录 一.算法原理 1.参数变量 2.算法流程 &lt;1&gt;随机读取数据 &lt;2&gt;拟合模型 &lt;3&gt;检验模型 &lt;4&gt;循环遍历 二.设计思路 1.设计目标 2.模块设计 &lt;1&gt;随机数产生模块 &lt;2&gt;暂存寄存器 &lt;3&gt;计算模块 &lt;4&gt;模型评估模块 &lt;5&gt;主体控制与输出模块 &lt;6&gt;整合 三.具体">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a2ef04e43713d49cbd2d77c4b3b13d13.png">
@@ -55,7 +55,7 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/direct/5c821beb009e40e3b2ad1ac4a359fe48.png">
 <meta property="article:published_time" content="2024-05-27T04:18:23.000Z">
 <meta property="article:modified_time" content="2025-02-08T03:45:06.143Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="SWQ">
 <meta property="article:tag" content="fpga开发">
 <meta property="article:tag" content="opencv">
 <meta property="article:tag" content="算法">
@@ -76,7 +76,7 @@
   };
 </script>
 
-  <title>RANSAC算法的FPGA实现 | Hexo</title>
+  <title>RANSAC算法的FPGA实现 | Switch</title>
   
 
 
@@ -127,7 +127,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">Switch</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -143,11 +143,6 @@
 
 <nav class="site-nav">
   <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
@@ -155,12 +150,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">26</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">40</span></a>
 
   </li>
   </ul>
@@ -192,12 +187,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="SWQ">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Switch">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -762,9 +757,9 @@ endmodule
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="John Doe"
+    <img class="site-author-image" itemprop="image" alt="SWQ"
       src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">John Doe</p>
+  <p class="site-author-name" itemprop="name">SWQ</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -792,7 +787,7 @@ endmodule
         <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-link fa-fw"></i>CSDN</a>
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
       </span>
   </div>
 

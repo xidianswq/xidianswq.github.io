@@ -24,7 +24,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="进阶设计一（DDR3）——FPGA学习笔记＜？＞">
 <meta property="og:url" content="http://example.com/2023/10/29/%E8%BF%9B%E9%98%B6%E8%AE%BE%E8%AE%A1%E4%B8%80%EF%BC%88DDR3%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C%EF%BC%9F%EF%BC%9E/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Switch">
 <meta property="og:description" content="一.简介    DDR3 SDRAM，以其单位存储量大、高数据带宽、读写速度快、价格相对便宜等优点 吸引了大批客户，占领市场较大份额。同时，作为内存条中不可缺少的一部分，DDR3 SDRAM 在计算机领域也占有一席之地。      要掌握 DDR3 SDRAM 的基本概念、数据存取原理、操作命令以及操作时序等相关知识。在掌 握 DDR3 SDRAM 的相关理论知识后，讲解 AXI4 接口，并且使用">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b1f3e93d3d6e3e3edeb231ab5b8c0ae5.png">
@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2a0f06fb6a50995ff5c2cbe2d97b5402.png">
 <meta property="article:published_time" content="2023-10-29T13:15:35.000Z">
 <meta property="article:modified_time" content="2025-02-08T03:45:06.182Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="SWQ">
 <meta property="article:tag" content="None">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/b1f3e93d3d6e3e3edeb231ab5b8c0ae5.png">
@@ -60,7 +60,7 @@
   };
 </script>
 
-  <title>进阶设计一（DDR3）——FPGA学习笔记＜？＞ | Hexo</title>
+  <title>进阶设计一（DDR3）——FPGA学习笔记＜？＞ | Switch</title>
   
 
 
@@ -111,7 +111,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">Switch</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -127,11 +127,6 @@
 
 <nav class="site-nav">
   <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
@@ -139,12 +134,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">26</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">40</span></a>
 
   </li>
   </ul>
@@ -176,12 +171,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="SWQ">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Switch">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -418,9 +413,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="John Doe"
+    <img class="site-author-image" itemprop="image" alt="SWQ"
       src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">John Doe</p>
+  <p class="site-author-name" itemprop="name">SWQ</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -448,7 +443,7 @@
         <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-link fa-fw"></i>CSDN</a>
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
       </span>
   </div>
 

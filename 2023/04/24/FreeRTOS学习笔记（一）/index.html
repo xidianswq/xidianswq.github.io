@@ -24,7 +24,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="FreeRTOS学习笔记（一）">
 <meta property="og:url" content="http://example.com/2023/04/24/FreeRTOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Switch">
 <meta property="og:description" content="FreeRTOS学习笔记 第一天摘要： Key： 移植方法，TCB的结构及创建,任务栈，列表和列表项定义及相关函数 实践：rtos移植执行led闪烁 注意点：keil下载device要正确；内存不够删去不需要的heap.c及其他内 核等多余文件（MemMang,RVDS） 代码风格： FreeRTOS 中详细的数据类型重定义在 portmacro.h 这个头文件中实现，具体 如下 1.2.4.2">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/18f990da82a5f9f6eb5a94ff344eb171.png">
@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4b7d15078dd210766f248d74c83c7ffd.png">
 <meta property="article:published_time" content="2023-04-24T12:18:51.000Z">
 <meta property="article:modified_time" content="2025-02-08T03:45:06.133Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="SWQ">
 <meta property="article:tag" content="stm32">
 <meta property="article:tag" content="c++">
 <meta property="article:tag" content="学习">
@@ -57,7 +57,7 @@
   };
 </script>
 
-  <title>FreeRTOS学习笔记（一） | Hexo</title>
+  <title>FreeRTOS学习笔记（一） | Switch</title>
   
 
 
@@ -108,7 +108,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">Switch</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -124,11 +124,6 @@
 
 <nav class="site-nav">
   <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
@@ -136,12 +131,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">26</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">40</span></a>
 
   </li>
   </ul>
@@ -173,12 +168,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="SWQ">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Switch">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -372,9 +367,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="John Doe"
+    <img class="site-author-image" itemprop="image" alt="SWQ"
       src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">John Doe</p>
+  <p class="site-author-name" itemprop="name">SWQ</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -402,7 +397,7 @@
         <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-link fa-fw"></i>CSDN</a>
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
       </span>
   </div>
 
