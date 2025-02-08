@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录 一.串口 RS232 &lt;1&gt;简介 &lt;2&gt;物理模型 &lt;3&gt;RS232通信协议 &lt;4&gt;设计实践 1.硬件资源 2.程序设计 （1）uart_rx设计 ①波形图分析 ②代码设计 ③仿真设计 （2）uart_tx设计 ①波形图分析 ②代码设计 （3）顶层设计 ①代码设计 ②仿真设计 3.总结 二.基于 I2C 协议的 EEPROM驱动控制 &lt;1&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础设计三（RS232、I2C）——FPGA学习笔记＜4＞">
+<meta property="og:url" content="http://example.com/2023/09/11/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%B8%89%EF%BC%88RS232%E3%80%81I2C%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C4%EF%BC%9E/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录 一.串口 RS232 &lt;1&gt;简介 &lt;2&gt;物理模型 &lt;3&gt;RS232通信协议 &lt;4&gt;设计实践 1.硬件资源 2.程序设计 （1）uart_rx设计 ①波形图分析 ②代码设计 ③仿真设计 （2）uart_tx设计 ①波形图分析 ②代码设计 （3）顶层设计 ①代码设计 ②仿真设计 3.总结 二.基于 I2C 协议的 EEPROM驱动控制 &lt;1&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/41ba38e183929d6376ec40adbf1f8724.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ad1a4ba482564893ff8359fd376ba7fc.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/efd543a7b07dc4ab460314ea28977952.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e0b0c8afd598edcb653a10bd0c1f5ab4.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/88c30e0af5325c41a66213c7d463ec71.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3b8c4ca545f52dddf282fb029181733a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/01160649df593bdc68380afe16a251a7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4ee97485a24245074b314660c134dafd.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fe6084b0edb9a5f4cd334a61d80e651c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/facb669a93fa73b488a4709d2cadce6f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d8f07d8ac3ff30bf88e42bedf2ad6151.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/89cd57b8bd71f41c5fe4616c0cb4bc03.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e38f5d9d318853e610d55253e535ed8d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e1bb92fefa5e8f242a1c746b4cd59c1d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ae18e4581af78dc5e42749840658916c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d6933ce910fc5d709216700158924677.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/01fac4f9c508d4dd87006a8b89346c90.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/6128969d4060f737d0dd13fb53fcc866.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fe6084b0edb9a5f4cd334a61d80e651c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c596d3b31134c232a5b00ae3aa4e8e48.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5a4836417c6b50f8cf813a88f9361063.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ed4132b9525222bdeaa4e73667653c35.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/df689b6329ed5b9a83b12ebab4268f37.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/27adf568c1d8464861d39e0417d4b893.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bff01cc72bba6840bbb1317293b334c8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/752abc66eb1c6660c1e6af853f3feb85.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c934c50ba6ee94b62f9e40b9f133fcf7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7d6b29ef23df2793e6dee03a09ab8981.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e4b199374ee410594861d4b291846da6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/416c880b3f8aca3ecaa6fcfbeba575bf.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/51f2fe112d1778081fc5d2cce74354fc.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/435e1a69a14a95b0356304920bc062df.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/12435cc99834822d4e7d56554f5cd25b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/25c752bd6943503f200153f7dce4a032.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ad709b86b2f585ed9b7e32572f475fa0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5046f4605c4667e12c78374ab7af14f9.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d5635fe91ddb5bd3e38a3c10b537fc9f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/cb7cecb706c44404eb242fcfc064d9aa.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/6c4f74a5010a210f39adf6fbdc8ec967.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/981cf57f7293a8b151ecefba24bcc8ab.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a22e72a1f9818b6e8dd52d4e6e556113.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2c607f0961eaa4707998a179c81932b4.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/dbbae5dafe0c9d75fea0a0c8f4c0b8b0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f163cf331443f13ea529491e0964a4d1.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e6ddc3bdf972cfc6b409df0357a7b299.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/21691eb71a39d5bf950a025e94f0dda7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4a970f3612ef8aafc029a265ccdf27ec.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ec68fc6685298d54ce1f1f76d69b368c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/6b50b1bf58d51104cf8dcdb6ec165a14.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4f84ba56575b04cae5fd6ae73bea6d80.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c844ac970c4e331bb4259a5372a63cb7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3502bc1d7fd38855b0b7f7a688156c7a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0a9f2151c7bafded4a203e9e302ce02b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5807cf4689a02cb0d3cc686a4d8d115e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/724069bcb981b658644f954820b36b02.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/31e7abe3c09fafe03c928c4066ed76e5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/1eabdb473fb9d49eb26921b67ba45288.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e9d9b2f0b9d41c7067ec9a6cd74b3c2b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/50887563f603498a62193a654156c9c0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0209b025d932bf0f3184f96236101d7e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c37479538b21c177100541d00510745f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/231d2a6b838d3c39c536be23ca2454f6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b26cbb5556b0e75db6eae9f5e4854b8d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7aefb6d791d0e5b2ee40791a003868d2.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/807dba7ae4cedc9edcfd57af4d0a16da.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e2a77dfc171149e04c16efba72151793.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/48ccb6e9de9b9a2775173b221db5bbf9.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a252e7dbc6797d1f315a8c7a7f10f427.png">
+<meta property="article:published_time" content="2023-09-11T14:30:32.000Z">
+<meta property="article:modified_time" content="2025-02-08T03:45:06.160Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="None">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/41ba38e183929d6376ec40adbf1f8724.png">
+
+<link rel="canonical" href="http://example.com/2023/09/11/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%B8%89%EF%BC%88RS232%E3%80%81I2C%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C4%EF%BC%9E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基础设计三（RS232、I2C）——FPGA学习笔记＜4＞ | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/11/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%B8%89%EF%BC%88RS232%E3%80%81I2C%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C4%EF%BC%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基础设计三（RS232、I2C）——FPGA学习笔记＜4＞
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-11 22:30:32" itemprop="dateCreated datePublished" datetime="2023-09-11T22:30:32+08:00">2023-09-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-08 11:45:06" itemprop="dateModified" datetime="2025-02-08T11:45:06+08:00">2025-02-08</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>57k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>52 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%B8%80.%E4%B8%B2%E5%8F%A3%20RS232">一.串口 RS232</a></p>
+<p><a href="about:blank#%3C1%3E%E7%AE%80%E4%BB%8B">&lt;1&gt;简介</a></p>
+<p><a href="about:blank#%3C2%3E%E7%89%A9%E7%90%86%E6%A8%A1%E5%9E%8B">&lt;2&gt;物理模型</a></p>
+<p><a href="about:blank#%3C3%3ERS232%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE">&lt;3&gt;RS232通信协议</a></p>
+<p><a href="about:blank#%3C4%3E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5">&lt;4&gt;设计实践</a></p>
+<p><a href="about:blank#1.%E7%A1%AC%E4%BB%B6%E8%B5%84%E6%BA%90">1.硬件资源</a></p>
+<p><a href="about:blank#2.%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">2.程序设计</a></p>
+<p><a href="about:blank#%EF%BC%881%EF%BC%89uart_rx%E8%AE%BE%E8%AE%A1">（1）uart_rx设计</a></p>
+<p><a href="about:blank#%E2%91%A0%E6%B3%A2%E5%BD%A2%E5%9B%BE%E5%88%86%E6%9E%90">①波形图分析</a></p>
+<p><a href="about:blank#%E2%91%A1%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1">②代码设计</a></p>
+<p><a href="about:blank#%E2%91%A2%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1">③仿真设计</a></p>
+<p><a href="about:blank#%EF%BC%882%EF%BC%89uart_tx%E8%AE%BE%E8%AE%A1">（2）uart_tx设计</a></p>
+<p><a href="about:blank#%E2%91%A0%E6%B3%A2%E5%BD%A2%E5%9B%BE%E5%88%86%E6%9E%90">①波形图分析</a></p>
+<p><a href="about:blank#%E2%91%A1%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1">②代码设计</a></p>
+<p><a href="about:blank#%EF%BC%883%EF%BC%89%E9%A1%B6%E5%B1%82%E8%AE%BE%E8%AE%A1">（3）顶层设计</a></p>
+<p><a href="about:blank#%E2%91%A0%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1">①代码设计</a></p>
+<p><a href="about:blank#%E2%91%A1%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1">②仿真设计</a></p>
+<p><a href="about:blank#3.%E6%80%BB%E7%BB%93">3.总结</a></p>
+<p><a href="about:blank#%E4%BA%8C.%E5%9F%BA%E4%BA%8E%20I2C%20%E5%8D%8F%E8%AE%AE%E7%9A%84%20EEPROM%20%E9%A9%B1%E5%8A%A8%E6%8E%A7%E5%88%B6">二.基于 I2C 协议的 EEPROM<br>驱动控制</a></p>
+<p><a href="about:blank#%3C1%3E%E7%AE%80%E4%BB%8B">&lt;1&gt;简介</a></p>
+<p><a href="about:blank#%3C2%3E%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C">&lt;2&gt;读写操作</a></p>
+<p><a href="about:blank#%3C3%3E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5">&lt;3&gt;设计实践</a></p>
+<p><a href="about:blank#%EF%BC%881%EF%BC%89%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1">（1）整体设计</a></p>
+<p><a href="about:blank#%EF%BC%882%EF%BC%89I2C%20%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9D%97">（2）I2C<br>驱动模块</a></p>
+<p><a href="about:blank#%E3%80%901%E3%80%91%E5%8D%95%E5%AD%97%E8%8A%82%E5%86%99%E6%93%8D%E4%BD%9C%E6%97%B6%E5%BA%8F%E5%88%86%E6%9E%90">【1】单字节写操作时序分析</a></p>
+<p><a href="about:blank#%E3%80%902%E3%80%91%E9%9A%8F%E6%9C%BA%E8%AF%BB%E6%93%8D%E4%BD%9C%E6%97%B6%E5%BA%8F%E5%88%86%E6%9E%90">【2】随机读操作时序分析</a></p>
+<p><a href="about:blank#%E3%80%903%E3%80%91%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1">【3】代码设计</a></p>
+<p><a href="about:blank#%EF%BC%883%EF%BC%89%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%A8%A1%E5%9D%97">（3）数据收发模块</a></p>
+<p><a href="about:blank#%E3%80%901%E3%80%91%E5%86%99%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E9%83%A8%E5%88%86">【1】写数据操作部分</a></p>
+<p><a href="about:blank#%E3%80%902%E3%80%91%E8%AF%BB%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E9%83%A8%E5%88%86">【2】读数据操作部分</a></p>
+<p><a href="about:blank#%E3%80%903%E3%80%91%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1">【3】代码设计</a></p>
+<p><a href="about:blank#%EF%BC%884%EF%BC%89%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1">（4）仿真设计</a></p>
+<hr>
+<p>前置学习：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132779996" title="基础设计二——FPGA学习笔记＜3＞">基础设计二——FPGA学习笔记＜3＞</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132314807?spm=1001.2014.3001.5502" title="基础设计一——FPGA学习笔记＜2＞">基础设计一——FPGA学习笔记＜2＞</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132308209?spm=1001.2014.3001.5502" title="verilog语法——FPGA学习笔记＜1＞">verilog语法——FPGA学习笔记＜1＞</a></p>
+<p>参考书目：《野火FPGA Verilog 开发实战指南》</p>
+<h2 id="一-串口-RS232"><a href="#一-串口-RS232" class="headerlink" title="一.串口 RS232"></a>一.串口 RS232</h2><h3 id="简介"><a href="#简介" class="headerlink" title="&lt;1&gt;简介"></a>&lt;1&gt;简介</h3><pre><code>    **通用异步收发传输器（Universal Asynchronous Receiver/Transmitter），通常称作 UART** 。UART 是一种**通用的数据通信协议** ，也是**异步串行通信口（串口）的总称** ，它在**发送数据时将并行数据转换成串行数据来传输** ，在**接收数据时将接收到的串行数据转换成并行数据** 。它包括了 RS232、RS499、RS423、RS422 和 RS485 等接口标准规范和总线标准规范。三大低速总线（UART、SPI、IIC）
+
+    UART 和 SPI、IIC 不同的是，它是**异步通信接口** ，异步通信中的接收方并不知道数据什么时候会到达，所以双方收发端都要有各自的时钟，在数据传输过程中是不需要时钟的，发送方发送的时间间隔可以不均匀，接受方是在数据的**起始位和停止位** 的帮助下实现信息同步的。而**SPI、IIC 是同步通信接口** （后面的章节会做详细介绍），同步通信中双方使用频率一致的时钟，在数据传输过程中时钟伴随着数据一起传输，发送方和接收方使用的时钟都是由主机提供的。
+
+     UART 通信只有两根信号线，一根是发送数据端口线叫 tx（Transmitter），一根是接收数据端口线叫 rx（Receiver），如图 26-1 所示，对于 PC 来说它的 tx 要和对于 FPGA 来 说的 rx 连接，同样 PC 的 rx 要和 FPGA 的 tx 连接，如果是两个 tx 或者两个 rx 连接那数据 就不能正常被发送出去和接收到，所以不要弄混，记住 rx 和 tx 都是相对自身主体来讲的。 UART 可以实现全双工，即可以同时进行发送数据和接收数据。        
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/41ba38e183929d6376ec40adbf1f8724.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ad1a4ba482564893ff8359fd376ba7fc.png"></p>
+<pre><code>    设计 FPGA 部分接收串口数据和发送串口数据的模块，最后把两个模块拼接起来，最后通过 loopback 测试（回环测试）来验证设计模块的正确性。所谓**loopback 测试** 就是发送端发送什么数据，接收端就接收什么数据。
+</code></pre>
+<p>串口 RS232 缺点：距离不远，传输速率相对较慢</p>
+<p>串口 RS232优点：</p>
+<p>1、很多传感器芯片或 CPU 都带有串口功能，目的是在使用一些传感器或 CPU 时可以通过串口进行调试，十分方便；</p>
+<p>2、在较为复杂的<strong>高速数据接口和数据链路集合的系统</strong> 中往往<strong>联合调试比较困难</strong><br>，可以<strong>先使用串口将数据链路部分验证后，再把串口换成高速数据接口</strong><br>。如在做以太网相关的项目时，可以在调试时先使用串口把整个数据链路调通，然后再把串口换成以太网的接口；</p>
+<p>3、串口的数据线一共就两根，也没有时钟线，节省了大量的管脚资源。</p>
+<h3 id="物理模型"><a href="#物理模型" class="headerlink" title="&lt;2&gt;物理模型"></a>&lt;2&gt;物理模型</h3><p>设备被分为<strong>数据终端设备 DTE</strong>(计算机、路由)和 <strong>数据通讯设备 DCE</strong>(调制调解器)。我们以这种通讯模型讲解它们的信号线连接方式及各个<br>信号线的作用。</p>
+<p>旧式台式计算机 RS-232 标准 COM 口(也称 DB9 接口)：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/efd543a7b07dc4ab460314ea28977952.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e0b0c8afd598edcb653a10bd0c1f5ab4.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/88c30e0af5325c41a66213c7d463ec71.png"></p>
+<p>串口线中的 RTS、CTS、DSR、DTR 及 DCD 信号，使用逻辑 1 表示信号有效，逻辑 0 表示信号无效。例如，当计算机端控制 DTR<br>信号线表示为逻辑 1 时，它是为了告知远端的调制调解器，本机已准备好接收数据， 0 则表示还没准备就绪。</p>
+<h3 id="RS232通信协议"><a href="#RS232通信协议" class="headerlink" title="&lt;3&gt;RS232通信协议"></a>&lt;3&gt;RS232通信协议</h3><p>1、RS232 是 UART 的一种，没有时钟线，只有两根数据线，分别是 rx 和 tx，这两根线都是<strong>1bit 位宽</strong> 的。其中 rx<br>是接收数据的线，tx 是发送数据的线。</p>
+<p>2、rx 位宽为 1bit，PC 机通过串口调试助手往 FPGA 发 8bit 数据时，FPGA 通过串口线 rx<br>一位一位地接收，<strong>从最低位到最高位依次接收</strong> ，最后在 FPGA 里面位拼接成 8 比特数据。</p>
+<p>3、tx 位宽为 1bit，FPGA 通过串口往 PC 机发 8bit 数据时，FPGA 把 8bit 数据通过 tx 线一位一位的传给 PC<br>机，从最低位到最高位依次发送，最后上位机通过串口助手按照 RS232 协议把这一位一位的数据位拼接成 8bit 数据。</p>
+<p>4、串口数据的发送与接收是基于帧结构的，即一帧一帧的发送与接收数据。<strong>每一帧除 了中间包含 8bit<br>有效数据外，还在每一帧的开头都必须有一个起始位，且固定为 0</strong> ；<strong>在每 一帧的结束时也必须有一个停止位，且固定为 1</strong><br>，<strong>即最基本的帧结构（不包括校验等）有 10bit</strong> 。在不发送或者不接收数据的情况下，r<strong>x 和 tx 处于空闲状态，此时 rx 和 tx 线都保持<br>高电平</strong> ，如果有数据帧传输时，首先会有一个起始位，然后是 8bit 的数据位，接着有 1bit 的停止位，然后 rx 和 tx<br>继续进入空闲状态，然后等待下一次的数据传输。如图为一个最基本的 RS232 帧结构。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3b8c4ca545f52dddf282fb029181733a.png"></p>
+<p>5、波特率：在信息传输通道中，携带数据信息的信号单元叫码元（因为串口是 1bit 进<br>行传输的，所以其码元就是代表一个二进制数），每秒钟通过信号传输的码元数称为码元的传输速率，简称波特率，常用符号“Baud”表示，其单位为“波特每秒（Bps）”。串口常见的波特率有<br>4800、9600、115200 等，我们选用 9600 的波特率进行串口章节的讲解。</p>
+<p>6、比特率：每秒钟通信信道传输的信息量称为位传输速率，简称比特率，其单位为 “每秒比特数（bps）”。比特率可由波特率计算得出，公式为：比特率&#x3D;波特率 *<br><strong>单个调制状态对应的二进制位数</strong> 。如果使用的是 9600 的波特率，其串口的比特率为：9600Bps * <strong>1bit</strong> &#x3D; 9600bps。</p>
+<p>7、由计算得串口发送或者接收 1bit 数据的时间为一个波特，即 1&#x2F;9600 秒，如果用 50MHz（周期为<br>20ns）的系统时钟来计数，需要计数的个数为<strong>cnt &#x3D; (1s * 10^9)ns &#x2F; 9600bit)ns &#x2F; 20ns ≈ 5208<br>个系统时钟周期</strong> ，即每个 bit 数据之间的间隔要在 50MHz 的时钟频率下计数 <strong>5208 次</strong> 。</p>
+<p>8、上位机通过串口发 8bit 数据时，会自动在发 8 位有效数据前发一个波特时间的起始位，也会自动在发完 8<br>位有效数据后发一个停止位。同理，串口助手接收上位机发送的数据前，必须检测到一个波特时间的起始位才能开始接收数据，接收完 8bit<br>的数据后，再接收一个波特时间的停止位。</p>
+<h3 id="设计实践"><a href="#设计实践" class="headerlink" title="&lt;4&gt;设计实践"></a>&lt;4&gt;设计实践</h3><h4 id="1-硬件资源"><a href="#1-硬件资源" class="headerlink" title="1.硬件资源"></a>1.硬件资源</h4><p>Artix-7开发板上使用CH340芯片将Rx、Tx信号线转成USB，硬件电路图见参考图书。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/01160649df593bdc68380afe16a251a7.png"></p>
+<p>在使用时需将 J9 口的 1、2 脚以及 3、4 脚用跳帽连接起来才能正常使 用。</p>
+<h4 id="2-程序设计"><a href="#2-程序设计" class="headerlink" title="2.程序设计"></a>2.程序设计</h4><p>整体框图：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4ee97485a24245074b314660c134dafd.png"></p>
+<h5 id="（1）uart-rx设计"><a href="#（1）uart-rx设计" class="headerlink" title="（1）uart_rx设计"></a>（1）uart_rx设计</h5><pre><code>    uart_rx按照规定波特率将接受到的1bit串行数据转成8bit并行数据po_data，并有效并行数据有效的标志信号 po_data_flag
+</code></pre>
+<h6 id="①波形图分析"><a href="#①波形图分析" class="headerlink" title="①波形图分析"></a>①波形图分析</h6><p><img src="https://i-blog.csdnimg.cn/blog_migrate/fe6084b0edb9a5f4cd334a61d80e651c.png"></p>
+<p><strong>波形设计思路详细解析：</strong></p>
+<p><strong>第一部分</strong> ：</p>
+<p>首先画出三个输入信号，时钟和复位，另一个是串行输入数据 rx， rx 串行数据一开始经过了 <strong>两级寄存器</strong> 。</p>
+<p>理论上我们应该按照串口接收数据的时序要求找到 rx 的下降沿，然后开始接收起始位的数据，但为什么先将数据打了两拍呢？那就要先从跨时钟域会导致“<strong>亚稳态</strong><br>” 的问题上说起。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/facb669a93fa73b488a4709d2cadce6f.png"></p>
+<pre><code>    把一个矩形脉冲的上升沿或下降沿放大后会发现其上升沿和下降沿并不是瞬间被拉高或拉低的，而是有一个**倾斜变化的过程** ，这在 运放中被称为“**压摆率** ”。
+
+    如果 FPGA 的系统时钟刚好采集到 rx 信号上升沿或下降沿的中间位置附近（按照概率来讲，如果数据传输量足够大或传输速度足够快时一定会产生这种情况），即 FPGA 在接收 rx 数据时不满足**内部寄存器的建立时间 Tsu（指触发器的时钟信号上升沿到来以前，数据稳定不变的最小时间）和保持时间 Th（指触发器的时钟信号上升沿到来以后，数据稳定不变的最小时间）** ，此时 FPGA 的**第一级寄存器的输出端在时钟沿到来之后比较长的一段时间内都处于不确定的状态** ，在 0 和 1 之间处于**振荡状态** ，而不是 等于串口输入的确定的 rx 值。
+
+    如图为产生亚稳态的波形示意图，rx 信号经过 FPGA 中的第一级寄存器后输出的 rx_reg1 信号在时钟上升沿 Tco 时间后会有**Tmet（决断时间）的振荡时段** ，当第一 个寄存器发生亚稳态后，经过 Tmet 的振荡稳定后，第二级寄存器就能采集到一个相对稳定的值。但由于** _振荡时间 Tmet 是受到很多因素影响的，所以 Tmet 时间有长有短_** 。如图所示，当 **Tmet1 时间长到大于一个采样周期后，那第二级寄存器就会采集到亚稳态** ，但是从第二级寄存器输出的信号就是相对稳定的了。当然会人会问到第二级寄存器的 Tmet2 的持续时间会不会继续延长到大于一个采样周期？这种情况虽然会存在，但是其概率是极小的，寄存器本身就有减小 Tmet 时间让数据快速稳定的作用。 由于在 PC 机中**波特率和 rx 信号是同步的，而 rx 信号和 FPGA 的系统时钟 sys_clk 是异步** 的关系，我们此时要做的是**将慢速时钟域（PC 机中的波特率）系统中的 rx 信号同步到快速时钟域（FPGA 中的 sys_clk）系统** 中，所使用的方法叫电平同步，俗称**“打两拍法”** 。所以 rx 信号进入 FPGA 后会首先经过一级寄存器，出现如图 26-13 所示的亚稳态现 象，导致 rx_reg1 信号的状态不确定是 0 还是 1，就会受其影响使其他相关信号做出不同的判断，有的判断到“0”有的判断到“1”，有的也进入了亚稳态并产生连锁反应，导致后 级相关逻辑电路混乱。为了避免这种情况，rx 信号进来后首先进行打一拍的处理，打一拍后产生 rx_reg1 信号。但 rx_reg1 可能还存在低概率的亚稳态现象，为了进一步降低出现亚稳态的概率，我们将从 rx_reg1 信号再打一拍后产生 rx_reg2 信号，使之能够较大概率保证 rx_reg2 信号是 0 或者 1 中的一种确定情况，这样 rx_reg2 所影响的后级电路就都是相对稳定的了。但一定要注意：**打两拍后虽然能让信号稳定到 0 或者 1 中确定的值，但究竟是 0 还是 1 却是随机的，与打拍之前输入信号的值没有必然的关系** 。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d8f07d8ac3ff30bf88e42bedf2ad6151.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/89cd57b8bd71f41c5fe4616c0cb4bc03.png"></p>
+<p>注：单比特信号从慢速时钟域同步到快速时钟域需要使用打两拍的方式消除亚稳态。<strong>第一级寄存器产生亚稳态并经过自身后可以稳定输出的概率为<br>70%~80%左右，第二级寄存器可以稳定输出的概率为 99%左右</strong> ，<strong>后面再多加寄存器的级数改善效果就不明显了</strong> ，所以<br>数据进来后一般选择打两拍即可。 另外<strong>单比特信号从<br>快速时钟域同步到慢速时钟域还仅仅使用打两拍的方式会漏采数据，所以往往使用脉冲同步法或的握手信号法</strong>；而<strong>多比特信号跨时钟域需要进行格雷码编码</strong><br>（<strong>多比特顺序数</strong> 才可以）后才能进行打两拍的处理，或者通过使用 FIFO、RAM 来处理数据与时钟同步的问题。 亚稳态振荡时间 Tmet<br>关系到后级寄存器的采集稳定问题，Tmet<br>影响因素包括：器件的生产工艺、温度、环境以及寄存器采集到亚稳态里稳定态的时刻等。甚至某些特定条件，如干扰、辐射等都会造成 Tmet 增长。</p>
+<p><strong>第二部分：</strong></p>
+<pre><code>  打两拍后的 rx_reg2 信号就是我们可以在后级逻辑电路中使用的相对稳定的信号，只 比 rx 信号延后两。下一步我们就可以根据串口接收数据的时序要求找到串口帧起始开始的标志——下降沿，然后按顺序接收数据。由第一部分的分析得 rx_reg1 信号可能是不稳定的， 而 rx_reg2 信号是相对稳定的，所以不能直接用 rx_reg1 信号和 rx_reg2 信号来产生下降沿标志信号，因为 **rx_reg1 信号的不稳定性可能会导致由它产生的下降沿标志信号也不稳定** 。所以如图所示，我们将 rx_reg2 信号再打一拍，得到 rx_reg3 信号，用 rx_reg2 信 号和 rx_reg3 信号产生 staet_nedge 作为下降沿标志信号。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e38f5d9d318853e610d55253e535ed8d.png"></p>
+<p><strong>第三部分：</strong></p>
+<pre><code>    我们检测到了第一个下降沿，后面的信号将以下降沿标志信号 start_nedge 为条件开始接收一帧 10bit 的数据。但新的问题又出现了，我们的 rx 信号本身就是 1bit 的，如 果在判断第一个下降沿后，后面帧中的数据还可能会有下降沿出现，那我们会又产生一个start_nedge 标志信号。我们知道在 Verilog 代码中**标志信号（flag）和使能信号（en）** 都是非常有用的，标志信号只有一拍，非常适合我们产生像下降沿标志这种信号，而使能信号就特别适合在此处使用，即**对一段时间区域进行控制锁定** 。如图所示，当下降沿标志信号 start_nedge 为高电平时拉高工作使能信号 work_en（什么时候拉低在后面讲解），在 work_en 信号为高的时间区域内虽然也会有下降沿 start_nedge 标志信号产生，但是我们可 以根据 work_en 信号就可以判断出此时出现的 start_nedge 标志信号并不是我们想要的串口帧起始下降沿，从而将其过滤除掉。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e1bb92fefa5e8f242a1c746b4cd59c1d.png"></p>
+<pre><code>    开始接收一帧数据。我们使用的是 9600bps 的波特率 和 PC 机进行串口通信，PC 机的串口调试助手要将发送数据波特率调整为 9600bps。而 FPGA 内部使用的系统时钟是 50MHz，前面也进行过计算，得出 1bit 需要的时间约为 5208 个（因为一帧只有 10bit，**细微的近似计数差别不会产生数据错误** ，但是如果计数值差的过大，则会产生接收数据的错误）系统时钟周期，那么我们就需要产生一个能计 5208 个数的计数器来依次接收 10 个比特的数据，计数器每计 5208 个数就接收一个新比特的数据。如 图 26-17 所示，计数器名为 baud_cnt，当 **work_en 信号为高电平的时候就让计数器计数** ， **当计数器计 5208 个数（从 0 到 5207）或 work_en 信号为低电平时计数器清零。**
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ae18e4581af78dc5e42749840658916c.png"></p>
+<p><strong>第四部分：</strong></p>
+<pre><code>    现在我们可以根据波特率计数器一个一个接收数据了，我们发现 baud_cnt 计数 器在计数值为 0 到 5207 期间都是数据有效的时刻，那我们该什么时候取数据呢？理论上讲，在数据变化的地方取数是不稳定的，所以我们**选择当 baud_cnt 计数器计数到 2603，即中间位置时取数最稳定** （其实只要 baud_cnt 计数器在计数值不是在 0 和 5207 这两个最不稳定的时刻取数都可以，**更为准确的是多次取值取概率最大的情况** ）。所以如图所示，在 baud_cnt 计数器**计数到中点时产生一个时钟周期的 bit_flag 的取数标志信号** ，用于 指示该时刻的数据可以被取走。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d6933ce910fc5d709216700158924677.png"></p>
+<pre><code>    也就是说我们需要准确的知道此时此刻接收的是第几比特，当接收够 10bit 数据后，我们就停止继续接收数据，等 rx 信号被拉高待恢复到空闲状态后再等待接收下一帧的数据。所以我们还需要 产生一个用于计数该时刻接收的数据是第几个比特的 **bit_cnt 计数器** 。如图所示，刚好可以利用我们已经产生的 bit_flag 取数标志信号，对该信号进行计数既可以知道此时我们接收的数据是第几个比特了。这里我们只让 bit_cnt 计数器的计数值为 8 时再清零，虽然 bit_cnt 计数器的计数值从 0 计数到 8 只有 9 个 bit，但这 9 个 bit 中已经包含的我们所需要 的 8bit 有用的数据，最后的 1bit 停止位没有用，可以不用再进行计数了，但如果非要将 bit_cnt 计数器的计数值计数到 9 后再清零也是可以的。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/01fac4f9c508d4dd87006a8b89346c90.png"></p>
+<p><strong>第五部分：</strong></p>
+<pre><code>    我们接收到的 rx 信号是串行的，后面的系统要使用的是完整的 8bit 并行数据。 也就是说我们还需要将 1bit 串行数据转换为 8bit 并行数据的串并转换的工作，这也是我们在接口设计中常遇到的一种操作。**串并转换就需要做移位** ，我们要考虑清楚什么时候开始移位，不能提前也不能推后，否则会将无用的数据也移位进来，所以我们需要卡准时间。 如图所示 PC 机的串口调试助手发送的数据是先发送的低位后发送的高位，所以我们接收的 rx 信号也是先接收的低位后接收的高位，我们采用边接收边移位的操作。移位操作的方法我们已经在前面的流水灯章节中讲过，这里不再重复。接下来我们需要确定移位开始和结束的时间。如图所示，当 bit_cnt 计数器的计数值为 1 时说明第一个有用数据已经接收到了，刚好剔除了起始位，就可以进行移位了。注意移位的条件， _**要在 bit_cnt 计 数器的计数值为 1 到 8 区间内且 bit_flag 取数标志信号同时为高时才能移位**_ ，也就是移动 7 次即可，接收最后 1bit 有用数据时就不需要再进行移位了。当移位 7 次后 1bit 的串行数据 已经变为 8bit 的并行数据了，此时产生一个移位完成标志信号 rx_flag。
+</code></pre>
+<p><strong>第六部分：</strong></p>
+<pre><code>    最后一 点，rx_data 信号是参与移位的数据，在移位的过程中数据是变动的，不可以被后级模块所使用，而可以肯定的是**在移位完成标志信号 rx_flag 为高时，rx_data 信号一定是移位完成的 稳定的 8bit 有用数据** 。如图所示，此时我们当移位完成标志信号 **rx_flag 为高时让 rx_data 信号赋值给专门用于输出 稳定 8bit 有用数据的 po_data 信号**就可以了，但 **rx_flag 信号又不能作为 po_data 信号有效的标志信号，所以需要将 rx_flag 信号 再打一拍**。最后输出的有用 8bit 数据为 po_data 信号和伴随 po_data 信号有效的标志信号 po_flag 信号。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/6128969d4060f737d0dd13fb53fcc866.png"></p>
+<pre><code>    到此为止我们 uart_rx 模块的波形就全部设计好了，此时再看时序图就能理解各个设计。为了获得数据到来标志start_nedge设置了三级寄存器；work_en确定了接收状态，对start_nedge进行管控，不再变化，并开启计数器baud_cnt ；在计数中央采集数据并记录数据个数bit_cnt ；结束置标志位rx_flag，但为稳定，滞后一拍得最终结果和标志位
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/fe6084b0edb9a5f4cd334a61d80e651c.png"></p>
+<h6 id="②代码设计"><a href="#②代码设计" class="headerlink" title="②代码设计"></a>②代码设计</h6><pre><code>module  uart_rx
+#(
+    parameter   UART_BPS    =   &#39;d9600,         //串口波特率
+    parameter   CLK_FREQ    =   &#39;d50_000_000    //时钟频率
+)
+(
+    input   wire            sys_clk     ,   //系统时钟50MHz
+    input   wire            sys_rst_n   ,   //全局复位
+    input   wire            rx          ,   //串口接收数据
+
+    output  reg     [7:0]   po_data     ,   //串转并后的8bit数据
+    output  reg             po_flag         //串转并后的数据有效标志信号
+);
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//localparam    define
+localparam  BAUD_CNT_MAX    =   CLK_FREQ/UART_BPS   ;
+
+//reg   define
+reg         rx_reg1     ;
+reg         rx_reg2     ;
+reg         rx_reg3     ;
+reg         start_nedge ;
+reg         work_en     ;
+reg [12:0]  baud_cnt    ;
+reg         bit_flag    ;
+reg [3:0]   bit_cnt     ;
+reg [7:0]   rx_data     ;
+reg         rx_flag     ;
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//插入两级寄存器进行数据同步，用来消除亚稳态
+//rx_reg1:第一级寄存器，寄存器空闲状态复位为1
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        rx_reg1 &lt;= 1&#39;b1;
+    else
+        rx_reg1 &lt;= rx;
+
+//rx_reg2:第二级寄存器，寄存器空闲状态复位为1
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        rx_reg2 &lt;= 1&#39;b1;
+    else
+        rx_reg2 &lt;= rx_reg1;
+
+//rx_reg3:第三级寄存器和第二级寄存器共同构成下降沿检测
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        rx_reg3 &lt;= 1&#39;b1;
+    else
+        rx_reg3 &lt;= rx_reg2;
+
+//start_nedge:检测到下降沿时start_nedge产生一个时钟的高电平
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        start_nedge &lt;= 1&#39;b0;
+    else    if((~rx_reg2) &amp;&amp; (rx_reg3))
+        start_nedge &lt;= 1&#39;b1;
+    else
+        start_nedge &lt;= 1&#39;b0;
+
+//work_en:接收数据工作使能信号
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        work_en &lt;= 1&#39;b0;
+    else    if(start_nedge == 1&#39;b1)
+        work_en &lt;= 1&#39;b1;
+    else    if((bit_cnt == 4&#39;d8) &amp;&amp; (bit_flag == 1&#39;b1))
+        work_en &lt;= 1&#39;b0;
+
+//baud_cnt:波特率计数器计数，从0计数到BAUD_CNT_MAX - 1
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        baud_cnt &lt;= 13&#39;b0;
+    else    if((baud_cnt == BAUD_CNT_MAX - 1) || (work_en == 1&#39;b0))
+        baud_cnt &lt;= 13&#39;b0;
+    else    if(work_en == 1&#39;b1)
+        baud_cnt &lt;= baud_cnt + 1&#39;b1;
+
+//bit_flag:当baud_cnt计数器计数到中间数时采样的数据最稳定，
+//此时拉高一个标志信号表示数据可以被取走
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        bit_flag &lt;= 1&#39;b0;
+    else    if(baud_cnt == BAUD_CNT_MAX/2 - 1)
+        bit_flag &lt;= 1&#39;b1;
+    else
+        bit_flag &lt;= 1&#39;b0;
+
+//bit_cnt:有效数据个数计数器，当8个有效数据（不含起始位和停止位）
+//都接收完成后计数器清零
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        bit_cnt &lt;= 4&#39;b0;
+    else    if((bit_cnt == 4&#39;d8) &amp;&amp; (bit_flag == 1&#39;b1))
+        bit_cnt &lt;= 4&#39;b0;
+     else    if(bit_flag ==1&#39;b1)
+         bit_cnt &lt;= bit_cnt + 1&#39;b1;
+
+//rx_data:输入数据进行移位
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        rx_data &lt;= 8&#39;b0;
+    else    if((bit_cnt &gt;= 4&#39;d1)&amp;&amp;(bit_cnt &lt;= 4&#39;d8)&amp;&amp;(bit_flag == 1&#39;b1))
+        rx_data &lt;= &#123;rx_reg3, rx_data[7:1]&#125;;
+
+//rx_flag:输入数据移位完成时rx_flag拉高一个时钟的高电平
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        rx_flag &lt;= 1&#39;b0;
+    else    if((bit_cnt == 4&#39;d8) &amp;&amp; (bit_flag == 1&#39;b1))
+        rx_flag &lt;= 1&#39;b1;
+    else
+        rx_flag &lt;= 1&#39;b0;
+
+//po_data:输出完整的8位有效数据
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        po_data &lt;= 8&#39;b0;
+    else    if(rx_flag == 1&#39;b1)
+        po_data &lt;= rx_data;
+
+//po_flag:输出数据有效标志（比rx_flag延后一个时钟周期，为了和po_data同步）
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        po_flag &lt;= 1&#39;b0;
+    else
+        po_flag &lt;= rx_flag;
+
+endmodule
+
+
+    可以看到，在2-5行声明参数方便修改；7-13行声明输入输出接口；20行定义局部变量；23-32行声明内部寄存器；40-58行rx数据经过三级寄存器赋值；start_nedge是判断(~rx_reg2) &amp;&amp; (rx_reg3)进行赋值，对应波形图上的关系；在112行进行了移位赋值，rx_data &lt;= &#123;rx_reg3, rx_data[7:1]&#125;，使得低位在右；后面要注意start_nedge和work_en的关系，后面一大部分实际上是以baud_cnt为基石，所以在baud_cnt的赋值中引入work_en的限制即可（另一种不同思路是start_nedge的赋值引入work_en作为判断【&amp;&amp;~work_en】，然后baud_cnt引入start_nedge）。
+</code></pre>
+<h6 id="③仿真设计"><a href="#③仿真设计" class="headerlink" title="③仿真设计"></a>③仿真设计</h6><pre><code>module  tb_uart_rx();
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//reg   define
+reg             sys_clk;
+reg             sys_rst_n;
+reg             rx;
+
+//wire  define
+wire    [7:0]   po_data;
+wire            po_flag;
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//初始化系统时钟、全局复位和输入信号
+initial begin
+        sys_clk    = 1&#39;b1;
+        sys_rst_n &lt;= 1&#39;b0;
+        rx        &lt;= 1&#39;b1;
+        #20;
+        sys_rst_n &lt;= 1&#39;b1;
+end
+
+//模拟发送8次数据，分别为0~7
+initial begin
+        #200
+        rx_bit(8&#39;d0);  //任务的调用，任务名+括号中要传递进任务的参数
+        rx_bit(8&#39;d1);
+        rx_bit(8&#39;d2);
+        rx_bit(8&#39;d3);
+        rx_bit(8&#39;d4);
+        rx_bit(8&#39;d5);
+        rx_bit(8&#39;d6);
+        rx_bit(8&#39;d7);
+end
+
+//sys_clk:每10ns电平翻转一次，产生一个50MHz的时钟信号
+always #10 sys_clk = ~sys_clk;
+
+//定义一个名为rx_bit的任务，每次发送的数据有10位
+//data的值分别为0~7由j的值传递进来
+//任务以task开头，后面紧跟着的是任务名，调用时使用
+task rx_bit(
+    //传递到任务中的参数，调用任务的时候从外部传进来一个8位的值
+        input   [7:0]   data
+);
+        integer i;      //定义一个常量
+//用for循环产生一帧数据，for括号中最后执行的内容只能写i=i+1
+//不可以写成C语言i=i++的形式
+        for(i=0; i&lt;10; i=i+1) begin
+            case(i)
+                0: rx &lt;= 1&#39;b0;
+                1: rx &lt;= data[0];
+                2: rx &lt;= data[1];
+                3: rx &lt;= data[2];
+                4: rx &lt;= data[3];
+                5: rx &lt;= data[4];
+                6: rx &lt;= data[5];
+                7: rx &lt;= data[6];
+                8: rx &lt;= data[7];
+                9: rx &lt;= 1&#39;b1;
+            endcase
+            #(5208*20); //每发送1位数据延时5208个时钟周期
+        end
+endtask         //任务以endtask结束
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------------------uart_rx_inst------------------------
+uart_rx uart_rx_inst(
+        .sys_clk    (sys_clk    ),  //input           sys_clk
+        .sys_rst_n  (sys_rst_n  ),  //input           sys_rst_n
+        .rx         (rx         ),  //input           rx
+                
+        .po_data    (po_data    ),  //output  [7:0]   po_data
+        .po_flag    (po_flag    )   //output          po_flag
+);
+
+endmodule
+
+
+
+    8-9行因要对输入信号赋值使用reg变量；21-27初始化系统时钟、全局复位和输入信号；29-40模拟拟发送 8 次数据；43行对时钟进行规定；77-86行进行实例化，实例名为代码设计中的模块名，实例化名可以是实例名加_inst；最关键的是48-70行对发送任务的定义，类似c语言中的函数，单独分析：
+
+
+//定义一个名为rx_bit的任务，每次发送的数据有10位
+//data的值分别为0~7由j的值传递进来
+//任务以task开头，后面紧跟着的是任务名，调用时使用
+task rx_bit(
+    //传递到任务中的参数，调用任务的时候从外部传进来一个8位的值
+        input   [7:0]   data
+);
+        integer i;      //定义一个常量
+//用for循环产生一帧数据，for括号中最后执行的内容只能写i=i+1
+//不可以写成C语言i=i++的形式
+        for(i=0; i&lt;10; i=i+1) begin
+            case(i)
+                0: rx &lt;= 1&#39;b0;
+                1: rx &lt;= data[0];
+                2: rx &lt;= data[1];
+                3: rx &lt;= data[2];
+                4: rx &lt;= data[3];
+                5: rx &lt;= data[4];
+                6: rx &lt;= data[5];
+                7: rx &lt;= data[6];
+                8: rx &lt;= data[7];
+                9: rx &lt;= 1&#39;b1;
+            endcase
+            #(5208*20); //每发送1位数据延时5208个时钟周期
+        end
+endtask         //任务以endtask结束
+
+    注意这是第一次for循环的使用，for 括号中最后执行的内容只能写 i=i+1；任务以 task 开头，后面紧跟着的是任务名，调用时使用，以 endtask 结束；任务名紧接着是传入参数的定义，i是内部参数定义在括号外（类比c语言函数定义）
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c596d3b31134c232a5b00ae3aa4e8e48.png"></p>
+<pre><code>    第一、第二、第三部分仿真波形如图所示，我们可以清晰的看到将 rx 信号打三拍的操作，并产生了串口帧起始的下降沿标志信号，以及 work_en 信号在串口帧起始的下降沿标志信号为高时拉高，baud_cnt 计数器在 work_en 信号为高时开始计数。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5a4836417c6b50f8cf813a88f9361063.png"></p>
+<p>……</p>
+<h5 id="（2）uart-tx设计"><a href="#（2）uart-tx设计" class="headerlink" title="（2）uart_tx设计"></a>（2）uart_tx设计</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/ed4132b9525222bdeaa4e73667653c35.png"></p>
+<h6 id="①波形图分析-1"><a href="#①波形图分析-1" class="headerlink" title="①波形图分析"></a>①波形图分析</h6><p><img src="https://i-blog.csdnimg.cn/blog_migrate/df689b6329ed5b9a83b12ebab4268f37.png"></p>
+<pre><code>    前6个信号通过uart_rx的设计可以知道其用途
+
+    下面我们就可以按照 5208 个系统时钟周期的波特率间隔来发送 1bit 数据了。理论上我们在第一个 5208 系统时钟周期内 的任意一个位置发送数据都可以，这和接收数据时要在中间位置不同，所以我们直接让当 **baud_cnt** 计数器的计数值为 1（选择其他的值也可以，但是尽量不要选择 baud_cnt 计数器的计数值为 0 或 5207 这种端点，因为容易出问题）的时候作为发送数据的点，产生 **bit_flag** 信号，并使 **bit_cnt** 计数值加一，而下一个 baud_cnt 计数器的计数值为 1 的时候和上一个正好相差 5208 个系统时钟周期，是完全可以满足要求的。发送完一帧数据后要将 work_en 信号拉低。
+
+    bit_cnt清零和work_en拉低的条件：**让 bit_cnt 计数器计数到 9** ，停止位和空闲情况下都为高电平，所以最有一个停止位就没有必要再单独计数了，所以 bit_cnt 计数器计数到 9 清零是完全可以 的，当然让 bit_cnt 计数器计数到 10 更是可以的。 最后再来说说 work_en 信号拉低的条件，work_en 存在的原因就是为了方便 baud_cnt 计数器计数的，当我们不需要 baud_cnt 计数器计数的时候也就可以让 work_en 信号拉低 了。当 bit_cnt 计数器计数到 9 且 bit_flag 信号有效时停止位就可以被发送出去了，此时就不再需要 baud_cnt 计数器计数了，就可以把 work_en 信号拉低了，但同时还要将 baud_cnt 计数器清零，等待下一次发送数据时再从 0 开始计数。
+</code></pre>
+<h6 id="②代码设计-1"><a href="#②代码设计-1" class="headerlink" title="②代码设计"></a>②代码设计</h6><pre><code>module  uart_tx
+#(
+    parameter   UART_BPS    =   &#39;d9600,         //串口波特率
+    parameter   CLK_FREQ    =   &#39;d50_000_000    //时钟频率
+)
+(
+     input   wire            sys_clk     ,   //系统时钟50MHz
+     input   wire            sys_rst_n   ,   //全局复位
+     input   wire    [7:0]   pi_data     ,   //模块输入的8bit数据
+     input   wire            pi_flag     ,   //并行数据有效标志信号
+ 
+     output  reg             tx              //串转并后的1bit数据
+);
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//localparam    define
+localparam  BAUD_CNT_MAX    =   CLK_FREQ/UART_BPS   ;
+
+//reg   define
+reg [12:0]  baud_cnt;
+reg         bit_flag;
+reg [3:0]   bit_cnt ;
+reg         work_en ;
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//work_en:接收数据工作使能信号
+always@(posedge sys_clk or negedge sys_rst_n)
+        if(sys_rst_n == 1&#39;b0)
+            work_en &lt;= 1&#39;b0;
+        else    if(pi_flag == 1&#39;b1)
+            work_en &lt;= 1&#39;b1;
+        else    if((bit_flag == 1&#39;b1) &amp;&amp; (bit_cnt == 4&#39;d9))
+            work_en &lt;= 1&#39;b0;
+
+//baud_cnt:波特率计数器计数，从0计数到BAUD_CNT_MAX - 1
+always@(posedge sys_clk or negedge sys_rst_n)
+        if(sys_rst_n == 1&#39;b0)
+            baud_cnt &lt;= 13&#39;b0;
+        else    if((baud_cnt == BAUD_CNT_MAX - 1) || (work_en == 1&#39;b0))
+            baud_cnt &lt;= 13&#39;b0;
+        else    if(work_en == 1&#39;b1)
+            baud_cnt &lt;= baud_cnt + 1&#39;b1;
+
+//bit_flag:当baud_cnt计数器计数到1时让bit_flag拉高一个时钟的高电平
+always@(posedge sys_clk or negedge sys_rst_n)
+        if(sys_rst_n == 1&#39;b0)
+            bit_flag &lt;= 1&#39;b0;
+        else    if(baud_cnt == 13&#39;d1)
+            bit_flag &lt;= 1&#39;b1;
+        else
+            bit_flag &lt;= 1&#39;b0;
+
+//bit_cnt:数据位数个数计数，10个有效数据（含起始位和停止位）到来后计数器清零
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        bit_cnt &lt;= 4&#39;b0;
+    else    if((bit_flag == 1&#39;b1) &amp;&amp; (bit_cnt == 4&#39;d9))
+        bit_cnt &lt;= 4&#39;b0;
+    else    if((bit_flag == 1&#39;b1) &amp;&amp; (work_en == 1&#39;b1))
+        bit_cnt &lt;= bit_cnt + 1&#39;b1;
+
+//tx:输出数据在满足rs232协议（起始位为0，停止位为1）的情况下一位一位输出
+always@(posedge sys_clk or negedge sys_rst_n)
+        if(sys_rst_n == 1&#39;b0)
+            tx &lt;= 1&#39;b1; //空闲状态时为高电平
+        else    if(bit_flag == 1&#39;b1)
+            case(bit_cnt)
+                0       : tx &lt;= 1&#39;b0;
+                1       : tx &lt;= pi_data[0];
+                2       : tx &lt;= pi_data[1];
+                3       : tx &lt;= pi_data[2];
+                4       : tx &lt;= pi_data[3];
+                5       : tx &lt;= pi_data[4];
+                6       : tx &lt;= pi_data[5];
+                7       : tx &lt;= pi_data[6];
+                8       : tx &lt;= pi_data[7];
+                9       : tx &lt;= 1&#39;b1;
+                default : tx &lt;= 1&#39;b1;
+            endcase
+
+endmodule
+</code></pre>
+<p>③仿真设计</p>
+<pre><code>module  tb_uart_tx();
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//reg   define
+reg         sys_clk;
+reg         sys_rst_n;
+reg [7:0]   pi_data;
+reg         pi_flag;
+
+//wire  define
+wire        tx;
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//初始化系统时钟、全局复位
+initial begin
+        sys_clk    = 1&#39;b1;
+        sys_rst_n &lt;= 1&#39;b0;
+        #20;
+        sys_rst_n &lt;= 1&#39;b1;
+end
+
+//模拟发送7次数据，分别为0~7
+initial begin
+        pi_data &lt;= 8&#39;b0;
+        pi_flag &lt;= 1&#39;b0;
+        #200
+        //发送数据0
+        pi_data &lt;= 8&#39;d0;
+        pi_flag &lt;= 1&#39;b1;
+        #20
+        pi_flag &lt;= 1&#39;b0;
+//每发送1bit数据需要5208个时钟周期，一帧数据为10bit
+//所以需要数据延时(5208*20*10)后再产生下一个数据
+        #(5208*20*10);
+        //发送数据1
+        pi_data &lt;= 8&#39;d1;
+        pi_flag &lt;= 1&#39;b1;
+        #20
+        pi_flag &lt;= 1&#39;b0;
+        #(5208*20*10);
+        //发送数据2
+        pi_data &lt;= 8&#39;d2;
+        pi_flag &lt;= 1&#39;b1;
+        #20
+        pi_flag &lt;= 1&#39;b0;
+        #(5208*20*10);
+        //发送数据3
+        pi_data &lt;= 8&#39;d3;
+        pi_flag &lt;= 1&#39;b1;
+        #20
+        pi_flag &lt;= 1&#39;b0;
+        #(5208*20*10);
+        //发送数据4
+        pi_data &lt;= 8&#39;d4;
+        pi_flag &lt;= 1&#39;b1;
+        #20
+        pi_flag &lt;= 1&#39;b0;
+        #(5208*20*10);
+        //发送数据5
+        pi_data &lt;= 8&#39;d5;
+        pi_flag &lt;= 1&#39;b1;
+        #20
+        pi_flag &lt;= 1&#39;b0;
+        #(5208*20*10);
+        //发送数据6
+        pi_data &lt;= 8&#39;d6;
+        pi_flag &lt;= 1&#39;b1;
+        #20
+        pi_flag &lt;= 1&#39;b0;
+        #(5208*20*10);
+        //发送数据7
+        pi_data &lt;= 8&#39;d7;
+        pi_flag &lt;= 1&#39;b1;
+        #20
+        pi_flag &lt;= 1&#39;b0;
+end
+
+//sys_clk:每10ns电平翻转一次，产生一个50MHz的时钟信号
+always #10 sys_clk = ~sys_clk;
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------------------uart_rx_inst------------------------
+uart_tx uart_tx_inst(
+        .sys_clk    (sys_clk    ),  //input           sys_clk
+        .sys_rst_n  (sys_rst_n  ),  //input           sys_rst_n
+        .pi_data    (pi_data    ),  //output  [7:0]   pi_data
+        .pi_flag    (pi_flag    ),  //output          pi_flag
+
+        .tx         (tx         )   //input           tx
+);
+
+endmodule
+</code></pre>
+<p>仿真这里测试了发送数据0~7</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/27adf568c1d8464861d39e0417d4b893.png"></p>
+<pre><code>    第三部分仿真波形如图所示，**我们可以清晰地看到最后一个 bit_flag 信号为高的时刻，且 bit_cnt 计数器也计数到 9，将停止位发送出去，同时 work_en 信号拉低， baud_cnt 计数器检测到 work_en 信号为低电平后立刻清零并停止计数，等待下一次发送数据时再工作。**
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/bff01cc72bba6840bbb1317293b334c8.png"></p>
+<h5 id="（3）顶层设计"><a href="#（3）顶层设计" class="headerlink" title="（3）顶层设计"></a>（3）顶层设计</h5><h6 id="①代码设计"><a href="#①代码设计" class="headerlink" title="①代码设计"></a>①代码设计</h6><pre><code>`timescale  1ns/1ns
+
+module  rs232
+(
+    input   wire    sys_clk     ,   //系统时钟50MHz
+    input   wire    sys_rst_n   ,   //全局复位
+    input   wire    rx          ,   //串口接收数据
+
+    output  wire    tx              //串口发送数据
+);
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//parameter define
+parameter   UART_BPS    =   20&#39;d9600        ,   //比特率
+            CLK_FREQ    =   26&#39;d50_000_000  ;   //时钟频率
+
+//wire  define
+wire    [7:0]   po_data;
+wire            po_flag;
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------------------ uart_rx_inst ------------------------
+uart_rx
+#(
+    .UART_BPS    (UART_BPS  ),  //串口波特率
+    .CLK_FREQ    (CLK_FREQ  )   //时钟频率
+)
+uart_rx_inst
+(
+    .sys_clk    (sys_clk    ),  //input             sys_clk
+    .sys_rst_n  (sys_rst_n  ),  //input             sys_rst_n
+    .rx         (rx         ),  //input             rx
+            
+    .po_data    (po_data    ),  //output    [7:0]   po_data
+    .po_flag    (po_flag    )   //output            po_flag
+);
+
+//------------------------ uart_tx_inst ------------------------
+uart_tx
+#(
+    .UART_BPS    (UART_BPS  ),  //串口波特率
+    .CLK_FREQ    (CLK_FREQ  )   //时钟频率
+)
+uart_tx_inst
+(
+    .sys_clk    (sys_clk    ),  //input             sys_clk
+    .sys_rst_n  (sys_rst_n  ),  //input             sys_rst_n
+    .pi_data    (po_data    ),  //input     [7:0]   pi_data
+    .pi_flag    (po_flag    ),  //input             pi_flag
+                
+    .tx         (tx         )   //output            tx
+);
+
+endmodule
+
+
+    可以看到，顶层模块先定义好顶层输入输出线in/output wire，需要用到的参数parameter和内部模块的连线wire型变量；然后实例化设计好的模块，按照模块代码实例化参数，格式与模块定义时一致，**·+参数名**** _引出模块内部参数_** ，**括号内是顶层模块的变量** ，起连接作用。
+</code></pre>
+<h6 id="②仿真设计"><a href="#②仿真设计" class="headerlink" title="②仿真设计"></a>②仿真设计</h6><pre><code>module  tb_rs232();
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//wire  define
+wire    tx          ;
+
+//reg   define
+reg     sys_clk     ;
+reg     sys_rst_n   ;
+reg     rx          ;
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//初始化系统时钟、全局复位和输入信号
+initial begin
+    sys_clk    = 1&#39;b1;
+    sys_rst_n &lt;= 1&#39;b0;
+    rx        &lt;= 1&#39;b1;
+    #20;
+    sys_rst_n &lt;= 1&#39;b1;
+end
+
+//调用任务rx_byte
+initial begin
+    #200
+    rx_byte();
+end
+
+//sys_clk:每10ns电平翻转一次，产生一个50MHz的时钟信号
+always #10 sys_clk = ~sys_clk;
+
+//创建任务rx_byte，本次任务调用rx_bit任务，发送8次数据，分别为0~7
+task    rx_byte();  //因为不需要外部传递参数，所以括号中没有输入
+    integer	j;
+    for(j=0; j&lt;8; j=j+1)    //调用8次rx_bit任务，每次发送的值从0变化7
+        rx_bit(j);
+endtask
+
+//创建任务rx_bit，每次发送的数据有10位，data的值分别为0到7由j的值传递进来
+task    rx_bit(
+    input   [7:0]   data
+);
+    integer i;
+    for(i=0; i&lt;10; i=i+1)   begin
+        case(i)
+            0: rx &lt;= 1&#39;b0;
+            1: rx &lt;= data[0];
+            2: rx &lt;= data[1];
+            3: rx &lt;= data[2];
+            4: rx &lt;= data[3];
+            5: rx &lt;= data[4];
+            6: rx &lt;= data[5];
+            7: rx &lt;= data[6];
+            8: rx &lt;= data[7];
+            9: rx &lt;= 1&#39;b1;
+        endcase
+        #(5208*20); //每发送1位数据延时5208个时钟周期
+    end
+endtask
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------------------ rs232_inst ------------------------
+rs232   rs232_inst
+(
+    .sys_clk    (sys_clk    ),  //input         sys_clk
+    .sys_rst_n  (sys_rst_n  ),  //input         sys_rst_n
+    .rx         (rx         ),  //input         rx
+
+    .tx         (tx         )   //output        tx
+);
+
+endmodule
+
+
+
+
+    这里的仿真使用了**task的嵌套** ，再实例化了顶层设计模块；**从此对模块设计 .V 文件中的参数及实例化理解加深，类似于顶层模块的综合，仿真模块开始时定义的变量时为了后面的实例化所服务的，要么起连线作用（wire），要么起赋值仿真作用（reg），在实例化的括号里连接。**
+</code></pre>
+<h4 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h4><pre><code>    “在本章的 Testbench 的设计中我们第一次使用到了 task 任务以及 for 循环语句，这两个语法都在仿真中使用的较多，虽然都是可以综合的但还是推荐初学者尽量**不要在 RTL 代码中使用** ，尤其是对它们理解不深刻的情况下。而我们**在 Testbench 中使用就不用担心这么多** ，且可以大大简化我们的代码，提高效率，是十分好用的，也推荐大家以后再 Testbench 中多尝试使用。”
+
+    以及更深入了解Verilog HDL代码的编写，深刻理解了参数、变量、实例化。
+</code></pre>
+<p>知识点总结：</p>
+<p>1. 理解亚稳态产生的原理，掌握单比特数据从<strong>慢速时钟域到快速时钟域</strong> 处理亚稳态的方法。</p>
+<p>2. 学会使用边沿检测，并记住代码的格式，理解原理。（<strong>第三级寄存器和第二级寄存器共同构成下降沿检测(~rx_reg2) &amp;&amp; (rx_reg3)）</strong></p>
+<p>3. 串并转换是接口中很常用的一种方法，用到了移位，要熟练掌握。</p>
+<p>4. 掌握 loopback 测试的方法，以后用于我们模块中代码的调试。</p>
+<h2 id="二-基于-I2C-协议的-EEPROM-驱动控制"><a href="#二-基于-I2C-协议的-EEPROM-驱动控制" class="headerlink" title="二.基于 I2C 协议的 EEPROM 驱动控制"></a>二.基于 I2C 协议的 EEPROM 驱动控制</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="&lt;1&gt;简介"></a>&lt;1&gt;简介</h3><pre><code>    I2C 通讯协议(Inter－Integrated Circuit)是由 Philips 公司开发的一种简单、**双向二线制同步串行总线** ，只需要两根线即可在连接于总线上的器件之间传送信息。 I2C 通讯协议和通信接口在很多工程中有广泛的应用，如数据采集领域的串行 AD，图像处理领域的摄像头配置，工业控制领域的 X 射线管配置等等。除此之外，由于 I2C 协议占用引脚特别少，硬件实现简单，可扩展型强，现在被广泛地使用在系统内多个**集成电路 (IC)间的通讯** 。
+
+    下面我们分别对 I2C 协议的**物理层** 及**协议层** 进行讲解。
+
+    它的**物理层** 有如下特点：        
+
+    (1) 它是一个支持多设备的总线。“总线”指多个设备共用的信号线。在一个 I2C 通讯 总线中，可连接多个 I2C 通讯设备，支持多个通讯主机及多个通讯从机。
+
+    (2) 一个 I2C 总线只使用两条总线线路，**一条双向串行数据线(SDA) ，一条串行时钟线 (SCL)** 。数据线即用来表示数据，时钟线用于数据收发同步。
+
+    (3) 每个连接到总线的设备都有**一个独立的地址** ，主机可以利用这个地址进行不同设备之间的访问。
+
+    (4) 总线通过上拉电阻接到电源。**当 I2C 设备空闲时，会输出高阻态，而当所有设备都空闲，都输出高阻态时，由上拉电阻把总线拉成高电平** 。
+
+    (5) 多个主机同时使用总线时，为了防止数据冲突，会利用**仲裁** 方式决定由哪个设备占用总线。
+
+    (6) 具有三种传输模式：标准模式传输速率为 100kbit/s ，快速模式为 400kbit/s ，高速模式下可达 3.4Mbit/s，但目前大多 I2C 设备尚不支持高速模式。
+
+    (7) 连接到相同总线的 IC 数量受到**总线的最大电容 400pF 限制** 。
+
+    它的**协议层** 有如下特点：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/752abc66eb1c6660c1e6af853f3feb85.png"></p>
+<pre><code>    由图可知，I2C 协议整体时序图分为 4 个部分，图中标注的①②③④表示 I2C 协议的 4 个状态，分别为“总线空闲状态”、“起始信号”、“数据读/写状态”和“停止信号”， 针对这 4 个状态，我们来做一下详细介绍。
+
+    (1) 图中标注①表示“总线空闲状态”，在此状态下串口时钟信号 SCL 和串行数据信 号 SDA 均保持高电平，此时无 I2C 设备工作。
+
+    (2) 图中标注②表示“起始信号”，在 I2C 总线处于“空闲状态”时，SCL 依旧保持高电平时， SDA 出现由高电平转为低电平的**下降沿，产生一个起始信号** ，此时与总线相连的所有 I2C 设备在检测到起始信号后，均跳出空闲状态，**等待控制字节的输入** 。
+
+    (3) 图中标注③表示“数据读/写状态”，“数据读/写状态”时序图具体见图：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c934c50ba6ee94b62f9e40b9f133fcf7.png"></p>
+<pre><code>    I2C 通讯设备的通讯模式是**主从通讯模式** ，通讯双方有主从之分。 当主机向从机进行指令或数据的写入时，串行数据线 SDA 上的数据**在串行时钟 SCL 为高电平时写入从机设备** ，每次只写入一位数据；串行数据线 SDA 中的数据**在串行时钟 SCL 为低电平时进行数据更新** ，以保证在 SCL 为高电平时采集到 SDA 数据的稳定状态。 当一个完整字节的指令或数据传输完成，从机设备正确接收到指令或数据后，会通过**拉低 SDA 为低电平，向主机设备发送单比特的应答信号** ，表示数据或指令写入成功。若从机正确应答，可以结束或开始下一字节数据或指令的传输，否则表明数据或指令写入失败，主机就可以决定是否放弃写入或者重新发起写入。
+
+    (4) 图中标注④表示“停止信号”，完成数据读写后，串口时钟 SCL 保持高电平，当 串口数据信号 SDA 产生一个由低电平转为高电平的上升沿时，产生一个停止信号，I2C 总线跳转回“总线空闲状态”。
+
+    **I2C 设备器件地址与存储地址** 有如下特点：
+
+    每个 I2C 设备在出厂前都被设置了器件地址，用户不可自主更改；器件地址一般位宽为 7 位，有的 I2C 设备的器件地址**设置了全部位宽** ，例如后面章节要讲解的 OV7725、 OV5640 摄像头；有的 I2C 设备的器件地址**设置了部分位宽** ，例如本章节要使用的 EEPROM 存储芯片，它的器件地址只设置了高 4 位，**剩下的低 3 位由用户在设计硬件时自主设置** 。 FPGA 开发板使用的是 ATMEL 公司生产的 AT24C 系列中的型号为 AT24C64 的 EEPROM 存储芯片。AT24C64 存储容量为**64Kbit，内部分成 256 页，每页 32 字节** ， 共有 8192 个字节，且其读写操作都是以字节为基本单位。 AT24C64 EEPROM 存储芯片的器件地址包括厂商设置的高 4 位 1010 和用户需自主设置的低 3 位 A0、A1、A2 。**在硬件设计时，通过将芯片的 A0、A1、A2 这 3 个引脚分别连接到 VCC 或 GND 来实现器件地址低 3 位的设置** ，若 3 个引脚均连接到 VCC，则设置后的器件地址为 1010_111；若 3 个引脚均连接到 GND，则设置后的器件地址为 1010_000。由于 A0、A1、A2 这 3 位只能组合出 8 种 情况，所以一个主机最多只能连接 8 个 AT24C64 存储芯片。 在 I2C 主从设备通讯时，主机在发送了起始信号后，接着会向从机发送控制命令。控制命令长度为 1 个字节，它的**高 7 位为上文讲解的 I2C 设备的器件地址，最低位为读写控制位** 。读写控制位为 0 时，表示主机要对从机进行数据写入操作；读写控制位为 1 时，表 示主机要对从机进行数据读出操作。         EEPROM 储存芯片控制命令格式示意图，具体见图：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7d6b29ef23df2793e6dee03a09ab8981.png"></p>
+<pre><code>    **I2C 设备存储地址相关** ： 
+
+    每一个支持 I2C 通讯协议的设备器件，内部都会**包含一些可进行读/写操作的寄存器或存储器** 。例如后面章节将会讲到的 OV7725、OV5640 摄像头(它们使用的是与 I2C 协议极 为相似的 SCCB 协议，后面章节会进行讲解)，他们内部包含一些需要进行读/写配置的寄存器，只有**向对应寄存器写入正确参数** ，摄像头才能被正确使用；同样，本章节要使用的 EEPROM 存储芯片内部则包含许多存储单元，需要**存储的数据按照地址被写入对应存储单元** 。 由于 I2C 设备要配置寄存器的多少或**存储容量的大小的不同，存储地址根据 位宽分为单字节和 2 字节**两种。例如后文要提到的 OV7725、OV5640 摄像头，两者的寄存器数量不 同，OV7725 摄像头需要配置寄存器较少，单个字节能够实现所有寄存器的寻址，所以他的存储地址位宽为 8 位；而 OV5640 摄像头需要配置寄存器较多，单个字节不能够实现所有寄存器的寻址，所以他的存储地址位宽为 16 位，2 个字节。 以 EEPROM 存储芯片为例，在 ATMEL 公司生产的 AT24C 系列 EEPROM 存储芯片中选取两款存储芯片 AT24C04 和 AT24C64。AT24C04 的存储容量为 1Kbit(128byte)，7 位存储地址即可满足所有存储单元的寻址，存储地址为单字节即可；而 AT24C64 的存储空间为 64 Kbit(8Kbyte)，需要 13 位存储地址才可满足所有存储单元的寻址，存储地址为 2 字节。
+</code></pre>
+<h3 id="读写操作"><a href="#读写操作" class="headerlink" title="&lt;2&gt;读写操作"></a>&lt;2&gt;读写操作</h3><pre><code>    I2C 读/写操作对传入从机的控制命令最低位读写控制位写入不同数据值，主机可实现对从机的读/写 操作，读写控制位为 0 时，表示主机要对从机进行数据写入操作；读写控制位为 1 时，表 示主机要对从机进行数据读出操作。
+</code></pre>
+<p><strong>I2C 单字节写操作：</strong></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e4b199374ee410594861d4b291846da6.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/416c880b3f8aca3ecaa6fcfbeba575bf.png"></p>
+<p><strong>注：MSB（最高有效位，Most Significant Bit）；LSB（最低有效位，Last Significant Bit）</strong></p>
+<p>参照时序图，列出单字节写操作流程如下：</p>
+<pre><code>    (1) **主机** 产生并**发送起始信号** 到从机，将控制命令写入从机设备，读写控制位设置为低电平，表示对从机进行数据写操作，控制命令的写入高位在前低位在后；
+
+    (2) **从机** 接收到控制指令后，**回传应答信号** ，主机接收到应答信号后开始存储地址的写入。若为 2 字节地址，顺序执行操作；若为单字节地址跳转到步骤(5)；
+
+    (3) **先** 向从机写入**高 8 位地址** ，且**高位在前低位在后** ；
+
+    (4) 待接收到从机回传的应答信号，**再写入低 8 位地址** ，且高位在前低位在后，若为 2 字节地址，跳转到步骤(6)；
+
+    (5) 按高位在前低位在后的顺序写入单字节存储地址；
+
+    (6) 地址写入完成，主机接收到从机**回传的应答信号** 后，开始单字节**数据的写入** ；
+
+    (7) 单字节数据写入完成，主机接收到应答信号后，向从机**发送停止信号** ，数据写入完成。
+</code></pre>
+<p><strong>I2C 页写操作：</strong></p>
+<pre><code>    单字节写操作中，主机一次向从机中写入单字节数据；页写操作中，主机一次可向从机写入**多字节数据** 。连续写时序图，具体见图：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/51f2fe112d1778081fc5d2cce74354fc.png"></p>
+<pre><code>    所有 I2C 设备均支持单字节数据写入操作，但只有**部分 I2C 设备支持页写操作** ； 且支持页写操作的设备，一次页写操作写入的字节数**不能超过设备 单页包含的存储单元数**。本章节使用的 AT24CXX 系列的 EEPROM 存储芯片，单页存储单元个数为 32 个，**一 次页写操作只能写入 32 字节数据。**
+</code></pre>
+<p><strong>I2C 随机读操作：</strong></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/435e1a69a14a95b0356304920bc062df.png"></p>
+<p>参照时序图，列出页写时序操作流程如下：</p>
+<pre><code>    (1) 主机产生并发送起始信号到从机，将控制命令写入从机设备，读写控制位设置为**低电平** ，表示对从机进行**数据写操作** ，控制命令的写入高位在前低位在后；
+
+    (2) 从机接收到控制指令后，回传应答信号，主机接收到应答信号后**开始存储地址的写入** 。若为 2 字节地址，顺序执行操作；若为单字节地址跳转到步骤(5)；         
+
+    (3) 先向从机写入高 8 位地址，且高位在前低位在后；         
+
+    (4) 待接收到从机回传的应答信号，再写入低 8 位地址，且高位在前低位在后，若为 2 字节地址，跳转到步骤(6)；
+
+    (5) 按高位在前低位在后的顺序写入单字节存储地址；
+
+    (6) **地址写入完成** ，主机接收到从机回传的应答信号后，主机**再次向从机发送一个起始信号** ；
+
+    (7) 主机向从机发送控制命令，读写控制位设置为**高电平** ，表示对从机进行**数据读操作** ；
+
+    (8) 主机接收到从机回传的应答信号后，开始**接收从机传回的第一个单字节数据** ；
+
+    (9) 数据接收完成后，**主机产生应答信号回传给从机** ，**从机接收到应答信号开始下一字节数据的传输** ，若数据接收完成，执行下一操作步骤；若数据接收未完成，在此执行步骤(9)；
+
+    (10) 主机产生**一个时钟的高电平 无应答信号**；
+
+    (11) 主机向从机发送**停止信号** ，顺序读操作完成。
+</code></pre>
+<p>注：可以看到，主机进行了<strong>两次控制命令发送（读写操作，地址+w&#x2F;r）</strong> ；在写操作中写入地址，然后在读操作读取数据。</p>
+<h3 id="设计实践-1"><a href="#设计实践-1" class="headerlink" title="&lt;3&gt;设计实践"></a>&lt;3&gt;设计实践</h3><pre><code>    运用所学理论知识设计一个使用 I2C 通讯协议的 EEPROM 读写控制器，使用按键控制数据写入或读出 EEPROM。使用写控制按键向 EEPROM 中写入数据 1-10 共 10 字节数据， 使用读控制按键读出之前写入到 EEPROM 的数据，并将读出的数据在数码管上显示出来。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/12435cc99834822d4e7d56554f5cd25b.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/25c752bd6943503f200153f7dce4a032.png"></p>
+<pre><code>    由原理图可知，升腾 Mini 板载 EEPROM 地址位 A0、A1 接高电平，A2 接地； EEPROM 地址为 7’b1010_011。
+</code></pre>
+<h4 id="（1）整体设计"><a href="#（1）整体设计" class="headerlink" title="（1）整体设计"></a>（1）整体设计</h4><p><img src="https://i-blog.csdnimg.cn/blog_migrate/ad709b86b2f585ed9b7e32572f475fa0.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5046f4605c4667e12c78374ab7af14f9.png"></p>
+<pre><code>    按下数据写操作按键，写触发信号传入按键消抖模块(key_filter)，经消抖处理后的写触发信号传入数据收发模块(i2c_rw_data)，模块接收到有效的**写触发信号** 后，生成写**使能信号、待写入数据、数据地址** 传入 I2C 驱动模块(i2c_ctrl)，I2C 驱动模块按照 I2C 协议将数据写入 EEPROM 存储芯片； 数据写入完成后，按下数据读操作按键，读触发信号传入按键消抖模块(key_filter)， 经消抖处理后的读触发信号传入数据收发模块(i2c_rw_data)，模块接收到有效的**读触发信号** 后，生成**读使能信号、数据地址** 传入 I2C 驱动模块(i2c_ctrl)，I2C 驱动模块自 EEPROM 存储芯片读取数据，将读取到的数据回传给数据收发模块(i2c_rw_data)，**数据收发模块将数据暂存** ，待所有数据均读取完成后，将数据传至数码管动态显示模块(seg_dynamic)，自 EEPROM 中读取的数据在数码管显示出来。
+
+
+module  eeprom_byte_rd_wr
+(
+    input   wire            sys_clk     ,   //输入工作时钟,频率50MHz
+    input   wire            sys_rst_n   ,   //输入复位信号,低电平有效
+    input   wire            key_wr      ,   //按键写
+    input   wire            key_rd      ,   //按键读
+
+    inout   wire            sda         ,   //串行数据
+    output  wire            scl         ,   //串行时钟
+    output  wire    [5:0]   sel         ,   //数码管位选信号
+    output  wire    [7:0]   seg             //数码管段选信号
+);
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//wire  define
+wire            read        ;
+wire            write       ;
+wire    [7:0]   po_data     ;
+wire    [7:0]   rd_data     ;
+wire            wr_en       ;
+wire            rd_en       ;
+wire            i2c_end     ;
+wire            i2c_start   ;
+wire    [7:0]   wr_data     ;
+wire    [15:0]  byte_addr   ;
+wire            i2c_clk     ;
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------- key_wr_inst -------------
+key_filter  key_wr_inst
+(
+    .sys_clk    (sys_clk    ),  //系统时钟50Mhz
+    .sys_rst_n  (sys_rst_n  ),  //全局复位
+    .key_in     (key_wr     ),  //按键输入信号
+
+    .key_flag   (write      )   //key_flag为1时表示按键有效，0表示按键无效
+);
+
+//------------- key_rd_inst -------------
+key_filter  key_rd_inst
+(
+    .sys_clk    (sys_clk    ),  //系统时钟50Mhz
+    .sys_rst_n  (sys_rst_n  ),  //全局复位
+    .key_in     (key_rd     ),  //按键输入信号
+
+    .key_flag   (read       )   //key_flag为1时表示按键有效，0表示按键无效
+);
+
+//------------- i2c_rw_data_inst -------------
+i2c_rw_data i2c_rw_data_inst
+(
+    .sys_clk     (sys_clk   ),  //输入系统时钟,频率50MHz
+    .i2c_clk     (i2c_clk   ),  //输入i2c驱动时钟,频率1MHz
+    .sys_rst_n   (sys_rst_n ),  //输入复位信号,低有效
+    .write       (write     ),  //输入写触发信号
+    .read        (read      ),  //输入读触发信号
+    .i2c_end     (i2c_end   ),  //一次i2c读/写结束信号
+    .rd_data     (rd_data   ),  //输入自i2c设备读出的数据
+
+    .wr_en       (wr_en     ),  //输出写使能信号
+    .rd_en       (rd_en     ),  //输出读使能信号
+    .i2c_start   (i2c_start ),  //输出i2c读/写触发信号
+    .byte_addr   (byte_addr ),  //输出i2c设备读/写地址
+    .wr_data     (wr_data   ),  //输出写入i2c设备的数据
+    .fifo_rd_data(po_data   )   //输出自fifo中读出的数据
+
+);
+
+//------------- i2c_ctrl_inst -------------
+i2c_ctrl
+#(
+    .DEVICE_ADDR    (7&#39;b1010_011     ), //i2c设备器件地址
+    .SYS_CLK_FREQ   (26&#39;d50_000_000  ), //i2c_ctrl模块系统时钟频率
+    .SCL_FREQ       (18&#39;d250_000     )  //i2c的SCL时钟频率
+)
+i2c_ctrl_inst
+(
+    .sys_clk     (sys_clk   ),   //输入系统时钟,50MHz
+    .sys_rst_n   (sys_rst_n ),   //输入复位信号,低电平有效
+    .wr_en       (wr_en     ),   //输入写使能信号
+    .rd_en       (rd_en     ),   //输入读使能信号
+    .i2c_start   (i2c_start ),   //输入i2c触发信号
+    .addr_num    (1&#39;b1      ),   //输入i2c字节地址字节数
+    .byte_addr   (byte_addr ),   //输入i2c字节地址
+    .wr_data     (wr_data   ),   //输入i2c设备数据
+
+    .rd_data     (rd_data   ),   //输出i2c设备读取数据
+    .i2c_end     (i2c_end   ),   //i2c一次读/写操作完成
+    .i2c_clk     (i2c_clk   ),   //i2c驱动时钟
+    .i2c_scl     (scl       ),   //输出至i2c设备的串行时钟信号scl
+    .i2c_sda     (sda       )    //输出至i2c设备的串行数据信号sda
+);
+
+//------------- seg_dynamic_inst -------------
+seg_dynamic seg_dynamic_inst
+(
+    .sys_clk     (sys_clk   ), //系统时钟，频率50MHz
+    .sys_rst_n   (sys_rst_n ), //复位信号，低有效
+    .data        (po_data   ), //数码管要显示的值
+    .point       (          ), //小数点显示,高电平有效
+    .seg_en      (1&#39;b1      ), //数码管使能信号，高电平有效
+    .sign        (          ), //符号位，高电平显示负号
+
+    .sel         (sel       ), //数码管位选信号
+    .seg         (seg       )  //数码管段选信号
+);
+
+endmodule
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d5635fe91ddb5bd3e38a3c10b537fc9f.png"></p>
+<h4 id="（2）I2C-驱动模块"><a href="#（2）I2C-驱动模块" class="headerlink" title="（2）I2C 驱动模块"></a>（2）I2C 驱动模块</h4><p><img src="https://i-blog.csdnimg.cn/blog_migrate/cb7cecb706c44404eb242fcfc064d9aa.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/6c4f74a5010a210f39adf6fbdc8ec967.png"></p>
+<pre><code>    由图表可知，I2C 驱动模块包括 13 路输入输出信号，其中输入信号 8 路、输出信号 5 路。输入信号中，sys_clk、sys_rst_n 是必不可少的系统时钟和复位信号；wr_en、rd_en 为写使能信号，由数据收发模块生成并传入，高电平有效；**i2c_start 信号为单字节数据读/写 开始信号；与 i2c_start 信号同时传入的还有数据存储地址 byte_addr 和待写入字节数据 wr_data** ；当写使能 wr_en 和 i2c_start 信号同时有效，模块执行单字节数据写操作，按照数据存储地址 byte_addr，向 EEPROM 对应地址写入数据 wr_data；当读使能信号 rd_en 和 i2c_start 信号同时有效，模块执行单字节数据读操作，按照数据存储地址 byte_addr 读取 EEPROM 对应地址中的数据；前文中我们提到， I2C 设备存储地址有单字节和 2 字节两种，为了应对这一情况，我们向模块输入**addr_num** 信号**，当信号为低电平时，** 表示 I2C 设备存储地址为单字节，在进行数据读写操作时只写入数据存储地址**byte_addr 的低 8 位** ；**当信号为高电平时，** 表示 I2C 设备存储地址为 2 字节，在进行数据读写操作时要写入数据存储地址 **byte_addr 的全部 16 位。**
+
+    输出信号中，**i2c_clk** 是本模块的工作时钟，由系统时钟 sys_clk 分频而来，它的时钟频率为串行时钟 **i2c_scl 频率的 4 倍** ，时钟信号 i2c_clk 要传入数据收发模块(i2c_rw_data)作为模块的工作时钟；输出给数据收发模块(i2c_rw_data)的单字节数据读/写结束信号 i2c_end，高电平有效，表示一次单字节数据读/写操作完成；rd_data 信号表示自 EEPROM 读出的单字节单字节数据，输出至数据收发模块(i2c_rw_data)；i2c_scl、i2c_sda 分别是串行时钟信号和串行数据信号，由模块产生传入 EEPROM 存储芯片。
+
+    注：对 EERPROM 的数据读写操作均使用单字节读/写操作，即**每次操作只读/写单字节数据** ；若想要实现数据的连续读/写，可**持续拉高读/写使能 rd_en/wr_en** ，并输入有效的单字节数据读/写开始信号 i2c_start 即可。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/981cf57f7293a8b151ecefba24bcc8ab.png"></p>
+<pre><code>    系统上电后，状态机处于 IDLE(初始状态)，接收到有效的单字节数据读/写开始信号 i2c_start 后，状态机跳转到 START_1(起始状态)；FPGA 向 EEPROM 存储芯片发送起始信号；随后状态机跳转到 SEND_D_ADDR(发送器件地址状态)，在此状态下向 EEPROM 存储芯片写入控制指令，控制指令高 7 位为器件地址，最低位为读写控制字，写入“0”，表 示执行写操作；控制指令写入完毕后，状态机跳转到 ACK_1(应答状态)。 在 ACK_1(应答状态)状态下，要根据存储地址字节数进行不同状态的跳转。当 FPGA 接收到 EEPROM 回传的应答信号且存储地址字节为 2 字节 ， 状态机跳转到 SEND_B_ADDR_H(发送高字节地址状态)，将存储地址的高 8 位写入 EEPROM，写入完成后，状态机跳转到 ACK_2(应答状态)；FPGA 接收到应答信号后，状态机跳转到 SEND_B_ADDR_L(发送低字节地址状态)；当 FPGA 接收到 EEPROM 回传的应答信号且存储地址字节为单字节，状态机状态机直接跳转到 SEND_B_ADDR_L(发送低字节地址状 态)；在此状态低 8 位存储地址或单字节存储地址写入完成后，状态机跳转到 ACK_3(应答状态)。 在 ACK_3(应答状态)状态下，要根据读/写使能信号做不同的状态跳转。当 FPGA 接收到应答信号且写使能信号有效，状态机跳转到 WR_DATA(写数据状态)；在写数据状态， 向 EEPROM 写入单字节数据后，状态机跳转到 ACK_4(应答状态)；待 FPGA 接收到有效应答信号后，状态机跳转到**STOP(停止状态)** ；当 FPGA 接收到应答信号且读使能信号有效， 状态机跳转到 START_2(起始状态)；再次向 EEPROM 写入起始信号，状态跳转到 SEND_RD_ADDR(发送读控制状态)；再次向 EEPROM 写入控制字节，高 7 位器件地址不变，读写控制位写入“1”，表示进行读操作，控制字节写入完毕后，状态机跳转到 ACK_5(应答状态)；待 FPGA 接收到有效应答信号后，状态机跳转到 RD_DATA(读数据状态)；在 RD_DATA(读数据状态)状态，EEPROM 向 FPGA 发送存储地址对应存储单元下的单字节数据，待数据读取完成户，状态机跳转到 **N_ACK(无应答状态)** ，在此状态下向 EEPROM 写入一个时钟的高电平，表示数据读取完成，随后状态机跳转到 STOP(停止状态)。 在 STOP(停止状态)状态，FPGA 向 EEPROM 发送停止信号，一次单字节数据读/写操作完成，随后状态机跳回 IDLE(初始状态)，等待下一次单字节数据读/写开始信号 i2c_start。 
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a22e72a1f9818b6e8dd52d4e6e556113.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2c607f0961eaa4707998a179c81932b4.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/dbbae5dafe0c9d75fea0a0c8f4c0b8b0.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f163cf331443f13ea529491e0964a4d1.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e6ddc3bdf972cfc6b409df0357a7b299.png"></p>
+<p>注：参考复习状态机设计<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132314807?spm=1001.2014.3001.5501" title="基础设计一——FPGA学习笔记＜2＞">基础设计一——FPGA学习笔记＜2＞</a></p>
+<h5 id="【1】单字节写操作时序分析"><a href="#【1】单字节写操作时序分析" class="headerlink" title="【1】单字节写操作时序分析"></a><strong>【1】单字节写操作时序分析</strong></h5><pre><code>    **第一部分** ：输入信号说明
+
+    本模块的输入信号有 8 路，其中 7 路信号与单字节写操作有关。系统时钟信号 sys_clk 和复位信号 sys_rst_n 不必多说，这是模块正常工作必不可少的；写使能信号 wr_en、 单 字节数据读/写开始信号 i2c_start，只有在两信号同时有效时，模块才会执行单字节数据写操作，若 wr_en 有效时，i2c_start 信号 n 次有效输入，可以实现 **n 个字节的连续写操作** ； addr_num 信号为存储地址字节数标志信号，赋值为 0 时，表示 I2C 设备存储地址为单字节，赋值为 1 时，表示 I2C 设备存储地址为 2 字节，本实验使用的 EEPROM 存储芯片的存 储地址位 2 字节，此信号**恒为高电平** ；信号 byte_addr 为存储地址；wr_data 表示要写入该地址的单字节数据。
+
+    **第二部分** ：时钟信号计数器 cnt_clk 和输出信号 i2c_clk 的设计与实现
+
+    本实验对 EEPROM 读写操作的串行时钟**scl 的频率为 250KHz** ，且只在数据读写操作时时钟信号才有效，其他时刻 scl 始终保持高电平。若直接使用系统时钟生成串行时钟 scl，计数器要设置**较大的位宽** ，较为麻烦，我们这里先**将系统时钟分频为频率较小的时钟，在使用新分频的时钟来生成串行时钟 scl** 。
+
+    所以，在这里声明一个新的计数器 **cnt_clk** 对系统时钟 sys_clk 进行计数，利用计数器 cnt_clk 生成新的时钟 **i2c_clk** 。
+
+    串行时钟 scl 的时钟频率为 250KHz，我们要生成的新时钟 i2c_clk 的频率要是 scl 的 4 倍，之所以这样是为了后面更好的生成 scl 和 sda，所以 i2c_clk 的时钟频率为 1MHz。经计 算，cnt_clk 要在 0-24 （25次）内循环计数，每个系统时钟周期自加 1；cnt_clk **每计完一个周期， i2c_clk 进行一次取反（50分频）** ，最后得到 i2c_clk 为频率 1MHz 的时钟，本模块中其他信号的生成都以此信号为同步时钟。两信号波形图如下。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/21691eb71a39d5bf950a025e94f0dda7.png"></p>
+<pre><code>    注：由于系统时钟 sys_clk 与时钟 i2c_clk 时钟频率相差较大，sys_clk 信号用虚线表示。
+
+    **第三部分** ：输出至 EEPROM 的串行时钟 scl 与串行数据 sda 只有在进行数据读写操作时有效，其他时刻始终保持高电平。由前文状态机相关讲解可知，除 IDLE(初始 状态)状态之外的其他状态均属于数据读写操作的有效部分，所以声明一个使能信号 **cnt_i2c_clk_en** ，在除 IDLE(初始状态)状态之外的其他状态保持有效高电平，作为 I2C 数据读写操作使能信号。
+
+    我们使用 50MHz 系统时钟生成了 1MHz 时钟 i2c_clk，但输出至 EEPROM 的串行时钟 scl 的时钟频率为 250KHz，我们声明时钟信号计数器 **cnt_i2c_clk** ，作为分频计数器，对时钟 i2c_clk 时钟信号进行计数，初值为 0，计数范围为 0-3，计数时钟为 i2c_clk 时钟，每个 时钟周期自加 1，实现时钟 i2c_clk 信号的 4 分频，生成串行时钟 **scl** 。同时计数器 cnt_i2c_clk 也可作为生成串行数据 sda 的约束条件，以及状态机跳转条件。
+
+    计数器 cnt_i2c_clk 循环计数一个周期，对应串行时钟 scl 的 1 个时钟周期以及串行数据 **sda 的 1 位数据保持时间** ，进行数据读写操作时，传输的指令、地址以及数据，位宽为固定的 8 位数据，我们声明一个比特计数器 cnt_bit，对计数器 cnt_i2c_clk 的计数周期进行计数，可以辅助串行数据 sda 的生成，同时作为状态机状态跳转的约束条件。
+
+    输出的串行数据 sda 作为一个双向端口，主机通过它向从机发送控制指令、地址以及数据，接收从机回传的应答信号和读取数据。回传给主机的**应答信号是实现状态机跳转的条件之一** 。**声明信号 sda_in 作为串行数据 sda 缓存** ，声明 ack 信号作为应答信号，ack 信号只在状态机处于各应答状态时由 sda_in 信号赋值，此时为从机回传的应答信号，其他状态时钟保持高电平。
+
+    状态机状态跳转的各约束条件均已介绍完毕，声明**状态变量 state** ， 单字节写操作状态机跳转流程如下：
+
+    系统上电后，状态机处于 IDLE(初始状态)，接收到有效的单字节数据读/写开始信号 i2c_start 后，状态机跳转到 START_1(起始状态)，同时使能信号 **cnt_i2c_clk_en 拉高** 、计数器 **cnt_i2c_clk、cnt_bit 开始计数** ，开始数据读写操作；
+
+    在 START_1(起始状态)状态保持一个串行时钟周期，期间 FPGA 向 EEPROM 存储芯 片发送起始信号，一个时钟周期过后，计数器 cnt_i2c_clk 完成一个周期计数，计数到最大值 3，状态机跳转到 SEND_D_ADDR(发送器件地址状态)；
+
+    计数器 cnt_i2c_clk、cnt_bit 同时归 0，重新计数，计数器 cnt_i2c_clk 每计完一个周期，cnt_bit 自加 1，当计数器 cnt_i2c_clk 完成 8 个计数周期后，cnt_bit 计数到 7，实现 8 个比特计数，器件 FPGA 按照时序向 EEPROM 存储芯片写入控制指令，控制指令高 7 位为器件地址，最低位为读写控制字，写入“0”，表示执行写操作。当计数器 cnt_ i2c_clk 计数到最大值 3、cnt_bit 计数到 7，两计数器同时归 0，**状态机跳转到转到 ACK_1(应答状态)** ；
+
+    在 ACK_1(应答状态)状态下，计数器 cnt_i2c_clk、cnt_bit 重新计数，当计数器 cnt_ i2c_clk 计数到最大值 3 ， 且应答信号 ack 为有效的低电平 ， 状态机跳转到 SEND_B_ADDR_H(发送高字节地址状态)，两计数器清 0；
+
+    此状态下，FPGA 将存储地址的高 8 位按时序写入 EEPROM，当计数器 cnt_ i2c_clk 计数到 3、cnt_bit 计数到 7，状态机跳转到 ACK_2(应答状态)， 两计数器清 0；
+
+    ACK_2 状态下，当计数器 cnt_ i2c_clk 计数到 3，且应答信号 ack 为有效的低电平，状态机跳转到 SEND_B_ADDR_L(发送低字节地址状态) ，两计数器清 0；
+
+    在此状态下，低 8 位存储地址按时序写入 EEPROM，计数器 cnt_ i2c_clk 计数到 3、 cnt_bit 计数到 7，状态机跳转到 ACK_3(应答状态)；
+
+    在 ACK_3(应答状态)状态下，当 **cnt_ i2c_clk 计数 3、应答信号 ack 有效，且写使能信号 wr_en 有效，状态机跳转到 WR_DATA(写数据状态)** ；
+
+    在写数据状态，按时序向 EEPROM 写入单字节数据，计数器 cnt_ i2c_clk 计数到 3、 cnt_bit 计数到 7，状态机跳转到 ACK_4(应答状态)；
+
+    在 ACK_4(应答状态)状态下，当 cnt_ i2c_clk 计数 3、应答信号 ack 有效，状态机跳转到 STOP(停止状态)状态；
+
+    在 STOP(停止状态)状态，FPGA 向 EEPROM 发送停止信号，一次单字节数据读/写操作完成，随后状态机跳回 IDLE(初始状态)，等待下一次单字节数据读/写开始信号 i2c_start。
+
+    可以看到主要决定状态机状态**跳转的判断条件** 是**cnt_ i2c_clk 计数到 3、应答信号 ack 有效、cnt_bit 计数到 7**
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4a970f3612ef8aafc029a265ccdf27ec.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ec68fc6685298d54ce1f1f76d69b368c.png"></p>
+<pre><code>    **第四部分** ：输出串行时钟 i2c_scl、串行数据信号 i2c_sda 及相关信号的波形设计与实现
+
+    串口数据 sda 端口作为一个双向端口，在单字节读取操作中，**主机只在除应答状态之外的其他状态拥有它的控制权，在应答状态下主机只能接收由从机通过 sda 传入的应答信号** 。声明使能信号 sda_en，只在除应答状态之外的其他状态赋值为有效的高电平，**sda_en 有效时，主机拥有对 sda 的控制权。**
+
+    声明 **i2c_sda_reg** 作为输出 i2c_sda 信号的**数据缓存** ，**在 sda_en 有效时，将 i2c_sda_reg 的值赋值给输出串口数据 i2c_sda，sda_en 无效时，输出串口数据 i2c_sda 为高阻态，主机放弃其控制权，接收其传入的应答信号。**
+
+    i2c_sda_reg 在使能信号 sda_en 无效时始终保持高电平，在使能 sda_en 有效时，在状态机对应状态下，以计数器 cnt_ i2c_clk、cnt_bit 为约束条件，对应写入起始信号、控制指令、存储地址、写入数据、停止信号。
+
+    对于输出的串行时钟 i2c_clk，由 I2C 通讯协议可知，I2C 设备只在串行时钟为高电平时进行数据采集，在串行时钟低电平时实现串行数据更新。我们使用计数器 cnt_ i2c_clk、 cnt_bit 以及状态变量 state 为约束条件，结合 I2C 通讯协议，生成满足时序要求的输出串行 时钟 i2c_clk。
+
+    输出串行时钟 i2c_scl、串行数据信号 i2c_sda 及相关信号的波形图如下。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/6b50b1bf58d51104cf8dcdb6ec165a14.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4f84ba56575b04cae5fd6ae73bea6d80.png"></p>
+<h5 id="【2】随机读操作时序分析"><a href="#【2】随机读操作时序分析" class="headerlink" title="【2】随机读操作时序分析"></a>【2】随机读操作时序分析</h5><pre><code>    单字节写操作和随机读操作所涉及的各信号大体相同，在随机读操作，我们只讲解差别较大之处，两操作相同或相似之处不再说明，读者可回顾单字节写操作部分的介 绍。 
+
+    **第一部分** ：输入信号说明 本模块的输入信号有 8 路，其中 6 路信号与随机读操作有关。系统时钟信号 sys_clk 和 复位信号 sys_rst_n 不必多说，这是模块正常工作必不可少的；读使能信号 rd_en、 单字节数据读/写开始信号 i2c_start，只有在两信号同时有效时，模块才会执行随机读操作，若 rd_en 有效时，i2c_start 信号 n 次有效输入，可以实现 n 个字节的连续读操作；addr_num 信 号为存储地址字节数标志信号，赋值为 0 时，表示 I2C 设备存储地址为单字节，赋值为 1 时，表示 2C 设备存储地址为 2 字节，本实验使用的 EEPROM 存储芯片的存储地址位 2 字节，此信号恒为高电平；信号 byte_addr 为存储地址。
+
+    **第二部分** ：状态机相关信号波形的设计与实现
+
+    状态机状态跳转的各约束条件，读者可回顾单字节写操作部分介绍。声明状态变量 state，结合各约束信号，单字节写操作状态机跳转流程如下：
+
+    系统上电后，状态机处于 IDLE(初始状态)，接收到有效的单字节数据读/写开始信号 i2c_start 后，状态机跳转到 START_1(起始状态)，同时使能信号 cnt_i2c_clk_en 拉高、计数器 cnt_i2c_clk、cnt_bit 开始计数，开始数据读写操作；
+
+    在 START_1(起始状态)状态保持一个串行时钟周期，期间 FPGA 向 EEPROM 存储芯 片发送起始信号，一个时钟周期过后，计数器 cnt_ i2c_clk 完成一个周期计数，计数器 cnt_ i2c_clk 计数到最大值 3，状态机跳转到 SEND_D_ADDR(发送器件地址状态)；
+
+    计数器 cnt_i2c_clk、cnt_bit 同时归 0，重新计数，计数器 cnt_i2c_clk 每计完一个周期，cnt_bit 自加 1，当计数器 cnt_i2c_clk 完成 8 个计数周期后，cnt_bit 计数到 7，实现 8 个比特计数，器件 FPGA 按照时序向 EEPROM 存储芯片写入控制指令，控制指令高 7 位为器件地址，最低位为读写控制字，写入“0”，表示执行写操作。当计数器 cnt_ i2c_clk 计数到最大值 3、cnt_bit 计数到 7，两计数器同时归 0，状态机跳转到转到 ACK_1(应答状态)；
+
+    在 ACK_1(应答状态)状态下，计数器 cnt_i2c_clk、cnt_bit 重新计数，当计数器 cnt_ i2c_clk 计数到最大值 3 ，且应答信号 ack 为有效的低电平，状态机跳转到 SEND_B_ADDR_H(发送高字节地址状态)，两计数器清 0；
+
+    此状态下，FPGA 将存储地址的高 8 位按时序写入 EEPROM，当计数器 cnt_ i2c_clk 计数到 3、cnt_bit 计数到 7，状态机跳转到 ACK_2(应答状态)， 两计数器清 0；
+
+    ACK_2 状态下，当计数器 cnt_ i2c_clk 计数到 3，且应答信号 ack 为有效的低电平，状态机跳转到 SEND_B_ADDR_L(发送低字节地址状态) ，两计数器清 0； 在此状态下，低 8 位存储地址按时序写入 EEPROM，计数器 cnt_ i2c_clk 计数到 3、 cnt_bit 计数到 7，状态机跳转到 ACK_3(应答状态)；
+
+    在 ACK_3(应答状态)状态下，当 cnt_ i2c_clk 计数 3、应答信号 ack 有效，且读使能信号 rd_en 有效，状态机跳转到 START_2(起始状态)；
+
+    在 START_2(起始状态)状态保持一个串行时钟周期，期间 FPGA 再次向 EEPROM 存 储芯片发送起始信号，一个时钟周期过后，计数器 cnt_ i2c_clk 完成一个周期计数，计数器 cnt_ i2c_clk 计数到 3，状态机跳转到 SEND_RD_ADDR(发送读控制状态)；
+
+    在此状态下，按时序向 EEPROM 写入控制指令，控制指令高 7 位为器件地址，最低位 为读写控制字，写入“1”，表示执行读操作。当计数器 cnt_ i2c_clk 计数到 3、cnt_bit 计 数到 7，两计数器同时归 0，状态机跳转到 ACK_5(应答状态)；
+
+    在 ACK_5(应答状态)状态下，当 cnt_ i2c_clk 计数 3、应答信号 ack 有效，状态机跳转 到 RD_DATA(读数据状态)；读数据状态下，主机读取从机发送的单字节数据，当计数器 cnt_ i2c_clk 计数到 3、cnt_bit 计数到 7，数据读取完成，计数器清 0，状态机跳转到 N_ACK(非应答状态)；在非应答状态下，向 EEPROM 写入一个时钟的高电平，当 cnt_ i2c_clk 计数 3，状态机跳转到 STOP(停止状态)。
+
+    在 STOP(停止状态)状态，FPGA 向 EEPROM 发送停止信号，一次随机数据读操作完 成，随后状态机跳回 IDLE(初始状态)，等待下一次单字节数据读/写开始信号 i2c_start。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c844ac970c4e331bb4259a5372a63cb7.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3502bc1d7fd38855b0b7f7a688156c7a.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/0a9f2151c7bafded4a203e9e302ce02b.png"></p>
+<p>可以看到主要决定状态机状态<strong>跳转的判断条件</strong> 是<strong>cnt_ i2c_clk 计数到 3、应答信号 ack 有效、cnt_bit 计数到 7</strong></p>
+<pre><code>    **第三部分** ：输出串行时钟 i2c_scl、串行数据信号 i2c_sda、读出数据 rd_data 及相关信号的波形设计与实现串口数据 sda 端口作为一个双向端口，在随机读操作中，主机只在除应答状态、读数据状态之外的其他状态拥有它的控制权，在应答状态下主机接收由从机通过 sda 传入的应答信号，在读数据状态下主机接收由从机传入的单字节数据。声明使能信号 sda_en，只在除应答状态、读数据状态之外的其他状态赋值为有效的高电平，sda_en 有效时，主机拥有 对 sda 的控制权。
+
+    声明 i2c_sda_reg 作为输出 i2c_sda 信号的数据缓存；声明 rd_data_reg 作为 EEPROM 读 出数据缓存。
+
+    i2c_sda_reg 在使能信号 sda_en 无效时始终保持高电平，在使能 sda_en 有效时，在状态机对应状态下，以计数器 cnt_ i2c_clk、cnt_bit 为约束条件，对应写入起始信号、控制指令、存储地址、写入数据、停止信号；在状态机处于读数据状态时，变量 rd_data_reg 由输入信号 sda_in 赋值，暂存 EEPROM 读取数据。
+
+    当 sda_en 有效时，将 i2c_sda_reg 赋值给 i2c_sda；当 sda_en 无效时，**i2c_sda 保持高阻 态。主机放弃对 sda 端口的控制；在状态机处于读数据状态时，变量 rd_data_reg 暂存 EEPROM 读取数据，读数据状态结束后，将暂存数据赋值给输出信号 rd_data** 。
+
+    对于输出的串行时钟 i2c_clk，由 I2C 通讯协议可知，I2C 设备只在串行时钟为高电平时进行数据采集，在串行时钟低电平时实现串行数据更新。我们使用计数器 cnt_ i2c_clk、 cnt_bit 以及状态变量 state 为约束条件，结合 I2C 通讯协议，生成满足时序要求的输出串行 时钟 i2c_clk。
+
+    输出串行时钟 i2c_scl、串行数据信号 i2c_sda、读出数据 rd_data 及相关信号波形图如下。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5807cf4689a02cb0d3cc686a4d8d115e.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/724069bcb981b658644f954820b36b02.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/31e7abe3c09fafe03c928c4066ed76e5.png"></p>
+<h5 id="【3】代码设计"><a href="#【3】代码设计" class="headerlink" title="【3】代码设计"></a>【3】代码设计</h5><pre><code>module  i2c_ctrl
+#(
+    parameter   DEVICE_ADDR     =   7&#39;b1010_000     ,   //i2c设备地址
+    parameter   SYS_CLK_FREQ    =   26&#39;d50_000_000  ,   //输入系统时钟频率
+    parameter   SCL_FREQ        =   18&#39;d250_000         //i2c设备scl时钟频率
+)
+(
+    input   wire            sys_clk     ,   //输入系统时钟,50MHz
+    input   wire            sys_rst_n   ,   //输入复位信号,低电平有效
+    input   wire            wr_en       ,   //输入写使能信号
+    input   wire            rd_en       ,   //输入读使能信号
+    input   wire            i2c_start   ,   //输入i2c触发信号
+    input   wire            addr_num    ,   //输入i2c字节地址字节数
+    input   wire    [15:0]  byte_addr   ,   //输入i2c字节地址
+    input   wire    [7:0]   wr_data     ,   //输入i2c设备数据
+
+    output  reg             i2c_clk     ,   //i2c驱动时钟
+    output  reg             i2c_end     ,   //i2c一次读/写操作完成
+    output  reg     [7:0]   rd_data     ,   //输出i2c设备读取数据
+    output  reg             i2c_scl     ,   //输出至i2c设备的串行时钟信号scl
+    inout   wire            i2c_sda         //输出至i2c设备的串行数据信号sda
+);
+
+//************************************************************************//
+//******************** Parameter and Internal Signal *********************//
+//************************************************************************//
+// parameter define
+parameter   CNT_CLK_MAX     =   (SYS_CLK_FREQ/SCL_FREQ) &gt;&gt; 2&#39;d3   ;   //cnt_clk计数器计数最大值
+
+parameter   CNT_START_MAX   =   8&#39;d100; //cnt_start计数器计数最大值
+
+parameter   IDLE            =   4&#39;d00,  //初始状态
+            START_1         =   4&#39;d01,  //开始状态1
+            SEND_D_ADDR     =   4&#39;d02,  //设备地址写入状态 + 控制写
+            ACK_1           =   4&#39;d03,  //应答状态1
+            SEND_B_ADDR_H   =   4&#39;d04,  //字节地址高八位写入状态
+            ACK_2           =   4&#39;d05,  //应答状态2
+            SEND_B_ADDR_L   =   4&#39;d06,  //字节地址低八位写入状态
+            ACK_3           =   4&#39;d07,  //应答状态3
+            WR_DATA         =   4&#39;d08,  //写数据状态
+            ACK_4           =   4&#39;d09,  //应答状态4
+            START_2         =   4&#39;d10,  //开始状态2
+            SEND_RD_ADDR    =   4&#39;d11,  //设备地址写入状态 + 控制读
+            ACK_5           =   4&#39;d12,  //应答状态5
+            RD_DATA         =   4&#39;d13,  //读数据状态
+            N_ACK           =   4&#39;d14,  //非应答状态
+            STOP            =   4&#39;d15;  //结束状态
+
+// wire  define
+wire            sda_in          ;   //sda输入数据寄存
+wire            sda_en          ;   //sda数据写入使能信号
+
+// reg   define
+reg     [7:0]   cnt_clk         ;   //系统时钟计数器,控制生成clk_i2c时钟信号
+reg     [3:0]   state           ;   //状态机状态
+reg             cnt_i2c_clk_en  ;   //cnt_i2c_clk计数器使能信号
+reg     [1:0]   cnt_i2c_clk     ;   //clk_i2c时钟计数器,控制生成cnt_bit信号
+reg     [2:0]   cnt_bit         ;   //sda比特计数器
+reg             ack             ;   //应答信号
+reg             i2c_sda_reg     ;   //sda数据缓存
+reg     [7:0]   rd_data_reg     ;   //自i2c设备读出数据
+
+//************************************************************************//
+//******************************* Main Code ******************************//
+//************************************************************************//
+// cnt_clk:系统时钟计数器,控制生成clk_i2c时钟信号
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_clk &lt;=  8&#39;d0;
+    else    if(cnt_clk == CNT_CLK_MAX - 1&#39;b1)
+        cnt_clk &lt;=  8&#39;d0;
+    else
+        cnt_clk &lt;=  cnt_clk + 1&#39;b1;
+
+// i2c_clk:i2c驱动时钟
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        i2c_clk &lt;=  1&#39;b1;
+    else    if(cnt_clk == CNT_CLK_MAX - 1&#39;b1)
+        i2c_clk &lt;=  ~i2c_clk;
+
+// cnt_i2c_clk_en:cnt_i2c_clk计数器使能信号
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_i2c_clk_en  &lt;=  1&#39;b0;
+    else    if((state == STOP) &amp;&amp; (cnt_bit == 3&#39;d3) &amp;&amp;(cnt_i2c_clk == 3))
+        cnt_i2c_clk_en  &lt;=  1&#39;b0;
+    else    if(i2c_start == 1&#39;b1)
+        cnt_i2c_clk_en  &lt;=  1&#39;b1;
+
+// cnt_i2c_clk:i2c_clk时钟计数器,控制生成cnt_bit信号
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_i2c_clk &lt;=  2&#39;d0;
+    else    if(cnt_i2c_clk_en == 1&#39;b1)
+        cnt_i2c_clk &lt;=  cnt_i2c_clk + 1&#39;b1;
+
+// cnt_bit:sda比特计数器
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_bit &lt;=  3&#39;d0;
+    else    if((state == IDLE) || (state == START_1) || (state == START_2)
+                || (state == ACK_1) || (state == ACK_2) || (state == ACK_3)
+                || (state == ACK_4) || (state == ACK_5) || (state == N_ACK))
+        cnt_bit &lt;=  3&#39;d0;
+    else    if((cnt_bit == 3&#39;d7) &amp;&amp; (cnt_i2c_clk == 2&#39;d3))
+        cnt_bit &lt;=  3&#39;d0;
+    else    if((cnt_i2c_clk == 2&#39;d3) &amp;&amp; (state != IDLE))
+        cnt_bit &lt;=  cnt_bit + 1&#39;b1;
+
+// state:状态机状态跳转
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        state   &lt;=  IDLE;
+    else    case(state)
+        IDLE:
+            if(i2c_start == 1&#39;b1)
+                state   &lt;=  START_1;
+            else
+                state   &lt;=  state;
+        START_1:
+            if(cnt_i2c_clk == 3)
+                state   &lt;=  SEND_D_ADDR;
+            else
+                state   &lt;=  state;
+        SEND_D_ADDR:
+            if((cnt_bit == 3&#39;d7) &amp;&amp;(cnt_i2c_clk == 3))
+                state   &lt;=  ACK_1;
+            else
+                state   &lt;=  state;
+        ACK_1:
+            if((cnt_i2c_clk == 3) &amp;&amp; (ack == 1&#39;b0))
+                begin
+                    if(addr_num == 1&#39;b1)
+                        state   &lt;=  SEND_B_ADDR_H;
+                    else
+                        state   &lt;=  SEND_B_ADDR_L;
+                end
+             else
+                state   &lt;=  state;
+        SEND_B_ADDR_H:
+            if((cnt_bit == 3&#39;d7) &amp;&amp;(cnt_i2c_clk == 3))
+                state   &lt;=  ACK_2;
+            else
+                state   &lt;=  state;
+        ACK_2:
+            if((cnt_i2c_clk == 3) &amp;&amp; (ack == 1&#39;b0))
+                state   &lt;=  SEND_B_ADDR_L;
+            else
+                state   &lt;=  state;
+        SEND_B_ADDR_L:
+            if((cnt_bit == 3&#39;d7) &amp;&amp; (cnt_i2c_clk == 3))
+                state   &lt;=  ACK_3;
+            else
+                state   &lt;=  state;
+        ACK_3:
+            if((cnt_i2c_clk == 3) &amp;&amp; (ack == 1&#39;b0))
+                begin
+                    if(wr_en == 1&#39;b1)
+                        state   &lt;=  WR_DATA;
+                    else    if(rd_en == 1&#39;b1)
+                        state   &lt;=  START_2;
+                    else
+                        state   &lt;=  state;
+                end
+             else
+                state   &lt;=  state;
+        WR_DATA:
+            if((cnt_bit == 3&#39;d7) &amp;&amp;(cnt_i2c_clk == 3))
+                state   &lt;=  ACK_4;
+            else
+                state   &lt;=  state;
+        ACK_4:
+            if((cnt_i2c_clk == 3) &amp;&amp; (ack == 1&#39;b0))
+                state   &lt;=  STOP;
+            else
+                state   &lt;=  state;
+        START_2:
+            if(cnt_i2c_clk == 3)
+                state   &lt;=  SEND_RD_ADDR;
+            else
+                state   &lt;=  state;
+        SEND_RD_ADDR:
+            if((cnt_bit == 3&#39;d7) &amp;&amp;(cnt_i2c_clk == 3))
+                state   &lt;=  ACK_5;
+            else
+                state   &lt;=  state;
+        ACK_5:
+            if((cnt_i2c_clk == 3) &amp;&amp; (ack == 1&#39;b0))
+                state   &lt;=  RD_DATA;
+            else
+                state   &lt;=  state;
+        RD_DATA:
+            if((cnt_bit == 3&#39;d7) &amp;&amp;(cnt_i2c_clk == 3))
+                state   &lt;=  N_ACK;
+            else
+                state   &lt;=  state;
+        N_ACK:
+            if(cnt_i2c_clk == 3)
+                state   &lt;=  STOP;
+            else
+                state   &lt;=  state;
+        STOP:
+            if((cnt_bit == 3&#39;d3) &amp;&amp;(cnt_i2c_clk == 3))
+                state   &lt;=  IDLE;
+            else
+                state   &lt;=  state;
+        default:    state   &lt;=  IDLE;
+    endcase
+
+// ack:应答信号
+always@(*)
+    case    (state)
+        IDLE,START_1,SEND_D_ADDR,SEND_B_ADDR_H,SEND_B_ADDR_L,
+        WR_DATA,START_2,SEND_RD_ADDR,RD_DATA,N_ACK:
+            ack &lt;=  1&#39;b1;
+        ACK_1,ACK_2,ACK_3,ACK_4,ACK_5:
+            if(cnt_i2c_clk == 2&#39;d0)
+                ack &lt;=   sda_in /* 1&#39;b0 */;
+            else
+                ack &lt;=  ack;
+        default:    ack &lt;=  1&#39;b1;
+    endcase
+
+// i2c_scl:输出至i2c设备的串行时钟信号scl
+always@(*)
+    case    (state)
+        IDLE:
+            i2c_scl &lt;=  1&#39;b1;
+        START_1:
+            if(cnt_i2c_clk == 2&#39;d3)
+                i2c_scl &lt;=  1&#39;b0;
+            else
+                i2c_scl &lt;=  1&#39;b1;
+        SEND_D_ADDR,ACK_1,SEND_B_ADDR_H,ACK_2,SEND_B_ADDR_L,
+        ACK_3,WR_DATA,ACK_4,START_2,SEND_RD_ADDR,ACK_5,RD_DATA,N_ACK:
+            if((cnt_i2c_clk == 2&#39;d1) || (cnt_i2c_clk == 2&#39;d2))
+                i2c_scl &lt;=  1&#39;b1;
+            else
+                i2c_scl &lt;=  1&#39;b0;
+        STOP:
+            if((cnt_bit == 3&#39;d0) &amp;&amp;(cnt_i2c_clk == 2&#39;d0))
+                i2c_scl &lt;=  1&#39;b0;
+            else
+                i2c_scl &lt;=  1&#39;b1;
+        default:    i2c_scl &lt;=  1&#39;b1;
+    endcase
+
+// i2c_sda_reg:sda数据缓存
+always@(*)
+    case    (state)
+        IDLE:
+            begin
+                i2c_sda_reg &lt;=  1&#39;b1;
+                rd_data_reg &lt;=  8&#39;d0;
+            end
+        START_1:
+            if(cnt_i2c_clk &lt;= 2&#39;d0)
+                i2c_sda_reg &lt;=  1&#39;b1;
+            else
+                i2c_sda_reg &lt;=  1&#39;b0;
+        SEND_D_ADDR:
+            if(cnt_bit &lt;= 3&#39;d6)
+                i2c_sda_reg &lt;=  DEVICE_ADDR[6 - cnt_bit];
+            else
+                i2c_sda_reg &lt;=  1&#39;b0;
+        ACK_1:
+            i2c_sda_reg &lt;=  1&#39;b1;
+        SEND_B_ADDR_H:
+            i2c_sda_reg &lt;=  byte_addr[15 - cnt_bit];
+        ACK_2:
+            i2c_sda_reg &lt;=  1&#39;b1;
+        SEND_B_ADDR_L:
+            i2c_sda_reg &lt;=  byte_addr[7 - cnt_bit];
+        ACK_3:
+            i2c_sda_reg &lt;=  1&#39;b1;
+        WR_DATA:
+            i2c_sda_reg &lt;=  wr_data[7 - cnt_bit];
+        ACK_4:
+            i2c_sda_reg &lt;=  1&#39;b1;
+        START_2:
+            if(cnt_i2c_clk &lt;= 2&#39;d1)
+                i2c_sda_reg &lt;=  1&#39;b1;
+            else
+                i2c_sda_reg &lt;=  1&#39;b0;
+        SEND_RD_ADDR:
+            if(cnt_bit &lt;= 3&#39;d6)
+                i2c_sda_reg &lt;=  DEVICE_ADDR[6 - cnt_bit];
+            else
+                i2c_sda_reg &lt;=  1&#39;b1;
+        ACK_5:
+            i2c_sda_reg &lt;=  1&#39;b1;
+        RD_DATA:
+            if(cnt_i2c_clk  == 2&#39;d2)
+                rd_data_reg[7 - cnt_bit]    &lt;=  sda_in;
+            else
+                rd_data_reg &lt;=  rd_data_reg;
+        N_ACK:
+            i2c_sda_reg &lt;=  1&#39;b1;
+        STOP:
+            if((cnt_bit == 3&#39;d0) &amp;&amp; (cnt_i2c_clk &lt; 2&#39;d3))
+                i2c_sda_reg &lt;=  1&#39;b0;
+            else
+                i2c_sda_reg &lt;=  1&#39;b1;
+        default:
+            begin
+                i2c_sda_reg &lt;=  1&#39;b1;
+                rd_data_reg &lt;=  rd_data_reg;
+            end
+    endcase
+
+// rd_data:自i2c设备读出数据
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        rd_data &lt;=  8&#39;d0;
+    else    if((state == RD_DATA) &amp;&amp; (cnt_bit == 3&#39;d7) &amp;&amp; (cnt_i2c_clk == 2&#39;d3))
+        rd_data &lt;=  rd_data_reg;
+
+// i2c_end:一次读/写结束信号
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        i2c_end &lt;=  1&#39;b0;
+    else    if((state == STOP) &amp;&amp; (cnt_bit == 3&#39;d3) &amp;&amp;(cnt_i2c_clk == 3))
+        i2c_end &lt;=  1&#39;b1;
+    else
+        i2c_end &lt;=  1&#39;b0;
+
+// sda_in:sda输入数据寄存
+assign  sda_in = i2c_sda;
+// sda_en:sda数据写入使能信号
+assign  sda_en = ((state == RD_DATA) || (state == ACK_1) || (state == ACK_2)
+                    || (state == ACK_3) || (state == ACK_4) || (state == ACK_5))
+                    ? 1&#39;b0 : 1&#39;b1;
+// i2c_sda:输出至i2c设备的串行数据信号sda
+assign  i2c_sda = (sda_en == 1&#39;b1) ? i2c_sda_reg : 1&#39;bz;
+
+endmodule
+
+
+    代码中有一处，读者要注意，经计算，生成 i2c_clk 时钟信号的计数器 cnt_clk 一个循环周期计数 25 次满足要求，但此处计数器 cnt_clk 计数最大值 CNT_CLK_MAX 并未直接赋值，而是使用公式赋值。
+
+
+parameter CNT_CLK_MAX = (SYS_CLK_FREQ/SCL_FREQ) &gt;&gt; 2&#39;d3 ; 
+
+    这是为了提高 I2C 驱动模块的复用性，参数 **SYS_CLK_FREQ** 表示系统时钟 sys_clk 时钟频率，参数 **SCL_FREQ** 表示输出串行时钟 i2c_scl 时钟频率；两参数做除法运算，结果右移一位结表示除 2，得到的结果用于**分频计数器计数最大值** ，可直接由系统时钟分频产生串行时钟 i2c_scl 时钟信号；结果继续右移两位表示除 4，作为分频计数器计数最大值， 可产生时钟信号 **i2c_clk** ，时钟频率为串行时钟 **i2c_scl 时钟频率的 4 倍** 。 这样一来，只要设置好系统时钟与串行时钟的时钟频率，本模块即可在多种时钟频率下使用，复用性大大提高。 
+</code></pre>
+<h4 id="（3）数据收发模块"><a href="#（3）数据收发模块" class="headerlink" title="（3）数据收发模块"></a>（3）数据收发模块</h4><pre><code>    数据收发模块的主要功能是：为 I2C 驱动模块**提供读/写数据存储地址** 、**待写入数据** 以及作为 **EEPROM 读出数据缓存** ，待数据读取完成后将读出数据**发送给数码管** 显示模块进行数据示。        
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/1eabdb473fb9d49eb26921b67ba45288.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e9d9b2f0b9d41c7067ec9a6cd74b3c2b.png"></p>
+<pre><code>    由图表可知，I2C 驱动模块包括 13 路输入输出信号，其中输入信号 7 路、输出信号 6 路。
+
+    输入信号中，有 2 路时钟信号和 1 路复位信号，sys_clk 为系统时钟信号，在数据收发模块中用于采集读/写触发信号 read 和 write，2 路触发信号均由外部按键输出，经消抖处理后传入本模块，消抖模块使用的时钟信号为与 sys_clk 相同的系统时钟，所以读/写触发信号的采集要使用系统时钟；i2c_clk 为模块工作时钟，由 I2C 驱动模块生成并传入，是存储地址、读/写数据以及使能信号的同步时钟，因为 I2C 模块的工作时钟为 i2c_clk 时钟信号，两模块工作时钟相同，不会出现时钟不同引起时序问题；复位信号 sys_rst_n，低电平有效，不必多说；i2c_end 为单字节数据读/写接数信号，由 I2C 驱动模块产生并传入，告 知数据生成模块单字节数据读/写操作完成。若连续读/写多字节数据，此信号可作为存储地址、写数据的更新标志；rd_data 为 I2C 驱动模块传入的数据信号，表示由 EEPROM 读出的字节数据。
+
+    输出信号中，**rd_en、wr_en 分别为读写使能信号** ，生成后传入 I2C 驱动模块，作为 I2C 驱动模块读/写操作的判断标志；i2c_start 是单字节数据读/写开始信号，作为 I2C 驱动模块单字节读/写操作开始的标志信号；byte_addr 为读写数据存储地址；wr_data 为待写入 EEPROM 的字节数据；**fifo_rd_data 为自 EEPROM 读出的字节数据，要发送到数码换显示模块在数码管显示出来** 。
+
+    注：数据收发模块内部**实例化一个 FIFO** ，将读出 EEPROM 的字节数据做**暂存** ，待**所有数据读取完成后，开始向数码管发送数据** 。例如本实验向 EEPROM 连续写入 10 个字节数据，随后将写入数据读出并在数码管显示，数据收发模块只有接收到读出的 10 个字节数据后，才会开始向数码管显示模块发送数据。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/50887563f603498a62193a654156c9c0.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/0209b025d932bf0f3184f96236101d7e.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c37479538b21c177100541d00510745f.png"></p>
+<h5 id="【1】写数据操作部分"><a href="#【1】写数据操作部分" class="headerlink" title="【1】写数据操作部分"></a>【1】写数据操作部分</h5><pre><code>    **第一部分** ：输出写使能信号 wr_en 及其相关信号波形的设计与实现
+
+    外部按键传入的写触发信号经消抖处理后传入本模块，该信号只保持一个有效时钟， 且同步时钟为系统时钟 sys_clk，模块工作时钟 i2c_clk 很难采集到该触发信号。我们需要**延长该写使能触发信号的有效时间** ，使模块工作时钟 i2c_clk 可以采集到该触发信号。
+
+    声明计数器 cnt_wr 和写有效信号 wr_valid 两信号的同步时钟均为系统时钟 sys_clk，当外部传入有效的写触发信号 write，写有效信号 wr_valid 拉高，计数器 cnt_wr 来时计数，计数器计数到设定值(200)后归 0，写有效信号拉低。计数器 cnt_wr 计数设定值可自主设定，只要能使 **wr_valid 信号保持一个工作时钟周期高电平即可** 。计数器 cnt_wr 和写有效信号 wr_valid 波形图如下：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/231d2a6b838d3c39c536be23ca2454f6.png"></p>
+<pre><code>    写有效信号 wr_valid 拉高后，工作时钟 i2c_clk 上升沿采集到 wr_valid 高电平，拉高写使能信号 wr_en，告知 I2C 驱动模块接下来要进行数据写操作。在此次实验我们要连续写入 10 字节数据，所以写使能信号 wr_en 要保持 10 次数据写操作的有效时间，在这一时间段我们要**输出 10 次有效的 i2c_start 信号** ，在接收到第 10 次 i2c_end 信号后，表示 10 字节 数据均已写入完成，将**写使能信号 rw_en 拉低** ，完成 10 字节数据的连续写入。 要实现这一操作我们需要声明 2 个变量，声明**字节计数器 wr_i2c_data_num** 对已写入 字节进行计数；由数据手册可知，两次相邻的读/写操作之间需要一定的**时间间隔，以保证 上一次读/写操作完成** ，所以声明计数器 **cnt_start** ，对相邻读/写操作**时间间隔进行计数** 。 采集到写有效信号 wr_valid 为高电平，拉高写使能信号 wr_en，计数器 **cnt_wait** 、 wr_i2c_data_num 均由 0 开始计数，每一个工作时钟周期 cnt_wait 自加 1，计数到最大值 1499，i2c_start 保持一个工作时钟的高电平，同时 cnt_wait 归 0，重新开始计数；I2C 驱动模块接收到有效的 i2c_start 信号后，向 EEPROM 写入单字节数据，传回 i2c_end 信号，表示一次单字节写操作完毕，计数器 wr_i2c_data_num 加 1；计数器 cnt_start 完成 10 次循环 计数，i2c_start 拉高 10 次，在接收到第 10 次有效的 i2c_end 信号后，表示连续 10 字节数 据写入完毕，将写使能信号 wr_en 拉低，写操作完毕。相关信号波形如下。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/b26cbb5556b0e75db6eae9f5e4854b8d.png"></p>
+<pre><code>    **第二部分** ：输出存储地址 byte_addr、写数据 wr_data 信号波形的设计与实现
+
+    既然是对 EEPROM 中写数据操作，存储地址和写数据必不可少，在本从实验中，向 EEPROM 中 10 个连续存储存储单元写入 10 字节数据。对输出存储地址 byte_addr，赋值**初始存储地址** ，当 i2c_end 信号有效时，地址加 1，待 10 字节数据均写入完毕，再次赋值初始从从地址；对于写数据 wr_data 处理方式相同，先赋值写数据初值，当 i2c_end 信号有效时，写数据加1，待 10 字节数据均写入完毕，在此赋值写数据初值。两输出信号波形如下。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7aefb6d791d0e5b2ee40791a003868d2.png"></p>
+<h5 id="【2】读数据操作部分"><a href="#【2】读数据操作部分" class="headerlink" title="【2】读数据操作部分"></a>【2】读数据操作部分</h5><pre><code>   延长该读使能触发信号的有效时间，使模块工作时钟 i2c_clk 可以采集到该触发信号。声明计数器 cnt_rd 和读有效信号 rd_valid 两信号，延长读触发信号 read 有效时间，使 i2c_clk 时钟能采集到该读触发信号。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/807dba7ae4cedc9edcfd57af4d0a16da.png"></p>
+<pre><code>    对于读使能信号的处理方式也与写操作方式相同，工作时钟 i2c_clk 上升沿采集到有效 rd_valid 信号，拉高读使能信号 **rd_en** ，告知 I2C 驱动模块接下来要进行数据读操作。
+
+    声明字节计数器 rd_i2c_data_num 对已读出字节进行计数；使用之前声明的计数器 **cnt_start** ，对相邻读/写操作**时间间隔进行计数** 。
+
+    采集到读有效信号 rd_valid 为高电平，拉高 rd_en，计数器 cnt_wait、 rd_i2c_data_num 均由 0 开始计数，每一个工作时钟周期 cnt_wait 自加 1，计数到最大值 1499，i2c_start 保持一个工作时钟的高电平，同时 cnt_wait 归 0，重新开始计数；I2C 驱动模块接收到有效的 i2c_start 信号后，自 EEPROM 读出单字节数据，传回 i2c_end 信号，表 示一次单字节写操作完毕，计数器 rd_i2c_data_num 加 1；计数器 cnt_start 完成 10 次循环计 数，i2c_start 拉高 10 次，在接收到第 10 次有效的 i2c_end 信号后，表示连续 10 字节数据 写入完毕，将读使能信号 rd_en 拉低，读操作完毕。相关信号波形如下。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e2a77dfc171149e04c16efba72151793.png"></p>
+<pre><code>    既然是数据读操作，自然有读出数据传入本模块，一次读操作连续读出 10 字节数据， 先将读取的 10 字节数据暂存到内部例化的 FIFO 中，以传回的 i2c_end 结束信号为写使能，在 i2c_clk 时钟同步下将读出数据写入 FIFO 中。同时我们将 FIFO 的数据计数器引出，方便后续数据发送阶段的操作。相关信号波形图如下。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/48ccb6e9de9b9a2775173b221db5bbf9.png"></p>
+<pre><code>    对于存储地址信号 byte_addr 的讲解，读者参阅写操作部分相关介绍，此处不再赘述， 接下来开始数据发送部分各信号波形的讲解。
+
+    等到读取的 10 字节均写入 FIFO 中，FIFO 数据计数器 data_num 显示为 10，表示 FIFO 中存有 10 字节读出数据。此时拉高 FIFO 读有效信号 fifo_rd_valid，只有信号 fifo_rd_valid 为有效高电平，对 FIFO 的读操作才有效；fifo_rd_valid 有效时，计数器 cnt_wait 开始循环计数，声明此计数器的目的是计数字节数据读出时间间隔，间隔越长，每字节数据在数码 管显示时间越长，方面现象观察；当计数器 cnt_wait 计数到最大值时，归 0 重新计数， FIFO 读使能信号信号 fifo_rd_en 拉高一个时钟周期，自 FIFO 读出一个字节数据，由 fifo_rd_data 将数据传出给数码管显示模块，读出字节计数器 rd_data_num 加 1；等到 10 字 节数据均读取并传出后，fifo_rd_valid 信号拉低，数据发送操作完成。相关信号波形如下。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a252e7dbc6797d1f315a8c7a7f10f427.png"></p>
+<h5 id="【3】代码设计-1"><a href="#【3】代码设计-1" class="headerlink" title="【3】代码设计"></a>【3】代码设计</h5><pre><code>module  i2c_rw_data
+(
+    input   wire            sys_clk     ,   //输入系统时钟,频率50MHz
+    input   wire            i2c_clk     ,   //输入i2c驱动时钟,频率1MHz
+    input   wire            sys_rst_n   ,   //输入复位信号,低有效
+    input   wire            write       ,   //输入写触发信号
+    input   wire            read        ,   //输入读触发信号
+    input   wire            i2c_end     ,   //一次i2c读/写结束信号
+    input   wire    [7:0]   rd_data     ,   //输入自i2c设备读出的数据
+
+    output  reg             wr_en       ,   //输出写使能信号
+    output  reg             rd_en       ,   //输出读使能信号
+    output  reg             i2c_start   ,   //输出i2c读/写触发信号
+    output  reg     [15:0]  byte_addr   ,   //输出i2c设备读/写地址
+    output  reg     [7:0]   wr_data     ,   //输出写入i2c设备的数据
+    output  wire    [7:0]   fifo_rd_data    //输出自fifo中读出的数据
+);
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+// parameter  define
+parameter   DATA_NUM        =   8&#39;d10       ,   //读/写操作读出或写入的数据个数
+            CNT_START_MAX   =   16&#39;d4000    ,   //cnt_start计数器计数最大值
+            CNT_WR_RD_MAX   =   8&#39;d200      ,   //cnt_wr/cnt_rd计数器计数最大值
+            CNT_WAIT_MAX    =   28&#39;d500_000 ;   //cnt_wait计数器计数最大值
+// wire  define
+wire    [7:0]   data_num    ;   //fifo中数据个数
+
+// reg   define
+reg     [7:0]   cnt_wr          ;   //写触发有效信号保持时间计数器
+reg             write_valid     ;   //写触发有效信号
+reg     [7:0]   cnt_rd          ;   //读触发有效信号保持时间计数器
+reg             read_valid      ;   //读触发有效信号
+reg     [15:0]  cnt_start       ;   //单字节数据读/写时间间隔计数
+reg     [7:0]   wr_i2c_data_num ;   //写入i2c设备的数据个数
+reg     [7:0]   rd_i2c_data_num ;   //读出i2c设备的数据个数
+reg             fifo_rd_valid   ;   //fifo读有效信号
+reg     [27:0]  cnt_wait        ;   //fifo读使能信号间时间间隔计数
+reg             fifo_rd_en      ;   //fifo读使能信号
+reg     [7:0]   rd_data_num     ;   //读出fifo数据个数
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//cnt_wr:写触发有效信号保持时间计数器,计数写触发有效信号保持时钟周期数
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_wr    &lt;=  8&#39;d0;
+    else    if(write_valid == 1&#39;b0)
+        cnt_wr    &lt;=  8&#39;d0;
+    else    if(write_valid == 1&#39;b1)
+        cnt_wr    &lt;=  cnt_wr + 1&#39;b1;
+
+//write_valid:写触发有效信号
+//由于写触发信号保持时间为一个系统时钟周期(20ns),
+//不能被i2c驱动时钟i2c_scl正确采集,延长写触发信号生成写触发有效信号
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        write_valid    &lt;=  1&#39;b0;
+    else    if(cnt_wr == (CNT_WR_RD_MAX - 1&#39;b1))
+        write_valid    &lt;=  1&#39;b0;
+    else    if(write == 1&#39;b1)
+        write_valid    &lt;=  1&#39;b1;
+
+//cnt_rd:读触发有效信号保持时间计数器,计数读触发有效信号保持时钟周期数
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_rd    &lt;=  8&#39;d0;
+    else    if(read_valid == 1&#39;b0)
+        cnt_rd    &lt;=  8&#39;d0;
+    else    if(read_valid == 1&#39;b1)
+        cnt_rd    &lt;=  cnt_rd + 1&#39;b1;
+
+//read_valid:读触发有效信号
+//由于读触发信号保持时间为一个系统时钟周期(20ns),
+//不能被i2c驱动时钟i2c_scl正确采集,延长读触发信号生成读触发有效信号
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        read_valid    &lt;=  1&#39;b0;
+    else    if(cnt_rd == (CNT_WR_RD_MAX - 1&#39;b1))
+        read_valid    &lt;=  1&#39;b0;
+    else    if(read == 1&#39;b1)
+        read_valid    &lt;=  1&#39;b1;
+
+//cnt_start:单字节数据读/写操作时间间隔计数
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_start   &lt;=  16&#39;d0;
+    else    if((wr_en == 1&#39;b0) &amp;&amp; (rd_en == 1&#39;b0))
+        cnt_start   &lt;=  16&#39;d0;
+    else    if(cnt_start == (CNT_START_MAX - 1&#39;b1))
+        cnt_start   &lt;=  16&#39;d0;
+    else    if((wr_en == 1&#39;b1) || (rd_en == 1&#39;b1))
+        cnt_start   &lt;=  cnt_start + 1&#39;b1;
+
+//i2c_start:i2c读/写触发信号
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        i2c_start   &lt;=  1&#39;b0;
+    else    if((cnt_start == (CNT_START_MAX - 1&#39;b1)))
+        i2c_start   &lt;=  1&#39;b1;
+    else
+        i2c_start   &lt;=  1&#39;b0;
+
+//wr_en:输出写使能信号
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        wr_en   &lt;=  1&#39;b0;
+    else    if((wr_i2c_data_num == DATA_NUM - 1) 
+                &amp;&amp; (i2c_end == 1&#39;b1) &amp;&amp; (wr_en == 1&#39;b1))
+        wr_en   &lt;=  1&#39;b0;
+    else    if(write_valid == 1&#39;b1)
+        wr_en   &lt;=  1&#39;b1;
+
+//wr_i2c_data_num:写入i2c设备的数据个数
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        wr_i2c_data_num &lt;=  8&#39;d0;
+    else    if(wr_en == 1&#39;b0)
+        wr_i2c_data_num &lt;=  8&#39;d0;
+    else    if((wr_en == 1&#39;b1) &amp;&amp; (i2c_end == 1&#39;b1))
+        wr_i2c_data_num &lt;=  wr_i2c_data_num + 1&#39;b1;
+
+//rd_en:输出读使能信号
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        rd_en   &lt;=  1&#39;b0;
+    else    if((rd_i2c_data_num == DATA_NUM - 1) 
+                &amp;&amp; (i2c_end == 1&#39;b1) &amp;&amp; (rd_en == 1&#39;b1))
+        rd_en   &lt;=  1&#39;b0;
+    else    if(read_valid == 1&#39;b1)
+        rd_en   &lt;=  1&#39;b1;
+
+//rd_i2c_data_num:写入i2c设备的数据个数
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        rd_i2c_data_num &lt;=  8&#39;d0;
+    else    if(rd_en == 1&#39;b0)
+        rd_i2c_data_num &lt;=  8&#39;d0;
+    else    if((rd_en == 1&#39;b1) &amp;&amp; (i2c_end == 1&#39;b1))
+        rd_i2c_data_num &lt;=  rd_i2c_data_num + 1&#39;b1;
+
+//byte_addr:输出读/写地址
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        byte_addr   &lt;=  16&#39;h00_5A;
+    else    if((wr_en == 1&#39;b0) &amp;&amp; (rd_en == 1&#39;b0))
+        byte_addr   &lt;=  16&#39;h00_5A;
+    else    if(((wr_en == 1&#39;b1) || (rd_en == 1&#39;b1)) &amp;&amp; (i2c_end == 1&#39;b1))
+        byte_addr   &lt;=  byte_addr + 1&#39;b1;
+
+//wr_data:输出待写入i2c设备数据
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        wr_data &lt;=  8&#39;h01;
+    else    if(wr_en == 1&#39;b0)
+        wr_data &lt;=  8&#39;h01;
+    else    if((wr_en == 1&#39;b1) &amp;&amp; (i2c_end == 1&#39;b1))
+        wr_data &lt;=  wr_data + 1&#39;b1;
+
+//fifo_rd_valid:fifo读有效信号
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        fifo_rd_valid  &lt;=  1&#39;b0;
+    else    if((rd_data_num == DATA_NUM)
+                &amp;&amp; (cnt_wait == (CNT_WAIT_MAX - 1&#39;b1)))
+        fifo_rd_valid  &lt;=  1&#39;b0;
+    else    if(data_num == DATA_NUM)
+        fifo_rd_valid  &lt;=  1&#39;b1;
+
+//cnt_wait:fifo读使能信号间时间间隔计数,计数两fifo读使能间的时间间隔
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_wait    &lt;=  28&#39;d0;
+    else    if(fifo_rd_valid == 1&#39;b0)
+        cnt_wait    &lt;=  28&#39;d0;
+    else    if(cnt_wait == (CNT_WAIT_MAX - 1&#39;b1))
+        cnt_wait    &lt;=  28&#39;d0;
+    else    if(fifo_rd_valid == 1&#39;b1)
+        cnt_wait    &lt;=  cnt_wait + 1&#39;b1;
+
+//fifo_rd_en:fifo读使能信号
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        fifo_rd_en &lt;=  1&#39;b0;
+    else    if((cnt_wait == (CNT_WAIT_MAX - 1&#39;b1))
+                &amp;&amp; (rd_data_num &lt; DATA_NUM))
+        fifo_rd_en &lt;=  1&#39;b1;
+    else
+        fifo_rd_en &lt;=  1&#39;b0;
+
+//rd_data_num:自fifo中读出数据个数计数
+always@(posedge i2c_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        rd_data_num &lt;=  8&#39;d0;
+    else    if(fifo_rd_valid == 1&#39;b0)
+        rd_data_num &lt;=  8&#39;d0;
+    else    if(fifo_rd_en == 1&#39;b1)
+        rd_data_num &lt;=  rd_data_num + 1&#39;b1;
+
+//****************************************************************//
+//************************* Instantiation ************************//
+//****************************************************************//
+//------------- fifo_read_inst -------------
+fifo_read   fifo_read_inst
+(
+    .clk        (i2c_clk            ),  //输入时钟信号,频率1MHz,1bit
+    .din        (rd_data            ),  //输入写入数据,1bit
+    .rd_en      (fifo_rd_en         ),  //输入数据读请求,1bit
+    .wr_en      (i2c_end &amp;&amp; rd_en   ),  //输入数据写请求,1bit
+
+    .dout       (fifo_rd_data       ),  //输出读出数据,1bit
+    .data_count (data_num           )   //输出fifo内数据个数,1bit
+);
+
+endmodule
+</code></pre>
+<h4 id="（4）仿真设计"><a href="#（4）仿真设计" class="headerlink" title="（4）仿真设计"></a>（4）仿真设计</h4><pre><code>module  tb_eeprom_byte_rd_wr();
+//wire define
+wire            scl ;
+wire            sda ;
+wire    [5:0]   sel ;
+wire    [7:0]   seg ;
+
+//reg define
+reg           clk   ;
+reg           rst_n ;
+reg           key_wr;
+reg           key_rd;
+
+//时钟、复位信号
+initial
+  begin
+    clk     =   1&#39;b1  ;
+    rst_n   &lt;=  1&#39;b0  ;
+    key_wr  &lt;=  1&#39;b1  ;
+    key_rd  &lt;=  1&#39;b1  ;
+    #200
+    rst_n   &lt;=  1&#39;b1  ;
+    #1000
+    key_wr  &lt;=  1&#39;b0  ;
+    key_rd  &lt;=  1&#39;b1  ;
+    #400
+    key_wr  &lt;=  1&#39;b1  ;
+    key_rd  &lt;=  1&#39;b1  ;
+    #20000000
+    key_wr  &lt;=  1&#39;b1  ;
+    key_rd  &lt;=  1&#39;b0  ;
+    #400
+    key_wr  &lt;=  1&#39;b1  ;
+    key_rd  &lt;=  1&#39;b1  ;
+    #40000000
+    $stop;
+  end
+
+always  #10 clk = ~clk;
+
+defparam eeprom_byte_rd_wr_inst.key_wr_inst.CNT_MAX = 5;
+defparam eeprom_byte_rd_wr_inst.key_rd_inst.CNT_MAX = 5;
+defparam eeprom_byte_rd_wr_inst.i2c_rw_data_inst.CNT_WAIT_MAX = 1000;
+
+//-------------eeprom_byte_rd_wr_inst-------------
+eeprom_byte_rd_wr   eeprom_byte_rd_wr_inst
+(
+    .sys_clk        (clk    ),    //输入工作时钟,频率50MHz
+    .sys_rst_n      (rst_n  ),    //输入复位信号,低电平有效
+    .key_wr         (key_wr ),    //按键写
+    .key_rd         (key_rd ),    //按键读
+
+    .sda            (sda    ),    //串行数据
+    .scl            (scl    ),    //串行时钟
+    .seg            (seg    ),    //数码管段选信号
+    .sel            (sel    )     //数码管位选信号
+);
+
+//-------------eeprom_inst-------------
+M24LC64  M24lc64_inst
+(
+    .A0     (1&#39;b0       ),  //器件地址
+    .A1     (1&#39;b0       ),  //器件地址
+    .A2     (1&#39;b0       ),  //器件地址
+    .WP     (1&#39;b0       ),  //写保护信号,高电平有效
+    .RESET  (~rst_n     ),  //复位信号,高电平有效
+
+    .SDA    (sda        ),  //串行数据
+    .SCL    (scl        )   //串行时钟
+);
+
+endmodule
+
+
+    拓展训练：将串口 RS232 与 EEPROM 读写工程结合起来，使用 PC 机通过串口发送指令和和数据实现 EEPROM 数据读写操作。
+</code></pre>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132818565">https://blog.csdn.net/qq_32971095/article/details/132818565</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/None/" rel="tag"># None</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/11/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%BA%8C%EF%BC%88IP%E6%A0%B8%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C3%EF%BC%9E/" rel="prev" title="基础设计二（IP核）——FPGA学习笔记＜3＞">
+      <i class="fa fa-chevron-left"></i> 基础设计二（IP核）——FPGA学习笔记＜3＞
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/18/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E5%9B%9B%EF%BC%88%E4%BF%A1%E5%8F%B7%E9%87%87%E9%9B%86%E3%80%81%E5%8F%91%E7%94%9F%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C5%EF%BC%9E/" rel="next" title="基础设计四（信号采集、发生）——FPGA学习笔记＜5＞">
+      基础设计四（信号采集、发生）——FPGA学习笔记＜5＞ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E4%B8%B2%E5%8F%A3-RS232"><span class="nav-number">1.</span> <span class="nav-text">一.串口 RS232</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">&lt;1&gt;简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">&lt;2&gt;物理模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS232%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.3.</span> <span class="nav-text">&lt;3&gt;RS232通信协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.4.</span> <span class="nav-text">&lt;4&gt;设计实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%A1%AC%E4%BB%B6%E8%B5%84%E6%BA%90"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.硬件资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.程序设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%881%EF%BC%89uart-rx%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">（1）uart_rx设计</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E2%91%A0%E6%B3%A2%E5%BD%A2%E5%9B%BE%E5%88%86%E6%9E%90"><span class="nav-number">1.4.2.1.1.</span> <span class="nav-text">①波形图分析</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E2%91%A1%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.2.1.2.</span> <span class="nav-text">②代码设计</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E2%91%A2%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.2.1.3.</span> <span class="nav-text">③仿真设计</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%882%EF%BC%89uart-tx%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">（2）uart_tx设计</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E2%91%A0%E6%B3%A2%E5%BD%A2%E5%9B%BE%E5%88%86%E6%9E%90-1"><span class="nav-number">1.4.2.2.1.</span> <span class="nav-text">①波形图分析</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E2%91%A1%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">1.4.2.2.2.</span> <span class="nav-text">②代码设计</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E9%A1%B6%E5%B1%82%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">（3）顶层设计</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E2%91%A0%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.2.3.1.</span> <span class="nav-text">①代码设计</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E2%91%A1%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.2.3.2.</span> <span class="nav-text">②仿真设计</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E5%9F%BA%E4%BA%8E-I2C-%E5%8D%8F%E8%AE%AE%E7%9A%84-EEPROM-%E9%A9%B1%E5%8A%A8%E6%8E%A7%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">二.基于 I2C 协议的 EEPROM 驱动控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-number">2.1.</span> <span class="nav-text">&lt;1&gt;简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.</span> <span class="nav-text">&lt;2&gt;读写操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5-1"><span class="nav-number">2.3.</span> <span class="nav-text">&lt;3&gt;设计实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.3.1.</span> <span class="nav-text">（1）整体设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89I2C-%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9D%97"><span class="nav-number">2.3.2.</span> <span class="nav-text">（2）I2C 驱动模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%8D%95%E5%AD%97%E8%8A%82%E5%86%99%E6%93%8D%E4%BD%9C%E6%97%B6%E5%BA%8F%E5%88%86%E6%9E%90"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">【1】单字节写操作时序分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%902%E3%80%91%E9%9A%8F%E6%9C%BA%E8%AF%BB%E6%93%8D%E4%BD%9C%E6%97%B6%E5%BA%8F%E5%88%86%E6%9E%90"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">【2】随机读操作时序分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.3.2.3.</span> <span class="nav-text">【3】代码设计</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%A8%A1%E5%9D%97"><span class="nav-number">2.3.3.</span> <span class="nav-text">（3）数据收发模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%86%99%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E9%83%A8%E5%88%86"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">【1】写数据操作部分</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%AF%BB%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E9%83%A8%E5%88%86"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">【2】读数据操作部分</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">2.3.3.3.</span> <span class="nav-text">【3】代码设计</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.3.4.</span> <span class="nav-text">（4）仿真设计</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">787k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:55</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

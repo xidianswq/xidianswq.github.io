@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录 一.简易频率计 &lt;1&gt;简介 （1）整体设计 （2）频率计算模块 &lt;2&gt;代码设计 （1）freq_meter_calc模块 （2）顶层模块 &lt;3&gt;仿真设计 二.简易 DDS信号发生器 &lt;1&gt;简介 &lt;2&gt;代码设计 （1）整体设计 （2）DDS部分 &lt;3&gt;仿真 三.简易电压表 &lt;1&gt;简介 &lt;2&gt;代码设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础设计四（信号采集、发生）——FPGA学习笔记＜5＞">
+<meta property="og:url" content="http://example.com/2023/09/18/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E5%9B%9B%EF%BC%88%E4%BF%A1%E5%8F%B7%E9%87%87%E9%9B%86%E3%80%81%E5%8F%91%E7%94%9F%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C5%EF%BC%9E/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录 一.简易频率计 &lt;1&gt;简介 （1）整体设计 （2）频率计算模块 &lt;2&gt;代码设计 （1）freq_meter_calc模块 （2）顶层模块 &lt;3&gt;仿真设计 二.简易 DDS信号发生器 &lt;1&gt;简介 &lt;2&gt;代码设计 （1）整体设计 （2）DDS部分 &lt;3&gt;仿真 三.简易电压表 &lt;1&gt;简介 &lt;2&gt;代码设计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/29bf724d81198014910c13dc96eaac2d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/978217a5799aeabeded01deee9551eac.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e94173082bc78bce0b67675ae8d59ee8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/02b9a4ea89adbb43d059dc540145cbb6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/23648a345380b8c3154eb7e6118f1e8e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5edf159cbdcee71c341f62c6e45080f0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f2bcf8e025972c05ca71aba1dc4dec4c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/680f95434816da76d89cec9336e84b6f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a1c2608b13ba13fac858da44b3b45277.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/6c80ea34aef420c3c4f07da0c3fcf0d2.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5f9d3db772c9b21577ae3374dc4460f4.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/da377471871ba01b431909229db0e598.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a87316586f399c84e19bb0b36947031f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0404863083748a6404247951d25cd7cb.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a74cf028e7f344f5bbcede195c9bddaa.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c1889590a090cc653ecbc28aa8be916d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/02c1afc1e39c76f93bda212446d69078.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e0285c7fd6f5b8e37bd4d93f9cdba82b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/70245ce26acea947146d29556fab06f5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/21ad66777b680d8d5fb99e1369c3fbe1.png">
+<meta property="article:published_time" content="2023-09-18T13:55:27.000Z">
+<meta property="article:modified_time" content="2025-02-08T03:45:06.165Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="None">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/29bf724d81198014910c13dc96eaac2d.png">
+
+<link rel="canonical" href="http://example.com/2023/09/18/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E5%9B%9B%EF%BC%88%E4%BF%A1%E5%8F%B7%E9%87%87%E9%9B%86%E3%80%81%E5%8F%91%E7%94%9F%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C5%EF%BC%9E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基础设计四（信号采集、发生）——FPGA学习笔记＜5＞ | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/18/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E5%9B%9B%EF%BC%88%E4%BF%A1%E5%8F%B7%E9%87%87%E9%9B%86%E3%80%81%E5%8F%91%E7%94%9F%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C5%EF%BC%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基础设计四（信号采集、发生）——FPGA学习笔记＜5＞
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-18 21:55:27" itemprop="dateCreated datePublished" datetime="2023-09-18T21:55:27+08:00">2023-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-08 11:45:06" itemprop="dateModified" datetime="2025-02-08T11:45:06+08:00">2025-02-08</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>34k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>31 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%B8%80.%E7%AE%80%E6%98%93%E9%A2%91%E7%8E%87%E8%AE%A1">一.简易频率计</a></p>
+<p><a href="about:blank#%3C1%3E%E7%AE%80%E4%BB%8B">&lt;1&gt;简介</a></p>
+<p><a href="about:blank#%EF%BC%881%EF%BC%89%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1">（1）整体设计</a></p>
+<p><a href="about:blank#%EF%BC%882%EF%BC%89%E9%A2%91%E7%8E%87%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%9D%97">（2）频率计算模块</a></p>
+<p><a href="about:blank#%3C2%3E%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1">&lt;2&gt;代码设计</a></p>
+<p><a href="about:blank#%EF%BC%881%EF%BC%89freq_meter_calc%E6%A8%A1%E5%9D%97">（1）freq_meter_calc模块</a></p>
+<p><a href="about:blank#%EF%BC%882%EF%BC%89%E9%A1%B6%E5%B1%82%E6%A8%A1%E5%9D%97">（2）顶层模块</a></p>
+<p><a href="about:blank#%3C3%3E%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1">&lt;3&gt;仿真设计</a></p>
+<p><a href="about:blank#%E4%BA%8C.%E7%AE%80%E6%98%93%20DDS%20%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8">二.简易 DDS<br>信号发生器</a></p>
+<p><a href="about:blank#%3C1%3E%E7%AE%80%E4%BB%8B">&lt;1&gt;简介</a></p>
+<p><a href="about:blank#%3C2%3E%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1">&lt;2&gt;代码设计</a></p>
+<p><a href="about:blank#%EF%BC%881%EF%BC%89%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1">（1）整体设计</a></p>
+<p><a href="about:blank#%EF%BC%882%EF%BC%89DDS%E9%83%A8%E5%88%86">（2）DDS部分</a></p>
+<p><a href="about:blank#%3C3%3E%E4%BB%BF%E7%9C%9F">&lt;3&gt;仿真</a></p>
+<p><a href="about:blank#%E4%B8%89.%E7%AE%80%E6%98%93%E7%94%B5%E5%8E%8B%E8%A1%A8">三.简易电压表</a></p>
+<p><a href="about:blank#%3C1%3E%E7%AE%80%E4%BB%8B">&lt;1&gt;简介</a></p>
+<p><a href="about:blank#%3C2%3E%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1">&lt;2&gt;代码设计</a></p>
+<p><a href="about:blank#%EF%BC%881%EF%BC%89ADC">（1）ADC</a></p>
+<p><a href="about:blank#%EF%BC%882%EF%BC%89%E9%A1%B6%E5%B1%82">（2）顶层</a></p>
+<p><a href="about:blank#%3C3%3E%E4%BB%BF%E7%9C%9F">&lt;3&gt;仿真</a></p>
+<hr>
+<p>前置学习：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132818565" title="基础设计三——FPGA学习笔记＜4＞">基础设计三——FPGA学习笔记＜4＞</a></p>
+<p>参考书目：《<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E9%87%8E%E7%81%AB&spm=1001.2101.3001.7020" title="野火">野火</a>FPGA Verilog 开发实战指南》</p>
+<h2 id="一-简易频率计"><a href="#一-简易频率计" class="headerlink" title="一.简易频率计"></a>一.简易频率计</h2><h3 id="简介"><a href="#简介" class="headerlink" title="&lt;1&gt;简介"></a>&lt;1&gt;简介</h3><p><strong>频率测量法</strong> ：在时间 t 内对被测时钟信号的时钟周期 N 进行计数，然后求出单位时间内的时钟周期数，即为被测时钟信号的时钟频率。</p>
+<p><strong>周期测量法</strong> ：先测量出被测时钟信号的时钟周期 T，然后根据频率 f &#x3D; 1／T 求出被测时钟信号的频率。</p>
+<pre><code>    但是上述两种方法都会**产生±1 个被测时钟周期的误差** ，在实际应用中有一定的局限性；而且根据两种方式的测量原理，很容易发现**频率测量法适合于测量高频时钟信号，而周期测量法适合于低频时钟信号的测量** ，但二者都不能兼顾高低频率同样精度的测量要求。
+
+    等精度测量法与前两种方式不同，其最大的特点是，测量的实际门控时间不是一个固定值，它与被测时钟信号相关，是被测时钟信号周期的整数倍。**在实际门控信号下，同时对标准时钟和被测时钟信号的时钟周期进行计数，再通过公式计算得到被测信号的时钟频率** 。**由于实际门控信号是被测时钟周期的整数倍，就消除了被测信号产生的±1 时钟周期的误差，但是会 产生对标准时钟信号±1 时钟周期的误差。**
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/29bf724d81198014910c13dc96eaac2d.png"></p>
+<pre><code>    结合等精度测量原理和原理示意图可得：被测时钟信号的时钟频率 fx 的相对误差与被测时钟信号无关；**增大“软件闸门”的有效范围或者提高“标准时钟信号”的时钟频率 fs，可以减小误差，提高测量精度。**
+
+    我们来说明一下被测时钟信号的计算方法。 首先我们先分别**对实际闸门下被测时钟信号和标准时钟信号的时钟周期进行计数** 。
+</code></pre>
+<p>实际闸门下被测时钟信号周期数为 X，设被测信号时钟周期为 Tfx，它的时钟频率 fx &#x3D; 1&#x2F;Tfx，由此可得等式：<strong>X * Tfx &#x3D; X &#x2F; fx &#x3D;<br>Tx(实际闸门)</strong> 。</p>
+<p>实际闸门下标准时钟信号周期数为 Y，设被测信号时钟周期为 Tfs，它的时钟频率 fs &#x3D; 1&#x2F;Tfs，由此可得等式：<strong>Y * Tfs &#x3D; Y &#x2F; fs &#x3D;<br>Tx(实际闸门)</strong> 。</p>
+<p>其次，将两等式结合得到只包含各自时钟周期计数和时钟频率的等式：X &#x2F; fx &#x3D; Y &#x2F; fs &#x3D;<br>Tx(实际闸门)，等式变换，得到被测时钟信号时钟频率计算公式：<strong>fx &#x3D; X * fs &#x2F; Y</strong> 。 最后，将已知量标准时钟信号时钟频率 fs 和测量量<br>X、Y 带入计算公式，得到被测时 钟信号时钟频率 fx。</p>
+<h4 id="（1）整体设计"><a href="#（1）整体设计" class="headerlink" title="（1）整体设计"></a>（1）整体设计</h4><pre><code>    设计一个基于等精度测量原理的简易频率计，对输入的未知时钟信号做频率测量，并将测量结果在数码管上显示。 要求：标准时钟信号频率为 100MHz，实际闸门时间大于或等于 1s，目的是减小误差，提高测量精度。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/978217a5799aeabeded01deee9551eac.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e94173082bc78bce0b67675ae8d59ee8.png"></p>
+<pre><code>    注：由频率计算模块输出的测量结果的单位为 Hz，为提高频率计测量范围，将结果除以 1000 后，再传入数码管显示模块，同时数码管小数点左移三位，所以**数码管显示结果的单位为 MHz** ；被测时钟生成模块(clk_test_gen)负责产生待检测时钟信号，如有条件的读者可用信号发生器代替该模块，直接输入待检测时钟信号。
+</code></pre>
+<h4 id="（2）频率计算模块"><a href="#（2）频率计算模块" class="headerlink" title="（2）频率计算模块"></a>（2）频率计算模块</h4><p>波形绘制：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/02b9a4ea89adbb43d059dc540145cbb6.png"></p>
+<p><strong>第一部分</strong> ：软件闸门 gate_s 及相关信号的设计与实现</p>
+<pre><code>    软件闸门的生成我们需要声明计数器进行时间计数，计数时钟使用系统时钟 sys_clk。 声明软件闸门计数器 cnt_gate_s，计数时钟为 50MHz 系统时钟，时钟周期为 20ns，计数器 cnt_gate_s 初值为 0，在(0 – CNT_GATE_S_MAX)范围内循环计数。
+</code></pre>
+<p><strong>第二部分</strong> ：<strong>实际闸门 gate_a 的设计与实现生成软件闸门后，使用被测时钟对软件闸门进行同步生成实际闸门 gate_a，实际闸门<br>波形图如下。（结合代码分析逻辑）</strong></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/23648a345380b8c3154eb7e6118f1e8e.png"></p>
+<p><strong>第三部分</strong> ：实际闸门下，标准信号和被测信号时钟计数相关信号的波形设计与实现在实际闸门下，分别对标准信号和被测信号的时钟周期进行计数。声明计数器<br>cnt_clk_stand，在实际闸门下对标准时钟信号 clk_stand 进行时钟周期计数；声明计数器<br>cnt_clk_test，在实际闸门下对被测时钟信号 clk_test 进行时钟周期计数，两计数器波形如下。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5edf159cbdcee71c341f62c6e45080f0.png"></p>
+<pre><code>    计数器 cnt_clk_stand、cnt_clk_test 在实际闸门下计数完成后，需要进行数据清零，方便下次计数。但是被测时钟频率的计算需要计数器的数据，所以在计数器数据清零之前我们需要**将计数器数据做一下寄存** ，对于数据寄存的时刻，我们选择**实际闸门的下降沿** 。 声明寄存器 cnt_clk_stand_reg；在标准时钟信号 clk_stand 同步下对实际闸门打一拍得 到 gate_a_s；使用实际闸门 gate_a 和 gate_a_s 得到标准时钟下的实际闸门下降沿标志信号 gate_a_fall_stand。当 gate_afall_stand 信号为高电平时，将计数器 cnt_clk_stand 数值赋值给寄存器 cnt_clk_stand_reg。 对 于 计 数 器 cnt_clk_test 的 数 值 寄 存 ， 我们使用相同的方法 ， 声明寄 存器 cnt_clk_test_reg；在被检测时钟信号 clk_test 同步下对实际闸门打一拍得到 gate_a_t；使用 实际闸门 gate_a 和 gate_a_t 得到被检测时钟下的实际闸门下降沿标志信号 gate_a_fall_test。 当 gate_a_fall_test 信号为高电平时，将计数器 cnt_clk_test 数值赋值给 cnt_clk_test_reg。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f2bcf8e025972c05ca71aba1dc4dec4c.png"></p>
+<p><strong>第四部分</strong> ：频率计算结果 freq 等相关信号波形的设计与实现实际闸门下的标准时钟和被测时钟的周期个数已经完成计数，且对结果进行了寄存，<br>标准时钟信号的时钟频率为已知量，得到这些参数，结合公式可以进行频率的求解。同时，新的问题出现，在哪一时刻进行数据求解。 我们可以利用最初声明的软件闸门计数器<br>cnt_gate_s，声明计算标志信号 calc_flag，在 计数器 cnt_gate_s 计数到最大值，将 calc_flag<br>拉高一个时钟周期的高电平作为计算标志， 计算被检测时钟信号时钟频率 freq_reg(注意变量位宽是否满足要求)；然后在系统时钟下将计算标志信号<br>calc_flag 打一拍，得到时钟频率输出标志信号 calc_flag_reg，当时钟频率输出标志信号 calc_flag_reg<br>为高电平时，将时钟频率计算结果 freq_reg 赋值给输出信号 freq。各信号波形图如下。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/680f95434816da76d89cec9336e84b6f.png"></p>
+<h3 id="代码设计"><a href="#代码设计" class="headerlink" title="&lt;2&gt;代码设计"></a>&lt;2&gt;代码设计</h3><p>参考书目参考代码：</p>
+<h4 id="（1）freq-meter-calc模块"><a href="#（1）freq-meter-calc模块" class="headerlink" title="（1）freq_meter_calc模块"></a>（1）freq_meter_calc模块</h4><pre><code>module  freq_meter_calc
+(
+    input   wire            sys_clk     ,   //系统时钟,频率50MHz
+    input   wire            sys_rst_n   ,   //复位信号,低电平有效
+    input   wire            clk_test    ,   //待检测时钟
+
+    output  reg     [33:0]  freq            //待检测时钟频率
+
+);
+//********************************************************************//
+//****************** Parameter And Internal Signal *******************//
+//********************************************************************//
+//parameter define
+parameter   CNT_GATE_S_MAX  =   28&#39;d37_499_999  ,   //软件闸门计数器计数最大值
+            CNT_RISE_MAX    =   28&#39;d6_250_000   ;   //软件闸门拉高计数值
+parameter   CLK_STAND_FREQ  =   28&#39;d100_000_000 ;   //标准时钟时钟频率
+//wire  define
+wire            clk_stand           ;   //标准时钟,频率100MHz
+wire            gate_a_fall_s       ;   //实际闸门下降沿(标准时钟下)
+wire            gate_a_fall_t       ;   //实际闸门下降沿(待检测时钟下)
+
+//reg   define
+reg     [27:0]  cnt_gate_s          ;   //软件闸门计数器
+reg             gate_s              ;   //软件闸门
+reg             gate_a              ;   //实际闸门
+reg             gate_a_test         ;
+reg             gate_a_stand        ;   //实际闸门打一拍(标准时钟下)
+reg             gate_a_stand_reg    ;
+reg             gate_a_test_reg     ;   //实际闸门打一拍(待检测时钟下)
+reg     [47:0]  cnt_clk_stand       ;   //标准时钟周期计数器
+reg     [47:0]  cnt_clk_stand_reg   ;   //实际闸门下标志时钟周期数
+reg     [47:0]  cnt_clk_test        ;   //待检测时钟周期计数器
+reg     [47:0]  cnt_clk_test_reg    ;   //实际闸门下待检测时钟周期数
+reg             calc_flag           ;   //待检测时钟时钟频率计算标志信号
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//cnt_gate_s:软件闸门计数器
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_gate_s  &lt;=  28&#39;d0;
+    else    if(cnt_gate_s == CNT_GATE_S_MAX)
+        cnt_gate_s  &lt;=  28&#39;d0;
+    else
+        cnt_gate_s  &lt;=  cnt_gate_s + 1&#39;b1;
+
+//gate_s:软件闸门
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        gate_s  &lt;=  1&#39;b0;
+    else    if((cnt_gate_s&gt;= CNT_RISE_MAX)
+                &amp;&amp; (cnt_gate_s &lt;= (CNT_GATE_S_MAX - CNT_RISE_MAX)))
+        gate_s  &lt;=  1&#39;b1;
+    else
+        gate_s  &lt;=  1&#39;b0;
+
+//gate_a:实际闸门
+always@(posedge clk_test or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        gate_a  &lt;=  1&#39;b0;
+    else
+        gate_a  &lt;=  gate_s;
+
+always@(posedge clk_test or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        gate_a_test  &lt;=  1&#39;b0;
+    else
+        gate_a_test  &lt;=  gate_a;
+
+//cnt_clk_stand:标准时钟周期计数器,计数实际闸门下标准时钟周期数
+always@(posedge clk_stand or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_clk_stand   &lt;=  48&#39;d0;
+    else    if(gate_a_stand == 1&#39;b0)
+        cnt_clk_stand   &lt;=  48&#39;d0;
+    else    if(gate_a_stand == 1&#39;b1)
+        cnt_clk_stand   &lt;=  cnt_clk_stand + 1&#39;b1;
+
+//cnt_clk_test:待检测时钟周期计数器,计数实际闸门下待检测时钟周期数
+always@(posedge clk_test or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_clk_test    &lt;=  48&#39;d0;
+    else    if(gate_a_test == 1&#39;b0)
+        cnt_clk_test    &lt;=  48&#39;d0;
+    else    if(gate_a_test == 1&#39;b1)
+        cnt_clk_test    &lt;=  cnt_clk_test + 1&#39;b1;
+
+//gate_a_stand:实际闸门打一拍(标准时钟下)
+always@(posedge clk_stand or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        gate_a_stand    &lt;=  1&#39;b0;
+    else
+        gate_a_stand    &lt;=  gate_a_test;
+
+always@(posedge clk_stand or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        gate_a_stand_reg    &lt;=  1&#39;b0;
+    else
+        gate_a_stand_reg    &lt;=  gate_a_stand;
+
+//gate_a_fall_s:实际闸门下降沿(标准时钟下)
+assign  gate_a_fall_s = ((gate_a_stand_reg == 1&#39;b1) &amp;&amp; (gate_a_stand == 1&#39;b0))
+                        ? 1&#39;b1 : 1&#39;b0;
+
+//cnt_clk_stand_reg:实际闸门下标志时钟周期数
+always@(posedge clk_stand or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_clk_stand_reg   &lt;=  32&#39;d0;
+    else    if(gate_a_fall_s == 1&#39;b1)
+        cnt_clk_stand_reg   &lt;=  cnt_clk_stand;
+
+//gate_a_test:实际闸门打一拍(待检测时钟下)
+always@(posedge clk_test or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        gate_a_test_reg &lt;=  1&#39;b0;
+    else
+        gate_a_test_reg &lt;=  gate_a_test;
+
+//gate_a_fall_t:实际闸门下降沿(待检测时钟下)
+assign  gate_a_fall_t = ((gate_a_test_reg == 1&#39;b1) &amp;&amp; (gate_a_test == 1&#39;b0))
+                        ? 1&#39;b1 : 1&#39;b0;
+
+//cnt_clk_test_reg:实际闸门下待检测时钟周期数
+always@(posedge clk_test or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_clk_test_reg   &lt;=  32&#39;d0;
+    else    if(gate_a_fall_t == 1&#39;b1)
+        cnt_clk_test_reg   &lt;=  cnt_clk_test;
+
+//calc_flag:待检测时钟时钟频率计算标志信号
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        calc_flag   &lt;=  1&#39;b0;
+    else    if(cnt_gate_s == (CNT_GATE_S_MAX - 1&#39;b1))
+        calc_flag   &lt;=  1&#39;b1;
+    else
+        calc_flag   &lt;=  1&#39;b0;
+
+//freq:待检测时钟信号时钟频率
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        freq    &lt;=  34&#39;d0;
+    else    if(calc_flag == 1&#39;b1)
+        freq    &lt;=  (CLK_STAND_FREQ / cnt_clk_stand_reg * cnt_clk_test_reg);
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//---------- clk_gen_inst ----------
+clk_gen clk_gen_inst
+(
+    .reset    (~sys_rst_n ),
+    .clk_in1  (sys_clk    ),
+     
+    .clk_out1 (clk_stand  )
+);
+
+endmodule
+</code></pre>
+<p>注：上述“打一拍”即经过一级寄存器，通过always时钟上升沿赋值即可实现</p>
+<h4 id="（2）顶层模块"><a href="#（2）顶层模块" class="headerlink" title="（2）顶层模块"></a>（2）顶层模块</h4><pre><code>module  freq_meter
+(
+    input   wire            sys_clk     ,   //系统时钟,频率50MHz
+    input   wire            sys_rst_n   ,   //复位信号,低电平有效
+    input   wire            clk_test    ,   //待检测时钟
+
+    output  wire            clk_out     ,   //生成的待检测时钟
+    output  wire    [5:0]   sel         ,   //数码管位选信号
+    output  wire    [7:0]   seg             //数码管段选信号
+
+);
+
+//wire  define
+wire    [33:0]  freq    ;   //计算得到的待检测信号时钟频率
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//---------- clk_gen_test_inst ----------
+clk_test_gen    clk_test_gen_inst
+(
+    .reset     (~sys_rst_n ),  //复位端口,高电平有效
+    .clk_in1   (sys_clk    ),  //输入系统时钟
+
+    .clk_out1  (clk_out    )   //输出生成的待检测时钟信号
+);
+
+//------------- freq_meter_calc_inst --------------
+freq_meter_calc freq_meter_calc_inst
+(
+    .sys_clk    (sys_clk    ),   //模块时钟,频率50MHz
+    .sys_rst_n  (sys_rst_n  ),   //复位信号,低电平有效
+    .clk_test   (clk_test   ),   //待检测时钟
+
+    .freq       (freq       )    //待检测时钟频率  
+);
+
+//------------- seg_595_dynamic_inst --------------
+seg_dynamic     seg_dynamic_inst
+(
+    .sys_clk     (sys_clk    ), //系统时钟，频率50MHz
+    .sys_rst_n   (sys_rst_n  ), //复位信号，低有效
+    .data        (freq/1000  ), //数码管要显示的值
+    .point       (6&#39;b001000  ), //小数点显示,高电平有效
+    .seg_en      (1&#39;b1       ), //数码管使能信号，高电平有效
+    .sign        (1&#39;b0       ), //符号位，高电平显示负号
+
+    .sel         (sel        ), //数码管位选信号
+    .seg         (seg        )  //数码管段选信号
+
+);
+
+endmodule
+</code></pre>
+<p>这里还实例化了之前编写的动态数码管模块</p>
+<h3 id="仿真设计"><a href="#仿真设计" class="headerlink" title="&lt;3&gt;仿真设计"></a>&lt;3&gt;仿真设计</h3><pre><code>module tb_freq_meter();
+
+//********************************************************************//
+//****************** Parameter And Internal Signal *******************//
+//********************************************************************//
+//wire  define
+wire    [5:0]   sel         ;
+wire    [7:0]   seg         ;
+
+//reg   define
+reg             sys_clk     ;
+reg             sys_rst_n   ;
+reg             clk_test    ;
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//时钟、复位、待检测时钟的生成
+initial
+    begin
+        sys_clk     =   1&#39;b1;
+        sys_rst_n   &lt;=  1&#39;b0;
+        #200
+        sys_rst_n  &lt;=  1&#39;b1;
+        #500
+        clk_test      =   1&#39;b1;
+    end
+
+always  #10     sys_clk =   ~sys_clk    ;   //50MHz系统时钟
+always  #100    clk_test=   ~clk_test    ;   //5MHz待检测时钟
+
+//重定义软件闸门计数时间,缩短仿真时间
+defparam freq_meter_inst.freq_meter_calc_inst.CNT_GATE_S_MAX    = 240   ;
+defparam freq_meter_inst.freq_meter_calc_inst.CNT_RISE_MAX      = 40    ;
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------- freq_meter_inst -------------
+freq_meter  freq_meter_inst
+(
+    .sys_clk     (sys_clk   ),   //系统时钟,频率50MHz
+    .sys_rst_n   (sys_rst_n ),   //复位信号,低电平有效
+    .clk_test    (clk_test  ),   //待检测时钟
+
+    .clk_out     (clk_out   ),   //生成的待检测时钟
+    .sel         (sel       ),   //串行数据输入
+    .seg         (seg       )
+);
+
+endmodule
+</code></pre>
+<h2 id="二-简易-DDS-信号发生器"><a href="#二-简易-DDS-信号发生器" class="headerlink" title="二.简易 DDS 信号发生器"></a>二.简易 DDS 信号发生器</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="&lt;1&gt;简介"></a>&lt;1&gt;简介</h3><pre><code>    DDS 技术是一种全新的频率合成方法，其具有低成本、低功耗、高分辨率和快速转换时间等优点，对数字信号处理及其硬件实现有着很重要的作用。 DDS 的基本结构主要由**相位累加器、相位调制器、波形数据表 ROM、D/A 转换器** 等四大结构组成，其中较多设计还会在数模转换器之后增加一个**低通滤波器** 。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a1c2608b13ba13fac858da44b3b45277.png"></p>
+<pre><code>    系统时钟 CLK 为整个系统的工作时钟， 频率为 fCLK；**频率字输入 F_WORD** ，一般为整数，数值大小控制输出信号的频率大小，数值越大输出信号频率越高，反之，输出信号频率越低，后文中**用 K 表示** ；**相位字输入 P_WORD** ，为整数，数值大小控制输出信号的相位偏移，主要用于相位的信号调制，后文 用 P 表示；设输出信号为 CLK_OUT，频率为 fOUT。
+
+    图中所展示的四大结构中，相位累加器是整个 DDS 的核心，在这里完成相位累加，生成相位码。相位累加器的输入为**频率字输入 K** ，表示相位增量，设其**位宽为 N** ，满足等式** K = (2^N) * fOUT / fCLK** 。其在输入相位累加器之前，在系统时钟同步下做数据寄存，数据改变时不会干扰相位累加器的正常工作。
+
+    相位调制器接收相位累加器输出的相位码， 在这里加上一个相位偏移值 P，主要用于信号的相位调制，如应用于通信方面的相移键控等，不使用此部分时可以去掉，或者将其设为一个常数输入，同样相位字输入也要做寄存。
+
+    **波形数据表 ROM 中存有一个完整周期的正弦波信号** 。假设波形数据 ROM 的**地址位宽为 12 位，存储数据位宽为 8 位** ，即 ROM 有 2^12 = 4096 个存储空间，每个存储空间可存储 1 字节数据。将一个周期的正弦波信号，**沿横轴等间隔采样 2^12 = 4096 次** ，每次采集的信号**幅度用 1 字节数据表示** ，最大值为 255，最小值为 0。将 4096 次采样结果按顺序写入 ROM 的 4096 个存储单元，一个完整周期正弦波的数字幅度信号写入了波形数据表 ROM 中。**波形数据表 ROM 以相位调制器传入的相位码为 ROM 读地址，将地址对应存储单元中的电压幅值数字量输出** 。 D/A 转换器将输入的电压幅值数字量转换为模拟量输出 ， 就得到输出信号 CLK_OUT。 输出信号 CLK_OUT 的信号频率 **fOUT = K * fCLK / 2^N。当 K = 1 时，可得 DDS 最小分辨率为：fOUT = fCLK / 2^N，此时输出信号频率最低。根据采样定理，K 的最大值应小于 (2 ^N) / 2。**
+</code></pre>
+<p><strong>相位累加器得到的相位码是如何实现 ROM 寻址的</strong> ？</p>
+<p>对于 N 位的相位累加器，它对应的相位累加值为 2^N，如果正弦 <strong>ROM 中存储单元的个数</strong> 也是 2^N 的话，这个问题就很好解决，但是这对 ROM<br>的对存储容量的要求较高。<strong>在实际操作中，我们使用相位累加值的高几位对 ROM 进行寻址</strong> ，也就是说<strong>并不是每个系统时钟都对 ROM<br>进行数据读取，而是多个时钟读取一次</strong> ，因为这样能<strong>保证相位累加器溢出时， 从正弦 ROM 表中取出正好一个正弦周期的样点</strong> 。<br>因此，<strong>相位累加器每计数 2^N 次，对应一个正弦周期</strong> 。而相位累加器 1 秒钟计数 fCLK 次，<strong>在 k&#x3D;1 时，DDS<br>输出的时钟频率就是频率分辨率。 频率控制字 K 增加时，相位累加器溢出的频率增加，对应 DDS 输出信号 CLK_OUT 频率变为 K 倍的 DDS<br>频率分辨率。</strong></p>
+<p>举个例子： 设：ROM 存储单元个数为 4096，每个存储数据用 8 位二进制表示。即，<strong>ROM 地址线 宽度为 12，数据线宽度为 8；相位累加器位宽<br>N &#x3D; 32</strong> 。 根据上述条件可以知道，相位调制器位宽 M &#x3D; 12，那么根据 DDS<br>原理。那么在相位调制器中与相位控制字进行累加时，应用相位累加器的高 12 位累加。而相位累加器的低 20 位只与频率控制字累加。 我们以<strong>频率控制字 K<br>&#x3D; 1</strong> 为例，相位累加器的低 20 位<strong>一直会加 1</strong> ，直到低 20 位溢出向 高 12 位进位，此时 ROM 为 0，也就是说，ROM 的 0<br>地址中的数据被读了 2^20次，继续下 去，ROM 中的 4096 个点，每个点都将会被读 2^ 20次，最终输出的波形频率应该是参考时钟频率的 1 &#x2F;<br>2^20，周期被扩大了 2^20 倍。同样当<strong>频率控制字 K&#x3D;  100 时</strong>，相位累加器的低 20 位 <strong>一直会加 100</strong><br>，那么，相位累加器的低 20 位溢出的时间比上面会快 100 倍，则 ROM 中的 每个点相比于上面会少读 100 次，所以最终输出频率是上述的 10 倍。</p>
+<pre><code>    D/A 转换器即 数/模转换器，简称 DAC（Digital to Analog Conver），是指将数字信号转换为模拟信号的电子元件或电路。
+
+    DAC 内部电路构造无太大差异，大多数 DAC 由**电阻阵列和 n 个电流开关(或电压开关)** 构成，按照输入的数字值进行**开关切换** ，输出对应电流或电压。因此，按照输出信号类型可分为电压型和电流型，也可以按照 DAC 能否做乘法运算进行分类。若将 DAC 分为电压型和电流型两大类，电压型 DAC 中又**有权电阻网络、T 形电阻网络、树形开关网络** 等分别；电流型 DAC 中又有**权电流型电阻网络和倒 T 形电阻网络** 等。
+
+    电压输出型 DAC 一般采用**内置输出放大器以低阻抗输出** ，少部分**直接通过电阻阵列进行电压输出** 。直接输出电压的 DAC 仅用于高阻抗负载，由于**无输出放大器部分的延迟** ，故常作为**高速 DAC** 使用。
+
+    电流输出型 DAC 很少直接利用电流输出，大多**外接电流 - 电压转换电路进行电压输出** 。实现电流 - 电压转换，方法有二：一是只在输出引脚上**接负载电阻而进行电流- 电压转换** ，**二是外接运算放大器** 。
+
+    DAC 的主要技术指标包括**分辨率、线性度、转换精度和转换速度** 。
+
+    分辨率指输出模拟电压的最小增量，即表明 DAC 输入一个最低有效位(LSB)而在输出端上模拟电压的变化量。
+
+    线性度在理想情况下，DAC 的数字输入量作**等量增加时，其模拟输出电压也应作等量增加** ，但是实际输出往往有偏离。
+
+    D/A 转换器的转换精度与 D/A 转换器的集成芯片的结构和接口电路配置有关。如果不考虑其他 D/A 转换误差时，D/A 的转换精度就是分辨率的大小，因此要获得高精度的 D/A 转换结果，首先要保证选择有足够分辨率的 D/A 转换器。同时 D/A 转换精度还与外接电路的配置有关，当外部电路器件或电源误差较大时，会造成较大的 D/A 转换误差，当这些误差超过一定程度时，D/A 转换就产生错误。
+
+    转换速度一般由建立时间决定。建立时间是将一个数字量转换为稳定模拟信号所需的时间，也可以认为是转换时间。**DA 中常用建立时间来描述其速度，而不是 AD 中常用的转换速率** 。一般地，电流输出 DA 建立时间较短，电压输出 DA 则较长。
+</code></pre>
+<h3 id="代码设计-1"><a href="#代码设计-1" class="headerlink" title="&lt;2&gt;代码设计"></a>&lt;2&gt;代码设计</h3><h4 id="（1）整体设计-1"><a href="#（1）整体设计-1" class="headerlink" title="（1）整体设计"></a>（1）整体设计</h4><pre><code>    使用 FPGA 开发板和外部挂载的高速 AD/DA 板卡，设计并实现一个简易 DDS 信号发 生器，可通过按键控制实现正弦波、方波、三角波和锯齿波的波形输出，频率相位可调
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/6c80ea34aef420c3c4f07da0c3fcf0d2.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5f9d3db772c9b21577ae3374dc4460f4.png"></p>
+<p>详细介绍参考《野火FPGA Verilog开发实战指南》</p>
+<pre><code>    其他 3 部分，相位累加器、相位调制器、波形数据表 ROM 由 FPGA 负责。所以我们要建立一个单独的模块对 DDS 部分进行处理；实验目标还提到要使用按键实现 4 种波形的切换，按键消抖模块必不可少；同时也要声明一个按键控制模块对 4 个输入按键进行控制，子功能模块已经足够了，最后再加一个顶层模块。
+
+    顶层模块较为简单，内部例化了各子功能模块，连接各对应信号；外部有 3 路输入信号、2 路输出信号。输入有时钟、复位信号和控制信号波形切换的 4 路按键信号；输出 2 路信号中，信号 dac_data 为 DDS 模块输出的，自波形数据表 ROM 中读取的波形数据；信号 dac_clk 为输入至外载板卡的时钟信号，**DA 模块使用此时钟进行数据处理，该信号由系统时钟 sys_clk 取反得到** 。 波形数据表 ROM 的读时钟为系统时钟 sys_clk，在系统时钟上升沿时对 ROM 进行数据读取，而 DA 模块也使用时钟上升沿进行数据处理，**将系统时钟 sys_clk 取反得到 dac_clk，dac_clk 的上升沿刚好采集到波形数据 dac_data 的稳定数据** 。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/da377471871ba01b431909229db0e598.png"></p>
+<pre><code>module  top_dds
+(
+    input   wire            sys_clk     ,   //系统时钟,50MHz
+    input   wire            sys_rst_n   ,   //复位信号,低电平有效
+    input   wire    [3:0]   key         ,   //输入4位按键
+
+    output  wire            dac_clk     ,   //输入DAC模块时钟
+    output  wire    [7:0]   dac_data        //输入DAC模块波形数据
+);
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//wire  define
+wire    [3:0]   wave_select ;   //波形选择
+
+//dac_clka:DAC模块时钟
+assign  dac_clk  = ~sys_clk;
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//-------------------------- dds_inst -----------------------------
+dds     dds_inst
+(
+    .sys_clk        (sys_clk    ),   //系统时钟,50MHz
+    .sys_rst_n      (sys_rst_n  ),   //复位信号,低电平有效
+    .wave_select    (wave_select),   //输出波形选择
+
+    .data_out       (dac_data   )    //波形输出
+);
+
+//----------------------- key_control_inst ------------------------
+key_control key_control_inst
+(
+    .sys_clk        (sys_clk    ),   //系统时钟,50MHz
+    .sys_rst_n      (sys_rst_n  ),   //复位信号,低电平有效
+    .key            (key        ),   //输入4位按键
+
+    .wave_select    (wave_select)    //输出波形选择
+ );
+
+endmodule
+</code></pre>
+<h4 id="（2）DDS部分"><a href="#（2）DDS部分" class="headerlink" title="（2）DDS部分"></a>（2）DDS部分</h4><pre><code>    dds 模块中实例化一个 ROM IP 核，按顺序存入了一个完整周期的正弦波、方波、三角波、锯齿波的信号波形， 根据输入波形选择信号对 rom 中对应信号波形进行读取，将读出波形的幅度数字值输出， 传入外部挂载的高速 AD/DA 板卡的 DA 端，板卡根据输入的数字信号生成对应波形的模拟信号。其中，输出信号的频率和相位的调节可在 dds 模块中通过修改参数实现。
+
+    需要事先在波形数据表 ROM 中存入 4 种波形信号各自的完整周期波形数据。ROM 作为只读存储器，**在进行 IP 核设置时需要指定初始化文件，我们将波形数据作为初始化文件写入其中，文件格式为 COE 文件。**
+
+    使用 MatLab 绘制 4 种信号波形，对波形进行等间隔采样，以采样次数作为 ROM 存储地址，将采集的波形幅值数据做为存储数据写入存储地址对应的存储空间。我们对 4 种信号波形进行分别采样，采样次数为 2^12 = 4096 次，采集的波形幅值数据位宽为 8bit，将采集数据保存为 MIF 文件。
+</code></pre>
+<p>MATLAB文件（以正弦信号为例）：</p>
+<pre><code>clc;                    %清除命令行命令
+clear all;              %清除工作区变量,释放内存空间
+F1=1;                   %信号频率
+Fs=2^12;                %采样频率
+P1=0;                   %信号初始相位
+N=2^12;                 %采样点数
+t=[0:1/Fs:(N-1)/Fs];    %采样时刻
+ADC=2^7 - 1;            %直流分量
+A=2^7;                  %信号幅度
+%生成正弦信号
+s=A*sin(2*pi*F1*t + pi*P1/180) + ADC;
+plot(s);                %绘制图形
+%创建coe文件
+fild = fopen(&#39;sin_wave_4096x8.coe&#39;,&#39;wt&#39;);
+%写入coe文件头
+fprintf(fild, &#39;%s\n&#39;,&#39;MEMORY_INITIALIZATION_RADIX=10;&#39;); %10进制数
+fprintf(fild, &#39;%s\n&#39;,&#39;MEMORY_INITIALIZATION_VECTOR=&#39;); 
+for i = 1:N
+    s0(i) = round(s(i));    %对小数四舍五入以取整
+    if s0(i) &lt;0             %负1强制置零
+        s0(i) = 0
+    end
+    if i == N
+            fprintf(fild, &#39;%d&#39;,s0(i));      %数据写入
+            fprintf(fild, &#39;%s&#39;,&#39;;&#39;);        %最后一个数据使用分号
+    else
+            fprintf(fild, &#39;%d&#39;,s0(i));      %数据写入
+            fprintf(fild, &#39;%s\n&#39;,&#39;,&#39;);      %逗号，换行
+    end     
+end
+fclose(fild);
+</code></pre>
+<p>整体信号写入：</p>
+<pre><code>clc;                    %清除命令行命令
+clear all;              %清除工作区变量,释放内存空间
+F1=1;                   %信号频率
+Fs=2^12;                %采样频率
+P1=0;                   %信号初始相位
+N=2^12;                 %采样点数
+t=[0:1/Fs:(N-1)/Fs];    %采样时刻
+ADC=2^7 - 1;            %直流分量
+A=2^7;                  %信号幅度
+s1=A*sin(2*pi*F1*t + pi*P1/180) + ADC;          %正弦波信号
+s2=A*square(2*pi*F1*t + pi*P1/180) + ADC;       %方波信号
+s3=A*sawtooth(2*pi*F1*t + pi*P1/180,0.5) + ADC; %三角波信号
+s4=A*sawtooth(2*pi*F1*t + pi*P1/180) + ADC;     %锯齿波信号
+%创建coe文件
+fild = fopen(&#39;wave_16384x8.coe&#39;,&#39;wt&#39;);
+%写入coe文件头
+fprintf(fild, &#39;%s\n&#39;,&#39;MEMORY_INITIALIZATION_RADIX=10;&#39;); %10进制数
+fprintf(fild, &#39;%s\n&#39;,&#39;MEMORY_INITIALIZATION_VECTOR=&#39;);
+for j = 1:4
+    for i = 1:N
+        if j == 1       %打印正弦信号数据
+            s0(i) = round(s1(i));    %对小数四舍五入以取整
+        end
+
+        if j == 2       %打印方波信号数据
+            s0(i) = round(s2(i));    %对小数四舍五入以取整
+        end
+
+        if j == 3       %打印三角波信号数据
+            s0(i) = round(s3(i));    %对小数四舍五入以取整
+        end
+
+        if j == 4       %打印锯齿波信号数据
+            s0(i) = round(s4(i));    %对小数四舍五入以取整
+        end
+
+        if s0(i) &lt;0             %负1强制置零
+            s0(i) = 0
+        end
+        
+        if j == 4 &amp;&amp; i == N
+            fprintf(fild, &#39;%d&#39;,s0(i));      %数据写入
+            fprintf(fild, &#39;%s&#39;,&#39;;&#39;);        %最后一个数使用分号结束
+        else
+            fprintf(fild, &#39;%d&#39;,s0(i));      %数据写入
+            fprintf(fild, &#39;%s\n&#39;,&#39;,&#39;);      %逗号，换行
+        end
+    end
+end
+fclose(fild);
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a87316586f399c84e19bb0b36947031f.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/0404863083748a6404247951d25cd7cb.png"></p>
+<pre><code>    内部声明 3 个寄存器变量。其中 fre_add 表示相位累加器输出值，位宽为 32 位，系统上电后，**fre_add 信号一直执行自加操作，每个时钟周期自加参数 FREQ_CTRL** ，参数 FREQ_CTRL 就是在之前理论知识部分提到的频率字输入 K。
+
+    寄存器变量 rom_addr_reg 表示相位调制器输出值，将相位累加器输出值的高 12 位与相位偏移量 PHASE_CTRL 相加，参数 PHASE_CTRL 就是我们之前提到过的相位字输入P。之所以使用高 12 位，与存储波形的 ROM 深度有关。按理论讲，将得到的变量 rom_addr_reg，可直接作为 ROM 读地址输入波形数据表进行数据读取，但是我们将 4 中波形存储在了同一 ROM 中，所以还需要对读数据地址做进一步计算。
+
+    ROM 读地址 rom_addr 是输入波形数据表的 ROM 读地址，是在 rom_addr_reg 的基础上计算得到。我们之前将 4 种信号波形数据按照正弦波、方波、三角波、锯齿波的顺序写 入 ROM。若需要读取正弦波波形数据，rom_addr_reg 可直接赋值给 rom_addr；但是要进行方波波形数据的读取，rom_addr_reg 需要再加上正弦波存储单元个数才能赋值给 rom_addr；剩余两信号同理。
+
+    本实验，我们希望输出一个频率为 500Hz，初相位为π/2 的正弦波信号。 计算参数 FREQ_CTRL，即频率输入字 K。
+
+    **FREQ_CTRL = K = 2N * fOUT / fCLK** ，其中**N = 32(相位累加器输出值 fre_add 的位宽)** 、 fOUT = 500Hz，fCLK = 50MHz，带入公式，FREQ_CTRL = K = 42949.67296 ，取整数部分为 42949；         
+
+    计算参数 PHASE_CTRL，即相位输入字 P。 **PHASE_CTRL = P = θ / (2π / 2M)** ，其中**M =12(输入 ROM 地址位宽)** 、θ = π / 2，带入 公式，PHASE_CTRL = P = 1024。
+
+
+module  dds
+(
+    input   wire            sys_clk     ,   //系统时钟,50MHz
+    input   wire            sys_rst_n   ,   //复位信号,低电平有效
+    input   wire    [3:0]   wave_select ,   //输出波形选择
+
+    output  wire    [7:0]   data_out        //波形输出
+);
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//parameter define
+parameter   sin_wave    =   4&#39;b0001     ,   //正弦波
+            squ_wave    =   4&#39;b0010     ,   //方波
+            tri_wave    =   4&#39;b0100     ,   //三角波
+            saw_wave    =   4&#39;b1000     ;   //锯齿波
+parameter   FREQ_CTRL   =   32&#39;d42949   ,   //相位累加器单次累加值
+            PHASE_CTRL  =   12&#39;d1024    ;   //相位偏移量
+
+//reg   define
+reg     [31:0]  fre_add     ;   //相位累加器
+reg     [11:0]  rom_addr_reg;   //相位调制后的相位码
+reg     [13:0]  rom_addr    ;   //ROM读地址
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//fre_add:相位累加器
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        fre_add &lt;=  32&#39;d0;
+    else
+        fre_add &lt;=  fre_add + FREQ_CTRL;
+
+//rom_addr:ROM读地址
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        begin
+            rom_addr        &lt;=  14&#39;d0;
+            rom_addr_reg    &lt;=  11&#39;d0;
+        end
+    else
+    case(wave_select)
+        sin_wave:
+            begin
+                rom_addr_reg    &lt;=  fre_add[31:20] + PHASE_CTRL;
+                rom_addr        &lt;=  rom_addr_reg;
+            end     //正弦波
+        squ_wave:
+            begin
+                rom_addr_reg    &lt;=  fre_add[31:20] + PHASE_CTRL;
+                rom_addr        &lt;=  rom_addr_reg + 14&#39;d4096;
+            end     //方波
+        tri_wave:
+            begin
+                rom_addr_reg    &lt;=  fre_add[31:20] + PHASE_CTRL;
+                rom_addr        &lt;=  rom_addr_reg + 14&#39;d8192;
+            end     //三角波
+        saw_wave:
+        begin
+                rom_addr_reg    &lt;=  fre_add[31:20] + PHASE_CTRL;
+                rom_addr        &lt;=  rom_addr_reg + 14&#39;d12288;
+            end     //锯齿波
+        default:
+            begin
+                rom_addr_reg    &lt;=  fre_add[31:20] + PHASE_CTRL;
+                rom_addr        &lt;=  rom_addr_reg;
+            end     //正弦波
+    endcase
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------------------- rom_wave_inst ------------------------
+
+rom_wave    rom_wave_inst
+(
+  .clka(sys_clk), // input clka
+  .addra(rom_addr), // input [13 : 0] addra
+  .douta(data_out) // output [7 : 0] douta
+);
+
+endmodule
+
+
+    rom_wave 是 IP 核，可以看到改变初相位的办法就是初始值加上 PHASE_CTRL ；每个时钟周期先给 fre_add 赋值，接着是 rom_addr_reg 和 rom_addr，rom_addr 直接连接到 IP 核。
+</code></pre>
+<p>（3）按键消抖部分</p>
+<pre><code>module  key_filter
+#(
+    parameter CNT_MAX = 20&#39;d999_999 //计数器计数最大值
+)
+(
+    input   wire    sys_clk     ,   //系统时钟50Mhz
+    input   wire    sys_rst_n   ,   //全局复位
+    input   wire    key_in      ,   //按键输入信号
+
+    output  reg     key_flag        //key_flag为1时表示消抖后检测到按键被按下
+                                    //key_flag为0时表示没有检测到按键被按下
+);
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//reg   define
+reg     [19:0]  cnt_20ms    ;   //计数器
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+
+//cnt_20ms:如果时钟的上升沿检测到外部按键输入的值为低电平时，计数器开始计数
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_20ms &lt;= 20&#39;b0;
+    else    if(key_in == 1&#39;b1)
+        cnt_20ms &lt;= 20&#39;b0;
+    else    if(cnt_20ms == CNT_MAX &amp;&amp; key_in == 1&#39;b0)
+        cnt_20ms &lt;= cnt_20ms;
+    else
+        cnt_20ms &lt;= cnt_20ms + 1&#39;b1;
+
+//key_flag:当计数满20ms后产生按键有效标志位
+//且key_flag在999_999时拉高,维持一个时钟的高电平
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        key_flag &lt;= 1&#39;b0;
+    else    if(cnt_20ms == CNT_MAX - 1&#39;b1)
+        key_flag &lt;= 1&#39;b1;
+    else
+        key_flag &lt;= 1&#39;b0;
+
+endmodule
+
+
+
+module  key_control
+(
+    input   wire            sys_clk     ,   //系统时钟,50MHz
+    input   wire            sys_rst_n   ,   //复位信号,低电平有效
+    input   wire    [3:0]   key         ,   //输入4位按键
+
+    output  reg     [3:0]   wave_select     //输出波形选择
+);
+
+//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//parameter define
+parameter   sin_wave    =   4&#39;b0001,    //正弦波
+            squ_wave    =   4&#39;b0010,    //方波
+            tri_wave    =   4&#39;b0100,    //三角波
+            saw_wave    =   4&#39;b1000;    //锯齿波
+
+parameter   CNT_MAX =   20&#39;d999_999;    //计数器计数最大值
+
+//wire  define
+wire            key3    ;   //按键3
+wire            key2    ;   //按键2
+wire            key1    ;   //按键1
+wire            key0    ;   //按键0
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//wave:按键状态对应波形
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        wave_select   &lt;=  4&#39;b0000;
+    else    if(key0 == 1&#39;b1)
+        wave_select   &lt;=  sin_wave;
+    else    if(key1 == 1&#39;b1)
+        wave_select   &lt;=  squ_wave;
+    else    if(key2 == 1&#39;b1)
+        wave_select   &lt;=  tri_wave;
+    else    if(key3 == 1&#39;b1)
+        wave_select   &lt;=  saw_wave;
+    else
+        wave_select   &lt;=  wave_select;
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------- key_fifter_inst3 --------------
+key_filter 
+#(
+    .CNT_MAX      (CNT_MAX  )       //计数器计数最大值
+)
+key_filter_inst3
+(
+    .sys_clk      (sys_clk  )   ,   //系统时钟50Mhz
+    .sys_rst_n    (sys_rst_n)   ,   //全局复位
+    .key_in       (key[3]   )   ,   //按键输入信号
+
+    .key_flag     (key3     )       //按键消抖后标志信号
+);
+
+//------------- key_fifter_inst2 --------------
+key_filter 
+#(
+    .CNT_MAX      (CNT_MAX  )       //计数器计数最大值
+)
+key_filter_inst2
+(
+    .sys_clk      (sys_clk  )   ,   //系统时钟50Mhz
+    .sys_rst_n    (sys_rst_n)   ,   //全局复位
+    .key_in       (key[2]   )   ,   //按键输入信号
+
+    .key_flag     (key2     )       //按键消抖后标志信号
+);
+
+//------------- key_fifter_inst1 --------------
+key_filter 
+#(
+    .CNT_MAX      (CNT_MAX  )       //计数器计数最大值
+)
+key_filter_inst1
+(
+    .sys_clk      (sys_clk  )   ,   //系统时钟50Mhz
+    .sys_rst_n    (sys_rst_n)   ,   //全局复位
+    .key_in       (key[1]   )   ,   //按键输入信号
+
+    .key_flag     (key1     )       //按键消抖后标志信号
+);
+
+//------------- key_fifter_inst0 --------------
+key_filter 
+#(
+    .CNT_MAX      (CNT_MAX  )       //计数器计数最大值
+)
+key_filter_inst0
+(
+    .sys_clk      (sys_clk  )   ,   //系统时钟50Mhz
+    .sys_rst_n    (sys_rst_n)   ,   //全局复位
+    .key_in       (key[0]   )   ,   //按键输入信号
+
+    .key_flag     (key0     )       //按键消抖后标志信号
+);
+
+endmodule
+</code></pre>
+<p>key_control模块实例化了四个按键消抖模块</p>
+<h3 id="仿真"><a href="#仿真" class="headerlink" title="&lt;3&gt;仿真"></a>&lt;3&gt;仿真</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/a74cf028e7f344f5bbcede195c9bddaa.png"></p>
+<pre><code>`timescale  1ns/1ns
+
+// Author  : EmbedFire
+// 实验平台: 野火FPGA系列开发板
+// 公司    : http://www.embedfire.com
+// 论坛    : http://www.firebbs.cn
+// 淘宝    : https://fire-stm32.taobao.com
+
+
+module  tb_top_dds();
+
+//**************************************************************//
+//*************** Parameter and Internal Signal ****************//
+//**************************************************************//
+parameter   CNT_1MS  = 20&#39;d19000   ,
+            CNT_11MS = 21&#39;d69000   ,
+            CNT_41MS = 22&#39;d149000  ,
+            CNT_51MS = 22&#39;d199000  ,
+            CNT_60MS = 22&#39;d249000  ;
+
+//wire  define
+wire            dac_clk     ;
+wire    [7:0]   dac_data    ;
+
+//reg   define
+reg             sys_clk     ;
+reg             sys_rst_n   ;
+reg     [21:0]  tb_cnt      ;
+reg             key_in      ;
+reg     [1:0]   cnt_key     ;
+reg     [3:0]   key         ;
+
+//defparam  define
+defparam    top_dds_inst.key_control_inst.CNT_MAX = 24;
+
+//**************************************************************//
+//************************** Main Code *************************//
+//**************************************************************//
+//sys_rst_n,sys_clk,key
+initial
+    begin
+        sys_clk     =   1&#39;b0;
+        sys_rst_n   &lt;=   1&#39;b0;
+        key &lt;= 4&#39;b0000;
+        #200;
+        sys_rst_n   &lt;=   1&#39;b1;
+    end
+
+always #10 sys_clk = ~sys_clk;
+
+//tb_cnt:按键过程计数器，通过该计数器的计数时间来模拟按键的抖动过程
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        tb_cnt &lt;= 22&#39;b0;
+    else    if(tb_cnt == CNT_60MS)
+        tb_cnt &lt;= 22&#39;b0;
+    else    
+        tb_cnt &lt;= tb_cnt + 1&#39;b1;
+
+//key_in:产生输入随机数，模拟按键的输入情况
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        key_in &lt;= 1&#39;b1;
+    else    if((tb_cnt &gt;= CNT_1MS &amp;&amp; tb_cnt &lt;= CNT_11MS)
+                || (tb_cnt &gt;= CNT_41MS &amp;&amp; tb_cnt &lt;= CNT_51MS))
+        key_in &lt;= &#123;$random&#125; % 2;
+    else    if(tb_cnt &gt;= CNT_11MS &amp;&amp; tb_cnt &lt;= CNT_41MS)
+        key_in &lt;= 1&#39;b0;
+    else
+        key_in &lt;= 1&#39;b1;
+
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_key &lt;=  2&#39;d0;
+    else    if(tb_cnt == CNT_60MS)
+        cnt_key &lt;=  cnt_key + 1&#39;b1;
+    else
+        cnt_key &lt;=  cnt_key;
+
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        key     &lt;=  4&#39;b1111;
+    else
+        case(cnt_key)
+            0:      key &lt;=  &#123;3&#39;b111,key_in&#125;;
+            1:      key &lt;=  &#123;2&#39;b11,key_in,1&#39;b1&#125;;
+            2:      key &lt;=  &#123;1&#39;b1,key_in,2&#39;b11&#125;;
+            3:      key &lt;=  &#123;key_in,3&#39;b111&#125;;
+            default:key &lt;=  4&#39;b1111;
+        endcase
+
+//**************************************************************//
+//************************ Instantiation ***********************//
+//**************************************************************//
+//------------- top_dds_inst -------------
+top_dds top_dds_inst
+(
+    .sys_clk    (sys_clk    ),
+    .sys_rst_n  (sys_rst_n  ),
+    .key        (key        ),
+
+    .dac_clk    (dac_clk    ),
+    .dac_data   (dac_data   )
+);
+
+endmodule
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c1889590a090cc653ecbc28aa8be916d.png"></p>
+<h2 id="三-简易电压表"><a href="#三-简易电压表" class="headerlink" title="三.简易电压表"></a>三.简易电压表</h2><h3 id="简介-2"><a href="#简介-2" class="headerlink" title="&lt;1&gt;简介"></a>&lt;1&gt;简介</h3><pre><code>    模/数转换器即 A/D 转换器，或简称 ADC（Analog to Digital Conver），模拟信号与数字信号的转换过程一般分为四个步骤：**采样、保持、量化、编码** 。前两个步骤在采样-保持电路中完成，后两步则在 ADC 芯片中完成。
+
+    常用的 ADC 可分为**积分型、逐次逼近型、并行比较型/串并行型、Σ -Δ调制型、电容阵列逐次比较型以及压频变换型** 。
+
+    积分型 ADC 工作原理是**将输入电压转换成时间或频率，然后由定时器/计数器获得数字值** 。其优点是使用简单电路就能获得高分辨率；缺点是由于转换精度依赖于积分时间， 因此**转换速率极低** 。双积分是一种常用的 AD 转换技术，具有精度高，抗干扰能力强等优点。但高精度的双积分 AD 芯片，价格昂贵，设计成本较高。
+
+    逐次逼近型 ADC 由一个比较器和 DA 转换器通过逐次比较逻辑构成，从 MSB 开始， 顺序地对每一位**将输入电压与内置 DA 转换器输出进行比较，经 n 次比较而输出数字值** 。 其电路规模属于中等，优点是速度较高、功耗低，在低分辨率( &lt; 12 位)时价格便宜，但高精度( &gt; 12 位)价格昂贵。
+
+    并行比较型 ADC **采用多个比较器** ，仅作一次比较而实行转换，又称 Flash 型。由于转换速率极高，**n 位的转换需要 2n - 1 个比较器** ，因此电路规模也极大，价格也高，**只适用于视频 AD 转换器等速度特别高的领域** 。
+
+    Σ- Δ型 ADC 以**很低的采样分辨率( 1 位)和很高的采样速率** 将模拟信号数字化，通过使用**过采样、噪声整形和数字滤波等方法增加有效分辨率** ，然后对 ADC 输出进行采样抽取处理以降低有效采样速率。Σ-Δ型 ADC 的电路结构是由非常简单的模拟电路和十分复杂的数字信号处理电路构成。
+
+    电容阵列逐次比较型 ADC 在**内置 DA 转换器中采用电容矩阵方式** ，也可称为电荷再分配型。一般的电阻阵列 DA 转换器中多数电阻的值必须一致，在单芯片上生成高精度的电阻并不容易。如果用电容阵列取代电阻阵列，可以用低廉成本制成高精度单片 AD 转换器。最近的逐次比较型 AD 转换器大多为电容阵列式的。
+
+    压频变换型是通过间接转换方式实现模数转换的。其原理是首先**将输入的模拟信号转换成频率，然后用计数器将频率转换成数字量** 。从理论上讲这种 ADC 的分辨率几乎可以无限增加，**只要采样的时间能够满足输出频率分辨率要求的累积脉冲个数的宽度** 。其优点是分辨率高、功耗低、价格低，但是需要外部计数电路共同完成 AD 转换。
+
+    ADC 的主要技术指标包括：**分辨率、转换速率、量化误差、满刻度误差、线性度** 。
+
+    分辨率指输出数字量变化一个最低有效位(LSB)所需的输入模拟电压的变化量。 转换速率是指完成一次从模拟转换到数字的 AD 转换所需要的时间的倒数。**积分型 AD 的转换时间是毫秒级属低速 AD，逐次比较型 AD 是微秒级属中速 AD，全并行/串并行 型 AD 可达到纳秒级** 。采样时间则是另外一个概念，是指**两次转换的间隔** 。为了保证转换的正确完成，**采样速率（Sample Rate）必须小于或等于转换速率** 。因此有人习惯上将转换速率在数值上等同于采样速率也是可以接受的。 量化误差是由于 AD 的有限分辩率而引起的误差，即有限分辩率 AD 的阶梯状转移特性曲线与无限分辩率 AD（理想 AD）的转移特性曲线（直线）之间的最大偏差。通常是 1 个或半个最小数字量的模拟变化量，表示为 **1LSB、1/2LSB** 。 满刻度误差是满刻度输出时对应的输入信号与理想输入信号值之差。 线性度指实际转换器的转移函数与理想直线的最大偏移。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/02c1afc1e39c76f93bda212446d69078.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e0285c7fd6f5b8e37bd4d93f9cdba82b.png"></p>
+<pre><code>    实验主要把adc模块传回的数据变换为数值。本实验使用的 ADC 芯片位宽为 8 位，板卡模拟电压输入范围为-5v~+5v，即电压表测量范围，最大值和最小值压降为 10v，分辨率为 10/28。
+
+    当 ADC 芯片采集后的电压数值 ad_data 位于 0 - 127 范围内，表示测量电压位于-5V ~ 0V 范围内，换算为电压值：Vin = - (10 / 28 * (127 - ad_data))；当 ADC 芯片采集后的电压数值 ad_data 位于 128 - 255 范围内，表示测量电压位于 0V ~ 5V 范围内，换算为电压值：Vin = (10 / 28 * (ad_data - 127))。
+
+    简易电压表实验可以参照这种思想来进行工程的设计与实现，但为了提高测量结果的精确性，我们使用**定义中值的测量方法** 。
+
+    在电压表上电后未接入测量电压时，取 ADC 芯片采集的最初的若干测量值，取平均，作为测量中值 **data_median** ，与实际测量值 0V 对应。 使用定义中值的测量方法时，当 ADC 芯片采集后的电压数值 ad_data 位于 0 ~ data_median 范围内，表示测量电压位于-5V ~ 0V 范围内，**分辨率为 10/((data_median + 1) * 2)** ，换算为电压值：Vin = - ((10 /((data_median + 1) * 2)) * (data_median - ad_data))；当 ADC 芯片采集后的电压数值 ad_data 位于 data_median - 255 范围内，表示测量电压位于 0V ~ 5V 范围内，分辨率为 10/((255 - data_median + 1) * 2)，换算为电压值：Vin = ((10 /((255 - data_median + 1) * 2)) * (ad_data - data_median))。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/70245ce26acea947146d29556fab06f5.png"></p>
+<pre><code>    对于模块的输入信号不再说明，输出至外载板块的的时钟信号为 ad_clk，频率为 12.5MHz，使用系统时钟 4 分频得来，所以声明了分频计数器 cnt_sys_clk，初值为 0，在系 统时钟同步下，在 0、1 之间循环计数；声明时钟信号 clk_sample，在计数器 cnt_sys_clk 计数值为 1 时，对自身取反，就得到了时钟频率为 12.5MHz 的分频时钟信号 clk_sample，也 作为本模块工作时钟信号；因为外载板卡与本模块均使用时钟上升沿对数据采样，**为保证模块内工作时钟上升沿能够采集到板块传入的稳定数据，我们对 clk_sample 时钟信号取反 作为输入板卡的时钟信号 adc_clk，adc_clk 的上升沿刚好采集到数据的稳定状态** 。
+
+    声明中值使能信号 median_en，方便计算中值，当 median_en 信号为低电平时，进行中值的计算；当 median_en 信号为高电平时，对 ADC 测量值进行累加求平均的计算。 对中值的计算我们也使用累加求平均的方法，**在无测量电压输入电压表时，对前 1024 个数据进行累加求平均** ，所以声明计数器 cnt_median 对累加值个数进行计数，计算范围 0- 1023，只在 median_en 为低电平时进行计数，median_en 为高电平时，保持计数最大值；同时，计数最大值作为条件，拉高 median_en 使能信号。1024 个测量值总和保存在变量 data_sum_m 中，**当 cnt_median 计数到最大值，将平均值赋值给变量 data_median** 。
+
+    中值 data_median 确定后，开始测量电压的计算。 为保证运算后的电压值更准确，我们对计算出的分辨率进行放大。**当 ADC 芯片采集后的电压数值 ad_data 位于 0 - data_median 范围内，表示测量电压位于-5V ~ 0V 范围内， 声明分辨率为 data_n = (10 * 2^13 * 1000) / ((data_median + 1) * 2)；当 ADC 芯片采集后的电压数值 ad_data 位于 data_median - 255 范围内，表示测量电压位于 0V ~ 5V 范围内，声明分辨率为 data_p = (10 * 2^13 * 1000) / ((255 - data_median + 1) * 2)。放大倍数为(2^13 * 1000) 倍** ，之所以使用这个放大倍数是为了方便电压值的计算与显示。（**小数除以大数精度损失，且无法恢复；左移变大，放大精度** ）
+
+    确定了分辨率之后，结合 ADC 芯片传入的测量值，我们开始计算实际电压值。声明实际电压值为 volt_reg，当 ADC 芯片采集后的电压数值 ad_data 位于 0 - data_median 范围内，表示测量电压位于-5V ~ 0V 范围内，volt_reg = (data_n *(data_median - ad_data)) &gt;&gt; 13；当 ADC 芯片采集后的电压数值 ad_data 位于 data_median - 255 范围内，表示测量电压 位于 0V ~ 5V 范围内，**volt_reg = (data_p *(ad_data - data_median)) &gt;&gt; 13。使用 “&gt;&gt; 13”对 计算值进行右移 13 位，由于抵消分辨率放大的 2^13 倍，分辨率中放大的 1000 倍，可以通 过将数码管显示值小数点左移 3 位来抵消**；正负号通过 ad_data 与中值 data_median 的打消比较来确定，sign = (ad_data &lt; data_median) ? 1&#39;b1 : 1&#39;b0，sign 为高电平，代表测量结果为负向电压，反之为正向电压。
+</code></pre>
+<h3 id="代码设计-2"><a href="#代码设计-2" class="headerlink" title="&lt;2&gt;代码设计"></a>&lt;2&gt;代码设计</h3><h4 id="（1）ADC"><a href="#（1）ADC" class="headerlink" title="（1）ADC"></a>（1）ADC</h4><pre><code>module  adc
+(
+    input   wire            sys_clk         ,   //时钟
+    input   wire            sys_rst_n       ,   //复位信号，低电平有效
+    input   wire    [7:0]   ad_data         ,   //AD输入数据
+
+    output  wire            ad_clk          ,   //AD驱动时钟,最大支持20Mhz时钟
+    output  wire            sign            ,   //正负符号位
+    output  wire    [15:0]  volt                //数据转换后的电压值
+);
+//********************************************************************//
+//******************Parameter And Internal Signal ********************//
+//********************************************************************//
+//parameter define
+parameter   CNT_DATA_MAX = 11&#39;d1024;    //数据累加次数
+
+//wire  define
+wire    [27:0]  data_p      ;   //根据中值计算出的正向电压AD分辨率
+wire    [27:0]  data_n      ;   //根据中值计算出的负向电压AD分辨率
+
+//reg define
+reg             median_en   ;   //中值使能
+reg     [10:0]  cnt_median  ;   //中值数据累加计数器
+reg     [18:0]  data_sum_m  ;   //1024次中值数据累加总和
+reg     [7:0]   data_median ;   //中值数据
+reg     [1:0]   cnt_sys_clk ;   //时钟分频计数器
+reg             clk_sample  ;   //采样数据时钟
+reg     [27:0]  volt_reg    ;   //电压值寄存
+
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//数据ad_data是在ad_sys_clk的上升沿更新
+//所以在ad_sys_clk的下降沿采集数据是数据稳定的时刻
+//FPGA内部一般使用上升沿锁存数据,所以时钟取反
+//这样ad_sys_clk的下降沿相当于sample_sys_clk的上升沿
+assign  ad_clk = ~clk_sample;
+
+//sign:正负符号位
+assign  sign = (ad_data &lt; data_median) ? 1&#39;b1 : 1&#39;b0;
+
+//时钟分频(4分频,时钟频率为12.5Mhz),产生采样AD数据时钟
+always@(posedge sys_clk or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        begin
+            cnt_sys_clk &lt;=  2&#39;d0;
+            clk_sample  &lt;=  1&#39;b0;
+        end
+        else
+        begin
+            cnt_sys_clk &lt;=  cnt_sys_clk + 2&#39;d1;
+        if(cnt_sys_clk == 2&#39;d1)
+            begin
+            cnt_sys_clk &lt;=  2&#39;d0;
+            clk_sample  &lt;=  ~clk_sample;
+            end
+        end
+
+//中值使能信号
+always@(posedge clk_sample or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        median_en   &lt;=  1&#39;b0;
+    else    if(cnt_median == CNT_DATA_MAX)
+        median_en   &lt;=  1&#39;b1;
+    else
+        median_en   &lt;=  median_en;
+
+//cnt_median:中值数据累加计数器
+always@(posedge clk_sample or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        cnt_median    &lt;=  11&#39;d0;
+    else    if(median_en == 1&#39;b0)
+        cnt_median    &lt;=  cnt_median + 1&#39;b1;
+
+//data_sum_m:1024次中值数据累加总和
+always@(posedge clk_sample or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        data_sum_m  &lt;=  19&#39;d0;
+    else    if(cnt_median == CNT_DATA_MAX)
+        data_sum_m    &lt;=  19&#39;d0;
+    else
+        data_sum_m    &lt;=  data_sum_m + ad_data;
+
+//data_median:中值数据
+always@(posedge clk_sample or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        data_median    &lt;=  8&#39;d0;
+    else    if(cnt_median == CNT_DATA_MAX)
+        data_median    &lt;=  data_sum_m / CNT_DATA_MAX;
+    else
+        data_median    &lt;=  data_median;
+
+//data_p:根据中值计算出的正向电压AD分辨率(放大2^13*1000倍)
+//data_n:根据中值计算出的负向电压AD分辨率(放大2^13*1000倍)
+assign  data_p = (median_en == 1&#39;b1) ? 8192_0000 / ((255 - data_median) * 2) : 0;
+assign  data_n = (median_en == 1&#39;b1) ? 8192_0000 / ((data_median + 1) * 2) : 0;
+
+//volt_reg:处理后的稳定数据
+always@(posedge clk_sample or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        volt_reg    &lt;= &#39;d0;
+    else    if(median_en == 1&#39;b1)
+        if((ad_data &gt; (data_median - 3))&amp;&amp;(ad_data &lt; (data_median + 3)))
+            volt_reg    &lt;= &#39;d0;
+        else    if(ad_data &lt; data_median)
+            volt_reg &lt;= (data_n *(data_median - ad_data)) &gt;&gt; 13;
+        else    if(ad_data &gt; data_median)
+            volt_reg &lt;= (data_p *(ad_data - data_median)) &gt;&gt; 13;
+    else
+        volt_reg    &lt;= &#39;d0;
+
+//volt:数据转换后的电压值
+assign  volt    =   volt_reg;
+
+endmodule
+</code></pre>
+<p>可以看到 volt_reg 数值在 da_data 接近 0 （ data_median ）时直接赋值 0<br>；同时注意到系统只能通过复位进行重新测量，median_en并没有自动拉低</p>
+<h4 id="（2）顶层"><a href="#（2）顶层" class="headerlink" title="（2）顶层"></a>（2）顶层</h4><pre><code>module  dig_volt
+(
+    input   wire            sys_clk     ,   //系统时钟,50MHz
+    input   wire            sys_rst_n   ,   //复位信号，低有效
+    input   wire    [7:0]   ad_data     ,   //AD输入数据
+
+    output  wire            ad_clk      ,   //AD驱动时钟,最大支持20Mhz时钟
+    output  wire    [5:0]   sel         ,   //串行数据输入
+    output  wire    [7:0]   seg             //使能信号
+);
+//********************************************************************//
+//*********************** Internal Signal ****************************//
+//********************************************************************//
+//wire  define
+wire    [15:0]  volt    ;   //数据转换后的电压值
+wire            sign    ;   //正负符号位
+
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------- adc_inst -------------
+adc     adc_inst
+(
+    .sys_clk    (sys_clk    ),  //时钟
+    .sys_rst_n  (sys_rst_n  ),  //复位信号，低电平有效
+    .ad_data    (ad_data    ),  //AD输入数据
+
+    .ad_clk     (ad_clk     ),  //AD驱动时钟,最大支持20Mhz时钟
+    .sign       (sign       ),  //正负符号位
+    .volt       (volt       )   //数据转换后的电压值
+);
+
+//------------- seg_dynamic_inst --------------
+seg_dynamic     seg_dynamic_inst
+(
+    .sys_clk    (sys_clk    ),  //系统时钟，频率50MHz
+    .sys_rst_n  (sys_rst_n  ),  //复位信号，低有效
+    .data       (&#123;4&#39;b0,volt&#125;),  //数码管要显示的值
+    .point      (6&#39;b001000  ),  //小数点显示,高电平有效
+    .seg_en     (1&#39;b1       ),  //数码管使能信号，高电平有效
+    .sign       (sign       ),  //符号位，高电平显示负号
+
+    .sel        (sel        ),  //串行数据输入
+    .seg        (seg        )   //输出使能信号
+);
+
+endmodule
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/21ad66777b680d8d5fb99e1369c3fbe1.png"></p>
+<h3 id="仿真-1"><a href="#仿真-1" class="headerlink" title="&lt;3&gt;仿真"></a>&lt;3&gt;仿真</h3><pre><code>module  tb_dig_volt();
+//wire  define
+wire            ad_clk  ;
+wire      [5:0]      sel    ;
+wire      [7:0]      seg    ;
+
+
+//reg   define
+reg             sys_clk     ;
+reg             clk_sample  ;
+reg             sys_rst_n   ;
+reg             data_en     ;
+reg     [7:0]   ad_data_reg ;
+reg     [7:0]   ad_data     ;
+
+//sys_rst_n,sys_clk,ad_data
+initial
+    begin
+        sys_clk     =   1&#39;b1;
+        clk_sample  =   1&#39;b1;
+        sys_rst_n   =   1&#39;b0;
+        #200;
+        sys_rst_n   =   1&#39;b1;
+        data_en     =   1&#39;b0;
+        #499990;
+        data_en     =   1&#39;b1; 
+    end
+
+always #10 sys_clk = ~sys_clk;
+always #40 clk_sample = ~clk_sample;
+
+always@(posedge clk_sample or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        ad_data_reg &lt;=  8&#39;d0;
+    else    if(data_en == 1&#39;b1)
+        ad_data_reg &lt;=  ad_data_reg + 1&#39;b1;
+    else
+        ad_data_reg &lt;=  8&#39;d0;
+
+always@(posedge clk_sample or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        ad_data &lt;=  8&#39;d0;
+    else    if(data_en == 1&#39;b0)
+        ad_data &lt;=  8&#39;d125;
+    else    if(data_en == 1&#39;b1)
+        ad_data &lt;=  ad_data_reg;
+    else
+        ad_data &lt;=  ad_data;
+
+//------------- dig_volt_inst -------------
+dig_volt    dig_volt_inst
+(
+    .sys_clk     (sys_clk   ),
+    .sys_rst_n   (sys_rst_n ),
+    .ad_data     (ad_data   ),
+
+    .ad_clk      (ad_clk    ),
+    .sel        (sel      ),
+    .seg        (seg      )
+);
+
+endmodule
+</code></pre>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132993678">https://blog.csdn.net/qq_32971095/article/details/132993678</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/None/" rel="tag"># None</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/11/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%B8%89%EF%BC%88RS232%E3%80%81I2C%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C4%EF%BC%9E/" rel="prev" title="基础设计三（RS232、I2C）——FPGA学习笔记＜4＞">
+      <i class="fa fa-chevron-left"></i> 基础设计三（RS232、I2C）——FPGA学习笔记＜4＞
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/22/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" rel="next" title="嵌入式学习路线">
+      嵌入式学习路线 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E7%AE%80%E6%98%93%E9%A2%91%E7%8E%87%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">一.简易频率计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">&lt;1&gt;简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.1.1.</span> <span class="nav-text">（1）整体设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E9%A2%91%E7%8E%87%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%9D%97"><span class="nav-number">1.1.2.</span> <span class="nav-text">（2）频率计算模块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.</span> <span class="nav-text">&lt;2&gt;代码设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89freq-meter-calc%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.1.</span> <span class="nav-text">（1）freq_meter_calc模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E9%A1%B6%E5%B1%82%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.2.</span> <span class="nav-text">（2）顶层模块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BF%E7%9C%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.3.</span> <span class="nav-text">&lt;3&gt;仿真设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E7%AE%80%E6%98%93-DDS-%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">二.简易 DDS 信号发生器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-number">2.1.</span> <span class="nav-text">&lt;1&gt;简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">2.2.</span> <span class="nav-text">&lt;2&gt;代码设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">（1）整体设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89DDS%E9%83%A8%E5%88%86"><span class="nav-number">2.2.2.</span> <span class="nav-text">（2）DDS部分</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.3.</span> <span class="nav-text">&lt;3&gt;仿真</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E7%AE%80%E6%98%93%E7%94%B5%E5%8E%8B%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">三.简易电压表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-2"><span class="nav-number">3.1.</span> <span class="nav-text">&lt;1&gt;简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1-2"><span class="nav-number">3.2.</span> <span class="nav-text">&lt;2&gt;代码设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89ADC"><span class="nav-number">3.2.1.</span> <span class="nav-text">（1）ADC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E9%A1%B6%E5%B1%82"><span class="nav-number">3.2.2.</span> <span class="nav-text">（2）顶层</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BF%E7%9C%9F-1"><span class="nav-number">3.3.</span> <span class="nav-text">&lt;3&gt;仿真</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">787k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:55</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

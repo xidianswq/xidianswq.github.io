@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="注释给了一些要点 用requests库爬取时网页可能加载不完整，故用selenium库，加sleep延时使加载充分 主要利用re库，利用正则表达式提取html文件中的信息 threading是多线程运行，节省时间 如何使用？     配置selenium库，下载chomedriver，网上有教程      更改range函数的范围就可以对该范围内用户信息爬取  存在问题：     太慢">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python爬虫学习笔记">
+<meta property="og:url" content="http://example.com/2023/03/17/python%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="注释给了一些要点 用requests库爬取时网页可能加载不完整，故用selenium库，加sleep延时使加载充分 主要利用re库，利用正则表达式提取html文件中的信息 threading是多线程运行，节省时间 如何使用？     配置selenium库，下载chomedriver，网上有教程      更改range函数的范围就可以对该范围内用户信息爬取  存在问题：     太慢">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-17T14:22:06.000Z">
+<meta property="article:modified_time" content="2025-02-08T03:45:06.141Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="开发语言">
+<meta property="article:tag" content="网络爬虫">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/03/17/python%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>python爬虫学习笔记 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/17/python%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python爬虫学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-17 22:22:06" itemprop="dateCreated datePublished" datetime="2023-03-17T22:22:06+08:00">2023-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-08 11:45:06" itemprop="dateModified" datetime="2025-02-08T11:45:06+08:00">2025-02-08</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>注释给了一些要点</p>
+<p>用requests库爬取时网页可能加载不完整，故用selenium库，加sleep延时使加载充分</p>
+<p>主要利用re库，利用正则表达式提取html文件中的信息</p>
+<p>threading是多线程运行，节省时间</p>
+<p>如何使用？</p>
+<pre><code>    配置selenium库，下载chomedriver，网上有教程
+
+    更改range函数的范围就可以对该范围内用户信息爬取
+</code></pre>
+<p>存在问题：</p>
+<pre><code>    太慢
+
+    不稳定，会漏用户，测试中        
+
+    用正则表达式麻烦
+</code></pre>
+<p>改进：</p>
+<pre><code>    学习xpath、scrapy爬虫框架、线程池等
+
+
+from selenium import webdriver
+import re
+import time
+import threading
+
+def blbl_uid_get(uid):
+
+    url=&quot;https://space.bilibili.com/&quot;+str(uid)
+    
+    # 不开网页显示
+    option = webdriver.ChromeOptions()
+    option.add_argument(&quot;headless&quot;)
+
+    # 使用selenium模块得到网页完整源码
+    driver=webdriver.Chrome(chrome_options=option)
+    driver.get(url) 
+    respond=driver.page_source
+    time.sleep(8)
+
+    # 网页内容爬取测试
+    # with open(&quot;blbl.html&quot;,&quot;wb+&quot;) as f:
+    #     f.write(respond.encode())
+
+    up_name=re.findall(r&#39;&lt;span id=&quot;h-name&quot;&gt;\s*(.*?)\s*&lt;/span&gt;&#39;,respond,re.S)
+    up_fans=re.findall(r&#39;&lt;p id=&quot;n-fs&quot; class=&quot;n-data-v space-fans&quot;&gt;\s*(.*?)\s*&lt;/p&gt;&#39;,respond,re.S)
+    # 网页还是缺失了部分信息如下
+    # zan_num=re.findall(r&#39;视频、动态、专栏累计获赞([^&quot;]*)&#39;,respond,re.S)
+    # watch_num=re.findall(r&#39;截止昨天，播放数总计为([^&quot;]*)&#39;,respond,re.S)
+    # read_num=re.findall(r&#39;截止昨天，阅读数总计为([^&quot;]*)&#39;,respond,re.S)
+    if len(up_fans)!=0 and len(up_name)!=0:
+        # 摘取要寻找的信息
+        record=&quot;&quot;
+        record=up_name[0]+&quot; &quot;+up_fans[0]+&#39;\n&#39;# +&quot; &quot;+zan_num[0]+&quot; &quot;+watch_num[0]+&quot; &quot;+read_num[0]
+        # 写入文件
+        with open(&quot;up_fans.txt&quot;,&quot;a+&quot;) as f:
+            f.write(record)
+            f.close()
+
+    # 一定要quit
+    driver.quit()
+
+# 并发执行爬虫
+for i in range(348651384,348651400):
+    t = threading.Thread(target=blbl_uid_get, args=(i,))
+    t.start()
+</code></pre>
+<p>结果：</p>
+<p>70975784467_bili 0<br>chnksxf 0<br>深蓝色五角枫 8<br>-SWQ- 27<br>w773727 0<br>If-There-If 2<br>bili75588510448 0<br>u723510 1<br>o206413 0<br>10292619012_bili 1<br>丶帝丶弑 0<br>t252791 0<br>why13643485777 0<br>丁嘉丽12334 0<br>80204814302_bili 0<br>ddzn17ZXZ 1</p>
+<p>结论：显然，-SWQ-在一定范围内粉丝最多</p>
+<p>2023年3月20日21:40:43更新</p>
+<p>学习了xpath语言，利用lxml库，可以代替re正则表达式</p>
+<p>相比正则表达式，xpath更加简单简洁！</p>
+<p>注意tree的两种创建方式的不同：本地文件和网络请求</p>
+<p>使用xpath要注重标签之间的结构！找好属性即其值，尽量缩小范围，不然很容易多得！</p>
+<pre><code>from selenium import webdriver
+import time
+import threading
+from lxml import etree
+
+def blbl_uid_get(uid):
+
+    url=&quot;https://space.bilibili.com/&quot;+str(uid)
+    
+    # 不开网页显示
+    option = webdriver.ChromeOptions()
+    option.add_argument(&quot;headless&quot;)
+
+    # 使用selenium模块得到网页完整源码
+    driver=webdriver.Chrome(chrome_options=option)
+    driver.get(url) 
+    time.sleep(2)
+    respond=driver.page_source
+    with open(&quot;blbl_xpath.html&quot;,&quot;wb&quot;) as f:
+        f.write(respond.encode())
+
+    # 利用xpath提取内容(本地调用方式！)
+    # paser=etree.HTMLParser(encoding=&#39;utf-8&#39;)
+    # tree=etree.parse(&#39;blbl_xpath.html&#39;,parser=paser)
+
+    # 利用xpath提取内容(互联网中响应)
+    tree=etree.HTML(respond)
+
+    up_name=tree.xpath(&#39;//div[@class=&quot;h-basic&quot;]//span[@id=&quot;h-name&quot;]/text()&#39;)
+    fans_num=tree.xpath(&#39;//div[@class=&quot;n-statistics&quot;]//p[@id=&quot;n-fs&quot;]/text()&#39;)[0].replace(&#39;\n&#39;,&#39;&#39;).replace(&#39; &#39;,&#39;&#39;)
+    # statistics=tree.xpath(&#39;//div[@class=&quot;n-statistics&quot;]//p[@id=&quot;n-bf&quot;]/text()&#39;)
+    work_title=tree.xpath(&#39;//div[@class=&quot;content clearfix&quot;]//a[@class=&quot;title&quot;]/text()&#39;)
+    work_length=tree.xpath(&#39;//div[@class=&quot;content clearfix&quot;]//span[@class=&quot;length&quot;]/text()&#39;)
+    work_play=tree.xpath(&#39;//div[@class=&quot;content clearfix&quot;]//span[@class=&quot;play&quot;]/text()&#39;)
+    work_time=tree.xpath(&#39;//div[@class=&quot;content clearfix&quot;]//span[@class=&quot;time&quot;]/text()&#39;)
+    min_num=min(len(work_time),len(work_length),len(work_title),len(work_play))
+
+    # 摘取要寻找的信息
+    record=&quot;&quot;
+    record=&quot;up昵称:&quot;+up_name[0]+&quot;\n&quot;+&quot;粉丝数:&quot;+fans_num+&#39;\n&#39;
+    if(min_num!=0):
+        record+=&#39;代表作:&#39;+&#39;\n&#39;
+        for i in range(0,min_num):
+            record+=&quot;作品名:&quot;+work_title[i]+&quot;\n&quot;+&quot;时长:&quot;+work_length[i]+&quot;\n&quot;+&quot;播放量:&quot;+work_play[i].replace(&#39;\n&#39;,&#39;&#39;).replace(&#39; &#39;,&#39;&#39;)+&quot;\n&quot;+&quot;发布时间:&quot;+work_time[i].replace(&#39;\n&#39;,&#39;&#39;).replace(&#39; &#39;,&#39;&#39;)
+    record+=&#39;\n\n&#39;
+
+    # 写入文件
+    with open(&quot;blbl_xpath_2.txt&quot;,&quot;w+&quot;,encoding=&#39;utf-8&#39;) as f:
+        f.write(record)
+        f.close()
+
+    
+    # 一定要quit
+    driver.quit()
+
+# 并发执行爬虫
+for i in range(348651375,348651390):
+    t = threading.Thread(target=blbl_uid_get, args=(i,))
+    t.start()
+</code></pre>
+<p>结果如下：</p>
+<p>up昵称:68228791709_bili<br>粉丝数:0</p>
+<p>up昵称:-SWQ-<br>粉丝数:27<br>代表作:<br>作品名:《刺客信条》6分49秒极限攀爬，同步率1000%<br>时长:04:18<br>播放量:164<br>发布时间:2022-3-20作品名:《消逝的光芒》对断桥、云端的向往以及信仰之跃<br>时长:09:35<br>播放量:419<br>发布时间:2022-2-1作品名:《生化危机2重制版》克莱尔打光弹药后手刃威廉G4<br>时长:12:14<br>播放量:310<br>发布时间:2022-2-1作品名:在西电中秋快乐的一天<br>时长:07:07<br>播放量:166<br>发布时间:2021-9-22作品名:4年菜鸡唯一一次五杀<br>时长:00:52<br>播放量:158<br>发布时间:2021-9-10作品名:沙雕室友们的日常<br>时长:00:21<br>播放量:51<br>发布时间:2020-8-22作品名:2020班级元旦晚会快来康康<br>时长:03:03<br>播放量:109<br>发布时间:2020-1-12作品名:社会我祥哥，同学冒死拍班主任<br>时长:00:13<br>播放量:114<br>发布时间:2019-8-19作品名:【建筑模型】建模锦标赛中华庭院模型展示<br>时长:02:39<br>播放量:2797<br>发布时间:2019-8-19</p>
+<p>up昵称:p604904<br>粉丝数:0</p>
+<p>up昵称:78992601564_bili<br>粉丝数:0</p>
+<p>up昵称:10292619012_bili<br>粉丝数:1</p>
+<p>up昵称:DMAP_<br>粉丝数:9<br>代表作:<br>作品名:拍拍猫猫<br>时长:02:03<br>播放量:89<br>发布时间:2022-11-29</p>
+<p>up昵称:82212894921_bili<br>粉丝数:0</p>
+<p>up昵称:bili75588510448<br>粉丝数:0</p>
+<p>up昵称:丁嘉丽12334<br>粉丝数:0</p>
+<p>up昵称:68228791709_bili<br>粉丝数:0</p>
+<p>up昵称:80204814302_bili<br>粉丝数:0</p>
+<p>up昵称:t229231<br>粉丝数:0</p>
+<p>up昵称:chnksxf<br>粉丝数:0</p>
+<p>up昵称:GH952105677<br>粉丝数:0</p>
+<p>up昵称:52393731947_bili<br>粉丝数:0</p>
+<p>up昵称:流口水的南方<br>粉丝数:0</p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/129629331">https://blog.csdn.net/qq_32971095/article/details/129629331</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80/" rel="tag"># 开发语言</a>
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/" rel="tag"># 网络爬虫</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/01/%E4%BD%8D%E5%9B%BE%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6%E7%BC%A9%E6%94%BE-%E8%A5%BF%E5%AE%89%E7%94%B5%E5%AD%90%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A/" rel="prev" title="位图图像文件缩放-西安电子科技大学大一程序基础设计课程设计作业">
+      <i class="fa fa-chevron-left"></i> 位图图像文件缩放-西安电子科技大学大一程序基础设计课程设计作业
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/24/FreeRTOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="FreeRTOS学习笔记（一）">
+      FreeRTOS学习笔记（一） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">787k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:55</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

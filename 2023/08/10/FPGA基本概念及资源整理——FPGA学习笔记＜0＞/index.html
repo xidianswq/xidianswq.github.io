@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录 零.前言 一.FPGA  二.FPGA+AI 三.HDL 四.XILINX 五.学习资源 六.硬件命名规则 七.vivado使用介绍 [八.FPGA Arm-Cortex-M1软核配置](about:blank#%E5%85%AB.FPGA%20Arm-Cortex-M1%E8%BD%AF%E6%A0%B8%E9%85%8D%E7%BD%AE) 九.xilinx Zynq UltraScal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FPGA基本概念及资源整理——FPGA学习笔记＜0＞">
+<meta property="og:url" content="http://example.com/2023/08/10/FPGA%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C0%EF%BC%9E/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录 零.前言 一.FPGA  二.FPGA+AI 三.HDL 四.XILINX 五.学习资源 六.硬件命名规则 七.vivado使用介绍 [八.FPGA Arm-Cortex-M1软核配置](about:blank#%E5%85%AB.FPGA%20Arm-Cortex-M1%E8%BD%AF%E6%A0%B8%E9%85%8D%E7%BD%AE) 九.xilinx Zynq UltraScal">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/efb548d7fce00591ae02781195aab027.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/89259418a2a5dcdcc118aea94879ed42.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e33ffc8e402126dade14098a34c12b84.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fcec777e5ea768a2abd0eb8059465495.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3e0feb3e8280ba4e06a7efb6f968a73b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/477090c37771b370ac8383bca92b9df3.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a884e13a6ae351570f5d5a459a8e6615.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d4c07fd2ab54f220e025e0ba093c633b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/715135ad31ba1890ad0059989b959629.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/28c6afc7b5621b2c4ef9da58d3121937.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f36b2ab3b83d541a095d93b84af4e6c3.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/09e7b9fd2103db6fbce09719a58a1d52.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a9226e376971648da400fbec74c13e90.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/31c9c122639646bdec9d69319b9313b3.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/03842299e0ad76ca983e82f57289b07c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/798af551557b2512a1d100f95fed5b77.png">
+<meta property="article:published_time" content="2023-08-10T15:39:14.000Z">
+<meta property="article:modified_time" content="2025-02-08T03:45:06.133Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="None">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+
+<link rel="canonical" href="http://example.com/2023/08/10/FPGA%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C0%EF%BC%9E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>FPGA基本概念及资源整理——FPGA学习笔记＜0＞ | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/10/FPGA%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C0%EF%BC%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FPGA基本概念及资源整理——FPGA学习笔记＜0＞
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-10 23:39:14" itemprop="dateCreated datePublished" datetime="2023-08-10T23:39:14+08:00">2023-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-08 11:45:06" itemprop="dateModified" datetime="2025-02-08T11:45:06+08:00">2025-02-08</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E9%9B%B6.%E5%89%8D%E8%A8%80">零.前言</a></p>
+<p><a href="about:blank#%E4%B8%80.FPGA%C2%A0">一.FPGA </a></p>
+<p><a href="about:blank#%E4%BA%8C.FPGA%2BAI">二.FPGA+AI</a></p>
+<p><a href="about:blank#%E4%B8%89.HDL">三.HDL</a></p>
+<p><a href="about:blank#%E5%9B%9B.XILINX">四.XILINX</a></p>
+<p><a href="about:blank#%E4%BA%94.%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90">五.学习资源</a></p>
+<p><a href="about:blank#%E5%85%AD.%E5%85%B6%E4%BB%96">六.硬件命名规则</a></p>
+<p><a href="about:blank#%E4%B8%83.vivado%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D">七.vivado使用介绍</a></p>
+<p>[八.FPGA Arm-Cortex-M1软核配置](about:blank#%E5%85%AB.FPGA%20Arm-<br>Cortex-M1%E8%BD%AF%E6%A0%B8%E9%85%8D%E7%BD%AE)</p>
+<p><a href="about:blank#%E4%B9%9D.xilinx%C2%A0Zynq%20UltraScale%2B%20MPSoC%C2%A0">九.xilinx Zynq UltraScale+ MPSoC
+</a></p>
+<p><a href="about:blank#%E5%8D%81.%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5%E6%B1%87%E6%80%BB">十.学习实践汇总</a></p>
+<hr>
+<h2 id="零-前言"><a href="#零-前言" class="headerlink" title="零.前言"></a>零.前言</h2><p>作者的“FPGA学习笔记”系列将采用野火 XILINX-Artix7-FPGA 升腾开发板作为学习平台进行学习，总结学习过程中的收获。</p>
+<p><strong>学习实践汇总</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132308209?spm=1001.2014.3001.5502" title="​​​​​​verilog语法——FPGA学习笔记＜1＞">​​​​​​verilog语法——FPGA学习笔记＜1＞<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;132308209?spm&#x3D;1001.2014.3001.5502</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132314807?spm=1001.2014.3001.5502" title="基础设计一——FPGA学习笔记＜2＞">基础设计一——FPGA学习笔记＜2＞xilinx FPGA<br>verilog工程设计流程<img src="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;132314807?spm&#x3D;1001.2014.3001.5502</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132779996?spm=1001.2014.3001.5502" title="基础设计二（IP核）——FPGA学习笔记＜3＞">基础设计二（IP核）——FPGA学习笔记＜3＞xilinx fpga<br>基础设计学习笔记，学习资料来自野火<img src="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;132779996?spm&#x3D;1001.2014.3001.5502</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132818565?spm=1001.2014.3001.5502" title="基础设计三（RS232、I2C）——FPGA学习笔记＜4＞">基础设计三（RS232、I2C）——FPGA学习笔记＜4＞参考书目：《野火FPGA Verilog<br>开发实战指南》<img src="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;132818565?spm&#x3D;1001.2014.3001.5502</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132993678?spm=1001.2014.3001.5502" title="基础设计四（信号采集、发生）——FPGA学习笔记＜5＞">基础设计四（信号采集、发生）——FPGA学习笔记＜5＞频率测量法：在时间 t 内对被测时钟信号的时钟周期 N<br>进行计数，然后求出单位时间内的时钟周期数，即为被测时钟信号的时钟频率。周期测量法：先测量出被测时钟信号的时钟周期 T，然后根据频率 f &#x3D; 1／T<br>求出被测时钟信号的频率。但是上述两种方法都会产生±1<br>个被测时钟周期的误差，在实际应用中有一定的局限性；而且根据两种方式的测量原理，很容易发现频率测量法适合于测量高频时钟信号，而周期测量法适合于低频时钟信号的测量，但二者都不能兼顾高低频率同样精度的测量要求。<img src="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;132993678?spm&#x3D;1001.2014.3001.5502</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133174030?spm=1001.2014.3001.5502" title="基础设计五（LCD液晶屏）——FPGA学习笔记＜6＞">基础设计五（LCD液晶屏）——FPGA学习笔记＜6＞液晶是一种介于固体和液体之间的特殊物质，它是一种有机化合物，常态下呈液态，<br>但是它的分子排列却和固体晶体一样非常规则，因此取名液晶。如果给液晶施加电场，会<br>改变它的分子排列，从而改变光线的传播方向，配合偏振光片，它就具有控制光线透过率<br>的作用，再配合彩色滤光片，改变加给液晶电压大小，就能改变某一颜色透光量的多少。​。<img src="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;133174030?spm&#x3D;1001.2014.3001.5502</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133233092?spm=1001.2014.3001.5502" title="Zynq简介——FPGA学习笔记＜7＞">Zynq简介——FPGA学习笔记＜7＞Xilinx 公司的 FPGA 芯片主要分为两大类，FPGA 和 SoC（System on<br>Chip，片上处理系统），其中 FPGA 芯片只包含了可编程逻辑部分，而不包含处理器，如常见的 Spartan 系列、Artix 系列、Kintex 系列和<br>Virtex 系列。每一个系列又根据制造工艺和架构的不同，分为 6 系列（45nm）、7 系列（28nm）、UltraScale（20nm） 和<br>UltraScale+（16nm），以提供不同的性能和功耗比。<img src="https://i-blog.csdnimg.cn/blog_migrate/be19846480ab44ce477585fc567aeaa0.png">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;133233092?spm&#x3D;1001.2014.3001.5502</a></p>
+<h2 id="一-FPGA"><a href="#一-FPGA" class="headerlink" title="一.FPGA"></a>一.FPGA</h2><p>1.FPGA——可编程逻辑器件，大家都知道。大家可能之前还做过电子线路实验，用过Quartus II，但是当看到各种各样的型号比如Xilinx<br>Artix-7 XC7A35T、Altera Cyclone IV<br>EP4CE10时完全不知道这是什么，推荐看一下：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/117974989" title="FPGA最全科普总结">FPGA最全科普总结</a></p>
+<p>大家还会看到Soc这个词，实际上就像是以前学的mcu：<a target="_blank" rel="noopener" href="https://blog.csdn.net/lqingqing/article/details/51566841" title="MCU, SOC 区别">MCU, SOC<br>区别</a></p>
+<p>2.关键名词：</p>
+<p>可编程逻辑器件(PLD,Programmable Logic Device)</p>
+<p>可编程整列逻辑(PAL,Progarmmable Array Logic)</p>
+<p>CPLD(Complex Progarmmable Logic Device)</p>
+<p>FPGA(Field Programmable Gate Array)</p>
+<p>FPGA配置模式：并行主模式为一片FPGA加一片EPROM的方式；主从模式可以支持一片PROM编程多块FPGA；串行模式可以采用串行PROM编程FPGA；外设模式可以将FPGA作为微处理器的外设，由微处理器对其进行编程</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/efb548d7fce00591ae02781195aab027.png" alt="da0a19b036704759be5eef2f40178dcd.png"></p>
+<p>详细硬件介绍：参考图书或</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1EE411475Z/?spm_id_from=333.999.0.0&vd_source=01cde8042a76495bf513aa4407a56cd6" title="从零开始系统学FPGA">从零开始系统学FPGA</a></p>
+<h2 id="二-FPGA-AI"><a href="#二-FPGA-AI" class="headerlink" title="二.FPGA+AI"></a>二.FPGA+AI</h2><p><img src="https://i-blog.csdnimg.cn/blog_migrate/89259418a2a5dcdcc118aea94879ed42.png" alt="0b2255268293419fa2598d8863ca129f.png"><br>用FPGA来干什么？方向FPGA+AI：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/428224002" title="Xilinx助力FPGA+AI时代">Xilinx助力FPGA+AI时代</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/tardis/zm/art/152167194?source_id=1005" title="两大FPGA公司的“AI技术路线">两大FPGA公司的“AI技术路线</a></p>
+<p>FPGA在AI领域的优势：<a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv13109378/?spm_id_from=333.999.collection.opus.click" title="FPGA图像处理的前景如何？">FPGA图像处理的前景如何？</a></p>
+<h2 id="三-HDL"><a href="#三-HDL" class="headerlink" title="三.HDL"></a>三.HDL</h2><p>1.FPGA使用硬件描述语言，可参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/617299598" title="《Verilog》·第2章·硬件描述语言基础">《Verilog》·第2章·硬件描述语言基础</a></p>
+<p>可能会用到的知识：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&album_id=1337168442583105536&__biz=MzIyMDc2NTQ0Mw==#wechat_redirect" title="基于Verilog的图像处理实现">基于Verilog的图像处理实现</a></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e33ffc8e402126dade14098a34c12b84.png" alt="01fbbd3b3ead49f68bc9187966e35cf5.png"><br>2.VHDL(VHSIC[Very-High-Speed Integrated Circuit] hardware Description<br>Language)</p>
+<p>VHDL支持多层次抽象描述： <strong><strong>行为层次（Behavioral）关注模块功能描述和仿真验证；寄存器传输层次（RTL，Register Transfer<br>Level）关注模块的可综合电路的实现；逻辑门层次（Logic）考虑如何用门级电路实现给定功能；布图层次（Lay<br>Out）考虑如何将电路适配到FPGA的资源中。</strong></strong></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/fcec777e5ea768a2abd0eb8059465495.jpeg" alt="a66a88467432488caf83079131890d3d.jpeg"></p>
+<p>VHDL基本设计单元：实体（Entity）、构造体（Architecture）、配置（Configuration）；包集合（Package）；库（Library）</p>
+<p>3.Verilog HDL</p>
+<h2 id="四-XILINX"><a href="#四-XILINX" class="headerlink" title="四.XILINX"></a>四.XILINX</h2><p>xilinx公司的产品系列：<a target="_blank" rel="noopener" href="https://china.xilinx.com/products/silicon-devices/fpga.html" title="FPGA 和 3D IC (xilinx.com)">FPGA 和 3D IC<br>(xilinx.com)</a></p>
+<p>文档搜索库：<a target="_blank" rel="noopener" href="https://docs.xilinx.com/" title="Homepage • AMD Adaptive Computing
+Documentation Portal (xilinx.com)">Homepage • AMD Adaptive Computing Documentation Portal<br>(xilinx.com)</a></p>
+<p>Artix-7官方文档：[搜索结果 • AMD 自适应计算文档门户<br>(xilinx.com)](<a target="_blank" rel="noopener" href="https://docs.xilinx.com/search/all?filters=Product_custom~%2522Boards+and+Kits%257CVirtex+7%2522&content-">https://docs.xilinx.com/search/all?filters=Product_custom~%2522Boards+and+Kits%257CVirtex+7%2522&amp;content-</a><br>lang&#x3D;en-US “搜索结果 • AMD 自适应计算文档门户 (xilinx.com)“)</p>
+<p>设计软件平台：</p>
+<p>xilinx开发工具有哪些：<a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv17335988/?spm_id_from=333.999.collection.opus.click" title="Vitis AI 系列视频 QA&amp;目录（待续）">Vitis AI 系列视频<br>QA&amp;目录（待续）</a></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3e0feb3e8280ba4e06a7efb6f968a73b.png" alt="b6db89dc700f40f7bcd5b85b40226fe7.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/477090c37771b370ac8383bca92b9df3.png" alt="2b70623234004a648a9341940d8cc42d.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a884e13a6ae351570f5d5a459a8e6615.png" alt="8bf4e434fdf24062be63b880cc577862.png"></p>
+<p> Vitis-AI：[Vitis AI (xilinx.com)](<a target="_blank" rel="noopener" href="https://china.xilinx.com/products/design-">https://china.xilinx.com/products/design-</a><br>tools&#x2F;vitis&#x2F;vitis-<br>ai.html#:~:text&#x3D;Vitis%E2%84%A2%20AI%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%98%AF%20Xilinx%20%E7%9A%84%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0%EF%BC%8C%E9%80%82%E7%94%A8%E4%BA%8E%E5%9C%A8%20Xilinx%20%E7%A1%AC%E4%BB%B6%E5%B9%B3%E5%8F%B0%EF%BC%88%E5%8C%85%E6%8B%AC%E8%BE%B9%E7%BC%98%E5%99%A8%E4%BB%B6%E5%92%8C%20Alveo,Vitis%20AI%20%E4%BB%A5%E9%AB%98%E6%95%88%E6%98%93%E7%94%A8%E4%B8%BA%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%EF%BC%8C%E5%8F%AF%E5%9C%A8%20Xilinx%20FPGA%20%E5%92%8C%20ACAP%20%E4%B8%8A%E5%85%85%E5%88%86%E5%8F%91%E6%8C%A5%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8A%A0%E9%80%9F%E7%9A%84%E6%BD%9C%E5%8A%9B%E3%80%82.<br>“Vitis AI (xilinx.com)“)</p>
+<p>Vitis-AI官方支持：<a target="_blank" rel="noopener" href="https://china.xilinx.com/developer/products/vitis-ai.html" title="Vitis
+AI 快速上手 (xilinx.com)">Vitis AI 快速上手<br>(xilinx.com)</a></p>
+<p>视频：[Vitis AI 全流程讲解<br>(xilinx.com)](<a target="_blank" rel="noopener" href="https://china.xilinx.com/video/events/cns-D1-03-Vitis-AI-Start-">https://china.xilinx.com/video/events/cns-D1-03-Vitis-AI-Start-</a><br>to-finish_FanZhang_region.html “Vitis AI 全流程讲解 (xilinx.com)“)</p>
+<p>Vitis下载：<a target="_blank" rel="noopener" href="https://china.xilinx.com/support/download/index.html/content/xilinx/zh/downloadNav/vitis.html" title="下载 (xilinx.com)">下载<br>(xilinx.com)</a></p>
+<p>注：Vitis是为无FPGA设计经验的人设计的软件开发平台；Vitis-AI是面向算法开发者进行深度学习开发的高级加速库和设计工具；频繁出现的DPU：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145142691" title="科普 | 什么是DPU？">科普 | 什么是DPU？</a></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d4c07fd2ab54f220e025e0ba093c633b.png" alt="7a9ddd30cbdf4a63b7835c9b544bbe84.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/715135ad31ba1890ad0059989b959629.png" alt="96dccbd6cf2047299a08800ca75c7427.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/28c6afc7b5621b2c4ef9da58d3121937.png"></p>
+<p>Model Zoo：使用公共数据集训练良好的Caffe、pytorch、TensorFlow框架模型</p>
+<p>处理流程：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f36b2ab3b83d541a095d93b84af4e6c3.png" alt="2504e79b6665483da00848b8f78ee776.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/09e7b9fd2103db6fbce09719a58a1d52.png" alt="4a08eebc031e484090a0653b6b345ce2.png"></p>
+<p>相关问题对话ChatGPT：<a target="_blank" rel="noopener" href="https://chat.openai.com/share/2206fea6-39c7-4ec7-9567-d5d14513250f">https://chat.openai.com/share/2206fea6-39c7-4ec7-9567-d5d14513250f</a></p>
+<p>xilinx社区：<a target="_blank" rel="noopener" href="https://xilinx.eetrend.com/" title="电子创新网赛灵思社区 | 电子创新网 (eetrend.com)">电子创新网赛灵思社区 | 电子创新网 (eetrend.com)</a></p>
+<p>xilinx技术支持社区：<a target="_blank" rel="noopener" href="https://support.xilinx.com/s/?language=zh_CN" title="主页 (xilinx.com)">主页 (xilinx.com)</a></p>
+<h2 id="五-学习资源"><a href="#五-学习资源" class="headerlink" title="五.学习资源"></a>五.学习资源</h2><p>1.竞赛平台提供</p>
+<p>FPGA创新大赛：<a target="_blank" rel="noopener" href="http://fpga.icisc.cn/video?value=4" title="培训视频_全国大学生fpga创新设计竞赛官网">培训视频_全国大学生fpga创新设计竞赛官网</a></p>
+<p>龙芯杯：[LoongsonEdu&#x2F;nscscc-wiki (gitee.com)](<a target="_blank" rel="noopener" href="https://gitee.com/loongson-">https://gitee.com/loongson-</a><br>edu&#x2F;nscscc-wiki “LoongsonEdu&#x2F;nscscc-wiki (gitee.com)“)</p>
+<p>英特尔杯：[英特尔杯在线培训中心](<a href="https://www.xn--48sz67d.xn--">https://www.xn--48sz67d.xn--</a><br>fiqs8s&#x2F;p&#x2F;t_pc&#x2F;course_pc_detail&#x2F;big_column&#x2F;p_624f9a63e4b04e8d902ce9ce<br>“英特尔杯在线培训中心”)</p>
+<p>2.野火资源</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nQ4y1Z7zN/?spm_id_from=333.999.0.0&vd_source=01cde8042a76495bf513aa4407a56cd6" title="FPGA系列Xilinx Artix7教学视频">FPGA系列Xilinx<br>Artix7教学视频</a></p>
+<p><a target="_blank" rel="noopener" href="https://doc.embedfire.com/products/link/zh/latest/index.html" title="野火产品资料下载中心">野火产品资料下载中心</a></p>
+<p>3.图书资源</p>
+<p>《XILINX FPGA设计基础》《XILINX FPGA权威设计指南》《野火FPGAVerilog开发实战指南》</p>
+<p>4.b站资源</p>
+<p>推荐up主视频：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Dg4y1v7P8/?vd_source=01cde8042a76495bf513aa4407a56cd6" title="第0期 - 介绍与规划 -基于FPGA的数字信号处理系统开发笔记">第0期 - 介绍与规划<br>-基于FPGA的数字信号处理系统开发笔记</a></p>
+<p><a target="_blank" rel="noopener" href="https://space.bilibili.com/505234/channel/collectiondetail?sid=308669" title="Vitis&#x2F;Vitis AI开发笔记">Vitis&#x2F;Vitis<br>AI开发笔记</a></p>
+<p><a target="_blank" rel="noopener" href="https://space.bilibili.com/473639301/channel/collectiondetail?sid=852953" title="ALINX Zynq MPSoC XILINX FPGA视频教程——Vitis HLS开发">ALINX Zynq MPSoC XILINX FPGA视频教程——Vitis<br>HLS开发</a></p>
+<p><a target="_blank" rel="noopener" href="https://space.bilibili.com/2139404925/channel/collectiondetail?sid=197586" title="FPGA图像处理">FPGA图像处理</a></p>
+<p>5.正点原子资料</p>
+<p>[MPSoC开发板 — 正点原子资料下载中心 1.0.0 文档](<a target="_blank" rel="noopener" href="http://www.openedv.com/docs/boards/fpga/zdyz-">http://www.openedv.com/docs/boards/fpga/zdyz-</a><br>MPSOC.html “MPSoC开发板 — 正点原子资料下载中心 1.0.0 文档”)</p>
+<h2 id="六-硬件命名规则"><a href="#六-硬件命名规则" class="headerlink" title="六.硬件命名规则"></a>六.硬件命名规则</h2><p><img src="https://i-blog.csdnimg.cn/blog_migrate/a9226e376971648da400fbec74c13e90.png" alt="3e62452446cd4e6db0ddeefee5a67020.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/31c9c122639646bdec9d69319b9313b3.png" alt="b3c7340adb9443c79cae1972129a00b7.png"><br>芯片资源</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/03842299e0ad76ca983e82f57289b07c.png" alt="1efa2f0f7686467791b576d34bc3d035.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/798af551557b2512a1d100f95fed5b77.png" alt="445d93be180549c688a0fe8c5617979b.png"></p>
+<h2 id="七-vivado使用介绍"><a href="#七-vivado使用介绍" class="headerlink" title="七.vivado使用介绍"></a>七.vivado使用介绍</h2><p>参考《xilinx fpga权威设计指南》</p>
+<p>1.首先书目介绍了新一代UltraScale结构，介绍了其CLB，包含LUT、触发器、查找表什么的，以此构成多路复用器、进位逻辑、存储等基本结构。（粗略浅看未看完）</p>
+<p>2.vivado以前的版本是个IDE，现在出现了GUI，前后者的关系类似Windows的shell和图形界面的关系。而在之前所使用的是 **XDC  **语言，由标准约束语言 **Tcl  **演变而来，二者相似。vivado工程目录下的 .Journal 文件和 .Log 文件则可以记录Tcl命令和执行反馈，据此可在工程调试中导出.Journal文件制成Tcl命令脚本，实现快速自动化处理。<a target="_blank" rel="noopener" href="https://xilinx.eetrend.com/content/2019/100046350.html#:~:text=XDC%20%E6%98%AF%20Xilinx%20Design%20Constraints%20%E7%9A%84%E7%AE%80%E5%86%99%EF%BC%8C%E4%BD%86%E5%85%B6%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E6%9D%A5%E6%BA%90%E4%BA%8E%E4%B8%9A%E7%95%8C%E7%BB%9F%E4%B8%80%E7%9A%84%E7%BA%A6%E6%9D%9F%E8%A7%84%E8%8C%83SDC%E3%80%82%20XDC%20%E5%9C%A8%E6%9C%AC%E8%B4%A8%E4%B8%8A%E5%B0%B1%E6%98%AF,I%2FO%20%E7%AD%89%E8%AF%AD%E6%B3%95%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E5%9C%A8%20Vivado%20%E4%B8%AD%20source%20%E4%B8%80%E4%B8%AA%20Tcl%20%E6%96%87%E4%BB%B6%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9D%A5%E8%A1%A5%E5%85%85%E3%80%82" title="XDC时钟约束 | 电子创新网赛灵思社区">XDC时钟约束 | 电子创新网赛灵思社区</a></p>
+<p>3.接下来介绍vivado集成开发界面：</p>
+<p>打开主界面三栏：快速开始（包含打开&#x2F;创建工程、<strong>打开示例工程</strong><br>）、Task（IP核操作、硬件管理器【要连接板子，下载步骤时也要打开】、Tcl商店）、资料中心（文档、<strong>视频</strong> 、注释向导）</p>
+<p>任意打开一个工程，主界面左侧<strong>FlowNavigator（流程向导）</strong> ，包含：工程管理器（添加原文件、IP目录）、IP<br>集成器（设计用户IP核）、仿真、<strong>RTL分析（RTL ANALYSIS【<a target="_blank" rel="noopener" href="https://blog.csdn.net/RERERERDFDSDSDSD/article/details/104838513" title="RTL
+闪退解决">RTL<br>闪退解决</a>】，生成网表图、硬件引脚连接，生成.XDC文件）、综合（SYNTHESIS）、实现（IMPLEMENTATION）</strong>、编程和调试（生成比特流、打开硬件管理器）</p>
+<p>可参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/wuzhikaidetb/article/details/128295529" title="Vivado的RTL分析（RTL analysis）、综合（synthesis）和实现（implementation）的区别？">Vivado的RTL分析（RTL<br>analysis）、综合（synthesis）和实现（implementation）的区别？</a></p>
+<p><strong>源窗口Source</strong> ，用于管理工程源文件，Hierarchy（层次）将工程按层次分组展示，Compile<br>order可设置工程文件编译顺序，文件右键点击set as top可设置为顶层文件。</p>
+<p>4.然后是高层次综合工具Vidado HLS</p>
+<p>原理即<strong>将高级语言如c&#x2F;c++转换成RTL级实现，还支持OpenCV函数</strong></p>
+<h2 id="八-FPGA-Arm-Cortex-M1软核配置"><a href="#八-FPGA-Arm-Cortex-M1软核配置" class="headerlink" title="八.FPGA Arm-Cortex-M1软核配置"></a>八.FPGA Arm-Cortex-M1软核配置</h2><pre><code>    打开vivado IP manager，搜索 arm 显示可使用的 arm 核——Arm-Cortex-M1，若未安装可点击链接下载。Arm 官网下载 IP 核需要提前一周注册，提供免费使用的 IP 核有 M1 和 M3。
+</code></pre>
+<h2 id="九-xilinx-Zynq-UltraScale-MPSoC"><a href="#九-xilinx-Zynq-UltraScale-MPSoC" class="headerlink" title="九.xilinx Zynq UltraScale+ MPSoC"></a>九.xilinx Zynq UltraScale+ MPSoC</h2><p>[Zynq UltraScale+ MPSoC](<a target="_blank" rel="noopener" href="https://china.xilinx.com/products/silicon-">https://china.xilinx.com/products/silicon-</a><br>devices&#x2F;soc&#x2F;zynq-ultrascale-mpsoc.html “Zynq UltraScale+ MPSoC”)  </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Xilinx/PYNQ" title="Xilinx&#x2F;PYNQ: Python Productivity
+for ZYNQ (github.com)">Xilinx&#x2F;PYNQ: Python Productivity for ZYNQ<br>(github.com)</a>  </p>
+<p><a target="_blank" rel="noopener" href="http://www.pynq.io/" title="PYNQ -
+Python productivity for Zynq - Home">PYNQ - Python productivity for Zynq - Home</a></p>
+<pre><code>    Zynq UltraScale+ MPSoC 是赛灵思推出的首款真正全可编程（All Programmable）异构多核处理 SoC 芯片。包含 **PS（Processing System，处理器系统）** 和**PL（Programmable Logic，可编程逻辑）** 两部分。Zynq UltraScale+ MPSoC 整合了一个**双核或四核 Cortex-A53 处理器、双核 Arm Cortex-R5F 实时处理器和一个传统的现场可编程门阵列（FPGA）逻辑部件** ，该器件的可编程逻辑部分基于 Xilinx 16nm FinFET+工艺的 UltraScale+系列 FPGA。这款芯片采用台积电公司 (TSMC) 新一代 16nm FinFET 工艺制程，它包含一个可扩展的 32 位或 64 位多处理器 CPU、用于实时处理图形和视频的专用硬化引擎、先进的高速外设，以及可编程逻辑，可用于汽车驾驶员辅助与安全、无线和有线通信、数据中心以及连接与控制等多种应用领域。
+
+    Zynq UltraScale+ MPSoC 系列产品分三种类型，分别是 **CG 型器件、EG 型器件和 EV 型器件** 。其中 CG 型器件集成了由双核 Arm Cortex-A53 和双核 Arm Cortex-R5F 组成的 64 位处理系统；EG 型器件集成 了四核 Arm Cortex-A53 和双核 Arm Cortex-R5F，除此之外 EG 型器件还集成了 Arm Mali-400 MP2 （GPU）用来专门进行图像处理操作；而 EV 型器件在 EG 型器件的基础上再次增加了 H.264/H.265 视频编解码器（VCU）用来专门进行视频处理操作，它可以支持 60 帧每秒(fps)的速率同时进 行 4Kx2K 的编码和解码(约 6 亿像素/秒)或 15 帧每秒 8Kx4K 的编码解码。
+</code></pre>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132220627">https://blog.csdn.net/qq_32971095/article/details/132220627</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/None/" rel="tag"># None</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/07/2023%E5%B9%B4%E7%94%B5%E8%B5%9BE%E9%A2%98%E5%AE%8C%E6%95%B4%E8%AE%BE%E8%AE%A1%E6%9A%A8%E7%94%B5%E8%B5%9B%E5%85%A8%E8%AE%B0%E5%BD%95/" rel="prev" title="2023年电赛E题完整设计暨电赛全记录">
+      <i class="fa fa-chevron-left"></i> 2023年电赛E题完整设计暨电赛全记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/08/15/HDL%E8%AF%AD%E6%B3%95%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C1%EF%BC%9E/" rel="next" title="HDL语法——FPGA学习笔记＜1＞">
+      HDL语法——FPGA学习笔记＜1＞ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%B6-%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">零.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-FPGA"><span class="nav-number">2.</span> <span class="nav-text">一.FPGA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-FPGA-AI"><span class="nav-number">3.</span> <span class="nav-text">二.FPGA+AI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-HDL"><span class="nav-number">4.</span> <span class="nav-text">三.HDL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-XILINX"><span class="nav-number">5.</span> <span class="nav-text">四.XILINX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94-%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="nav-number">6.</span> <span class="nav-text">五.学习资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD-%E7%A1%AC%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="nav-number">7.</span> <span class="nav-text">六.硬件命名规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83-vivado%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">8.</span> <span class="nav-text">七.vivado使用介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB-FPGA-Arm-Cortex-M1%E8%BD%AF%E6%A0%B8%E9%85%8D%E7%BD%AE"><span class="nav-number">9.</span> <span class="nav-text">八.FPGA Arm-Cortex-M1软核配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D-xilinx-Zynq-UltraScale-MPSoC"><span class="nav-number">10.</span> <span class="nav-text">九.xilinx Zynq UltraScale+ MPSoC</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">787k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:55</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

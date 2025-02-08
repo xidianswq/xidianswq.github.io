@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="_  图片来源：B站唐老师讲电赛_目录 图片来源：B站唐老师讲电赛 一.电机部分结构 二.步进电机示例 三.伺服电机示例 四.我们的方案  一.电机部分结构      二.步进电机示例1.驱动器：L298N（CSDN搜索使用方法）；控制器：stm32；电源暂时用12V直流源 2.控制：全速模式：in1、in2一低一高控制正反转，全低不转。 pwm控制模式：使能端连接单片机IO口，通过产生pwm波">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像识别小车（电机部分）——电赛学习笔记（2）">
+<meta property="og:url" content="http://example.com/2023/07/04/%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89%E2%80%94%E2%80%94%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="_  图片来源：B站唐老师讲电赛_目录 图片来源：B站唐老师讲电赛 一.电机部分结构 二.步进电机示例 三.伺服电机示例 四.我们的方案  一.电机部分结构      二.步进电机示例1.驱动器：L298N（CSDN搜索使用方法）；控制器：stm32；电源暂时用12V直流源 2.控制：全速模式：in1、in2一低一高控制正反转，全低不转。 pwm控制模式：使能端连接单片机IO口，通过产生pwm波">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bcfec2f6ed3a3e801301c91dfeb4307d.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b68a6432253fb37113bcd87a78d6af13.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/99f4e23df848c63b9a836035426fe043.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5483b488abe59c6b56599034cee91db9.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/36766f56d5dbe1c3b71e1d2f8cc63d56.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f23bb2de689dbeadc754dd5f58a19811.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f2fe3b27147efcb57b0964d81171b5b5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4547084918f7ca3e14a1a6aaf1c3ea0c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/79abef952376244b07db4ca4c37604b6.png">
+<meta property="article:published_time" content="2023-07-04T14:32:42.000Z">
+<meta property="article:modified_time" content="2025-02-08T03:45:06.155Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="None">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/bcfec2f6ed3a3e801301c91dfeb4307d.jpeg">
+
+<link rel="canonical" href="http://example.com/2023/07/04/%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89%E2%80%94%E2%80%94%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>图像识别小车（电机部分）——电赛学习笔记（2） | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/04/%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89%E2%80%94%E2%80%94%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图像识别小车（电机部分）——电赛学习笔记（2）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-07-04 22:32:42" itemprop="dateCreated datePublished" datetime="2023-07-04T22:32:42+08:00">2023-07-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-08 11:45:06" itemprop="dateModified" datetime="2025-02-08T11:45:06+08:00">2025-02-08</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>907</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id=""><a href="#" class="headerlink" title=""></a></h2><hr>
+<h2 id="图片来源：B站唐老师讲电赛"><a href="#图片来源：B站唐老师讲电赛" class="headerlink" title="_  图片来源：B站唐老师讲电赛_"></a><strong>_  图片来源：B站唐老师讲电赛_</strong></h2><p><strong>目录</strong></p>
+<p><a href="about:blank#%C2%A0%E5%9B%BE%E7%89%87%E6%9D%A5%E6%BA%90%EF%BC%9AB%E7%AB%99%E5%94%90%E8%80%81%E5%B8%88%E8%AE%B2%E7%94%B5%E8%B5%9B"><br>图片来源：B站唐老师讲电赛</a></p>
+<p><a href="about:blank#%E4%B8%80.%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84">一.电机部分结构</a></p>
+<p><a href="about:blank#%E4%BA%8C.%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA%E7%A4%BA%E4%BE%8B">二.步进电机示例</a></p>
+<p><a href="about:blank#%E4%B8%89.%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%E7%A4%BA%E4%BE%8B">三.伺服电机示例</a></p>
+<p><a href="about:blank#%E5%9B%9B.%E6%88%91%E4%BB%AC%E7%9A%84%E6%96%B9%E6%A1%88">四.我们的方案</a></p>
+<hr>
+<h2 id="一-电机部分结构"><a href="#一-电机部分结构" class="headerlink" title="一.电机部分结构"></a>一.电机部分结构</h2><p><img src="https://i-blog.csdnimg.cn/blog_migrate/bcfec2f6ed3a3e801301c91dfeb4307d.jpeg"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/b68a6432253fb37113bcd87a78d6af13.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/99f4e23df848c63b9a836035426fe043.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5483b488abe59c6b56599034cee91db9.png"><img src="https://i-blog.csdnimg.cn/blog_migrate/36766f56d5dbe1c3b71e1d2f8cc63d56.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f23bb2de689dbeadc754dd5f58a19811.png"><img src="https://i-blog.csdnimg.cn/blog_migrate/f2fe3b27147efcb57b0964d81171b5b5.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4547084918f7ca3e14a1a6aaf1c3ea0c.png"></p>
+<h2 id="二-步进电机示例"><a href="#二-步进电机示例" class="headerlink" title="二.步进电机示例"></a>二.步进电机示例</h2><p>1.驱动器：L298N（CSDN搜索使用方法）；控制器：stm32；电源暂时用12V直流源</p>
+<p>2.控制：全速模式：in1、in2一低一高控制正反转，全低不转。</p>
+<p>pwm控制模式：使能端连接单片机IO口，通过产生pwm波占空比控制速度（相当于有效电压控制）</p>
+<p>3.编码器：将编码器产生脉冲当做外部时钟传入单片机定时器，定时读取并清零</p>
+<p>4.涉及知识：定时器（内部定时器产生pwm波，外部作为编码计数）</p>
+<p>5.示例代码：</p>
+<p>可参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_65683639/article/details/130562162" title="直流减速编码电机的使用（STM32f103c8t6）L298N电机驱动模块_stm32f103c8t6控制直流电机_阿昕同学的博客-CSDN博客">直流减速编码电机的使用（STM32f103c8t6）L298N电机驱动模块_stm32f103c8t6控制直流电机_阿昕同学的博客-<br>CSDN博客</a></p>
+<h2 id="三-伺服电机示例"><a href="#三-伺服电机示例" class="headerlink" title="三.伺服电机示例"></a>三.伺服电机示例</h2><p>MG995型伺服电机：</p>
+<p>1.结构：可参考：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/he__yuan/article/details/79195435?spm=1001.2014.3001.5506" title="MG995舵机工作原理及基于STM32的驱动源代码_斜杠青年&#x2F;的博客-CSDN博客">MG995舵机工作原理及基于STM32的驱动源代码_斜杠青年&#x2F;的博客-<br>CSDN博客</a></p>
+<p>2.控制：通过PWM波占空比控制</p>
+<p>固定20ms周期pwm波通过定时器输出  </p>
+<p>TIM1_PWM_Init(199,7199);        &#x2F;&#x2F;(7200<em>200)&#x2F;72000000&#x3D;0.02&#x3D;20ms；（分频</em>周期数）</p>
+<p>占空比通过函数TIM_SetCompare1（TIM1,num）控制，其中num是低电平占周期数</p>
+<p>0.5ms对应195，2.5ms对应175</p>
+<p>四.具体器件</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/79abef952376244b07db4ca4c37604b6.png"></p>
+<h2 id="四-我们的方案"><a href="#四-我们的方案" class="headerlink" title="四.我们的方案"></a>四.我们的方案</h2><p>后轮电机：MG513直流减速电机（霍尔编码器）</p>
+<p>前轮转向电机（采用阿克曼转向结构）：舵机MG995</p>
+<p>机械臂电机：舵机MG995</p>
+<p>后轮电机驱动：l298n电机驱动模块</p>
+<p>舵机驱动：pca9685 PWM伺服驱动器模块</p>
+<p>超声波测距：cs100a超声波模块</p>
+<p>蓝牙：JDY-31蓝牙模块</p>
+<p>显示屏：SSD1306 OLED IIC显示屏</p>
+<p>稳压芯片：lm2596可调稳压模块*2（12V-5V-3.3V）</p>
+<p>电池：12V3A锂电池（最大电流6A）</p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/131503991">https://blog.csdn.net/qq_32971095/article/details/131503991</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/None/" rel="tag"># None</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/04/%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88jetson%20nano%E9%83%A8%E5%88%86%EF%BC%89%E2%80%94%E2%80%94%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89/" rel="prev" title="图像识别小车（jetson nano部分）——电赛学习笔记（3）">
+      <i class="fa fa-chevron-left"></i> 图像识别小车（jetson nano部分）——电赛学习笔记（3）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/08/OpenCV%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/" rel="next" title="OpenCV学习笔记——《基于OpenCV的数字图像处理》">
+      OpenCV学习笔记——《基于OpenCV的数字图像处理》 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E6%9D%A5%E6%BA%90%EF%BC%9AB%E7%AB%99%E5%94%90%E8%80%81%E5%B8%88%E8%AE%B2%E7%94%B5%E8%B5%9B"><span class="nav-number">2.</span> <span class="nav-text">_  图片来源：B站唐老师讲电赛_</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">一.电机部分结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">二.步进电机示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">三.伺服电机示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E6%88%91%E4%BB%AC%E7%9A%84%E6%96%B9%E6%A1%88"><span class="nav-number">6.</span> <span class="nav-text">四.我们的方案</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">787k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:55</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

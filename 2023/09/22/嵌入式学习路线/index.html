@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录 一.嵌入式学习路线 二.学习实践 1.课内课程 学习记录 2.51单片机 3.stm32 学习记录 4.FPGA 学习记录 5.操作系统 三.其他学习资料 学习记录 四.总结  一.嵌入式学习路线   对于计算机科学与技术嵌入式方向的学生，要学好嵌入式括软件和硬件。 大一时搜集有关嵌入式方面的介绍，分享一篇对我颇有启发的作者——小智学长嵌入式（微信公众号）。      截取文章[【干货】关于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式学习路线">
+<meta property="og:url" content="http://example.com/2023/09/22/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录 一.嵌入式学习路线 二.学习实践 1.课内课程 学习记录 2.51单片机 3.stm32 学习记录 4.FPGA 学习记录 5.操作系统 三.其他学习资料 学习记录 四.总结  一.嵌入式学习路线   对于计算机科学与技术嵌入式方向的学生，要学好嵌入式括软件和硬件。 大一时搜集有关嵌入式方面的介绍，分享一篇对我颇有启发的作者——小智学长嵌入式（微信公众号）。      截取文章[【干货】关于">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="article:published_time" content="2023-09-22T05:03:41.000Z">
+<meta property="article:modified_time" content="2025-02-08T03:45:06.169Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="嵌入式硬件">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+
+<link rel="canonical" href="http://example.com/2023/09/22/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>嵌入式学习路线 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/22/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          嵌入式学习路线
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-22 13:03:41" itemprop="dateCreated datePublished" datetime="2023-09-22T13:03:41+08:00">2023-09-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-08 11:45:06" itemprop="dateModified" datetime="2025-02-08T11:45:06+08:00">2025-02-08</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%B8%80.%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF">一.嵌入式学习路线</a></p>
+<p><a href="about:blank#%E4%BA%8C.%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5">二.学习实践</a></p>
+<p><a href="about:blank#1.%E8%AF%BE%E5%86%85%E8%AF%BE%E7%A8%8B">1.课内课程</a></p>
+<p><a href="about:blank#%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95">学习记录</a></p>
+<p><a href="about:blank#2.51%E5%8D%95%E7%89%87%E6%9C%BA">2.51单片机</a></p>
+<p><a href="about:blank#3.stm32">3.stm32</a></p>
+<p><a href="about:blank#%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95">学习记录</a></p>
+<p><a href="about:blank#4.FPGA">4.FPGA</a></p>
+<p><a href="about:blank#%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95">学习记录</a></p>
+<p><a href="about:blank#5.%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">5.操作系统</a></p>
+<p><a href="about:blank#%E4%B8%89.%E5%85%B6%E4%BB%96%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99">三.其他学习资料</a></p>
+<p><a href="about:blank#%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95">学习记录</a></p>
+<p><a href="about:blank#%E5%9B%9B.%E6%80%BB%E7%BB%93">四.总结</a></p>
+<hr>
+<h2 id="一-嵌入式学习路线"><a href="#一-嵌入式学习路线" class="headerlink" title="一.嵌入式学习路线"></a>一.嵌入式学习路线</h2><pre><code>   对于计算机科学与技术嵌入式方向的学生，要学好嵌入式括软件和硬件。 大一时搜集有关嵌入式方面的介绍，分享一篇对我颇有启发的作者——小智学长嵌入式（微信公众号）。
+
+    截取文章[【干货】关于嵌入式开发的经验之谈](https://mp.weixin.qq.com/s/HFsuS9_teHIzbdc6dQ9-IA &quot;【干货】关于嵌入式开发的经验之谈&quot;)如下：
+</code></pre>
+<p>总结下来，需要掌握以下技能：</p>
+<pre><code>    **算法层** ：需要根据处理器的特性，选择最适合在该处理上运行的算法。例如两个实现相同功能的算法，一个适合并行，一个不适合并行，则优先选取适合并行的算法。再比如有些算法的实现，存在一些过设计（如太多的迭代次数），需要能及时识别出来。算法层的优化必须先做，在这一层可能能带来事半功倍的效果。所以嵌入式工程师需要懂相关算法的原理，否则容易被算法工程师唬住（大家别笑，这种事情其实经常发生）。并行层：识别出代码中可以并行加速的部分，根据所用处理器的并行处理单元(NEON, DSP, GPU) ，使用vectorC/intrinsic C/CUDA/openCL编写并行加速代码，最大限度提高并行运算单元利用率。处理器层：如果编译器做得比较好，经过第二层，会得到优化效率很高的代码。但目前大部分编译器仍旧与人工节写的汇编有一定差距。所以针对热点代码，可以采用手写汇编的方式进行优化。但这一步，是优化到最后仍旧差一点点万不得已的办法，写汇编会耗费大量的时间精力，日后换处理器时还需要重写。处理器层除了汇编优化，还包括cache,DMA等memory相关的优化。memory的优化是经常被忽视的地方，通过提升内存的cache友好性是一件事半功倍的工作。
+</code></pre>
+<p>**<br>语言基础**:C&#x2F;C++操作系统：RTOS、Linux、Android硬件：10、12C、SPI、SDIO、USB、内外部中断、定时器编程技能：数据结构、IPC、进程、线程、内存、文件、socket项目相关:wifi<br>ble 摄像头 激光雷达<br>zigbee等，这个部分根据自己学校资源与身边资源去选择。但有一个点非常重要，比如说你做wifi相关的项目，不是去实现wifi的连接功能即可，而是针对实际的产品场景，去输出有价值的实现方案。举个例子，做智能家居的产品，部分同学都是把模块买回来，源码UI改下，连接到别人服务器，然后整个链路跑通就完了。但是如果你做了一个断网以及网络延时情况下方案的解决办法或者模块远程升级的方案，这部分的实现思想比起你跑通整个链路，其实是更有谈资的。</p>
+<pre><code>    大学可以学习学习以下方面：C和汇编语言混合编程、c++-&gt;python-&gt;JAVA、MAKEFILE、Builtroot(Linux移植)、cpu架构 ARM DSP/GPU、操作系统、通信协议(驱动)、ros系统、协议栈。
+
+    还有有关硬件基础的内容，由于大一当时看不懂，就未截取。现在看来还是非常全面的。
+
+    大学的很多竞赛都可以打打，提升自己的技术，比如：数学竞赛、算法竞赛、嵌入式相关的一些比赛和项目、数学建模...
+
+    如果想在将来创业或者职业规划最后走向管理岗，可以多多了解一些项目管理的知识。
+
+ 
+
+    另外看到两段比较有感触的话：
+
+    12、输出**个人价值：** 把自己对于项目、对于职场、对于专业技能的思考，转化为文字、语音或视频输出到互联网，能给你带来意想不到的收获。
+
+    13、不要给自己设限。工作十年后，你可以成为技术专家、项目经理，也可以成为售前技术、方案架构、专利顾问，可以开淘宝店卖开发板教程、出书、做培训机构老师，也可以给自己上下游厂家卖技术方案、开外包公司、建立自己品牌，甚至在自已小区楼下开小卖铺，一个月一万多生活没问题的。
+</code></pre>
+<h2 id="二-学习实践"><a href="#二-学习实践" class="headerlink" title="二.学习实践"></a>二.学习实践</h2><h3 id="1-课内课程"><a href="#1-课内课程" class="headerlink" title="1.课内课程"></a>1.课内课程</h3><p>高等数学、离散数学、概率论、大学物理;</p>
+<p>电路基础、数字电路、模拟电路、计算机通信与网络、信号与系统、数字信号处理;</p>
+<p>计算机组织与体系结构、微机原理;</p>
+<p>计算机导论与程序设计、程序设计、数据结构、操作系统、python、数据库系统</p>
+<h4 id="学习记录"><a href="#学习记录" class="headerlink" title="学习记录"></a><strong>学习记录</strong></h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/129629331?spm=1001.2014.3001.5502" title="python爬虫学习笔记">python爬虫学习笔记<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;129629331?spm&#x3D;1001.2014.3001.5502</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/124532108?spm=1001.2014.3001.5502" title="位图图像文件缩放-西安电子科技大学大一程序基础设计课程设计作业">位图图像文件缩放-西安电子科技大学大一程序基础设计课程设计作业<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;124532108?spm&#x3D;1001.2014.3001.5502</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/124508883?spm=1001.2014.3001.5502" title="简单文件数据库-模拟图书馆管理系统-西安电子科技大学大一程序基础设计课程设计作业">简单文件数据库-模拟图书馆管理系统-<br>西安电子科技大学大一程序基础设计课程设计作业<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;124508883?spm&#x3D;1001.2014.3001.5502</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/124302787?spm=1001.2014.3001.5502" title="UVa232解答">UVa232解答<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;124302787?spm&#x3D;1001.2014.3001.5502</a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_32971095/88221772?spm=1001.2014.3001.5503" title="【免费】西安电子科技大学计算机大类大一下程序设计基础课程设计大作业资源">【免费】西安电子科技大学计算机大类大一下程序设计基础课程设计大作业资源<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://download.csdn.net/download/qq_32971095&#x2F;88221772?spm&#x3D;1001.2014.3001.5503</a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_32971095/88221707?spm=1001.2014.3001.5503" title="【免费】西安电子科技大学计算机大类大一上机代码及部分答案资源">【免费】西安电子科技大学计算机大类大一上机代码及部分答案资源<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://download.csdn.net/download/qq_32971095&#x2F;88221707?spm&#x3D;1001.2014.3001.5503</a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_32971095/88221767?spm=1001.2014.3001.5503" title="【免费】西安电子科技大学计算机科学与技术专业大二数据结构上机代码资源">【免费】西安电子科技大学计算机科学与技术专业大二数据结构上机代码资源<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://download.csdn.net/download/qq_32971095&#x2F;88221767?spm&#x3D;1001.2014.3001.5503</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133420554" title="边缘检测——Matlab实现计算机视觉＜1＞">边缘检测——Matlab实现计算机视觉＜1＞<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;133420554</a></p>
+<h3 id="2-51单片机"><a href="#2-51单片机" class="headerlink" title="2.51单片机"></a>2.51单片机</h3><p>推荐学习（结合开发板）：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1RB4y1i71i/?spm_id_from=333.999.0.0" title="【普中官方】51单片机手把手教学视频">【普中官方】51单片机手把手教学视频</a></p>
+<p>学习收获：</p>
+<p>对单片机、模块有相应概念，会通过寄存器操作的方式使用单片机；实现简单功能</p>
+<h3 id="3-stm32"><a href="#3-stm32" class="headerlink" title="3.stm32"></a>3.stm32</h3><p>推荐学习（结合核心板和模块）：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1th411z7sn/?spm_id_from=333.999.0.0" title="STM32入门教程-2023持续更新中">STM32入门教程-2023持续更新中</a></p>
+<p>学习收获：</p>
+<p>掌握单片机的库函数开发方式；熟悉模块互联通信；单片机系统程序设计；可制作稍复杂控制系统</p>
+<h5 id="学习记录-1"><a href="#学习记录-1" class="headerlink" title="学习记录"></a><strong>学习记录</strong></h5><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132150694?spm=1001.2014.3001.5502" title="2023年电赛E题完整设计暨电赛全记录——二.学习资料分享——&lt;1&gt;学习笔记">2023年电赛E题完整设计暨电赛全记录——二.学习资料分享——&lt;1&gt;学习笔记<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;132150694?spm&#x3D;1001.2014.3001.5502</a></p>
+<p><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_32971095/88226743?spm=1001.2014.3001.5503" title="电赛备战：基于stm32的多功能巡线避障小车_stm32巡线小车原理详解资源">电赛备战：基于stm32的多功能巡线避障小车_stm32巡线小车原理详解资源<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://download.csdn.net/download/qq_32971095&#x2F;88226743?spm&#x3D;1001.2014.3001.5503</a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_32971095/88221917" title="基于stm32的智能自行车尾灯_自行车尾灯资源">基于stm32的智能自行车尾灯_自行车尾灯资源<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://download.csdn.net/download/qq_32971095&#x2F;88221917</a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_32971095/88221914" title="【免费】stm32测试平台，包含oled显示和蓝牙通讯功能资源">【免费】stm32测试平台，包含oled显示和蓝牙通讯功能资源<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://download.csdn.net/download/qq_32971095&#x2F;88221914</a></p>
+<h3 id="4-FPGA"><a href="#4-FPGA" class="headerlink" title="4.FPGA"></a>4.FPGA</h3><p>推荐学习：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nQ4y1Z7zN/?vd_source=01cde8042a76495bf513aa4407a56cd6" title="FPGA系列Xilinx Artix7教学视频">FPGA系列Xilinx<br>Artix7教学视频</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1T84y1C7qy/?vd_source=01cde8042a76495bf513aa4407a56cd6" title="FPGA-MPSoC">FPGA-<br>MPSoC</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Hq4y1u7qH/?vd_source=01cde8042a76495bf513aa4407a56cd6" title="ZYNQ之嵌入式SDK开发">ZYNQ之嵌入式SDK开发</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qz4y1d7pF/?vd_source=01cde8042a76495bf513aa4407a56cd6" title="ZYNQ之Linux开发">ZYNQ之Linux开发</a></p>
+<p>学习收获：</p>
+<p>**     **    Zynq 的 PS 部分就像 stm32<br>一样，本质都是配置外设的寄存器，利用开发商或者其他提供的友好接口的库函数对寄存器进行配置开发。 stm32 使用<br>ARM公司提供的cortex-M3内核，通过下载器将机器码下载至存储器代码段。</p>
+<pre><code>    此时再**回头看 stm32 的 SoC 架构和总线系统** 相比 Zynq 的也容易看了许多，之后再看stm32 的数据手册也多了一些理解。还有之后的 stm32 的学习，可以使用 keil5 的调试功能，检查各个寄存器的值和执行的汇编语言，从而更深层面了解微机原理和 CPU 的运作。
+</code></pre>
+<h5 id="学习记录-2"><a href="#学习记录-2" class="headerlink" title="学习记录"></a><strong>学习记录</strong></h5><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132220627?spm=1001.2014.3001.5502" title="FPGA基本概念及资源整理——FPGA学习笔记＜0＞——零.前言——学习实践汇总">FPGA基本概念及资源整理——FPGA学习笔记＜0＞——零.前言——学习实践汇总<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;132220627?spm&#x3D;1001.2014.3001.5502</a></p>
+<h3 id="5-操作系统"><a href="#5-操作系统" class="headerlink" title="5.操作系统"></a>5.操作系统</h3><p><strong>学习记录</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/130351060?spm=1001.2014.3001.5502" title="FreeRTOS学习笔记（一）">FreeRTOS学习笔记（一）<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;130351060?spm&#x3D;1001.2014.3001.5502</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133484963" title="Linux系统——OS学习笔记＜1＞">Linux系统——OS学习笔记＜1＞<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;133484963</a></p>
+<h2 id="三-其他学习资料"><a href="#三-其他学习资料" class="headerlink" title="三.其他学习资料"></a>三.其他学习资料</h2><p>推荐学习：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yx411u7iX/?spm_id_from=333.788.videocard.6&vd_source=01cde8042a76495bf513aa4407a56cd6" title="【Advanced控制理论】">【Advanced控制理论】</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16E411h7Cg/?spm_id_from=333.788.videocard.10" title="现代控制理论（清华大学）">现代控制理论（清华大学）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV15t411G7AG/?p=22&vd_source=01cde8042a76495bf513aa4407a56cd6" title="东北大学-计算机控制系统（国家级精品课）">东北大学-<br>计算机控制系统（国家级精品课）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Bf4y1t7oA/?p=1&vd_source=01cde8042a76495bf513aa4407a56cd6" title="现代数字信号处理">现代数字信号处理</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1es411H7eJ/?p=1&vd_source=01cde8042a76495bf513aa4407a56cd6" title="数字信号处理（西安电子科技大学&#x2F;西电）">数字信号处理（西安电子科技大学&#x2F;西电）</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cqfdcw/article/details/84939698" title="常见滤波器简要对比介绍及Matlab实现">常见滤波器简要对比介绍及Matlab实现</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18E411f7ZQ/?vd_source=01cde8042a76495bf513aa4407a56cd6" title="数字信号分析理论与实践（基于matlab）">数字信号分析理论与实践（基于matlab）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qf4y1x7kB/" title="浙江大学-机器学习">浙江大学-机器学习</a></p>
+<h5 id="学习记录-3"><a href="#学习记录-3" class="headerlink" title="学习记录"></a><strong>学习记录</strong></h5><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132343604?spm=1001.2014.3001.5501" title="​​​​​项目管理概述">​​​​​项目管理概述<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://blog.csdn.net/qq_32971095&#x2F;article&#x2F;details&#x2F;132343604?spm&#x3D;1001.2014.3001.5501</a></p>
+<h2 id="四-总结"><a href="#四-总结" class="headerlink" title="四.总结"></a>四.总结</h2><p>总结来说就是借鉴，思考，改进，创新！</p>
+<p>做好生涯规划，不要蹉跎岁月</p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133165306">https://blog.csdn.net/qq_32971095/article/details/133165306</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"># 学习</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/18/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E5%9B%9B%EF%BC%88%E4%BF%A1%E5%8F%B7%E9%87%87%E9%9B%86%E3%80%81%E5%8F%91%E7%94%9F%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C5%EF%BC%9E/" rel="prev" title="基础设计四（信号采集、发生）——FPGA学习笔记＜5＞">
+      <i class="fa fa-chevron-left"></i> 基础设计四（信号采集、发生）——FPGA学习笔记＜5＞
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/22/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%BA%94%EF%BC%88LCD%E6%B6%B2%E6%99%B6%E5%B1%8F%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C6%EF%BC%9E/" rel="next" title="基础设计五（LCD液晶屏）——FPGA学习笔记＜6＞">
+      基础设计五（LCD液晶屏）——FPGA学习笔记＜6＞ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="nav-number">1.</span> <span class="nav-text">一.嵌入式学习路线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">二.学习实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AF%BE%E5%86%85%E8%AF%BE%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1.课内课程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95"><span class="nav-number">2.1.1.</span> <span class="nav-text">学习记录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-51%E5%8D%95%E7%89%87%E6%9C%BA"><span class="nav-number">2.2.</span> <span class="nav-text">2.51单片机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-stm32"><span class="nav-number">2.3.</span> <span class="nav-text">3.stm32</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95-1"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">学习记录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-FPGA"><span class="nav-number">2.4.</span> <span class="nav-text">4.FPGA</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95-2"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">学习记录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.5.</span> <span class="nav-text">5.操作系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E5%85%B6%E4%BB%96%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">三.其他学习资料</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95-3"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">学习记录</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">四.总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">787k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:55</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

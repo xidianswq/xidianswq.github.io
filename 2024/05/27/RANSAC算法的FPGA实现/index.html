@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录 一.算法原理 1.参数变量 2.算法流程 &lt;1&gt;随机读取数据 &lt;2&gt;拟合模型 &lt;3&gt;检验模型 &lt;4&gt;循环遍历 二.设计思路 1.设计目标 2.模块设计 &lt;1&gt;随机数产生模块 &lt;2&gt;暂存寄存器 &lt;3&gt;计算模块 &lt;4&gt;模型评估模块 &lt;5&gt;主体控制与输出模块 &lt;6&gt;整合 三.具体">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RANSAC算法的FPGA实现">
+<meta property="og:url" content="http://example.com/2024/05/27/RANSAC%E7%AE%97%E6%B3%95%E7%9A%84FPGA%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录 一.算法原理 1.参数变量 2.算法流程 &lt;1&gt;随机读取数据 &lt;2&gt;拟合模型 &lt;3&gt;检验模型 &lt;4&gt;循环遍历 二.设计思路 1.设计目标 2.模块设计 &lt;1&gt;随机数产生模块 &lt;2&gt;暂存寄存器 &lt;3&gt;计算模块 &lt;4&gt;模型评估模块 &lt;5&gt;主体控制与输出模块 &lt;6&gt;整合 三.具体">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a2ef04e43713d49cbd2d77c4b3b13d13.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e1a40e9fb00f3d512134c9efbe023418.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c14f200db8d3e933e48fbe49a193f1fc.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fab333897437b774df5bb4bc2a42adc5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7d6b9180c527cfd5d39786f27076598b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f8b333fec06e0a78982e2978f077efd7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/aa641fc13e378827a3ed2d7763b60aab.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/face361f9b63a0ff29ebaa18ae4d4d2f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4f39ebf2287ecd3f78f9f303dcd7d844.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2b5db5cfbb3689bbf2b38712717330ee.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/332a59e94e620fbd13c87aa0a98f3baa.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bb02859e4670ee07014b6af6ab546d75.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/8479c74fa867c5f9ca2329e5ac82e282.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/462f462ef19b1e592eaa28041ca7d0d8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/91c5ac678cde8f1b0bf32fa7ae06f688.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/32d8e202d68c50edda80d9e40a9f5d36.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/dd0a71b7d0b73f5101eb227302152b34.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/7cc6346feffd47fbb37c328f1ba6f213.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/b4d02ced10924951b3a607efb1514515.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/1d33919743cf4a19a82137d91e857368.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/c561475921714635b0cce41ba03c8ab0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/4fda9ff18bf140c6a740e791e136710a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/d00fb992865d4c92bf86772ec2471575.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/7a1311448ae04201b9232d675c8a8c9a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/c3fd17c5f6ca4efabdd1acaaab26491f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/5c821beb009e40e3b2ad1ac4a359fe48.png">
+<meta property="article:published_time" content="2024-05-27T04:18:23.000Z">
+<meta property="article:modified_time" content="2025-02-08T03:45:06.143Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="fpga开发">
+<meta property="article:tag" content="opencv">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="计算机视觉">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/a2ef04e43713d49cbd2d77c4b3b13d13.png">
+
+<link rel="canonical" href="http://example.com/2024/05/27/RANSAC%E7%AE%97%E6%B3%95%E7%9A%84FPGA%E5%AE%9E%E7%8E%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>RANSAC算法的FPGA实现 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/27/RANSAC%E7%AE%97%E6%B3%95%E7%9A%84FPGA%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RANSAC算法的FPGA实现
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-27 12:18:23" itemprop="dateCreated datePublished" datetime="2024-05-27T12:18:23+08:00">2024-05-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-08 11:45:06" itemprop="dateModified" datetime="2025-02-08T11:45:06+08:00">2025-02-08</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%B8%80.%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86">一.算法原理</a></p>
+<p><a href="about:blank#1.%E5%8F%82%E6%95%B0%E5%8F%98%E9%87%8F">1.参数变量</a></p>
+<p><a href="about:blank#2.%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B">2.算法流程</a></p>
+<p><a href="about:blank#%3C1%3E%E9%9A%8F%E6%9C%BA%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE">&lt;1&gt;随机读取数据</a></p>
+<p><a href="about:blank#%3C2%3E%E6%8B%9F%E5%90%88%E6%A8%A1%E5%9E%8B">&lt;2&gt;拟合模型</a></p>
+<p><a href="about:blank#%3C3%3E%E6%A3%80%E9%AA%8C%E6%A8%A1%E5%9E%8B">&lt;3&gt;检验模型</a></p>
+<p><a href="about:blank#%3C4%3E%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86">&lt;4&gt;循环遍历</a></p>
+<p><a href="about:blank#%E4%BA%8C.%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF">二.设计思路</a></p>
+<p><a href="about:blank#1.%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87">1.设计目标</a></p>
+<p><a href="about:blank#2.%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1">2.模块设计</a></p>
+<p><a href="about:blank#%3C1%3E%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BA%A7%E7%94%9F%E6%A8%A1%E5%9D%97">&lt;1&gt;随机数产生模块</a></p>
+<p><a href="about:blank#%3C2%3E%E6%9A%82%E5%AD%98%E5%AF%84%E5%AD%98%E5%99%A8">&lt;2&gt;暂存寄存器</a></p>
+<p><a href="about:blank#%3C3%3E%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%9D%97">&lt;3&gt;计算模块</a></p>
+<p><a href="about:blank#%3C4%3E%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9D%97">&lt;4&gt;模型评估模块</a></p>
+<p><a href="about:blank#%3C5%3E%E4%B8%BB%E4%BD%93%E6%8E%A7%E5%88%B6%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A8%A1%E5%9D%97">&lt;5&gt;主体控制与输出模块</a></p>
+<p><a href="about:blank#%3C6%3E%E6%95%B4%E5%90%88">&lt;6&gt;整合</a></p>
+<p><a href="about:blank#%E4%B8%89.%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0">三.具体实现</a></p>
+<p><a href="about:blank#1.Python%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9D%97">1.Python数据生成模块</a></p>
+<p><a href="about:blank#2.Verilog%20RANSAC%E7%AE%97%E6%B3%95%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C">2.Verilog<br>RANSAC算法仿真结果</a></p>
+<p><a href="about:blank#%E5%9B%9B.%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90">四.性能分析</a></p>
+<p><a href="about:blank#1.%E8%B5%84%E6%BA%90%E5%88%86%E6%9E%90">1.资源分析</a></p>
+<p><a href="about:blank#2.%E9%80%9F%E5%BA%A6%E5%88%86%E6%9E%90">2.速度分析</a></p>
+<p><a href="about:blank#3.%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%A7%8D%E5%AD%90%E4%B8%8B%E7%9A%84%E7%BB%93%E6%9E%9C">3.选择不同随机数种子下的结果</a></p>
+<p><a href="about:blank#4.%E4%B8%8D%E5%90%8C%E9%A2%84%E8%AE%BE%E7%9B%B4%E7%BA%BF%E5%8F%82%E6%95%B0%E4%B8%8B%E7%9A%84%E6%8B%9F%E5%90%88%E7%BB%93%E6%9E%9C">4.不同预设直线参数下的拟合结果</a></p>
+<p><a href="about:blank#%E4%BA%94.%E6%80%9D%E8%80%83%E4%B8%8E%E6%94%B9%E8%BF%9B">五.思考与改进</a></p>
+<p><a href="about:blank#1.%E6%8F%90%E9%80%9F%E7%93%B6%E9%A2%88">1.提速瓶颈</a></p>
+<p><a href="about:blank#2.%E5%A2%9E%E5%8A%A0%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%A6">2.增加并行程度</a></p>
+<p><a href="about:blank#3.%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E6%94%B9%E8%BF%9B">3.算法流程改进</a></p>
+<p><a href="about:blank#%E5%85%AD.%E9%99%84%E5%BD%95">六.附录</a></p>
+<p><a href="about:blank#1.vivado%E5%B7%A5%E7%A8%8B%E6%BA%90%E7%A0%81%E9%83%A8%E5%88%86">1.vivado工程源码部分</a></p>
+<p><a href="about:blank#%3C1%3E%E4%B8%BB%E4%BD%93%E6%8E%A7%E5%88%B6%E9%83%A8%E5%88%86">&lt;1&gt;主体控制部分</a></p>
+<p><a href="about:blank#%E4%B8%83.%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE">七.参考文献</a></p>
+<p><a href="about:blank#%E5%85%AB.%E8%AE%BE%E8%AE%A1%E6%94%B9%E8%BF%9B">八.设计改进</a></p>
+<p><a href="about:blank#1.%E4%B8%8D%E5%8F%AF%E7%BB%BC%E5%90%88%E8%AF%AD%E5%8F%A5">1.不可综合语句</a></p>
+<p><a href="about:blank#2.%E4%BF%AE%E6%AD%A3%E7%A8%8B%E5%BA%8F%E8%AF%AD%E5%8F%A5">2.修正程序语句</a></p>
+<p><a href="about:blank#3.%E6%97%B6%E9%92%9F%E6%A8%A1%E5%9D%97">3.时钟模块</a></p>
+<p><a href="about:blank#%E4%B9%9D.%E8%AE%BE%E8%AE%A1%E5%AE%9E%E7%8E%B0%E5%88%86%E6%9E%90">九.设计实现分析</a></p>
+<p><a href="about:blank#1.%E9%9D%99%E6%80%81%E6%97%B6%E5%BA%8F%E5%88%86%E6%9E%90">1.静态时序分析</a></p>
+<p><a href="about:blank#%E5%8D%81.%E4%B8%8B%E8%BD%BD%E9%AA%8C%E8%AF%81">十.下载验证</a></p>
+<hr>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Graduate2015/article/details/113133919" title="伪随机序列：LFSR Sequence、m-Sequence和Gold Code&#x2F;Sequence-
+CSDN博客">伪随机序列：LFSR Sequence、m-Sequence和Gold Code&#x2F;Sequence-<br>CSDN博客</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/xijuezhu8128/article/details/122930455" title="RANSAC算法(附RANSAC直线拟合C++与Python版本)-CSDN博客">RANSAC算法(附RANSAC直线拟合C++与Python版本)-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhoucoolqi/article/details/105497572?spm=1001.2014.3001.5506" title="RANSAC算法——看完保证你理解-CSDN博客">RANSAC算法——看完保证你理解-<br>CSDN博客</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/Graduate2015/article/details/113133919" title="伪随机序列：LFSR Sequence、m-Sequence和Gold Code&#x2F;Sequence-CSDN博客">伪随机序列：LFSR Sequence、m-Sequence和Gold Code&#x2F;Sequence-<br>CSDN博客</a></p>
+<h2 id="一-算法原理"><a href="#一-算法原理" class="headerlink" title="一.算法原理"></a>一.算法原理</h2><h3 id="1-参数变量"><a href="#1-参数变量" class="headerlink" title="1.参数变量"></a>1.参数变量</h3><p>输入：数据集data、拟合模型model</p>
+<p>中间参数：一次拟合需要的数据量n；算法最大遍历次数k；计算匹配阈值t；最小匹配数据数d</p>
+<p>输出：完成信号done、最匹配的模型model参数</p>
+<p>模型：二元一次线性模型，二元多次非线性模型，任意函数…</p>
+<h3 id="2-算法流程"><a href="#2-算法流程" class="headerlink" title="2.算法流程"></a>2.算法流程</h3><h4 id="随机读取数据"><a href="#随机读取数据" class="headerlink" title="&lt;1&gt;随机读取数据"></a>&lt;1&gt;随机读取数据</h4><p>随机数生成模块生成n个随机地址，取出存储器对应地址数据。</p>
+<h4 id="拟合模型"><a href="#拟合模型" class="headerlink" title="&lt;2&gt;拟合模型"></a>&lt;2&gt;拟合模型</h4><p>由读出的n个数据拟合出相应模型</p>
+<h4 id="检验模型"><a href="#检验模型" class="headerlink" title="&lt;3&gt;检验模型"></a>&lt;3&gt;检验模型</h4><p>检验存储器中所有数据对于该模型的拟合程度</p>
+<h4 id="循环遍历"><a href="#循环遍历" class="headerlink" title="&lt;4&gt;循环遍历"></a>&lt;4&gt;循环遍历</h4><p>每次循环评价随机拟合的模型，当遍历k次后结束拟合，得到最佳模型</p>
+<h2 id="二-设计思路"><a href="#二-设计思路" class="headerlink" title="二.设计思路"></a>二.设计思路</h2><h3 id="1-设计目标"><a href="#1-设计目标" class="headerlink" title="1.设计目标"></a>1.设计目标</h3><pre><code>    工程能够完成一组坐标点集的线性拟合。输入坐标数据（x,y）的值为8bit 无符号整数数据类型，输出拟合直线参数，包括斜率k和y轴截距b，为8bit 有符号整数。
+</code></pre>
+<h3 id="2-模块设计"><a href="#2-模块设计" class="headerlink" title="2.模块设计"></a>2.模块设计</h3><h4 id="随机数产生模块"><a href="#随机数产生模块" class="headerlink" title="&lt;1&gt;随机数产生模块"></a>&lt;1&gt;随机数产生模块</h4><pre><code>    利用线性反馈移位寄存器（Linear Feedback Shift Register，LFSR）产生随机数，对于反馈移位寄存器和异或门构成的电路，可以按下面的关系式生成序列[1]：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a2ef04e43713d49cbd2d77c4b3b13d13.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e1a40e9fb00f3d512134c9efbe023418.png"></p>
+<pre><code>    对于m位的线性反馈移位寄存器，最多可以产生2^m-1个不同状态。如果一个序列发生器正好生产这 2^m-1个不同状态之后才重复此序列。随机数产生器的初始队列成为种子（seed），随后队列对种子进行移位运算生成新队列。
+
+    工程中采用32位随机数产生模块，每次取前14位分别作为两随机点的地址（128个数据对应7位地址）。
+</code></pre>
+<h4 id="暂存寄存器"><a href="#暂存寄存器" class="headerlink" title="&lt;2&gt;暂存寄存器"></a>&lt;2&gt;暂存寄存器</h4><pre><code>    通过rom读取文件内数据信息，存入相关数据。Rom深度为128，对应7位地址线，宽度为16位数据前8位为x，后8位为y。采用组合逻辑电路直接输出对应地址数据。
+</code></pre>
+<h4 id="计算模块"><a href="#计算模块" class="headerlink" title="&lt;3&gt;计算模块"></a>&lt;3&gt;计算模块</h4><pre><code>    通过所给数据拟合出模型。输入为32位数据，前16位和后16位分别是(x1,y1)和(x2,y2)。实现的组合电路结构如下：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c14f200db8d3e933e48fbe49a193f1fc.png"></p>
+<p>K&#x3D;(y2-y1)&#x2F;(x2-x1)    b&#x3D;y2-k*x2</p>
+<h4 id="模型评估模块"><a href="#模型评估模块" class="headerlink" title="&lt;4&gt;模型评估模块"></a>&lt;4&gt;模型评估模块</h4><pre><code>    给定参数T_RANGE，表示允许残差平方RSS的最大值（RSS=(y-k*x-b)^2，表示期望值与实际值只差的平方），当RSS&lt;T_RANGE时，表示该点在允许范围之内。Fit信号输出为1。实现的组合电路结构如下：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/fab333897437b774df5bb4bc2a42adc5.png"></p>
+<h4 id="主体控制与输出模块"><a href="#主体控制与输出模块" class="headerlink" title="&lt;5&gt;主体控制与输出模块"></a>&lt;5&gt;主体控制与输出模块</h4><pre><code>    用于控制迭代次数K，以及产生随机数产生模块时钟和rom地址更新。每次迭代重新生成随机数以产生新模型。遍历rom检验后比较最大线内点数fit_num，如果大于最大值则更新模型参数
+</code></pre>
+<h4 id="整合"><a href="#整合" class="headerlink" title="&lt;6&gt;整合"></a>&lt;6&gt;整合</h4><p><img src="https://i-blog.csdnimg.cn/blog_migrate/7d6b9180c527cfd5d39786f27076598b.png"></p>
+<table>
+<thead>
+<tr>
+<th>NAME</th>
+<th>ADDR_WIDTH</th>
+<th>DATA_WIDTH</th>
+<th>INPUTDATA_WIDTH</th>
+<th>PARA_WIDTH</th>
+<th>T_WIDTH</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WIDTH&#x2F;BITS</td>
+<td>7</td>
+<td>16</td>
+<td>32</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr>
+<td>DETAILS</td>
+<td></td>
+<td>x(h_8b)</td>
+<td>y(l_8b)</td>
+<td>x1(h_8b)</td>
+<td>y1(l_8b)</td>
+</tr>
+</tbody></table>
+<h2 id="三-具体实现"><a href="#三-具体实现" class="headerlink" title="三.具体实现"></a>三.具体实现</h2><h3 id="1-Python数据生成模块"><a href="#1-Python数据生成模块" class="headerlink" title="1.Python数据生成模块"></a>1.Python数据生成模块</h3><pre><code>    使用python编写代码生成十六进制数据集，包含线内点和噪声点，并给出python实现ransac和最小二乘法的拟合结果。如下：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f8b333fec06e0a78982e2978f077efd7.png"></p>
+<pre><code>    设定直线的参数：斜率k=2，截距b=25，最小二乘法和ransac拟合参数结果如下：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/aa641fc13e378827a3ed2d7763b60aab.png"></p>
+<pre><code>    其中红色线是最小二乘法的拟合结果，绿色线是ransac在迭代1000次，允许误差为5的拟合结果。
+
+    将产生数据以16进制形式保存，并存储于data.mem文件中在vivado中读取。
+</code></pre>
+<h3 id="2-Verilog-RANSAC算法仿真结果"><a href="#2-Verilog-RANSAC算法仿真结果" class="headerlink" title="2.Verilog RANSAC算法仿真结果"></a>2.Verilog RANSAC算法仿真结果</h3><pre><code>    工程拟合结果直线参数为：斜率k=2(0x02),b=24(0x18)，完全符合设定值。符合误差范围的点数最多为47个（0x2F），并在第450代（0x01C2）时随机产生的地址拟合出了最佳参数。此时的残差平方和RSS为2086（0x826）。
+
+    由于拟合和评估部分皆为组合逻辑电路，算法完成的速度取决于迭代次数K和时钟频率CLK_FRE。仿真采用100MHZ时钟，K取1000次，每次迭代遍历128个点需要128个时钟周期，故算法每次执行需要：128*K/CLK_FRE秒。本次仿真算法在0.00128s（128*1k/1M）左右结束，done信号置高电平有效，故算法频率为781.25HZ。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/face361f9b63a0ff29ebaa18ae4d4d2f.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4f39ebf2287ecd3f78f9f303dcd7d844.png"></p>
+<h2 id="四-性能分析"><a href="#四-性能分析" class="headerlink" title="四.性能分析"></a>四.性能分析</h2><h3 id="1-资源分析"><a href="#1-资源分析" class="headerlink" title="1.资源分析"></a>1.资源分析</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/2b5db5cfbb3689bbf2b38712717330ee.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/332a59e94e620fbd13c87aa0a98f3baa.png"></p>
+<pre><code>    设计使用到的查找表、IO、缓存器等资源均较少，满足设计的资源限制。
+</code></pre>
+<h3 id="2-速度分析"><a href="#2-速度分析" class="headerlink" title="2.速度分析"></a>2.速度分析</h3><pre><code>    下表给出不同迭代次数和时钟频率下的算法频率F=CLK_FRE/(128*K)：
+</code></pre>
+<h2 id="F-CLK-FRE-128-K"><a href="#F-CLK-FRE-128-K" class="headerlink" title="F&#x3D;CLK_FRE&#x2F;(128*K)  "></a>F&#x3D;CLK_FRE&#x2F;(128*K)  </h2><p>CLK_FRE(&#x2F;M) |  K |  frequency(&#x2F;Hz)<br>100 |  1000 |  781.25<br>100 |  10000 |  78.125<br>100 |  500 |  1562.5<br>80 |  1000 |  625<br>15 |  1000 |  117.1875  </p>
+<h3 id="3-选择不同随机数种子下的结果"><a href="#3-选择不同随机数种子下的结果" class="headerlink" title="3.选择不同随机数种子下的结果"></a>3.选择不同随机数种子下的结果</h3><pre><code>    在迭代次数k=1000次下，不同随机数种子下最终结果出现的时机（其中k是代数，para是拟合参数）：
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>seed</th>
+<th>0x12345678</th>
+<th>0xFFFFFFFF</th>
+<th>0x11111111</th>
+<th>0xcd62f912</th>
+<th>0x63e8c090</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>K</td>
+<td>450</td>
+<td>403</td>
+<td>13</td>
+<td>524</td>
+<td>360</td>
+</tr>
+<tr>
+<td>PARA</td>
+<td>0x0218</td>
+<td>0x0218</td>
+<td>0x0218</td>
+<td>0x0218</td>
+<td>0x0218</td>
+</tr>
+</tbody></table>
+<h3 id="4-不同预设直线参数下的拟合结果"><a href="#4-不同预设直线参数下的拟合结果" class="headerlink" title="4.不同预设直线参数下的拟合结果"></a>4.不同预设直线参数下的拟合结果</h3><pre><code>    在seed=0x12345678下，不同预设直线参数下的拟合结果如下，其中k，b为设定值，ransac_k、ransac_b为拟合值，fit_num为检测为线内的点数（实际为128）：
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>k</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>2.5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ransac_k</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>b</td>
+<td>25</td>
+<td>10</td>
+<td>77</td>
+<td>16</td>
+</tr>
+<tr>
+<td>ransac_b</td>
+<td>24</td>
+<td>11</td>
+<td>51</td>
+<td>41</td>
+</tr>
+<tr>
+<td>fit_num</td>
+<td>47</td>
+<td>64</td>
+<td>25</td>
+<td>39</td>
+</tr>
+</tbody></table>
+<h2 id="五-思考与改进"><a href="#五-思考与改进" class="headerlink" title="五.思考与改进"></a>五.思考与改进</h2><h3 id="1-提速瓶颈"><a href="#1-提速瓶颈" class="headerlink" title="1.提速瓶颈"></a>1.提速瓶颈</h3><pre><code>    在算法的实现流程中，计算和评估模块均采用组合逻辑电路，而 控制部分电路采用循环遍历的方式，依次选取rom中数据对模型进行检验，大大降低了算法的速度。
+</code></pre>
+<h3 id="2-增加并行程度"><a href="#2-增加并行程度" class="headerlink" title="2.增加并行程度"></a>2.增加并行程度</h3><pre><code>    在检验阶段，设计一寄存器组，提前将rom中所有数据存储至寄存器组后并行输出，连接至同等数量的evaluate_kernel模块同时进行检验。实现由之前的循环遍历校验转化为同时并行检验：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/bb02859e4670ee07014b6af6ab546d75.png"></p>
+<h3 id="3-算法流程改进"><a href="#3-算法流程改进" class="headerlink" title="3.算法流程改进"></a>3.算法流程改进</h3><p>&lt;1&gt;工程中模型的拟合采用直接随机选取n个数据进行拟合的方法，进而确定线内点。可以改进为最后增加一个步骤，由已经确定的线内点重新使用最小二乘法拟合参数，减小拟合参数的残差平方和RSS。</p>
+<p>&lt;2&gt;线内点的确定可改进为投票式，即由k个模型共同投票符合要求的片内点，选取票数最高的点作为真正的片内点[2]。</p>
+<h2 id="六-附录"><a href="#六-附录" class="headerlink" title="六.附录"></a>六.附录</h2><h3 id="1-vivado工程源码部分"><a href="#1-vivado工程源码部分" class="headerlink" title="1.vivado工程源码部分"></a>1.vivado工程源码部分</h3><h4 id="主体控制部分"><a href="#主体控制部分" class="headerlink" title="&lt;1&gt;主体控制部分"></a>&lt;1&gt;主体控制部分</h4><pre><code>`timescale 1ns / 1ps
+//
+// Engineer: switch_swq
+// Create Date: 2024/05/20 10:48:12
+//
+module evaluate
+#(
+    parameter ADDR_WIDTH = 7,
+    parameter DATA_WIDTH = 16,
+    parameter INPUTDATA_WIDTH = 32,
+    parameter PARA_WIDTH = 16,  
+    parameter T_WIDTH = 18,  
+    parameter T_RANGE = 10,
+    parameter K_RANGE = 1000,
+    parameter DATA_FILE = &quot;data.mem&quot;
+)
+(
+    input wire clk_in,
+    input wire rst_in,
+    output reg done,
+    //output reg [PARA_WIDTH-1:0]best_para
+    output wire [5:0]sel, 
+    output wire [7:0]seg          
+);
+
+wire clk,rst;
+wire [31:0]random_num;
+wire [PARA_WIDTH-1:0] para;
+wire [DATA_WIDTH-1:0] data;
+wire [INPUTDATA_WIDTH-1:0]input_data;
+wire fit;
+wire [T_WIDTH-1:0]RSS;
+reg random_clk;
+reg [ADDR_WIDTH-1:0] addr,fit_count,fit_max;
+reg [T_WIDTH-1:0]rss_num,rss_min;
+reg [15:0]k_num;
+reg [PARA_WIDTH-1:0]best_para;
+wire [23:0]output_data;
+wire [5:0]point;
+
+assign rst=~rst_in;
+
+always@(posedge clk or posedge rst)
+if(rst==1&#39;b1)
+    addr&lt;=1&#39;b0;
+else
+    addr&lt;=addr+1;
+    
+always@(posedge clk or posedge rst)
+if(rst==1&#39;b1)
+    k_num&lt;=1&#39;b0;
+else if(k_num&lt;=K_RANGE &amp;&amp; addr==1&#39;b0)
+    k_num&lt;=k_num+1;
+    
+always@(posedge clk or posedge rst)
+if(rst==1&#39;b1)
+    random_clk&lt;=1&#39;b0;
+else if(k_num&lt;=K_RANGE &amp;&amp; addr==1&#39;b0)
+    random_clk&lt;=1&#39;b1;
+else 
+    random_clk&lt;=1&#39;b0;
+   
+always@(posedge clk or posedge rst)
+if(rst==1&#39;b1)
+    done&lt;=1&#39;b0;
+else if(k_num&gt;K_RANGE)
+    done&lt;=1&#39;b1;
+else 
+    done&lt;=1&#39;b0;
+
+always@(posedge clk or posedge rst)
+begin
+    if(rst==1&#39;b1)begin
+        rss_num&lt;=&#39;b0;
+        fit_count&lt;=&#39;b0;
+        fit_max&lt;=&#39;b0;        
+        
+        best_para&lt;=&#39;b0;
+     end
+     else if(k_num&lt;=K_RANGE)begin   
+        if(fit==1&#39;b1)begin
+            fit_count&lt;=fit_count+1;
+            rss_num&lt;=rss_num+RSS;
+        end     
+        
+        if(addr==1&#39;b0)begin
+            if(fit_count&gt;fit_max)begin
+                best_para&lt;=para;
+                fit_max&lt;=fit_count;
+                rss_min&lt;=rss_num;
+            end
+            rss_num&lt;=&#39;b0;
+            fit_count&lt;=1&#39;b0;
+        end
+    end
+end
+
+assign output_data=&#123;8&#39;b0,best_para&#125;;
+assign point=6&#39;b0;
+
+clk_wiz_0 clk_wiz_0_inst
+   (
+    // Clock out ports
+    .clk_out1(clk),     // output clk_out1
+   // Clock in ports
+    .clk_in1(clk_in)      // input clk_in1
+);
+
+blk_mem_gen_0 blk_mem_gen_0_inst1 (
+  .clka(clk),    // input wire clka
+  .addra(addr),  // input wire [6 : 0] addra
+  .douta(data)  // output wire [15 : 0] douta
+);
+
+blk_mem_gen_0 blk_mem_gen_0_inst2 (
+  .clka(clk),    // input wire clka
+  .addra(random_num[6:0]),  // input wire [6 : 0] addra
+  .douta(input_data[INPUTDATA_WIDTH-1:INPUTDATA_WIDTH/2])  // output wire [15 : 0] douta
+);
+
+blk_mem_gen_0 blk_mem_gen_0_inst3 (
+  .clka(clk),    // input wire clka
+  .addra(random_num[13:7]),  // input wire [6 : 0] addra
+  .douta(input_data[INPUTDATA_WIDTH/2-1:0])  // output wire [15 : 0] douta
+);
+
+evaluate__kernel
+#(
+    .DATA_WIDTH(DATA_WIDTH),
+    .PARA_WIDTH(PARA_WIDTH),
+    .T_WIDTH   (T_WIDTH   ),
+    .T_RANGE   (T_RANGE   ) 
+)
+evaluate__kernel_inst
+(
+    .data(data),
+    .para(para),
+    .RSS(RSS),
+    .fit(fit)
+);
+
+calculate_kernel
+#(
+    .INPUTDATA_WIDTH(INPUTDATA_WIDTH),
+    .PARA_WIDTH(PARA_WIDTH)
+)
+calculate_kernel_inst
+(
+    .input_data(input_data),
+    .para(para)
+);
+
+random_num random_num_inst
+(
+    .clk   (random_clk)  ,
+    .rst   (rst   )  ,
+    .data  (random_num)
+);
+
+seg_dynamic seg_dynamic_inst
+(
+    .sys_clk  (clk      )   ,
+    .sys_rst_n(rst      )   ,
+    .data     (output_data)   , 
+    .point    (point),
+    .sel      (sel      )   ,
+    .seg      (seg      )    
+);
+
+endmodule
+</code></pre>
+<h2 id="七-参考文献"><a href="#七-参考文献" class="headerlink" title="七.参考文献"></a>七.参考文献</h2><p>[1]束礼宝,宋克柱,王砚方.伪随机数发生器的FPGA实现与研究[J].电路与系统学报,2003(03):121-124.</p>
+<p>[2]江洁,凌思睿.一种投票式并行RANSAC算法及其FPGA实现[J].电子与信息学报,2014,36(05):1145-1150.</p>
+<h2 id="八-设计改进"><a href="#八-设计改进" class="headerlink" title="八.设计改进"></a>八.设计改进</h2><h3 id="1-不可综合语句"><a href="#1-不可综合语句" class="headerlink" title="1.不可综合语句"></a>1.不可综合语句</h3><pre><code>    原代码中夹杂着不可综合语句，如rom中的initial语句。现将数据存储器使用xilinx block memory generator ip核替换原本不可综合的rom模块。
+</code></pre>
+<h3 id="2-修正程序语句"><a href="#2-修正程序语句" class="headerlink" title="2.修正程序语句"></a>2.修正程序语句</h3><p>（1）原程序出现阻塞赋值和非阻塞赋值语句混用情况，现对evaluate、evaluate_kernel、calculate_kernel相关语句进行了修正。（说明：控制模块evaluate和随机数生成模块random_num采用时序逻辑，计算和评估模块_kernel仍使用组合逻辑）</p>
+<p>（2）原程序的控制模块evaluate中语句较为混乱，现依据信号划分语句，使结构更为清晰。</p>
+<h3 id="3-时钟模块"><a href="#3-时钟模块" class="headerlink" title="3.时钟模块"></a>3.时钟模块</h3><pre><code>    添加xilinx clocking wizard ip核代替原硬件时钟直连，方便后续进行时序分析和调试。
+</code></pre>
+<h2 id="九-设计实现分析"><a href="#九-设计实现分析" class="headerlink" title="九.设计实现分析"></a>九.设计实现分析</h2><h3 id="1-静态时序分析"><a href="#1-静态时序分析" class="headerlink" title="1.静态时序分析"></a>1.静态时序分析</h3><pre><code>    在vivado设计实现中，观察“Timing Summary”内的时钟域内路径“intra-clock paths”以确定时钟频率。可以看到路径上的时序要求“requirement”为30.303ns，数据信号在时钟周期内稳定下来的最长时间在path1上，如下图：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/8479c74fa867c5f9ca2329e5ac82e282.png"></p>
+<pre><code>    该路径是从存储器blk_mem_gen0至寄存器fit_count_reg，即对应从随机从存储器中取数至模型遍历评估一个数结束。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/462f462ef19b1e592eaa28041ca7d0d8.png"></p>
+<pre><code>    按照信号稳定的最长时间为30.303ns，计算出的最大频率约为33.00MHz。在时钟约束中设置时钟的输出频率为33MHz，implement后的结果如下：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/91c5ac678cde8f1b0bf32fa7ae06f688.png"></p>
+<pre><code>    可以看到系统的最差负时序裕量“WNS”和最差保持时序裕量“WHS”均为正；总的负时序裕量“TNS”和保持时序裕量“THS”为零，即所有的时序路径都能满足这些要求。
+</code></pre>
+<h2 id="十-下载验证"><a href="#十-下载验证" class="headerlink" title="十.下载验证"></a>十.下载验证</h2><pre><code>    在工程中添加数码管显示模块，并生成比特流对工程进行下载验证。使用开发板芯片型号为xc7a35tfgg484-2，资源使用情况如下：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/32d8e202d68c50edda80d9e40a9f5d36.png"></p>
+<pre><code>    实际运行情况如下：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/dd0a71b7d0b73f5101eb227302152b34.png"></p>
+<h2 id="十一-后续改进"><a href="#十一-后续改进" class="headerlink" title="十一.后续改进"></a>十一.后续改进</h2><h3 id="1-时序电路设计"><a href="#1-时序电路设计" class="headerlink" title="1.时序电路设计"></a>1.时序电路设计</h3><pre><code>    将模型拟合模块和评估模块（calculate_kernel和evaluate__kernel模块）由组合逻辑改为时序逻辑，减小了信号传递的长度，从而减少线路上信号稳定所需要的时间。
+</code></pre>
+<h3 id="2-流水线改进"><a href="#2-流水线改进" class="headerlink" title="2.流水线改进"></a>2.流水线改进</h3><pre><code>    在拟合和评估模块将相关计算步骤分解成流水线。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/direct/7cc6346feffd47fbb37c328f1ba6f213.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/direct/b4d02ced10924951b3a607efb1514515.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/direct/1d33919743cf4a19a82137d91e857368.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/direct/c561475921714635b0cce41ba03c8ab0.png"></p>
+<h3 id="3-数值精度提升"><a href="#3-数值精度提升" class="headerlink" title="3.数值精度提升"></a>3.数值精度提升</h3><pre><code>    提升线路宽度从原来8位提高到16位，并使用定点小数表示数值。高8位为整数部分，低8位为小数部分。
+</code></pre>
+<h3 id="4-算法结构改进"><a href="#4-算法结构改进" class="headerlink" title="4.算法结构改进"></a>4.算法结构改进</h3><pre><code>    将评估模块由原先循环取数评估改为并行评估（evaluate_parralle模块），将评估所需时钟周期数由128变为1，以适配流水线周期长度。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/direct/4fda9ff18bf140c6a740e791e136710a.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/direct/d00fb992865d4c92bf86772ec2471575.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/direct/7a1311448ae04201b9232d675c8a8c9a.png"></p>
+<h3 id="5-改进后性能"><a href="#5-改进后性能" class="headerlink" title="5.改进后性能"></a>5.改进后性能</h3><pre><code>    最高时钟频率约72.4MHz（最长路径时间为12.002ns）
+</code></pre>
+<h3 id="6-现存问题"><a href="#6-现存问题" class="headerlink" title="6.现存问题"></a>6.现存问题</h3><p>&lt;1&gt;评估模块（evaluate_parralle模块）以空间换速度，占用资源较多</p>
+<p>&lt;2&gt;使用vivado提供的除法运算“&#x2F;”所综合的器件导致该路径用时（logic delay）过长，成为时钟频率无法提升的主要问题，需进行改进。</p>
+<p><img src="https://i-blog.csdnimg.cn/direct/c3fd17c5f6ca4efabdd1acaaab26491f.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/direct/5c821beb009e40e3b2ad1ac4a359fe48.png"></p>
+<pre><code>    另一方面系统布线时延（net delay）也较长，表现在参数计算模块calculate_kernel的b_reg到并行评估模块kxb_reg上，仍在探索优化方法。
+</code></pre>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/139198487">https://blog.csdn.net/qq_32971095/article/details/139198487</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
+              <a href="/tags/opencv/" rel="tag"># opencv</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" rel="tag"># 计算机视觉</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/05/23/%E8%A5%BF%E7%94%B5%E8%AE%A1%E7%A7%91%E5%A4%A7%E4%B8%89%E4%B8%8BSOC%E5%BE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E5%90%88%E9%9B%86/" rel="prev" title="西电计科大三下SOC微体系结构设计实验合集">
+      <i class="fa fa-chevron-left"></i> 西电计科大三下SOC微体系结构设计实验合集
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/02/08/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">一.算法原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8F%82%E6%95%B0%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1.参数变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">2.算法流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.1.</span> <span class="nav-text">&lt;1&gt;随机读取数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%9F%E5%90%88%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">&lt;2&gt;拟合模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E9%AA%8C%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.3.</span> <span class="nav-text">&lt;3&gt;检验模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86"><span class="nav-number">1.2.4.</span> <span class="nav-text">&lt;4&gt;循环遍历</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">二.设计思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">1.设计目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.2.</span> <span class="nav-text">2.模块设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BA%A7%E7%94%9F%E6%A8%A1%E5%9D%97"><span class="nav-number">2.2.1.</span> <span class="nav-text">&lt;1&gt;随机数产生模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9A%82%E5%AD%98%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.2.2.</span> <span class="nav-text">&lt;2&gt;暂存寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%9D%97"><span class="nav-number">2.2.3.</span> <span class="nav-text">&lt;3&gt;计算模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9D%97"><span class="nav-number">2.2.4.</span> <span class="nav-text">&lt;4&gt;模型评估模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E4%BD%93%E6%8E%A7%E5%88%B6%E4%B8%8E%E8%BE%93%E5%87%BA%E6%A8%A1%E5%9D%97"><span class="nav-number">2.2.5.</span> <span class="nav-text">&lt;5&gt;主体控制与输出模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E5%90%88"><span class="nav-number">2.2.6.</span> <span class="nav-text">&lt;6&gt;整合</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">三.具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Python%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9D%97"><span class="nav-number">3.1.</span> <span class="nav-text">1.Python数据生成模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Verilog-RANSAC%E7%AE%97%E6%B3%95%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C"><span class="nav-number">3.2.</span> <span class="nav-text">2.Verilog RANSAC算法仿真结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">四.性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%B5%84%E6%BA%90%E5%88%86%E6%9E%90"><span class="nav-number">4.1.</span> <span class="nav-text">1.资源分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%80%9F%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-number">4.2.</span> <span class="nav-text">2.速度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#F-CLK-FRE-128-K"><span class="nav-number">5.</span> <span class="nav-text">F&#x3D;CLK_FRE&#x2F;(128*K)  </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%A7%8D%E5%AD%90%E4%B8%8B%E7%9A%84%E7%BB%93%E6%9E%9C"><span class="nav-number">5.1.</span> <span class="nav-text">3.选择不同随机数种子下的结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%B8%8D%E5%90%8C%E9%A2%84%E8%AE%BE%E7%9B%B4%E7%BA%BF%E5%8F%82%E6%95%B0%E4%B8%8B%E7%9A%84%E6%8B%9F%E5%90%88%E7%BB%93%E6%9E%9C"><span class="nav-number">5.2.</span> <span class="nav-text">4.不同预设直线参数下的拟合结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94-%E6%80%9D%E8%80%83%E4%B8%8E%E6%94%B9%E8%BF%9B"><span class="nav-number">6.</span> <span class="nav-text">五.思考与改进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%8F%90%E9%80%9F%E7%93%B6%E9%A2%88"><span class="nav-number">6.1.</span> <span class="nav-text">1.提速瓶颈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A2%9E%E5%8A%A0%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%A6"><span class="nav-number">6.2.</span> <span class="nav-text">2.增加并行程度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E6%94%B9%E8%BF%9B"><span class="nav-number">6.3.</span> <span class="nav-text">3.算法流程改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD-%E9%99%84%E5%BD%95"><span class="nav-number">7.</span> <span class="nav-text">六.附录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-vivado%E5%B7%A5%E7%A8%8B%E6%BA%90%E7%A0%81%E9%83%A8%E5%88%86"><span class="nav-number">7.1.</span> <span class="nav-text">1.vivado工程源码部分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E4%BD%93%E6%8E%A7%E5%88%B6%E9%83%A8%E5%88%86"><span class="nav-number">7.1.1.</span> <span class="nav-text">&lt;1&gt;主体控制部分</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">8.</span> <span class="nav-text">七.参考文献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB-%E8%AE%BE%E8%AE%A1%E6%94%B9%E8%BF%9B"><span class="nav-number">9.</span> <span class="nav-text">八.设计改进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%8D%E5%8F%AF%E7%BB%BC%E5%90%88%E8%AF%AD%E5%8F%A5"><span class="nav-number">9.1.</span> <span class="nav-text">1.不可综合语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BF%AE%E6%AD%A3%E7%A8%8B%E5%BA%8F%E8%AF%AD%E5%8F%A5"><span class="nav-number">9.2.</span> <span class="nav-text">2.修正程序语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%97%B6%E9%92%9F%E6%A8%A1%E5%9D%97"><span class="nav-number">9.3.</span> <span class="nav-text">3.时钟模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D-%E8%AE%BE%E8%AE%A1%E5%AE%9E%E7%8E%B0%E5%88%86%E6%9E%90"><span class="nav-number">10.</span> <span class="nav-text">九.设计实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%99%E6%80%81%E6%97%B6%E5%BA%8F%E5%88%86%E6%9E%90"><span class="nav-number">10.1.</span> <span class="nav-text">1.静态时序分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81-%E4%B8%8B%E8%BD%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">11.</span> <span class="nav-text">十.下载验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80-%E5%90%8E%E7%BB%AD%E6%94%B9%E8%BF%9B"><span class="nav-number">12.</span> <span class="nav-text">十一.后续改进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%97%B6%E5%BA%8F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="nav-number">12.1.</span> <span class="nav-text">1.时序电路设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%94%B9%E8%BF%9B"><span class="nav-number">12.2.</span> <span class="nav-text">2.流水线改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E5%80%BC%E7%B2%BE%E5%BA%A6%E6%8F%90%E5%8D%87"><span class="nav-number">12.3.</span> <span class="nav-text">3.数值精度提升</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%AE%97%E6%B3%95%E7%BB%93%E6%9E%84%E6%94%B9%E8%BF%9B"><span class="nav-number">12.4.</span> <span class="nav-text">4.算法结构改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%94%B9%E8%BF%9B%E5%90%8E%E6%80%A7%E8%83%BD"><span class="nav-number">12.5.</span> <span class="nav-text">5.改进后性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E7%8E%B0%E5%AD%98%E9%97%AE%E9%A2%98"><span class="nav-number">12.6.</span> <span class="nav-text">6.现存问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">787k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:55</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
