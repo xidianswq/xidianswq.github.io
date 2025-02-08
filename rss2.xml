@@ -8,7 +8,7 @@
     
     <atom:link href="http://example.com/rss2.xml" rel="self" type="application/rss+xml"/>
     
-    <description>归去来兮</description>
+    <description>舟遥遥以轻飏，风飘飘而吹衣</description>
     <pubDate>Sat, 08 Feb 2025 05:18:43 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
@@ -199,15 +199,15 @@
       
       
       
-      <category domain="http://example.com/tags/opencv/">opencv</category>
-      
-      <category domain="http://example.com/tags/c/">c++</category>
-      
       <category domain="http://example.com/tags/python/">python</category>
       
       <category domain="http://example.com/tags/%E5%AD%A6%E4%B9%A0/">学习</category>
       
       <category domain="http://example.com/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
+      
+      <category domain="http://example.com/tags/c/">c++</category>
+      
+      <category domain="http://example.com/tags/opencv/">opencv</category>
       
       <category domain="http://example.com/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</category>
       

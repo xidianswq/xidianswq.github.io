@@ -142,15 +142,15 @@
       
         <tags>
             
-            <tag> opencv </tag>
-            
-            <tag> c++ </tag>
-            
             <tag> python </tag>
             
             <tag> 学习 </tag>
             
             <tag> 笔记 </tag>
+            
+            <tag> c++ </tag>
+            
+            <tag> opencv </tag>
             
             <tag> 人工智能 </tag>
             
@@ -459,11 +459,11 @@
       
         <tags>
             
-            <tag> 嵌入式硬件 </tag>
-            
             <tag> 学习 </tag>
             
             <tag> 笔记 </tag>
+            
+            <tag> 嵌入式硬件 </tag>
             
         </tags>
       
@@ -522,11 +522,11 @@
             
             <tag> fpga开发 </tag>
             
-            <tag> 嵌入式硬件 </tag>
-            
             <tag> 学习 </tag>
             
             <tag> 笔记 </tag>
+            
+            <tag> 嵌入式硬件 </tag>
             
         </tags>
       
@@ -621,11 +621,11 @@
       
         <tags>
             
+            <tag> c++ </tag>
+            
             <tag> stm32 </tag>
             
             <tag> opencv </tag>
-            
-            <tag> c++ </tag>
             
             <tag> linux </tag>
             
@@ -768,13 +768,13 @@
       
         <tags>
             
-            <tag> stm32 </tag>
-            
-            <tag> c++ </tag>
-            
             <tag> 学习 </tag>
             
             <tag> 笔记 </tag>
+            
+            <tag> c++ </tag>
+            
+            <tag> stm32 </tag>
             
         </tags>
       
