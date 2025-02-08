@@ -199,11 +199,11 @@
       
       
       
+      <category domain="http://example.com/tags/python/">python</category>
+      
       <category domain="http://example.com/tags/opencv/">opencv</category>
       
       <category domain="http://example.com/tags/c/">c++</category>
-      
-      <category domain="http://example.com/tags/python/">python</category>
       
       <category domain="http://example.com/tags/%E5%AD%A6%E4%B9%A0/">学习</category>
       
