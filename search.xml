@@ -14,9 +14,9 @@
       
         <tags>
             
-            <tag> python </tag>
-            
             <tag> Hexo </tag>
+            
+            <tag> python </tag>
             
         </tags>
       
@@ -48,9 +48,9 @@
       
         <tags>
             
-            <tag> opencv </tag>
-            
             <tag> fpga开发 </tag>
+            
+            <tag> opencv </tag>
             
             <tag> 算法 </tag>
             
@@ -142,6 +142,8 @@
       
         <tags>
             
+            <tag> python </tag>
+            
             <tag> opencv </tag>
             
             <tag> c++ </tag>
@@ -149,8 +151,6 @@
             <tag> 学习 </tag>
             
             <tag> 笔记 </tag>
-            
-            <tag> python </tag>
             
             <tag> 人工智能 </tag>
             
@@ -520,9 +520,9 @@
       
         <tags>
             
-            <tag> 嵌入式硬件 </tag>
-            
             <tag> fpga开发 </tag>
+            
+            <tag> 嵌入式硬件 </tag>
             
             <tag> 学习 </tag>
             
