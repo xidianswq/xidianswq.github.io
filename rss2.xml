@@ -29,9 +29,9 @@
       
       
       
-      <category domain="http://example.com/tags/Hexo/">Hexo</category>
-      
       <category domain="http://example.com/tags/python/">python</category>
+      
+      <category domain="http://example.com/tags/Hexo/">Hexo</category>
       
       
       <comments>http://example.com/2025/02/08/CSDN%E5%8D%9A%E5%AE%A2%E5%AF%BC%E5%87%BA%E4%B8%BAHexo%E7%9A%84MD%E6%96%87%E4%BB%B6/#disqus_thread</comments>
@@ -203,11 +203,11 @@
       
       <category domain="http://example.com/tags/c/">c++</category>
       
-      <category domain="http://example.com/tags/python/">python</category>
-      
       <category domain="http://example.com/tags/%E5%AD%A6%E4%B9%A0/">学习</category>
       
       <category domain="http://example.com/tags/%E7%AC%94%E8%AE%B0/">笔记</category>
+      
+      <category domain="http://example.com/tags/python/">python</category>
       
       <category domain="http://example.com/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</category>
       
