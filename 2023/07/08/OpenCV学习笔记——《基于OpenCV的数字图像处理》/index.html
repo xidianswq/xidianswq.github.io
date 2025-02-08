@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Zhi Mang Xing:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://googlefonts.cn//css?family=Zhi Mang Xing:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
@@ -575,7 +575,7 @@ void onMouseCallback(int event, int x, int y, int flags, void* param)
 <p><strong>CMakeLists.txt编辑：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kuliuheng/p/9431275.html" title="[CMAKE]
 详解CMakeLists.txt文件 - VictoKu - 博客园 (cnblogs.com)">[CMAKE] 详解CMakeLists.txt文件 - VictoKu - 博客园<br>(cnblogs.com)</a></strong></p>
 <p><strong>或参考：jetson nano上的OpenCV使用：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/131511658?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22131511658%22,%22source%22:%22qq_32971095%22%7D" title="图像识别小车（jetson nano部分）">图像识别小车（jetson<br>nano部分）</a>——第五章</strong></p>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="三-OpenCV基本数据结构和基本组件"><a href="#三-OpenCV基本数据结构和基本组件" class="headerlink" title="三.OpenCV基本数据结构和基本组件"></a>三.OpenCV基本数据结构和基本组件</h2><h5 id="-1"><a href="#-1" class="headerlink" title=""></a></h5><p>&lt;1&gt;（基础图像容器Mat类；点Point类；颜色Scalar类；尺寸Size类；矩形Rect类；旋转矩形RotatedRect类；固定向量Vec类；复数类complexf）</p>
+<h2 id><a href="#" class="headerlink" title></a></h2><h2 id="三-OpenCV基本数据结构和基本组件"><a href="#三-OpenCV基本数据结构和基本组件" class="headerlink" title="三.OpenCV基本数据结构和基本组件"></a>三.OpenCV基本数据结构和基本组件</h2><h5 id="-1"><a href="#-1" class="headerlink" title></a></h5><p>&lt;1&gt;（基础图像容器Mat类；点Point类；颜色Scalar类；尺寸Size类；矩形Rect类；旋转矩形RotatedRect类；固定向量Vec类；复数类complexf）</p>
 <p>（辅助对象：迭代参数TermCriteria类；范围range类；指针Ptr类）</p>
 <p>（工具和系统函数：数学、内存管理、性能优化、异常处理函数）</p>
 <p>（图像绘制图形函数：线、矩形、圆、折线）</p>
@@ -786,7 +786,7 @@ void MyGammaCorrection(const Mat&amp; src, Mat&amp; dst, float fGamma)
 	&#125;
 &#125;
 </code></pre>
-<p>注：saturate_cast&lt;&gt;的使用（防止颜色溢出）参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_15698613/article/details/84557588?spm=1001.2014.3001.5506" title="【OpenCV】中saturate_cast&lt;uchar&gt;的含义和用法是什么？_人工智能博士的博客-CSDN博客">【OpenCV】中saturate_cast<uchar>的含义和用法是什么？_人工智能博士的博客-<br>CSDN博客</a></p>
+<p>注：saturate_cast&lt;&gt;的使用（防止颜色溢出）参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_15698613/article/details/84557588?spm=1001.2014.3001.5506" title="【OpenCV】中saturate_cast&lt;uchar&gt;的含义和用法是什么？_人工智能博士的博客-CSDN博客">【OpenCV】中saturate_cast<uchar>的含义和用法是什么？_人工智能博士的博客-<br>CSDN博客</uchar></a></p>
 <h6 id="2-直方图（概率直方图）绘制函数"><a href="#2-直方图（概率直方图）绘制函数" class="headerlink" title="2.直方图（概率直方图）绘制函数"></a>2.直方图（概率直方图）绘制函数</h6><p>①灰度直方图</p>
 <pre><code>//灰度直方图
 void DrawGrayImgHist(const Mat &amp;srcImg)
@@ -913,7 +913,7 @@ void DrawAccumulateImgHist(const Mat &amp;srcImg)
 &#125;
 </code></pre>
 <h2 id="七-图像分割"><a href="#七-图像分割" class="headerlink" title="七.图像分割"></a>七.图像分割</h2><h5 id="（边缘检测：算子：一阶导数【Sobel-Prewitt-Roberts】、二阶【拉普拉斯-LOG-Canny】）"><a href="#（边缘检测：算子：一阶导数【Sobel-Prewitt-Roberts】、二阶【拉普拉斯-LOG-Canny】）" class="headerlink" title="&lt;1&gt;（边缘检测：算子：一阶导数【Sobel&#x2F;Prewitt&#x2F;Roberts】、二阶【拉普拉斯&#x2F;LOG&#x2F;Canny】）"></a>&lt;1&gt;（边缘检测：算子：一阶导数【Sobel&#x2F;Prewitt&#x2F;Roberts】、二阶【拉普拉斯&#x2F;LOG&#x2F;Canny】）</h5><h5 id="（几何形状检测【霍夫变换】：直线、圆）"><a href="#（几何形状检测【霍夫变换】：直线、圆）" class="headerlink" title="（几何形状检测【霍夫变换】：直线、圆）"></a>（几何形状检测【霍夫变换】：直线、圆）</h5><h5 id="（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）"><a href="#（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）" class="headerlink" title="（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）"></a>（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/42061b3c66f846c840087275d00ada91.jpeg"></p>
-<h5 id="-2"><a href="#-2" class="headerlink" title=""></a></h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/4e731b3257fee71a5ec24342e7b18efb.jpeg"><br>&lt;2&gt;示例代码</p>
+<h5 id="-2"><a href="#-2" class="headerlink" title></a></h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/4e731b3257fee71a5ec24342e7b18efb.jpeg"><br>&lt;2&gt;示例代码</p>
 <h6 id="1-霍夫直线变换和霍夫圆检测"><a href="#1-霍夫直线变换和霍夫圆检测" class="headerlink" title="1.霍夫直线变换和霍夫圆检测"></a>1.霍夫直线变换和霍夫圆检测</h6><pre><code>void DetectLines()
 &#123;
 	Mat matSrc = imread(&quot;Hough_src_clr.png&quot;, IMREAD_GRAYSCALE);

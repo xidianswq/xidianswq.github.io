@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Zhi Mang Xing:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://googlefonts.cn//css?family=Zhi Mang Xing:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
@@ -3603,7 +3603,7 @@ $&#123;函数名 参数集合&#125;
 
     此函数查找字符串&lt;text&gt;中的单词是否符合模式&lt;pattern&gt;，如果匹配就用&lt;replacement&gt;来  
 </code></pre>
-<p>替换掉，<pattern>可以使用包括通配符“%”，表示任意长度的字符串，函数返回值就是替换<br>后的字符串。如果<replacement>中也包涵“%”，那么<replacement>中的“%”将是<pattern><br>中的那个“%”所代表的字符串，比如：</p>
+<p>替换掉，<pattern>可以使用包括通配符“%”，表示任意长度的字符串，函数返回值就是替换<br>后的字符串。如果<replacement>中也包涵“%”，那么<replacement>中的“%”将是<pattern><br>中的那个“%”所代表的字符串，比如：</pattern></replacement></replacement></pattern></p>
 <pre><code>$(patsubst %.c,%.o,a.c b.c c.c)
 
     将字符串“a.c b.c c.c”中的所有符合“%.c”的字符串，替换为“%.o”，替换完成以后的 字符串为“a.o b.o c.o”。
@@ -3631,7 +3631,7 @@ $(dir &lt;/src/a.c&gt;)
 
     此函数的意思就是把参数&lt;list&gt;中的单词逐一取出来放到参数&lt;var&gt;中，然后再执行&lt;text&gt;  
 </code></pre>
-<p>所包含的表达式。每次<text>都会返回一个字符串，循环的过程中，<text>中所包含的每个字<br>符串会以空格隔开，最后当整个循环结束时，<text>所返回的每个字符串所组成的整个字符串<br>将会是函数 foreach 函数的返回值。</p>
+<p>所包含的表达式。每次<text>都会返回一个字符串，循环的过程中，<text>中所包含的每个字<br>符串会以空格隔开，最后当整个循环结束时，<text>所返回的每个字符串所组成的整个字符串<br>将会是函数 foreach 函数的返回值。</text></text></text></p>
 <p><strong>6、函数 wildcard</strong></p>
 <pre><code>    通配符“%”只能用在规则中，只有在规则中它才会展开，**如果 在变量定义和函数使用时， 通配符不会自动展开，这个时候就要用到函数 wildcard**，使用方法如下：
 
@@ -4053,7 +4053,7 @@ petalinux-config --get-hw-description /mnt/hgfs/shared_folder/xsa/
 
     通过键盘上的**“↑”和“↓”键来选择要配置的菜单** ，**按下“Enter”键进入子菜单** 。菜单中高亮的字母就是此菜单的**热键** ，在键盘上按下此高亮字母对应的键可以快速选中对应的菜单。选中子菜单以后**按下“Y”键就会将相应的配置选项写入配置文件中，菜单前面变为“ &lt; * &gt;”**。 **按下“N”键不编译相应的代码，按下“M”键就会将相应的代码编译为模块，菜单前面变为“ &lt; M &gt;”**。按两下“Esc”键退出，也就是返回到上一级，按下“?”键查看此菜单的帮助信 息，按下“/”键打开搜索框，可以在搜索框输入要搜索的内容。
 </code></pre>
-<p>在配置界面下方会有五个按钮，这五个按钮的功能如下：<br><Select>：选中按钮，和“Enter”键的功能相同，负责选中并进入某个菜单。<br><Exit>：退出按钮，和按两下“Esc”键功能相同，退出当前菜单，返回到上一级。<br><Help>：帮助按钮，查看选中菜单的帮助信息。<br><Save>：保存按钮，保存修改后的配置文件。<br><Load>：加载按钮，加载指定的配置文件。<br>        本实验我们无需更改该窗口的配置信息。不过由于该窗口菜单不多，我们就从上到下的简单地介绍下这些菜单。</p>
+<p>在配置界面下方会有五个按钮，这五个按钮的功能如下：<br><Select>：选中按钮，和“Enter”键的功能相同，负责选中并进入某个菜单。<br><Exit>：退出按钮，和按两下“Esc”键功能相同，退出当前菜单，返回到上一级。<br><Help>：帮助按钮，查看选中菜单的帮助信息。<br><Save>：保存按钮，保存修改后的配置文件。<br><Load>：加载按钮，加载指定的配置文件。<br>        本实验我们无需更改该窗口的配置信息。不过由于该窗口菜单不多，我们就从上到下的简单地介绍下这些菜单。</Load></Save></Help></Exit></Select></p>
 <pre><code>    首先按键盘上的下方向键移动到“Linux Components Selection”，然后按键盘上的“Enter” 进入子菜单，子菜单内容如下图所示：
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/b0f9a188e5df166fb919bd2fe2140b59.png"></p>
