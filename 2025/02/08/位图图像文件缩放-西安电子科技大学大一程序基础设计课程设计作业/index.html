@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="问题描述：  编写一个程序，可以在命令行输入参数，完成指定文件的缩放，并存储到新文件，命令行参数如下 zoom file1.bmp 200 file2.bmp 第一个参数为可执行程序名称，第二个参数为原始图像文件名，第三个参数为缩放比例（百分比），第四个参数为新文件名  问题分析：   综述：  要实现对bmp图像操作，首先要知道bmp图像的存储机理（图像信息如何以二进制信息存储）及文件包含的内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2025/02/08/%E4%BD%8D%E5%9B%BE%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6%E7%BC%A9%E6%94%BE-%E8%A5%BF%E5%AE%89%E7%94%B5%E5%AD%90%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="问题描述：  编写一个程序，可以在命令行输入参数，完成指定文件的缩放，并存储到新文件，命令行参数如下 zoom file1.bmp 200 file2.bmp 第一个参数为可执行程序名称，第二个参数为原始图像文件名，第三个参数为缩放比例（百分比），第四个参数为新文件名  问题分析：   综述：  要实现对bmp图像操作，首先要知道bmp图像的存储机理（图像信息如何以二进制信息存储）及文件包含的内">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-08T03:46:35.938Z">
+<meta property="article:modified_time" content="2025-02-08T01:31:53.682Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/02/08/%E4%BD%8D%E5%9B%BE%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6%E7%BC%A9%E6%94%BE-%E8%A5%BF%E5%AE%89%E7%94%B5%E5%AD%90%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/08/%E4%BD%8D%E5%9B%BE%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6%E7%BC%A9%E6%94%BE-%E8%A5%BF%E5%AE%89%E7%94%B5%E5%AD%90%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-02-08 11:46:35 / 修改时间：09:31:53" itemprop="dateCreated datePublished" datetime="2025-02-08T11:46:35+08:00">2025-02-08</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>问题描述：</li>
+</ul>
+<p>编写一个程序，可以在命令行输入参数，完成指定文件的缩放，并存储到新文件，命令行参数如下</p>
+<p>zoom file1.bmp 200 file2.bmp</p>
+<p>第一个参数为可执行程序名称，第二个参数为原始图像文件名，第三个参数为缩放比例（百分比），第四个参数为新文件名</p>
+<ul>
+<li>问题分析：</li>
+</ul>
+<ol>
+<li>综述：</li>
+</ol>
+<p>要实现对bmp图像操作，首先要知道bmp图像的存储机理（图像信息如何以二进制信息存储）及文件包含的内容；其次知晓基本的图像缩放算法即可；最后要知晓如何读取和存储文件信息。</p>
+<ol>
+<li>实现时的困难：<br>1. 定义何种类型变量？<br>2. 文件大小如何读取、计算？<br>3. 像素信息如何读取、写入？</li>
+<li>对应解决方案<br>1. 首先创建全局变量，如src_：原图宽高；dst_：缩放后宽高；各函数都可对其进行访问；其次用一个字符数组typedef unsigned char pixel[3];存储一个像素的RGB信息；对于缩放比例用double height_zoom_rate,width_zoom_rate;操作更精准，计算缩放后像素用类型转换即可，如：dst_width&#x3D;(int)(width_zoom_rate<em>src_width); 而在访问文件文件头和信息头时，定义unsigned char <em>buf&#x3D;NULL,<em>bui&#x3D;NULL;方便逐个字节访问，也可以处理小端对齐。<br>2. 即如何根据字节小端对齐计算文件大小；前面已经用buf、bui逐个访问文件头，信息头的每个字节数据，故如：b_size&#x3D;bui[23]<em>16</em>16</em>16</em>16</em>16<em>16+bui[22]<em>16</em>16</em>16*16+bui[21]<em>16</em>16+bui[20];</li>
+</ol>
+<p>可以读取图像大小；而：</p>
+<p>f_size&#x3D;dst_width*dst_height+54;则可计算操作后的文件大小</p>
+<ol>
+<li><pre><code>1. 每个像素的RGB信息各占一个字节，用fgetc即可读取每个字节。读取完一行的像素后，通过计算填充字节个数（pad_num=(4-(src_width*3)%4)%4;），再用fgetc读掉填充字节，即可读取下一行。写入时采用三个字节为一组（即一个像素的RGB信息），结合最近邻插入法用fwrite写入fwrite(&amp;info[si*src_width+sj],sizeof(pixel),1,fp_n);
+</code></pre>
+</li>
+</ol>
+<p>再用fputc（0，fp_n）写入填充字节数。</p>
+<pre><code>#define _CRT_SECURE_NO_WARNINGS
+#include&quot;bmp.h&quot;
+
+extern double height_zoom_rate,width_zoom_rate;
+
+int main(int argc, char* argv[]) &#123;
+	
+	//打开文件 
+	FILE*fp=fopen(argv[1],&quot;rb&quot;),*fp_n = fopen(argv[3], &quot;wb&quot;);
+	
+	//读取文件头、信息头 
+	read_bmp_head(fp);
+	//读取像素信息 
+	read_bmp_data(fp);
+	
+	//计算长宽缩放比例 
+	width_zoom_rate=height_zoom_rate=(atoi(argv[2]) /100.0);
+	
+	//结合最近邻插入法写入缩放后的图像信息 
+	write_data(fp_n);
+	//展示操作好的图像信息 
+	read_bmp_head(fp_n);
+	
+	//关闭两个图像文件 
+	fclose(fp);
+	fclose(fp_n);
+
+	return 0;
+&#125;
+
+
+
+/*头文件使用说明：
+在主程序中：extern double height_zoom_rate,width_zoom_rate;并赋值方可正常运行
+包含三个函数：
+void read_bmp_head(FILE*fp)； 
+void read_bmp_data(FILE*fp)；
+void write_data(FILE* fp_n)； 
+*/ 
+#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+//改对取模数为1个字节（默认为8，只可是2^n）
+#pragma pack(1)
+//存储一个像素信息的三元素字符数组 
+typedef unsigned char pixel[3];
+//文件头信息
+typedef struct tagBITMAPFILEHEADER
+&#123;
+	unsigned short bfType;		 //保存图片类型。 &#39;BM&#39;(1-2字节) 
+	unsigned long bfSize; 	 //位图文件的大小，以字节为单位（3-6字节，低位在前）
+	unsigned short bfReserved1;//位图文件保留字，必须为0(7-8字节）
+	unsigned short bfReserved2;//位图文件保留字，必须为0(9-10字节）
+	unsigned long bfOffBits;  //RGB数据偏移地址,位图数据的起始位置，以相对于位图（11-14字节，低位在前）
+&#125;BITMAP_FILE_HEADER;
+//信息头信息
+typedef struct tagBITMAPINFOHEADER
+&#123;
+	unsigned long 	biSize; 		 //本结构所占用字节数（15-18字节）
+	unsigned long  biWidth; 	 //位图的宽度，以像素为单位（19-22字节）
+	unsigned long  biHeight; 	 //位图的高度，以像素为单位（23-26字节）
+	unsigned short biPlanes; 	 //目标设备的级别，必须为1(27-28字节）
+	unsigned short biBitCount;  //每个像素所需的位数，必须是1（双色）（29-30字节）,4(16色），8(256色）16(高彩色)或24（真彩色）之一
+
+	unsigned long  biCompression;//位图压缩类型，必须是0（不压缩），（31-34字节）
+	//1(BI_RLE8压缩类型）或2(BI_RLE4压缩类型）之一
+
+	unsigned long  biSizeImage;  //位图的大小(其中包含了为了补齐每行字节数是4的倍数而添加的空字节)，以字节为单位（35-38字节）
+
+	unsigned long  biXPelsPerMeter;//位图水平分辨率，每米像素数（39-42字节）
+	unsigned long  biYPelsPerMeter;//位图垂直分辨率，每米像素数（43-46字节)
+	unsigned long  biClrUsed; 		 //位图实际使用的颜色表中的颜色数（47-50字节）
+	unsigned long  biClrImportant; //位图显示过程中重要的颜色数（51-54字节）
+&#125;BITMAP_INFO_HEADER;
+
+//全局变量说明：src_：原图宽高；dst_：缩放后宽高；pad_num：每行补齐空字节数；
+//f_size: bfSize; b_size: biSizeImage; _zoom_rate: 宽高缩放倍数；sign：是否没计算过宽高标志 
+int sign1=1;
+int src_width,src_height,dst_width,dst_height;
+int pad_num,f_size,b_size;
+double height_zoom_rate,width_zoom_rate;
+unsigned char *buf=NULL,*bui=NULL;
+//创建两个结构体存储文件头和信息头信息 
+BITMAP_FILE_HEADER file_head;
+BITMAP_INFO_HEADER info_head;
+//info指向像素信息的头地址，以info[i](=*(info+i))访问第i个像素 
+pixel *info=NULL;
+
+//读取文件头和信息头的信息 
+void read_bmp_head(FILE*fp)&#123;
+	
+	if ( fp == NULL ) &#123;
+		printf(&quot;file doesn&#39;t exist!\n&quot;);
+		exit(0);
+	&#125;
+	rewind(fp); 
+
+	//读取信息 
+	fread(&amp;file_head, sizeof(BITMAP_FILE_HEADER), 1, fp);
+	fread(&amp;info_head, sizeof(BITMAP_INFO_HEADER), 1, fp);
+	
+	//因为信息是小端对齐，以字节为单位方便读取 
+	buf=(unsigned char*)&amp;file_head;
+	printf(&quot;\nbfType:\t\t%c %c&quot;,buf[1],buf[0]);
+	f_size=buf[5]*16*16*16*16*16*16+buf[4]*16*16*16*16+buf[3]*16*16+buf[2];
+	printf(&quot;\nbfSize:\t\t%02x %02x %02x %02x   ----   %d&quot;,buf[5],buf[4],buf[3],buf[2],f_size);
+	printf(&quot;\nbfReserved1:\t%02x %02x\nbfReserved2:\t%02x %02x&quot;,buf[7],buf[6],buf[9],buf[8]);
+	printf(&quot;\nbf0ffbits:\t%02x %02x %02x %02x&quot;,buf[13],buf[12],buf[11],buf[10]); 
+	printf(&quot;\n\n&quot;); 
+	
+	bui=(unsigned char*)&amp;info_head;
+	printf(&quot;\nbiSize:\t\t%02x %02x %02x %02x&quot;,bui[3],bui[2],bui[1],bui[0]);
+	src_width=bui[7]*16*16*16*16*16*16+bui[6]*16*16*16*16+bui[5]*16*16+bui[4];
+	src_height=bui[11]*16*16*16*16*16*16+bui[10]*16*16*16*16+bui[9]*16*16+bui[8];
+	printf(&quot;\nbiWidth:\t%02x %02x %02x %02x   ----   %d&quot;,bui[7],bui[6],bui[5],bui[4],src_width);
+	printf(&quot;\nbiHeight:\t%02x %02x %02x %02x   ----   %d&quot;,bui[11],bui[10],bui[9],bui[8],src_height);
+	printf(&quot;\nbiPlans:\t%02x %02x&quot;,bui[13],bui[12]);
+	printf(&quot;\nbiBitCount:\t%02x %02x&quot;,bui[15],bui[14]);
+	printf(&quot;\nbiCompression:\t%02x %02x %02x %02x&quot;,bui[19],bui[18],bui[17],bui[16]);
+	b_size=bui[23]*16*16*16*16*16*16+bui[22]*16*16*16*16+bui[21]*16*16+bui[20];
+	printf(&quot;\nbiSizeImage:\t%02x %02x %02x %02x   ----   %d&quot;,bui[23],bui[22],bui[21],bui[20],b_size);
+	printf(&quot;\nbiXPelsPerMeter:%02x %02x %02x %02x&quot;,bui[27],bui[26],bui[25],bui[24]);
+	printf(&quot;\nbiYPelsPerMeter:%02x %02x %02x %02x&quot;,bui[31],bui[30],bui[29],bui[28]);
+	printf(&quot;\nbiClrUsed:\t%02x %02x %02x %02x&quot;,bui[35],bui[34],bui[33],bui[32]);
+	printf(&quot;\nbiClrImportant:\t%02x %02x %02x %02x\n&quot;,bui[39],bui[38],bui[37],bui[36]);
+	
+	sign1=0; 
+&#125;
+	
+//将照片像素信息读取，通过全局变量info访问 
+void read_bmp_data(FILE*fp)&#123;
+	
+	void read_bmp_head(FILE*fp);
+	if ( fp == NULL ) &#123;
+		printf(&quot;file doesn&#39;t exist!\n&quot;);
+		exit(0);
+	&#125;
+	//判断是否计算好了图像的长宽，没有则执行 
+	if(sign1)&#123;
+		rewind(fp);
+		read_bmp_head(fp);
+	&#125;
+	
+	int i,j,k;
+
+	//填充字节数 
+	pad_num=(4-(src_width*3)%4)%4;
+	//开辟空间 
+	info=(pixel*)malloc(src_width*src_height*sizeof(pixel));
+	
+	//读取像素信息RGB 
+	for(i=0;i&lt;src_height;i++)&#123;
+		for(j=0;j&lt;src_width;j++)&#123;
+			info[i*src_width+j][0]=fgetc(fp);
+			info[i*src_width+j][1]=fgetc(fp);
+			info[i*src_width+j][2]=fgetc(fp);
+		&#125;
+		//读掉填充字节 
+		for(k=0;k&lt;pad_num;k++)fgetc(fp);
+	&#125;
+	
+&#125;
+
+//将信息写入新文件 
+void write_data(FILE* fp_n) &#123;
+	
+	rewind(fp_n);
+	dst_width=(int)(width_zoom_rate*src_width);
+	dst_height=(int)(height_zoom_rate*src_height);
+	
+	//文件头信息修改、拷贝（小对齐，故用&amp;、&gt;&gt;位操作） 
+	int f_size=dst_width*dst_height+54,i,j,k;
+	buf[2]=0x000000FF&amp;f_size;
+	buf[3]=(0x0000FF00&amp;f_size)&gt;&gt;8;
+	buf[4]=(0x00FF0000&amp;f_size)&gt;&gt;16;
+	buf[5]=(0xFF000000&amp;f_size)&gt;&gt;24;
+	
+	for(i=0;i&lt;14;i++)fputc(buf[i],fp_n);
+	
+	//信息头信息修改、拷贝 
+	bui[4]=0x000000FF&amp;dst_width;
+	bui[5]=(0x0000FF00&amp;dst_width)&gt;&gt;8;
+	bui[6]=(0x00FF0000&amp;dst_width)&gt;&gt;16;
+	bui[7]=(0xFF000000&amp;dst_width)&gt;&gt;24;
+	bui[8]=0x000000FF&amp;dst_height;
+	bui[9]=(0x0000FF00&amp;dst_height)&gt;&gt;8;
+	bui[10]=(0x00FF0000&amp;dst_height)&gt;&gt;16;
+	bui[11]=(0xFF000000&amp;dst_height)&gt;&gt;24;
+	
+	pad_num= (4-(dst_width*3)%4)%4;
+	b_size=dst_height*(dst_width+pad_num)*3;
+	bui[20]=0x000000FF&amp;b_size;
+	bui[21]=(0x0000FF00&amp;b_size)&gt;&gt;8;
+	bui[22]=(0x00FF0000&amp;b_size)&gt;&gt;16;
+	bui[23]=(0xFF000000&amp;b_size)&gt;&gt;24; 
+	
+	for(i=0;i&lt;40;i++)fputc(bui[i],fp_n);
+	
+	int si,sj;
+	
+	//像素信息写入 
+	for(i=0;i&lt;dst_height;i++)&#123;
+		si=i/height_zoom_rate;
+		for(j=0;j&lt;dst_width;j++)&#123;
+			//最近邻插入法 
+			sj=j/width_zoom_rate;
+			fwrite(&amp;info[si*src_width+sj],sizeof(pixel),1,fp_n);
+		&#125;
+		for(k=0;k&lt;pad_num;k++)fputc(0,fp_n);
+	&#125;
+	/*
+	//不行的写法！低效且数值越界 
+	for(i=0;i&lt;dst_height;i++)&#123;
+		for(j=0;j&lt;dst_width;j++)&#123;
+			//最近邻插入法 
+			fwrite(&amp;info[(int)(i*src_width/height_zoom_rate+j/width_zoom_rate)],sizeof(pixel),1,fp_n);
+		&#125;
+		for(k=0;k&lt;pad_num;k++)fputc(0,fp_n);
+	&#125;
+	*/
+&#125;
+</code></pre>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/124532108">https://blog.csdn.net/qq_32971095/article/details/124532108</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/02/08/%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%BA%90%E9%83%A8%E5%88%86%EF%BC%89%E2%80%94%E2%80%94%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/02/08/%E8%A5%BF%E7%94%B5%E8%AE%A1%E7%A7%91%E5%A4%A7%E4%B8%89%E4%B8%8BSOC%E5%BE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A%E5%90%88%E9%9B%86/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">698k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">10:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录 作业概述： 一.一阶导数算子——Sobel算子 二.二阶导数算子——Canny算子 附录： 1.使用的sobel算子 2.使用的5*5高斯平滑模版 3.源代码  西安电子科技大学_计算机视觉_作业一_边缘检测 作业概述：作业 1：边缘检测 编程语言：Matlab（推荐） 或 Python（可能需要使用 OpenCV） 题目内容： 自选一张图像，编程实现以下操作： • 分别采用 Sobel 算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2025/02/08/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%EF%BC%9C1%EF%BC%9E/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录 作业概述： 一.一阶导数算子——Sobel算子 二.二阶导数算子——Canny算子 附录： 1.使用的sobel算子 2.使用的5*5高斯平滑模版 3.源代码  西安电子科技大学_计算机视觉_作业一_边缘检测 作业概述：作业 1：边缘检测 编程语言：Matlab（推荐） 或 Python（可能需要使用 OpenCV） 题目内容： 自选一张图像，编程实现以下操作： • 分别采用 Sobel 算">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f089df392b290c82c2217105c8da4e7f.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/8b9d8d83a6334aa1992c110a768b94f4.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3e38d99b56bbf67908f656b8eadabd2f.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/087357e370b158b125a780536caff592.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2ca59c955dc405d499ac1b357d0cce8c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/8e8cafc9ef237158894971f55f7c810c.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/9399bb1b0692b68d6e2be51c27872fb9.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f203482fda90f8be278e727cc58328f0.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/622487c3dba1ca0f1f6324d30ded53d1.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/07e60e31a5360caee06a12687e923136.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/eb56bf290e418556ec6cdf1684206f85.jpeg">
+<meta property="article:published_time" content="2025-02-08T03:46:35.896Z">
+<meta property="article:modified_time" content="2025-02-08T01:31:11.137Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/f089df392b290c82c2217105c8da4e7f.jpeg">
+
+<link rel="canonical" href="http://example.com/2025/02/08/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%EF%BC%9C1%EF%BC%9E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/08/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%EF%BC%9C1%EF%BC%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-02-08 11:46:35 / 修改时间：09:31:11" itemprop="dateCreated datePublished" datetime="2025-02-08T11:46:35+08:00">2025-02-08</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%BD%9C%E4%B8%9A%E6%A6%82%E8%BF%B0%EF%BC%9A">作业概述：</a></p>
+<p><a href="about:blank#%E4%B8%80.%E4%B8%80%E9%98%B6%E5%AF%BC%E6%95%B0%E7%AE%97%E5%AD%90%E2%80%94%E2%80%94Sobel%E7%AE%97%E5%AD%90">一.一阶导数算子——Sobel算子</a></p>
+<p><a href="about:blank#%E4%BA%8C.%E4%BA%8C%E9%98%B6%E5%AF%BC%E6%95%B0%E7%AE%97%E5%AD%90%E2%80%94%E2%80%94Canny%E7%AE%97%E5%AD%90">二.二阶导数算子——Canny算子</a></p>
+<p><a href="about:blank#%E9%99%84%E5%BD%95%EF%BC%9A">附录：</a></p>
+<p><a href="about:blank#1.%E4%BD%BF%E7%94%A8%E7%9A%84sobel%E7%AE%97%E5%AD%90">1.使用的sobel算子</a></p>
+<p><a href="about:blank#2.%E4%BD%BF%E7%94%A8%E7%9A%845*5%E9%AB%98%E6%96%AF%E5%B9%B3%E6%BB%91%E6%A8%A1%E7%89%88">2.使用的5*5高斯平滑模版</a></p>
+<p><a href="about:blank#3.%E6%BA%90%E4%BB%A3%E7%A0%81">3.源代码</a></p>
+<hr>
+<p>西安电子科技大学_计算机视觉_作业一_边缘检测</p>
+<h2 id="作业概述："><a href="#作业概述：" class="headerlink" title="作业概述："></a>作业概述：</h2><p>作业 1：边缘检测 编程语言：Matlab（推荐） 或 Python（可能需要使用 OpenCV）</p>
+<p>题目内容：</p>
+<p>自选一张图像，编程实现以下操作：</p>
+<p>• 分别采用 Sobel 算子和 Canny 算子滤波，进行边缘提取；</p>
+<p>• 显示原始图像以及不同滤波器滤波后的结果</p>
+<p>• 对于 Sobel 滤波结果，显示 x 方向的梯度、y 方向的梯度、梯度幅度、梯 度角度等</p>
+<p>• 对于 Canny 算子滤波，显示滤波后边缘检测结果 并分析不同滤波结果的差异。</p>
+<p>说明：</p>
+<p>（1）基于原理，自行实现，进行计算（禁止使用自带函数进行滤波）。各种滤 波函数应进行封装，并在统一的 test 文件（test.m or<br>test.py）中调用使用。</p>
+<p>（2） 所得各图像，按照子图样式显示(subplot)，并标注(title)</p>
+<p>（3） 打包文件夹，包含代码和文档，文档中应包含上述结果的截图及最终分 析。</p>
+<p>要求：内容完备（包含计算过程），结构清晰、排版美观。</p>
+<h2 id="一-一阶导数算子——Sobel算子"><a href="#一-一阶导数算子——Sobel算子" class="headerlink" title="一.一阶导数算子——Sobel算子"></a>一.一阶导数算子——Sobel算子</h2><p>通过求导可以得到边缘，边缘像素变化快，导数绝对值大。在离散点中则使用差分近似，通过与特定的卷积核卷积实现差分运算，并近似出该点导数。</p>
+<p>而Sobel算子分为x轴方向和y轴方向，分别卷积获得各像素点x、y轴梯度x_g和y_g。梯度幅值用x_g和y_g的2-范数（平方和开根）求得（也可用1-范数[绝对值求和]近似，减少运算量），相位用arctan求得。</p>
+<p><strong>测试结果：</strong></p>
+<p>原图：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f089df392b290c82c2217105c8da4e7f.jpeg"></p>
+<p>sobel滤波：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/8b9d8d83a6334aa1992c110a768b94f4.jpeg"></p>
+<p>x方向梯度：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3e38d99b56bbf67908f656b8eadabd2f.jpeg"></p>
+<p>y方向梯度：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/087357e370b158b125a780536caff592.jpeg"></p>
+<p>从图中可以清晰看到x轴方向和y轴方向的Sobel算子检测结果的差异。梯度的幅度和相位保存在mat文件中。</p>
+<h2 id="二-二阶导数算子——Canny算子"><a href="#二-二阶导数算子——Canny算子" class="headerlink" title="二.二阶导数算子——Canny算子"></a>二.二阶导数算子——Canny算子</h2><p>Canny边缘检测算法包括以下步骤[1]：</p>
+<p>1.高斯平滑，滤除噪声</p>
+<p>2.计算梯度强度和方向</p>
+<p>3.应用非极大值抑制法（Nom-Maximum Suppression，NMS），以消除杂散效应</p>
+<p>4.应用滞后阈值法检测边缘</p>
+<p>（5.边缘跟踪得到单像素宽度的边缘图像）</p>
+<p>这里主要说明第3步：</p>
+<pre><code>    图像梯度矩阵中的元素值大，不能直接用来判断该点为边缘。NMS可以剔除伪边缘信息。如果该像素满足梯度局部最大值，则判断该像素为边缘，并对其余像素的相关信息进行抑制。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2ca59c955dc405d499ac1b357d0cce8c.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/8e8cafc9ef237158894971f55f7c810c.jpeg"></p>
+<pre><code>    中心点周围有8个领域点，但做中心点梯度方向的直线的交点并不一定的8-领域点，根据交点所在的区域可以将领域划分为4块，交点PM、PN的值通过线性插值计算。
+
+    最后放大保留下来的像素点，这里简单地将满足双阈值间的点灰度设置为255。
+</code></pre>
+<p><strong>测试结果：</strong></p>
+<p>高斯平滑：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9399bb1b0692b68d6e2be51c27872fb9.jpeg"></p>
+<p>高斯平滑后sobel滤波：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f203482fda90f8be278e727cc58328f0.jpeg"></p>
+<p>非极大值抑制：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/622487c3dba1ca0f1f6324d30ded53d1.jpeg"></p>
+<p>双阈值处理：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/07e60e31a5360caee06a12687e923136.jpeg"></p>
+<p>可以通过调整双阈值来调整最终结果保留细节的多少</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/eb56bf290e418556ec6cdf1684206f85.jpeg"></p>
+<h2 id="附录："><a href="#附录：" class="headerlink" title="附录："></a>附录：</h2><h3 id="1-使用的sobel算子"><a href="#1-使用的sobel算子" class="headerlink" title="1.使用的sobel算子"></a>1.使用的sobel算子</h3><p>s_x&#x3D;1&#x2F;8*[1,0,-1;2,0,-2;1,0,-1];</p>
+<p>s_y&#x3D;1&#x2F;8*[-1,-2,-1;0,0,0;1,2,1];</p>
+<h3 id="2-使用的5-5高斯平滑模版"><a href="#2-使用的5-5高斯平滑模版" class="headerlink" title="2.使用的5*5高斯平滑模版"></a>2.使用的5*5高斯平滑模版</h3><p>gs&#x3D;1&#x2F;159*[2,4,5,4,2;4,9,12,9,4;5,12,15,12,5;4,9,12,9,4;2,4,5,4,2];</p>
+<h3 id="3-源代码"><a href="#3-源代码" class="headerlink" title="3.源代码"></a>3.源代码</h3><pre><code>function []=Sobel_Canny_Filter(Src_img)
+%% 输入参数：同路径下照片名。使用举例：Sobel_Canny_filter(&#39;Test.jpg&#39;)
+
+%%  一阶导数——Sobel算子。
+F=imread(Src_img);
+f=double(rgb2gray(F));
+[row,col]=size(f);
+
+%   Sobel核处理结果
+X_grad=zeros(row,col);
+Y_grad=zeros(row,col);
+S_dir=zeros(row,col);
+Output_img=zeros(row,col);
+
+%   Sobel核
+s_x=[1,0,-1;2,0,-2;1,0,-1];
+s_y=[-1,-2,-1;0,0,0;1,2,1];
+
+for i=2:row-1
+    for j=2:col-1
+        %   卷积运算
+        fx=[f(i-1,j-1),f(i-1,j),f(i-1,j+1);f(i,j-1),f(i,j),f(i,j+1);f(i+1,j-1),f(i+1,j),f(i+1,j+1)];
+        fy=[f(i-1,j-1),f(i-1,j),f(i-1,j+1);f(i,j-1),f(i,j),f(i,j+1);f(i+1,j-1),f(i+1,j),f(i+1,j+1)];
+        Sx=0.125*s_x.*fx;
+        Sy=0.125*s_y.*fy;
+        x_g=sum(Sx,&#39;all&#39;);
+        y_g=sum(Sy,&#39;all&#39;);
+        
+        %   关键数值求解
+        S_dir(i,j)=atan2(y_g,x_g);        
+        A=sqrt(x_g^2+y_g^2);
+        X_grad(i,j)=abs(x_g);
+        Y_grad(i,j)=abs(y_g);
+        Output_img(i,j)=A;
+    end
+end
+
+%%   绘图
+figure(8);
+
+%   原图
+subplot(2,4,1);
+imshow(F);
+title(&#39;source&#39;);
+
+%   sober滤波后图
+subplot(2,4,2);
+imshow(Output_img,[]);
+title(&#39;sobel-filter&#39;);
+imwrite(uint8(Output_img),&#39;sobel_filter.jpg&#39;);
+
+%   x方向梯度
+subplot(2,4,3);
+imshow(X_grad,[]);
+title(&#39;x-grad&#39;);
+imwrite(uint8(X_grad),&#39;X_grad.jpg&#39;);
+
+%   y方向梯度
+subplot(2,4,4);
+imshow(Y_grad,[]);
+title(&#39;y-grad&#39;);
+imwrite(uint8(Y_grad),&#39;Y_grad.jpg&#39;);
+
+%   保存梯度的幅度和相位
+save(&#39;Amplitude.mat&#39;,&quot;A&quot;);
+save(&#39;dir.mat&#39;,&quot;S_dir&quot;);
+
+%% 二阶导数——Canny算子。
+%%   高斯滤波  
+Gs=zeros(row,col);
+Gs_sobel=zeros(row,col);
+Canny_temp=zeros(row,col);
+Canny=zeros(row,col);
+%   5*5高斯核
+gs=[2,4,5,4,2;4,9,12,9,4;5,12,15,12,5;4,9,12,9,4;2,4,5,4,2];
+for i=3:row-2
+    for j=3:col-2
+        gg=[f(i-2,j-2),f(i-2,j-1),f(i-2,j),f(i-2,j+1),f(i-2,j+2);f(i-1,j-2),f(i-1,j-1),f(i-1,j),f(i-1,j+1),f(i-1,j+2);f(i,j-2),f(i,j-1),f(i,j),f(i,j+1),f(i,j+2);f(i+1,j-2),f(i+1,j-1),f(i+1,j),f(i+1,j+1),f(i+1,j+2);f(i+2,j-2),f(i+2,j-1),f(i+2,j),f(i+2,j+1),f(i+2,j+2)];
+        s_g=gs.*gg/159;
+        Gs(i,j)=sum(s_g,&#39;all&#39;);
+    end
+end
+
+%%   高斯平滑
+for i=3:row-2
+    for j=3:col-2
+        gsx=[Gs(i-1,j-1),Gs(i-1,j),Gs(i-1,j+1);Gs(i,j-1),Gs(i,j),Gs(i,j+1);Gs(i+1,j-1),Gs(i+1,j),Gs(i+1,j+1)];
+        gsy=[Gs(i-1,j-1),Gs(i-1,j),Gs(i-1,j+1);Gs(i,j-1),Gs(i,j),Gs(i,j+1);Gs(i+1,j-1),Gs(i+1,j),Gs(i+1,j+1)];
+        Sx=0.125*s_x.*gsx;
+        Sy=0.125*s_y.*gsy;
+        gsx_g=sum(Sx,&#39;all&#39;);
+        gsy_g=sum(Sy,&#39;all&#39;);
+        
+        GSS_dir(i,j)=atan(gsx_g/gsy_g);        
+        GSA=sqrt(gsx_g^2+gsy_g^2);
+        GSX_grad(i,j)=abs(x_g);
+        GSY_grad(i,j)=abs(y_g);
+        Gs_sobel(i,j)=GSA;
+    end
+end
+
+%%   高斯平滑后sobel滤波
+for i=3:row-2
+    for j=3:col-2
+        k=abs(tan(GSS_dir(i,j)));
+        %   非极大值抑制
+        %   判断领域点(非8-领域点可划分为4部分)并进行相应线性插值并判断是否为局部大优点（进行保留）
+        if (GSS_dir(i,j)&gt;=0 &amp;&amp; GSS_dir(i,j)&lt;pi/4) || (GSS_dir(i,j)&gt;=-pi &amp;&amp; GSS_dir(i,j)&lt;-3*pi/4)
+            if Gs_sobel(i,j) &gt;= Gs_sobel(i+1,j+1)+(Gs_sobel(i+1,j+1)-Gs_sobel(i+1,j))/k &amp;&amp; Gs_sobel(i,j) &gt;= Gs_sobel(i-1,j-1)+(Gs_sobel(i-1,j-1)-Gs_sobel(i-1,j))/k
+             Canny_temp(i, j) = Gs_sobel(i, j);
+            end        
+        elseif (GSS_dir(i,j)&gt;=pi/4 &amp;&amp; GSS_dir(i,j)&lt;pi/2) || (GSS_dir(i,j)&gt;=-3*pi/4 &amp;&amp; GSS_dir(i,j)&lt;-pi/2)
+            if Gs(i,j) &gt;= (Gs_sobel(i-1,j-1)+(Gs_sobel(i,j-1)-Gs_sobel(i-1,j-1))/k) &amp;&amp; Gs_sobel(i,j) &gt;= (Gs_sobel(i+1,j+1)+(Gs_sobel(i,j+1)-Gs_sobel(i+1,j+1))/k)
+             Canny_temp(i, j) = Gs_sobel(i, j);
+            end
+        elseif (GSS_dir(i,j)&gt;=pi/2 &amp;&amp; GSS_dir(i,j)&lt;3*pi/4) || (GSS_dir(i,j)&gt;=-pi/2 &amp;&amp; GSS_dir(i,j)&lt;-pi/4)
+            if Gs_sobel(i,j) &gt;= Gs_sobel(i+1,j-1)+(Gs_sobel(i,j-1)-Gs_sobel(i+1,j-1))/k &amp;&amp; Gs_sobel(i,j) &gt;= Gs_sobel(i-1,j+1)+(Gs_sobel(i,j+1)-Gs_sobel(i-1,j+1))/k
+             Canny_temp(i, j) = Gs_sobel(i, j);
+            end
+        elseif (GSS_dir(i,j)&gt;=3*pi/4 &amp;&amp; GSS_dir(i,j)&lt;pi) || (GSS_dir(i,j)&gt;=-pi/4 &amp;&amp; GSS_dir(i,j)&lt;0)
+            if Gs_sobel(i,j) &gt;= Gs_sobel(i+1,j-1)+(Gs_sobel(i+1,j-1)-Gs_sobel(i+1,j))/k &amp;&amp; Gs_sobel(i,j) &gt;= Gs_sobel(i-1,j+1)+(Gs_sobel(i-1,j+1)-Gs_sobel(i-1,j))/k
+             Canny_temp(i, j) = Gs_sobel(i, j);
+            end
+        end
+    end
+end
+
+%%   双阈值变换
+lowTh  = 0.02 *max(max(Canny_temp));%高阈值
+higtTh = 1 *max(max(Canny_temp));%低阈值
+
+for i = 3 : row-2
+    for j = 3 : col-2
+        %   灵活设置保留值
+        if Canny_temp(i,j) &gt;=lowTh &amp;&amp; Canny_temp(i,j) &lt;= higtTh
+            %Canny(i,j) = Canny_temp(i,j);
+            Canny(i,j) = 255;
+        end
+    end
+end
+
+%% 绘图
+%   高斯平滑结果
+subplot(2,4,5);
+imshow(Gs,[]);
+title(&#39;gauss-filter&#39;);
+imwrite(uint8(Gs),&#39;gauss_filter.jpg&#39;);
+
+%   高斯平滑后sobel滤波结果
+subplot(2,4,6);
+imshow(Gs_sobel,[]);
+title(&#39;gauss-sobel-filter&#39;);
+imwrite(uint8(Gs_sobel),&#39;Gs_sobel_filter.jpg&#39;);
+
+%   非极大值抑制后结果
+subplot(2,4,7);
+imshow(Canny_temp,[]);
+title(&#39;Canny-temp&#39;);
+imwrite(uint8(Canny_temp),&#39;Canny_temp.jpg&#39;);
+
+%   阈值间处理
+subplot(2,4,8);
+imshow(Canny,[]);
+title(&#39;Canny-filter&#39;);
+imwrite(uint8(Canny),&#39;Canny_filter.jpg&#39;);
+
+%保存结果
+saveas(8,&#39;result.jpg&#39;);
+ 
+end
+</code></pre>
+<p>参考文献</p>
+<p>[1]柳林.基于OpenCV的数字图像处理技术[M].杭州:浙江大学出版社，2020：202-203.</p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133420554">https://blog.csdn.net/qq_32971095/article/details/133420554</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/02/08/Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/02/08/%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%BA%8C%EF%BC%88IP%E6%A0%B8%EF%BC%89%E2%80%94%E2%80%94FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9C3%EF%BC%9E/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E6%A6%82%E8%BF%B0%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">作业概述：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E4%B8%80%E9%98%B6%E5%AF%BC%E6%95%B0%E7%AE%97%E5%AD%90%E2%80%94%E2%80%94Sobel%E7%AE%97%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">一.一阶导数算子——Sobel算子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E4%BA%8C%E9%98%B6%E5%AF%BC%E6%95%B0%E7%AE%97%E5%AD%90%E2%80%94%E2%80%94Canny%E7%AE%97%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">二.二阶导数算子——Canny算子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">附录：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8%E7%9A%84sobel%E7%AE%97%E5%AD%90"><span class="nav-number">4.1.</span> <span class="nav-text">1.使用的sobel算子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E7%9A%845-5%E9%AB%98%E6%96%AF%E5%B9%B3%E6%BB%91%E6%A8%A1%E7%89%88"><span class="nav-number">4.2.</span> <span class="nav-text">2.使用的5*5高斯平滑模版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="nav-number">4.3.</span> <span class="nav-text">3.源代码</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">698k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">10:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

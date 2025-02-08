@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录 一.VHDL设计作业 1.基于硬件描述语言的3-8译码器逻辑电路设计 2.8位双向移位寄存器设计 3.基于有限状态机的自助售票系统设计 4.按键消抖电路设计 5.同步环形FIFO设计 6.线上实验——时钟模块设计 7.线上实验——原码二位乘法器设计  8.线上实验——布斯乘法器设计  一.VHDL设计作业源文件、测试文件及仿真结果 1.基于硬件描述语言的3-8译码器逻辑电路设计根据3-8译码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2025/02/08/%E8%A5%BF%E7%94%B5%E8%AE%A1%E7%A7%91%E5%A4%A7%E4%B8%89%E4%B8%8BSOC%E5%BE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A%E5%90%88%E9%9B%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录 一.VHDL设计作业 1.基于硬件描述语言的3-8译码器逻辑电路设计 2.8位双向移位寄存器设计 3.基于有限状态机的自助售票系统设计 4.按键消抖电路设计 5.同步环形FIFO设计 6.线上实验——时钟模块设计 7.线上实验——原码二位乘法器设计  8.线上实验——布斯乘法器设计  一.VHDL设计作业源文件、测试文件及仿真结果 1.基于硬件描述语言的3-8译码器逻辑电路设计根据3-8译码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2cdaef1463aa82317fd6029b8c7bb08e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5dcfe13e83a9275011aae48f12d1be1c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/711bd6d2672a650569b2474d89e3f38e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/dfad20f27e654f243f373cfb9b80256c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2b1e4d12b3c904bbdb1f64914294b450.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/9085cd14c31cada75062d36a643fb2b5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4dbe7b6e7886a88433a6fb76f77ee7f8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/adec0f2295677479c7321988b4b0f166.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7bb5fc46ac6d878964e59ddeb1fe803c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/8f30332a988566f33bab93454ab0c0ca.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/559a1c00923a7cda00c06f63c6dec1cc.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/920cb7c013bd5af2e09bc59aafba028c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d171f9dc0e6d54b72cf1ffe1f8c759ec.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/08847d6e576be1f9f61c68f8d15899b6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e286d15abce298cf0b629350ba7e076e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/cdd818c3fea80ef3bef0a36c7c6ab446.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b25fa007565503bdd4b69b5d6c31496d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/daac7ca07dca672e89a3e831d4b8bd9a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/8c09ab4e531a18f069ba4afb9e18d438.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d3e67513e1e27963a8e15f23f6a8cc7c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4cd31e8dc5958ee6e4b4eedfd590f2fa.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/83c13baff1be05be6cda0e582d59099f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/61bbc405e10beaea2c2635a94871b4cb.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/78e8dae445e0aa8620fd29c657228abd.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/9597c2a19cccbc17358d377d0ee32df8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d7c983ed1ce45af2d329d820c088e9dd.png">
+<meta property="article:published_time" content="2025-02-08T03:46:35.948Z">
+<meta property="article:modified_time" content="2025-02-08T01:30:37.241Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/2cdaef1463aa82317fd6029b8c7bb08e.png">
+
+<link rel="canonical" href="http://example.com/2025/02/08/%E8%A5%BF%E7%94%B5%E8%AE%A1%E7%A7%91%E5%A4%A7%E4%B8%89%E4%B8%8BSOC%E5%BE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A%E5%90%88%E9%9B%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/08/%E8%A5%BF%E7%94%B5%E8%AE%A1%E7%A7%91%E5%A4%A7%E4%B8%89%E4%B8%8BSOC%E5%BE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A%E5%90%88%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-02-08 11:46:35 / 修改时间：09:30:37" itemprop="dateCreated datePublished" datetime="2025-02-08T11:46:35+08:00">2025-02-08</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>34k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>30 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%B8%80.VHDL%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A">一.VHDL设计作业</a></p>
+<p><a href="about:blank#1.%E5%9F%BA%E4%BA%8E%E7%A1%AC%E4%BB%B6%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80%E7%9A%843-8%E8%AF%91%E7%A0%81%E5%99%A8%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1">1.基于硬件描述语言的3-8译码器逻辑电路设计</a></p>
+<p><a href="about:blank#2.8%E4%BD%8D%E5%8F%8C%E5%90%91%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BE%E8%AE%A1">2.8位双向移位寄存器设计</a></p>
+<p><a href="about:blank#3.%E5%9F%BA%E4%BA%8E%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9A%84%E8%87%AA%E5%8A%A9%E5%94%AE%E7%A5%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1">3.基于有限状态机的自助售票系统设计</a></p>
+<p><a href="about:blank#4.%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1">4.按键消抖电路设计</a></p>
+<p><a href="about:blank#5.%E5%90%8C%E6%AD%A5%E7%8E%AF%E5%BD%A2FIFO%E8%AE%BE%E8%AE%A1">5.同步环形FIFO设计</a></p>
+<p><a href="about:blank#6.%E7%BA%BF%E4%B8%8A%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E6%97%B6%E9%92%9F%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1">6.线上实验——时钟模块设计</a></p>
+<p><a href="about:blank#7.%E7%BA%BF%E4%B8%8A%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%8E%9F%E7%A0%81%E4%BA%8C%E4%BD%8D%E4%B9%98%E6%B3%95%E5%99%A8%E8%AE%BE%E8%AE%A1%C2%A0">7.线上实验——原码二位乘法器设计
+</a></p>
+<p><a href="about:blank#8.%E7%BA%BF%E4%B8%8A%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%B8%83%E6%96%AF%E4%B9%98%E6%B3%95%E5%99%A8%E8%AE%BE%E8%AE%A1">8.线上实验——布斯乘法器设计</a></p>
+<hr>
+<h2 id="一-VHDL设计作业"><a href="#一-VHDL设计作业" class="headerlink" title="一.VHDL设计作业"></a>一.VHDL设计作业</h2><p>源文件、测试文件及仿真结果</p>
+<h3 id="1-基于硬件描述语言的3-8译码器逻辑电路设计"><a href="#1-基于硬件描述语言的3-8译码器逻辑电路设计" class="headerlink" title="1.基于硬件描述语言的3-8译码器逻辑电路设计"></a>1.基于硬件描述语言的3-8译码器逻辑电路设计</h3><p>根据3-8译码器基本原理，采用硬件描述语言设计一个3-8译码器逻辑电路，并给出仿真结果。</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity decoder3_8 is
+    Port (  
+        OE: in std_logic;
+        X: in std_logic_vector(2 downto 0);
+        Y: out std_logic_vector(7 downto 0)
+    );
+end decoder3_8;
+
+architecture Behavioral of decoder3_8 is
+begin
+process(OE,X)
+begin
+    if OE=&#39;0&#39; then Y&lt;=&quot;00000000&quot;;
+    elsif OE=&#39;1&#39;then
+        Case X is
+            When &quot;000&quot; =&gt;Y&lt;=&quot;11111110&quot;;
+            When &quot;001&quot; =&gt;Y&lt;=&quot;11111101&quot;;
+            When &quot;010&quot; =&gt;Y&lt;=&quot;11111011&quot;;
+            When &quot;011&quot; =&gt;Y&lt;=&quot;11110111&quot;;
+            When &quot;100&quot; =&gt;Y&lt;=&quot;11101111&quot;;
+            When &quot;101&quot; =&gt;Y&lt;=&quot;11011111&quot;;
+            When &quot;110&quot; =&gt;Y&lt;=&quot;10111111&quot;;
+            When &quot;111&quot; =&gt;Y&lt;=&quot;01111111&quot;;
+            When others =&gt;Y&lt;=&quot;11111111&quot;;
+        END CASE;    
+   end if;
+end process;
+end Behavioral;
+</code></pre>
+<p>testbench：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity decoder3_8_tb is
+--  Port ( );
+end decoder3_8_tb;
+
+architecture structural of decoder3_8_tb is
+component decoder3_8
+    port(
+        OE: in std_logic;
+        X: in std_logic_vector(2 downto 0);
+        Y: out std_logic_vector(7 downto 0)
+    );
+end component;
+signal oe:std_logic;
+signal input:std_logic_vector(2 downto 0);
+signal output:std_logic_vector(7 downto 0);
+begin
+d1:decoder3_8 port map(oe,input,output);
+
+ensure:process
+    begin
+        oe&lt;=&#39;0&#39;;
+        wait for 50ns;
+        oe&lt;=&#39;1&#39;;
+        wait;
+end process;
+
+sel:process
+    begin
+        input&lt;=&quot;000&quot;;
+        wait for 20ns;
+        input&lt;=&quot;001&quot;;
+        wait for 20ns;
+        input&lt;=&quot;010&quot;;
+        wait for 20ns;
+        input&lt;=&quot;011&quot;;
+        wait for 20ns;
+        input&lt;=&quot;100&quot;;
+        wait for 20ns;
+        input&lt;=&quot;101&quot;;
+        wait for 20ns;
+        input&lt;=&quot;110&quot;;
+        wait for 20ns;
+        input&lt;=&quot;111&quot;;
+        wait for 20ns;
+end process;
+end structural;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2cdaef1463aa82317fd6029b8c7bb08e.png"></p>
+<h3 id="2-8位双向移位寄存器设计"><a href="#2-8位双向移位寄存器设计" class="headerlink" title="2.8位双向移位寄存器设计"></a>2.8位双向移位寄存器设计</h3><p>采用硬件描述语言实现8位双向移位寄存器，其功能包括异步置零，同步置数，左移，右移和保持状态不变等5种功能。其中输入端口包括8位并行数据、两位的选择信号和两个1位串行数据，输出是8位并行数据。当RESET信号为低电平时，寄存器的输出被异步置零；否则当RESET&#x3D;1时，与时钟有关的四种功能由输入信号MODE决定。请给出仿真结果。</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity shift_register is
+    Port (
+        clk,reset,left,right:in std_logic;
+        mode:in std_logic_vector(1 downto 0);
+        input_data:in std_logic_vector(7 downto 0);
+        output_data:inout std_logic_vector(7 downto 0)
+    );
+end shift_register;
+
+architecture Behavioral of shift_register is
+begin
+process(reset,clk,mode)
+
+begin
+    if (reset=&#39;0&#39;)then
+        output_data&lt;=&quot;00000000&quot;;
+    elsif(reset=&#39;1&#39;and clk=&#39;1&#39;)then
+        case mode is
+            when &quot;00&quot;=&gt;output_data&lt;=output_data;
+            when &quot;01&quot;=&gt;output_data&lt;=input_data;
+            when &quot;10&quot;=&gt;
+                    output_data(0)&lt;=left;
+                    output_data(7)&lt;=output_data(6);
+                    output_data(6)&lt;=output_data(5);
+                    output_data(5)&lt;=output_data(4);
+                    output_data(4)&lt;=output_data(3);
+                    output_data(3)&lt;=output_data(2);
+                    output_data(2)&lt;=output_data(1);
+                    output_data(1)&lt;=output_data(0);              
+            when &quot;11&quot;=&gt;
+                    output_data(0)&lt;=output_data(1);
+                    output_data(1)&lt;=output_data(2);
+                    output_data(2)&lt;=output_data(3);
+                    output_data(3)&lt;=output_data(4);
+                    output_data(4)&lt;=output_data(5);
+                    output_data(5)&lt;=output_data(6);
+                    output_data(6)&lt;=output_data(7);
+                    output_data(7)&lt;=right;
+            when others=&gt;output_data&lt;=output_data;
+        end case;         
+    end if;
+end process;
+
+end Behavioral;
+</code></pre>
+<p>testbench：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity shift_register_tb is
+--  Port ( );
+end shift_register_tb;
+
+architecture Behavioral of shift_register_tb is
+component shift_register
+port(
+        clk,reset,left,right:in std_logic;
+        mode:in std_logic_vector(1 downto 0);
+        input_data:in std_logic_vector(7 downto 0);
+        output_data:inout std_logic_vector(7 downto 0)   
+);
+end component;
+signal clk,reset,left,right:std_logic;
+signal mode:std_logic_vector(1 downto 0);
+signal input_data:std_logic_vector(7 downto 0);
+signal output_data:std_logic_vector(7 downto 0);   
+begin
+sr1:shift_register port map(clk,reset,left,right,mode,input_data,output_data);
+
+clock_gen:process
+    begin
+        left&lt;=output_data(7);
+        right&lt;=output_data(0);
+        clk&lt;=&#39;0&#39;;
+        wait for 10ns;
+        clk&lt;=&#39;1&#39;;
+        wait for 10ns;
+end process;
+
+reset_gen:process
+    begin
+        reset&lt;=&#39;0&#39;;
+        wait for 25ns;
+        reset&lt;=&#39;1&#39;;
+        wait;
+end process;
+
+mode_test:process
+    begin
+        mode&lt;=&quot;00&quot;;
+        wait for 30ns;
+        mode&lt;=&quot;01&quot;;
+        input_data&lt;=&quot;00001111&quot;;
+        wait for 30ns;
+        mode&lt;=&quot;10&quot;;
+        wait for 200ns;
+        mode&lt;=&quot;01&quot;;
+        input_data&lt;=&quot;00001111&quot;;
+        wait for 30ns;
+        mode&lt;=&quot;11&quot;;
+        wait for 200ns;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5dcfe13e83a9275011aae48f12d1be1c.png"></p>
+<h3 id="3-基于有限状态机的自助售票系统设计"><a href="#3-基于有限状态机的自助售票系统设计" class="headerlink" title="3.基于有限状态机的自助售票系统设计"></a>3.基于有限状态机的自助售票系统设计</h3><p>某自助售票系统只能接收 5元和10元纸币，若一张票的价格设定为 25元。<br>请利用有限状态机设计该售票系统，<br>1. 首先给出状态说明，然后画出具体的状态图及说明状态转移关系。<br>2. 并完成硬件描述语言程序设计。</p>
+<p>3.将第1和2题的答案做成word文档上传。</p>
+<p>4.扩展要求（加分10分）：增加20元纸币输入。</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity ticket_state_machine is
+    Port (
+        clk,reset:in std_logic;
+        input_money:in std_logic_vector(2 downto 0);
+        return_money:out std_logic_vector(2 downto 0);
+        output_ticket:out std_logic
+    );
+end ticket_state_machine;
+
+architecture Behavioral of ticket_state_machine is
+type states is (m0,m5,m10,m15,m20,m25,m30,m35,m40);
+signal current_state,next_state:states;
+begin
+
+start:process(reset,clk)
+    begin
+        if(reset=&#39;1&#39;)then
+            current_state&lt;=m0;
+        elsif(reset=&#39;0&#39;and clk=&#39;1&#39;and clk&#39;event)then
+            current_state&lt;=next_state;
+        end if;         
+end process;
+
+state_machine:process(current_state,input_money)
+    begin
+        case current_state is
+            when m0=&gt;
+                output_ticket&lt;=&#39;0&#39;;
+                return_money&lt;=&quot;000&quot;;
+                case input_money is
+                    when&quot;000&quot;=&gt;next_state&lt;=m0;
+                    when&quot;001&quot;=&gt;next_state&lt;=m5;
+                    when&quot;010&quot;=&gt;next_state&lt;=m10;
+                    when&quot;100&quot;=&gt;next_state&lt;=m20;
+                    when others=&gt;next_state&lt;=current_state;
+                end case;
+            when m5=&gt;
+                output_ticket&lt;=&#39;0&#39;;
+                return_money&lt;=&quot;000&quot;;
+                case input_money is
+                    when&quot;000&quot;=&gt;next_state&lt;=m5;
+                    when&quot;001&quot;=&gt;next_state&lt;=m10;
+                    when&quot;010&quot;=&gt;next_state&lt;=m15;
+                    when&quot;100&quot;=&gt;next_state&lt;=m25;
+                    when others=&gt;next_state&lt;=current_state;
+                end case;
+            when m10=&gt;
+                output_ticket&lt;=&#39;0&#39;;
+                return_money&lt;=&quot;000&quot;;
+                case input_money is
+                    when&quot;000&quot;=&gt;next_state&lt;=m10;
+                    when&quot;001&quot;=&gt;next_state&lt;=m15;
+                    when&quot;010&quot;=&gt;next_state&lt;=m20;
+                    when&quot;100&quot;=&gt;next_state&lt;=m30;
+                    when others=&gt;next_state&lt;=current_state;
+                end case; 
+            when m15=&gt;
+                output_ticket&lt;=&#39;0&#39;;
+                return_money&lt;=&quot;000&quot;;
+                case input_money is
+                    when&quot;000&quot;=&gt;next_state&lt;=m15;
+                    when&quot;001&quot;=&gt;next_state&lt;=m20;
+                    when&quot;010&quot;=&gt;next_state&lt;=m25;
+                    when&quot;100&quot;=&gt;next_state&lt;=m35;
+                    when others=&gt;next_state&lt;=current_state;
+                end case; 
+            when m20=&gt;
+                output_ticket&lt;=&#39;0&#39;;
+                return_money&lt;=&quot;000&quot;;
+                case input_money is
+                    when&quot;000&quot;=&gt;next_state&lt;=m20;
+                    when&quot;001&quot;=&gt;next_state&lt;=m25;
+                    when&quot;010&quot;=&gt;next_state&lt;=m30;
+                    when&quot;100&quot;=&gt;next_state&lt;=m40;
+                    when others=&gt;next_state&lt;=current_state;
+                end case; 
+            when m25=&gt;
+                output_ticket&lt;=&#39;1&#39;;
+                return_money&lt;=&quot;000&quot;;
+                case input_money is
+                    when&quot;000&quot;=&gt;next_state&lt;=m0;
+                    when&quot;001&quot;=&gt;next_state&lt;=m5;
+                    when&quot;010&quot;=&gt;next_state&lt;=m10;
+                    when&quot;100&quot;=&gt;next_state&lt;=m20;
+                    when others=&gt;next_state&lt;=current_state;
+                end case; 
+            when m30=&gt;
+                output_ticket&lt;=&#39;1&#39;;
+                return_money&lt;=&quot;001&quot;;
+                case input_money is
+                    when&quot;000&quot;=&gt;next_state&lt;=m0;
+                    when&quot;001&quot;=&gt;next_state&lt;=m5;
+                    when&quot;010&quot;=&gt;next_state&lt;=m10;
+                    when&quot;100&quot;=&gt;next_state&lt;=m20;
+                    when others=&gt;next_state&lt;=current_state;
+                end case;
+             when m35=&gt;
+                output_ticket&lt;=&#39;1&#39;;
+                return_money&lt;=&quot;010&quot;;
+                case input_money is
+                    when&quot;000&quot;=&gt;next_state&lt;=m0;
+                    when&quot;001&quot;=&gt;next_state&lt;=m5;
+                    when&quot;010&quot;=&gt;next_state&lt;=m10;
+                    when&quot;100&quot;=&gt;next_state&lt;=m20;
+                    when others=&gt;next_state&lt;=current_state;
+                end case;    
+            when m40=&gt;
+                output_ticket&lt;=&#39;1&#39;;
+                return_money&lt;=&quot;011&quot;;
+                case input_money is
+                    when&quot;000&quot;=&gt;next_state&lt;=m0;
+                    when&quot;001&quot;=&gt;next_state&lt;=m5;
+                    when&quot;010&quot;=&gt;next_state&lt;=m10;
+                    when&quot;100&quot;=&gt;next_state&lt;=m20;
+                    when others=&gt;next_state&lt;=current_state;
+                end case;    
+        end case;             
+end process;
+
+end Behavioral;
+</code></pre>
+<p>testbench：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity ticket_state_machine_tb is
+--  Port ( );
+end ticket_state_machine_tb;
+
+architecture Behavioral of ticket_state_machine_tb is
+component ticket_state_machine
+    Port (
+        clk,reset:in std_logic;
+        input_money:in std_logic_vector(2 downto 0);
+        return_money:out std_logic_vector(2 downto 0);
+        output_ticket:out std_logic
+    );
+end component;
+signal clk,reset: std_logic;
+signal input_money: std_logic_vector(2 downto 0);
+signal return_money: std_logic_vector(2 downto 0);
+signal output_ticket: std_logic;
+begin
+tsm:ticket_state_machine port map(clk,reset,input_money,return_money,output_ticket);
+
+clock:process
+    begin
+        clk&lt;=&#39;0&#39;;
+        wait for 10ns;
+        clk&lt;=&#39;1&#39;;
+        wait for 10ns;
+end process;
+
+start:process
+    begin
+        reset&lt;=&#39;1&#39;;
+        wait for 20ns;
+        reset&lt;=&#39;0&#39;;
+        wait;
+end process;
+
+test:process
+    begin
+        wait for 50ns;
+        input_money&lt;=&quot;001&quot;;
+        wait for 20ns;
+        input_money&lt;=&quot;000&quot;;
+        wait for 50ns;
+        input_money&lt;=&quot;010&quot;;
+        wait for 20ns;
+        input_money&lt;=&quot;000&quot;;
+        wait for 50ns;
+        input_money&lt;=&quot;100&quot;;
+        wait for 20ns;
+        input_money&lt;=&quot;000&quot;;
+        wait for 50ns;
+        input_money&lt;=&quot;010&quot;;
+        wait for 20ns;
+        input_money&lt;=&quot;000&quot;;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/711bd6d2672a650569b2474d89e3f38e.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/dfad20f27e654f243f373cfb9b80256c.png"></p>
+<h3 id="4-按键消抖电路设计"><a href="#4-按键消抖电路设计" class="headerlink" title="4.按键消抖电路设计"></a>4.按键消抖电路设计</h3><p>请使用硬件描述语言设计一个按键消抖电路，假设输入时钟频率为50MHZ。请给出设计方案及仿真验证结果。</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity key_stroke is
+    generic(CLK_FRE:integer:=50000000);
+    Port (
+        clk:in std_logic;
+        reset:in std_logic;
+        key_in:in std_logic;
+        output:out std_logic           
+    );
+end key_stroke;
+
+architecture Behavioral of key_stroke is
+
+type states is(s0,s1,s2,s3,s4);
+signal state:states;
+
+begin
+process(reset,clk,key_in)
+variable count_num:integer:=3*CLK_FRE/1000;
+variable count:integer:=0;
+    begin
+        if reset=&#39;1&#39;then
+            state&lt;=s0;
+            count:=0;
+            output&lt;=&#39;0&#39;;
+        elsif reset=&#39;0&#39;then
+            case state is
+                when s0=&gt;if key_in=&#39;1&#39; then state&lt;=s1;end if;
+                when s1=&gt;
+                    if clk=&#39;1&#39; then count:=count+1;end if;
+                    if count=count_num then state&lt;=s2; end if;
+                when s2=&gt;
+                    if(key_in=&#39;1&#39;)then output&lt;=&#39;1&#39;;state&lt;=s3;
+                    elsif(key_in=&#39;0&#39;)then output&lt;=&#39;0&#39;;state&lt;=s4;
+                    end if;
+                when s3=&gt;
+                    output&lt;=&#39;0&#39;;
+                    if(key_in=&#39;0&#39;)then state&lt;=s4;end if;
+                when s4=&gt;
+                    state&lt;=s0;
+                    count:=0;
+                    output&lt;=&#39;0&#39;;             
+            end case;               
+        end if;     
+end process;
+
+
+
+end Behavioral;
+</code></pre>
+<p>testbench：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity key_stroke_tb is
+--  Port ( );
+end key_stroke_tb;
+
+architecture Behavioral of key_stroke_tb is
+component key_stroke
+    generic(CLK_FRE:integer:=50000000);
+    port(
+        clk:in std_logic;
+        reset:in std_logic;
+        key_in:in std_logic;
+        output:out std_logic 
+    ); 
+end component;
+signal clk:std_logic;
+signal reset:std_logic;
+signal key_in:std_logic;
+signal output:std_logic;
+begin
+ks:key_stroke generic map(50000000)port map(clk,reset,key_in,output);
+
+clock:process
+begin
+    clk&lt;=&#39;0&#39;;
+    wait for 10ns;
+    clk&lt;=&#39;1&#39;;
+    wait for 10ns;
+end process;
+
+rst:process
+begin
+    reset&lt;=&#39;1&#39;;
+    wait for 25ns;
+    reset&lt;=&#39;0&#39;;
+    wait;
+end process;
+
+test:process
+begin
+    key_in&lt;=&#39;1&#39;;
+    wait for 50ns;
+    key_in&lt;=&#39;0&#39;;
+    wait for 70ns;
+    key_in&lt;=&#39;1&#39;;
+    wait for 100ns;
+    key_in&lt;=&#39;0&#39;;
+    wait for 40ns;
+    key_in&lt;=&#39;1&#39;;
+    wait for 120ns;
+    key_in&lt;=&#39;0&#39;;
+    wait for 30ns;
+    key_in&lt;=&#39;1&#39;;
+    wait for 40ns;
+    key_in&lt;=&#39;0&#39;;
+    wait for 70ns;
+    key_in&lt;=&#39;1&#39;;
+    wait for 30ns;
+    key_in&lt;=&#39;0&#39;;
+    wait for 100ns;
+    key_in&lt;=&#39;1&#39;;
+    wait for 50ns;
+    key_in&lt;=&#39;0&#39;;
+    wait for 20ns;
+    key_in&lt;=&#39;1&#39;;
+    wait for 1000ns;
+    key_in&lt;=&#39;0&#39;;
+    wait for 2000ns;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2b1e4d12b3c904bbdb1f64914294b450.png"></p>
+<h3 id="5-同步环形FIFO设计"><a href="#5-同步环形FIFO设计" class="headerlink" title="5.同步环形FIFO设计"></a>5.同步环形FIFO设计</h3><p>请采用硬件描述语言设计实现一个存储深度M和数据宽度N可以用户配置的同步FIFO存储器，请给出仿真结果。</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity FIFO_ring is
+generic(
+    depth:positive :=8;
+    width:positive:=8
+);
+    Port(
+        clk:in std_logic;
+        rst:in std_logic;
+        data_in:in std_logic_vector(7 downto 0);
+        wr:in std_logic;
+        rd:in std_logic;
+--        wr_clr:in std_logic;
+--        wr_en:in std_logic;
+--        rd_clr:in std_logic;
+--        rd_en:in std_logic;
+        
+        empty:out std_logic;
+        full:out std_logic;
+        data_out:out std_logic_vector(7 downto 0)
+    );
+end FIFO_ring;
+
+architecture Behavioral of FIFO_ring is
+component duaram
+generic(
+    depth:positive :=8;
+    width:positive:=8
+);
+Port(
+    clka:in std_logic;
+    wr:in std_logic;
+    addra:in std_logic_vector(depth-1 downto 0);
+    datain:in std_logic_vector(width-1 downto 0);
+    
+    clkb:in std_logic;
+    rd:in std_logic;
+    addrb:in std_logic_vector(depth-1 downto 0);
+    dataout:out std_logic_vector(width-1 downto 0)
+); 
+end component;
+component write_pointer
+    generic(
+        depth:positive
+    );
+    Port(
+        clk:in std_logic;
+        rst:in std_logic;
+        wq:in std_logic;
+        wr_pt:out std_logic_vector(depth-1 downto 0)
+    );
+end component;
+component read_pointer
+    generic(
+        depth:positive
+    );
+    Port(
+        clk:in std_logic;
+        rst:in std_logic;
+        rq:in std_logic;
+        rd_pt:out std_logic_vector(depth-1 downto 0)
+    );
+end component;
+component judge_status
+    generic(
+        depth:positive
+    );
+    port(
+        clk:in std_logic;
+        rst:in std_logic;
+        wr_pt:in std_logic_vector(depth-1 downto 0);
+        rd_pt:in std_logic_vector(depth-1 downto 0);
+        empty:out std_logic;
+        full:out std_logic
+    );
+end component;
+
+signal rp_line:std_logic_vector(depth-1 downto 0);
+signal wp_line:std_logic_vector(depth-1 downto 0);
+
+begin
+duaram_inst:duaram generic map(depth,width)port map(clka=&gt;clk,clkb=&gt;clk,datain=&gt;data_in,dataout=&gt;data_out,addra=&gt;wp_line,addrb=&gt;rp_line,rd=&gt;rd,wr=&gt;wr);
+write_pointer_inst:write_pointer generic map(depth)port map(clk=&gt;clk,rst=&gt;rst,wq=&gt;wr,wr_pt=&gt;wp_line);
+read_pointer_inst:read_pointer generic map(depth)port map(clk=&gt;clk,rst=&gt;rst,rq=&gt;rd,rd_pt=&gt;rp_line);
+judge_status_inst:judge_status generic map(depth)port map(clk=&gt;clk,rst=&gt;rst,wr_pt=&gt;wp_line,rd_pt=&gt;rp_line,full=&gt;full,empty=&gt;empty);
+
+
+end Behavioral;
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity duaram is
+generic(
+    depth:positive :=8;
+    width:positive:=8
+);
+Port(
+    clka:in std_logic;
+    wr:in std_logic;
+    addra:in std_logic_vector(depth-1 downto 0);
+    datain:in std_logic_vector(width-1 downto 0);
+    
+    clkb:in std_logic;
+    rd:in std_logic;
+    addrb:in std_logic_vector(depth-1 downto 0);
+    dataout:out std_logic_vector(width-1 downto 0)
+);
+end duaram;
+
+architecture Behavioral of duaram is
+
+type ram is array(2**depth-1 downto 0)of std_logic_vector(width-1 downto 0);
+signal dualram:ram;
+
+begin
+
+process(clka,clkb)
+begin
+    if(clka&#39;event and clka=&#39;1&#39;)then
+        if(wr=&#39;0&#39;)then dualram(conv_integer(addra))&lt;=datain;end if;
+    end if;
+end process;
+
+process(clkb)
+begin
+    if(clkb&#39;event and clkb=&#39;1&#39;)then
+        if(rd=&#39;0&#39;)then dataout&lt;=dualram(conv_integer(addrb));end if;
+    end if;
+end process;
+
+end Behavioral;
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity write_pointer is
+    generic(
+        depth:positive
+    );
+    Port(
+        clk:in std_logic;
+        rst:in std_logic;
+        wq:in std_logic;
+        wr_pt:out std_logic_vector(depth-1 downto 0)
+    );
+end write_pointer;
+
+architecture Behavioral of write_pointer is
+
+signal wr_pt_t:std_logic_vector(depth-1 downto 0);
+
+begin
+process(rst,clk)
+begin
+    if(rst=&#39;0&#39;)then
+        wr_pt_t&lt;=(others=&gt;&#39;0&#39;);
+    elsif(clk&#39;event and clk=&#39;1&#39;)then
+        if wq=&#39;0&#39;then wr_pt_t&lt;=wr_pt_t+1;end if;
+    end if;     
+end process;
+wr_pt&lt;=wr_pt_t;
+end Behavioral;
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity read_pointer is
+    generic(
+        depth:positive
+    );
+    Port(
+        clk:in std_logic;
+        rst:in std_logic;
+        rq:in std_logic;
+        rd_pt:out std_logic_vector(depth-1 downto 0)
+    );
+end read_pointer;
+
+architecture Behavioral of read_pointer is
+
+signal rd_pt_t:std_logic_vector(depth-1 downto 0);
+
+begin
+process(rst,clk)
+begin
+    if(rst=&#39;0&#39;)then
+        rd_pt_t&lt;=(others=&gt;&#39;0&#39;);
+    elsif(clk&#39;event and clk=&#39;1&#39;)then
+        if rq=&#39;0&#39;then rd_pt_t&lt;=rd_pt_t+1;end if;
+    end if;     
+end process;
+rd_pt&lt;=rd_pt_t;
+end Behavioral;
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity judge_status is
+    generic(
+        depth:positive
+    );
+    port(
+        clk:in std_logic;
+        rst:in std_logic;
+        wr_pt:in std_logic_vector(depth-1 downto 0);
+        rd_pt:in std_logic_vector(depth-1 downto 0);
+        empty:out std_logic;
+        full:out std_logic
+    );
+end entity judge_status;
+
+architecture Behavioral of judge_status is
+
+begin
+
+process(rst,clk)
+begin
+    if(rst=&#39;0&#39;)then empty&lt;=&#39;1&#39;;
+    elsif clk&#39;event and clk=&#39;1&#39;then
+        if wr_pt=rd_pt then empty&lt;=&#39;1&#39;;
+        else empty&lt;=&#39;0&#39;;
+        end if;
+    end if;  
+end process;
+
+process(rst,clk)
+begin
+    if(rst=&#39;0&#39;)then full&lt;=&#39;0&#39;;
+    elsif clk&#39;event and clk=&#39;1&#39;then
+        if wr_pt&gt;rd_pt then
+            if(depth+rd_pt)=wr_pt then full&lt;=&#39;1&#39;;else full&lt;=&#39;0&#39;;end if;
+        end if;
+    end if;  
+end process;
+
+end Behavioral;
+</code></pre>
+<p>testbench：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity FIFO_ring_tb is
+--  Port ( );
+end FIFO_ring_tb;
+
+architecture Behavioral of FIFO_ring_tb is
+
+component FIFO_ring
+generic(
+    depth:positive :=8;
+    width:positive:=8
+);
+    Port(
+        clk:in std_logic;
+        rst:in std_logic;
+        data_in:in std_logic_vector(7 downto 0);
+        wr:in std_logic;
+        rd:in std_logic;
+--        wr_clr:in std_logic;
+--        wr_en:in std_logic;
+--        rd_clr:in std_logic;
+--        rd_en:in std_logic;
+        
+        empty:out std_logic;
+        full:out std_logic;
+        data_out:out std_logic_vector(7 downto 0)
+    );
+end component;
+
+signal clk:std_logic;
+signal rst:std_logic;
+signal data_in:std_logic_vector(7 downto 0);
+signal wr:std_logic;
+signal rd:std_logic;
+signal empty:std_logic;
+signal full:std_logic;
+signal data_out:std_logic_vector(7 downto 0);
+
+begin
+
+FIFO_ring_inst:FIFO_ring generic map(8,8)port map(clk,rst,data_in,wr,rd,empty,full,data_out);
+
+clock:process
+begin
+    clk&lt;=&#39;0&#39;;
+    wait for 10ns;
+    clk&lt;=&#39;1&#39;;
+    wait for 10ns;
+end process;
+
+reset:process
+begin
+    rst&lt;=&#39;0&#39;;
+    wait for 25ns;
+    rst&lt;=&#39;1&#39;;
+    wait;
+end process;
+
+test:process
+begin
+    rd&lt;=&#39;1&#39;;
+    wr&lt;=&#39;1&#39;;
+    data_in&lt;=&quot;00000000&quot;;
+    wait for 50ns;
+    data_in&lt;=&quot;00000001&quot;;
+    wr&lt;=&#39;0&#39;;
+    wait for 20ns;
+    wr&lt;=&#39;1&#39;;
+    wait for 30ns;
+    data_in&lt;=&quot;00000010&quot;;
+    wr&lt;=&#39;0&#39;;
+    wait for 20ns;
+    wr&lt;=&#39;1&#39;;
+    wait for 30ns;
+    data_in&lt;=&quot;00000100&quot;;
+    wr&lt;=&#39;0&#39;;
+    wait for 20ns;
+    wr&lt;=&#39;1&#39;;
+    wait for 30ns;
+    data_in&lt;=&quot;00001000&quot;;
+    wr&lt;=&#39;0&#39;;
+    wait for 20ns;
+    wr&lt;=&#39;1&#39;;
+    wait for 30ns;
+    data_in&lt;=&quot;00010000&quot;;
+    wr&lt;=&#39;0&#39;;
+    wait for 20ns;
+    wr&lt;=&#39;1&#39;;
+    wait for 30ns;
+    data_in&lt;=&quot;00100000&quot;;
+    wr&lt;=&#39;0&#39;;
+    wait for 20ns;
+    wr&lt;=&#39;1&#39;;
+    wait for 30ns;
+    data_in&lt;=&quot;01000000&quot;;
+    wr&lt;=&#39;0&#39;;
+    wait for 20ns;
+    wr&lt;=&#39;1&#39;;
+    wait for 30ns;
+    data_in&lt;=&quot;10000000&quot;;
+    wr&lt;=&#39;0&#39;;
+    wait for 20ns;
+    wr&lt;=&#39;1&#39;;
+    wait for 50ns;
+    
+    rd&lt;=&#39;0&#39;;
+    wait for 20ns;
+    rd&lt;=&#39;1&#39;;
+    wait for 30ns;
+    rd&lt;=&#39;0&#39;;
+    wait for 20ns;
+    rd&lt;=&#39;1&#39;;
+    wait for 30ns;
+    rd&lt;=&#39;0&#39;;
+    wait for 20ns;
+    rd&lt;=&#39;1&#39;;
+    wait for 30ns;
+    rd&lt;=&#39;0&#39;;
+    wait for 20ns;
+    rd&lt;=&#39;1&#39;;
+    wait for 30ns;
+    rd&lt;=&#39;0&#39;;
+    wait for 20ns;
+    rd&lt;=&#39;1&#39;;
+    wait for 30ns;
+    rd&lt;=&#39;0&#39;;
+    wait for 20ns;
+    rd&lt;=&#39;1&#39;;
+    wait for 30ns;
+    rd&lt;=&#39;0&#39;;
+    wait for 20ns;
+    rd&lt;=&#39;1&#39;;
+    wait for 30ns;
+    rd&lt;=&#39;0&#39;;
+    wait for 20ns;
+    rd&lt;=&#39;1&#39;;
+    wait for 30ns;
+    
+    wait;
+    
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9085cd14c31cada75062d36a643fb2b5.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4dbe7b6e7886a88433a6fb76f77ee7f8.png"></p>
+<h3 id="6-线上实验——时钟模块设计"><a href="#6-线上实验——时钟模块设计" class="headerlink" title="6.线上实验——时钟模块设计"></a>6.线上实验——时钟模块设计</h3><p>采用硬件描述语言设计实现CPU时钟模块，输出信号包括四个节拍信号（每两个时钟周期一个节拍），时钟反相信号，时钟2分频信号及其反相信号，完成逻辑功能设计及仿真验证，并给出仿真结果。</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity clock is
+    Port(
+        clk,rst:in std_logic;
+        clk1,nclk1:out std_logic;   --clk
+        clk2,nclk2:out std_logic;   --clk二分频
+        w0,w1,w2,w3:out std_logic   --节拍信号
+    );
+end clock;
+
+architecture Behavioral of clock is
+begin
+
+process(clk)
+variable count_clk2:integer:=0;
+variable count_w:integer:=0;
+begin
+    if(rst=&#39;0&#39;)then
+        w0&lt;=&#39;0&#39;;
+        w1&lt;=&#39;0&#39;;
+        w2&lt;=&#39;0&#39;;
+        w3&lt;=&#39;0&#39;;
+        clk1&lt;=&#39;0&#39;;
+        nclk1&lt;=&#39;1&#39;;
+        clk2&lt;=&#39;0&#39;;
+        nclk2&lt;=&#39;1&#39;;
+        count_clk2:=0;
+        count_w:=0;
+    elsif(rst=&#39;1&#39;)then
+        clk1&lt;=clk;
+        nclk1&lt;=not clk;
+        if(clk&#39;event and clk=&#39;1&#39;)then
+            if(count_clk2=0)then count_clk2:=1;clk2&lt;=&#39;1&#39;;nclk2&lt;=&#39;0&#39;;
+            elsif(count_clk2=1)then count_clk2:=0;clk2&lt;=&#39;0&#39;;nclk2&lt;=&#39;1&#39;;
+            end if;
+            if(count_w&gt;=0 and count_w&lt;=3)then w0&lt;=&#39;1&#39;;else w0&lt;=&#39;0&#39;;end if;
+            if(count_w&gt;=4 and count_w&lt;=7)then w1&lt;=&#39;1&#39;;else w1&lt;=&#39;0&#39;;end if;
+            if(count_w&gt;=8 and count_w&lt;=11)then w2&lt;=&#39;1&#39;;else w2&lt;=&#39;0&#39;;end if;
+            if(count_w&gt;=12 and count_w&lt;=15)then w3&lt;=&#39;1&#39;;else w3&lt;=&#39;0&#39;;end if;
+            if(count_w&lt;15)then count_w:=count_w+1;else count_w:=0;end if;
+        end if;
+    end if;
+end process;
+
+end Behavioral;
+</code></pre>
+<p>testbench：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity clock_tb is
+--  Port ( );
+end clock_tb;
+
+architecture Behavioral of clock_tb is
+component clock
+    Port(
+        clk,rst:in std_logic;
+        clk1,nclk1:out std_logic;   --clk
+        clk2,nclk2:out std_logic;   --clk二分频
+        w0,w1,w2,w3:out std_logic   --节拍信号
+    );
+end component;
+
+signal clk,rst:std_logic;
+signal clk1,nclk1:std_logic;   --clk
+signal clk2,nclk2:std_logic;   --clk二分频
+signal w0,w1,w2,w3:std_logic;  --节拍信号
+
+begin
+clock_inst:clock port map(clk,rst,clk1,nclk1,clk2,nclk2,w0,w1,w2,w3);
+
+clock_gen:process
+begin
+    clk&lt;=&#39;0&#39;;
+    wait for 10ns;
+    clk&lt;=&#39;1&#39;;
+    wait for 10ns;
+end process;
+
+reset_gen:process
+begin
+    rst&lt;=&#39;0&#39;;
+    wait for 25ns;
+    rst&lt;=&#39;1&#39;;
+    wait;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/adec0f2295677479c7321988b4b0f166.png"></p>
+<h3 id="7-线上实验——原码二位乘法器设计"><a href="#7-线上实验——原码二位乘法器设计" class="headerlink" title="7.线上实验——原码二位乘法器设计"></a>7.线上实验——原码二位乘法器设计</h3><p>请用硬件描述语言设计一个原码二位乘法器，其中两个操作数位宽为8，请给出仿真结果。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7bb5fc46ac6d878964e59ddeb1fe803c.png"></p>
+<p>顶层——multiplier_2bit：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity multiplier_2bit is
+    Port(
+        clk,start:in std_logic;
+        ain,bin:in std_logic_vector(7 downto 0);
+        done:out std_logic;
+        sout:inout std_logic_vector(15 downto 0)
+    );
+end multiplier_2bit;
+
+architecture Behavioral of multiplier_2bit is
+
+component multiplier_ctrl
+    Port (
+        clk,start:in std_logic;
+        clkout,rstall,done:out std_logic
+     );
+end component;
+component multiplier_8bitshiftreg
+    Port (
+        clk,load:in std_logic;
+        din:in std_logic_vector(7 downto 0);
+        qb0,qb1:out std_logic
+     );
+end component;
+component multiplier_16bitreg
+    Port (
+        clk,clr:in std_logic;
+        d:in std_logic_vector(8 downto 0);
+        q:out std_logic_vector(15 downto 0)
+     );
+end component;
+component multiplier_selector
+    Port (
+        clk,rst:in std_logic;
+        a0,a1,cin:in std_logic;
+        din:in std_logic_vector(7 downto 0);
+        cout:out std_logic;
+        dout:out std_logic_vector(7 downto 0)
+     );
+end component;
+component multiplier_8bitadder
+    Port (
+        clk,rst:in std_logic;
+        cin:in std_logic;
+        ain,bin:in std_logic_vector(7 downto 0);
+        sout:out std_logic_vector(8 downto 0)
+     );
+end component;
+
+signal clk_line:std_logic;
+signal rst_line:std_logic;
+signal cin_line:std_logic;
+signal qb1_line,qb0_line:std_logic;
+signal bin_line:std_logic_vector(7 downto 0);
+signal sout_line:std_logic_vector(8 downto 0);
+signal test_line:std_logic_vector(8 downto 0);
+
+begin
+multiplier_ctrl_inst:multiplier_ctrl port map(clk=&gt;clk,start=&gt;start,clkout=&gt;clk_line,rstall=&gt;rst_line,done=&gt;done);
+multiplier_8bitshiftreg_inst:multiplier_8bitshiftreg port map(clk=&gt;clk_line,load=&gt;rst_line,din=&gt;ain,qb0=&gt;qb0_line,qb1=&gt;qb1_line);
+multiplier_16bitreg_inst:multiplier_16bitreg port map(clk=&gt;clk_line,clr=&gt;rst_line,d=&gt;sout_line,q=&gt;sout);
+multiplier_selector_inst:multiplier_selector port map(clk=&gt;clk_line,rst=&gt;rst_line,a0=&gt;qb0_line,a1=&gt;qb1_line,cin=&gt;sout_line(8),din=&gt;bin,cout=&gt;cin_line,dout=&gt;bin_line);
+multiplier_8bitadder_inst:multiplier_8bitadder port map(clk=&gt;clk_line,rst=&gt;rst_line,cin=&gt;cin_line,ain=&gt;sout(15 downto 8),bin=&gt;bin_line,sout=&gt;sout_line);
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/8f30332a988566f33bab93454ab0c0ca.png"></p>
+<p>testbench:</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity multiplier_2bit_tb is
+--  Port ( );
+end multiplier_2bit_tb;
+
+architecture Behavioral of multiplier_2bit_tb is
+component multiplier_2bit
+    Port(
+        clk,start:in std_logic;
+        ain,bin:in std_logic_vector(7 downto 0);
+        done:out std_logic;
+        sout:inout std_logic_vector(15 downto 0)
+    );
+end component;
+signal clk,start: std_logic;
+signal ain,bin: std_logic_vector(7 downto 0);
+signal done: std_logic;
+signal sout: std_logic_vector(15 downto 0);
+begin
+multiplier_2bit_inst:multiplier_2bit port map(clk,start,ain,bin,done,sout);
+
+clock_gen:process
+begin  
+    clk&lt;=&#39;1&#39;;
+    wait for 10ns;
+    clk&lt;=&#39;0&#39;;
+    wait for 10ns;
+end process;
+
+test:process
+begin
+    ain&lt;=&quot;10011010&quot;;
+    bin&lt;=&quot;01100101&quot;;
+    wait for 25ns;
+    start&lt;=&#39;1&#39;;
+    wait for 25ns;
+    start&lt;=&#39;0&#39;;    
+    wait for 150ns;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/559a1c00923a7cda00c06f63c6dec1cc.png"></p>
+<p>模块：</p>
+<p>multiplier_2bit_ctrl ：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_ctrl is
+    Port (
+        clk,start:in std_logic;
+        clkout,rstall,done:out std_logic
+     );
+end multiplier_ctrl;
+
+architecture Behavioral of multiplier_ctrl is
+
+signal cnt3b:std_logic_vector(2 downto 0);
+
+begin
+
+process(clk,start)
+begin
+    rstall&lt;=start;
+    if(start=&#39;1&#39;)then cnt3b&lt;=&quot;000&quot;;
+    elsif clk&#39;event and clk=&#39;1&#39;then if cnt3b&lt;=4 then cnt3b&lt;=cnt3b+1;end if;
+    end if;
+end process;
+
+process(clk,cnt3b,start)
+begin
+    if (start=&#39;1&#39;)then
+        clkout&lt;=&#39;0&#39;;done&lt;=&#39;0&#39;; 
+    elsif(start=&#39;0&#39;)then    
+        if cnt3b&lt;=4 then clkout&lt;=clk;
+        else clkout&lt;=&#39;0&#39;;done&lt;=&#39;1&#39;;
+        end if; 
+    end if;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/920cb7c013bd5af2e09bc59aafba028c.png"></p>
+<p>multiplier_2bit_8bitshiftreg：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_8bitshiftreg is
+    Port (
+        clk,load:in std_logic;
+        din:in std_logic_vector(7 downto 0);
+        qb0,qb1:out std_logic
+     );
+end multiplier_8bitshiftreg;
+
+architecture Behavioral of multiplier_8bitshiftreg is
+
+signal reg8b:std_logic_vector(7 downto 0);
+
+begin
+
+process(clk,load)
+begin
+    if load=&#39;1&#39;then reg8b&lt;=din;qb0&lt;=&#39;0&#39;;qb1&lt;=&#39;0&#39;;end if;
+    if(load=&#39;0&#39;and clk=&#39;1&#39;)then 
+        qb0&lt;=reg8b(0);
+        qb1&lt;=reg8b(1);
+        reg8b(5 downto 0)&lt;=reg8b(7 downto 2);
+        reg8b(7 downto 6)&lt;=&quot;00&quot;;   
+    end if;     
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d171f9dc0e6d54b72cf1ffe1f8c759ec.png"></p>
+<p>multiplier_2bit_16bitreg：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_16bitreg is
+    Port (
+        clk,clr:in std_logic;
+        d:in std_logic_vector(8 downto 0);
+        q:out std_logic_vector(15 downto 0)
+     );
+end multiplier_16bitreg;
+
+architecture Behavioral of multiplier_16bitreg is
+
+begin
+
+process(clk,clr)
+variable sr16b:std_logic_vector(15 downto 0);
+begin
+    if clr=&#39;1&#39;then
+        sr16b:=&quot;0000000000000000&quot;;
+    elsif(clr=&#39;0&#39;and clk&#39;event and clk=&#39;1&#39;)then  
+        sr16b(15 downto 8):=d(7 downto 0);
+        sr16b(13 downto 0):=sr16b(15 downto 2);
+        sr16b(15):=d(8);
+        sr16b(14):=d(8);
+    end if;   
+    q&lt;=sr16b;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/08847d6e576be1f9f61c68f8d15899b6.png"></p>
+<p>multiplier_2bit_selector：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_selector is
+    Port (
+        clk,rst:in std_logic;
+        a0,a1,cin:in std_logic;
+        din:in std_logic_vector(7 downto 0);
+        cout:out std_logic;
+        dout:out std_logic_vector(7 downto 0)
+     );
+end multiplier_selector;
+
+architecture Behavioral of multiplier_selector is
+
+begin
+
+process(clk,a0,a1,cin,din)
+begin
+    if(rst=&#39;1&#39;)then cout&lt;=&#39;0&#39;;dout&lt;=&quot;00000000&quot;;
+    elsif(rst=&#39;0&#39;and clk&#39;event and clk=&#39;0&#39;)then
+        if(a0=a1 and a0=cin)then dout&lt;=&quot;00000000&quot;;cout&lt;=cin;
+        elsif(a1=&#39;0&#39;and (a0 xor cin)=&#39;1&#39;)then dout&lt;=din;cout&lt;=&#39;0&#39;;
+        elsif((a1 xor a0)=&#39;1&#39;and a0=cin)then
+            dout(7 downto 1)&lt;=din(6 downto 0);  
+            dout(0)&lt;=&#39;0&#39;;
+            cout&lt;=&#39;0&#39;;
+        elsif(a1=&#39;1&#39;and(a0 xor cin)=&#39;1&#39;)then
+            dout&lt;=(not din)+1;
+            cout&lt;=&#39;1&#39;;  
+        end if;
+    end if;    
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e286d15abce298cf0b629350ba7e076e.png"></p>
+<p>multiplier_2bit_8bitadder：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_8bitadder is
+    Port (
+        clk,rst:in std_logic;
+        cin:in std_logic;
+        ain,bin:in std_logic_vector(7 downto 0);
+        sout:out std_logic_vector(8 downto 0)
+     );
+end multiplier_8bitadder;
+
+architecture Behavioral of multiplier_8bitadder is
+begin
+
+process(clk,rst,ain,bin,cin)
+begin
+    if(rst=&#39;1&#39;)then sout&lt;=&quot;000000000&quot;;
+    elsif(rst=&#39;0&#39;and clk=&#39;0&#39;)then
+        sout&lt;=(&#39;0&#39;&amp; ain)+(cin &amp; bin);
+    end if;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/cdd818c3fea80ef3bef0a36c7c6ab446.png"></p>
+<p><strong>设计注意点：</strong></p>
+<p>0.设计顺序：控制器-8b移位寄存器-16位缓存器-选择器-加法器</p>
+<p>1.输入位8位无符号数，若输入有符号数需修改位宽并另外计算符号位。</p>
+<p>2.共用总线需注意时序，防止总线冲突以及数据读取错误</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/b25fa007565503bdd4b69b5d6c31496d.png"></p>
+<p>共用总线sout时序设计：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/daac7ca07dca672e89a3e831d4b8bd9a.png"></p>
+<p>3.process内语句顺序执行的次序。</p>
+<p>4.变量的使用：mulitiplier_16bitreg中</p>
+<pre><code>variable sr16b:std_logic_vector(15 downto 0);
+</code></pre>
+<p>若使用 signal sr16b，则 q&lt;&#x3D;sr16b; 无效</p>
+<p>5.位拓展：</p>
+<pre><code>sout&lt;=(&#39;0&#39;&amp; ain)+(cin &amp; bin); 
+</code></pre>
+<p>使用 &amp; 符拓展位宽</p>
+<h3 id="8-线上实验——布斯乘法器设计"><a href="#8-线上实验——布斯乘法器设计" class="headerlink" title="8.线上实验——布斯乘法器设计"></a>8.线上实验——布斯乘法器设计</h3><p>采用硬件描述语言设计实现布斯乘法器，完成逻辑功能设计及仿真验证，并给出仿真结果。</p>
+<p>按照7中的设计顺序对7中设计文件进行修改：</p>
+<pre><code>    ctrl模块发出时钟周期数改为8；8bitshiftreg和16bitreg模块每个时钟周期移动1位，且8；8bitshiftreg输出的是a0和a-1；16bitreg和selector模块载入数值后求补；selector模块删去cin和cout信号并修改规则；adder无cin...
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/8c09ab4e531a18f069ba4afb9e18d438.png"></p>
+<p>顶层模块——multiplier_booth：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity multiplier_booth is
+    Port(
+        clk,start:in std_logic;
+        ain,bin:in std_logic_vector(7 downto 0);
+        done:out std_logic;
+        sout:inout std_logic_vector(15 downto 0)
+    );
+end multiplier_booth;
+
+architecture Behavioral of multiplier_booth is
+
+component multiplier_booth_ctrl
+    Port (
+        clk,start:in std_logic;
+        clkout,rstall,done:out std_logic
+     );
+end component;
+component multiplier_booth_8bitshiftreg
+    Port (
+        clk,load:in std_logic;
+        din:in std_logic_vector(7 downto 0);
+        qb0,qb1:out std_logic
+     );
+end component;
+component multiplier_booth_16bitreg
+    Port (
+        clk,clr:in std_logic;
+        d:in std_logic_vector(8 downto 0);
+        q:out std_logic_vector(15 downto 0)
+     );
+end component;
+component multiplier_booth_selector
+    Port (
+        clk,rst:in std_logic;
+        a0,a1:in std_logic;
+        din:in std_logic_vector(7 downto 0);
+        dout:out std_logic_vector(7 downto 0)
+     );
+end component;
+component multiplier_booth_8bitadder
+    Port (
+        clk,rst:in std_logic;
+        ain,bin:in std_logic_vector(7 downto 0);
+        sout:out std_logic_vector(8 downto 0)
+     );
+end component;
+
+signal clk_line:std_logic;
+signal rst_line:std_logic;
+signal qb1_line,qb0_line:std_logic;
+signal bin_line:std_logic_vector(7 downto 0);
+signal sout_line:std_logic_vector(8 downto 0);
+signal test_line:std_logic_vector(8 downto 0);
+
+begin
+multiplier_booth_ctrl_inst:multiplier_booth_ctrl port map(clk=&gt;clk,start=&gt;start,clkout=&gt;clk_line,rstall=&gt;rst_line,done=&gt;done);
+multiplier_booth_8bitshiftreg_inst:multiplier_booth_8bitshiftreg port map(clk=&gt;clk_line,load=&gt;rst_line,din=&gt;ain,qb0=&gt;qb0_line,qb1=&gt;qb1_line);
+multiplier_booth_16bitreg_inst:multiplier_booth_16bitreg port map(clk=&gt;clk_line,clr=&gt;rst_line,d=&gt;sout_line,q=&gt;sout);
+multiplier_booth_selector_inst:multiplier_booth_selector port map(clk=&gt;clk_line,rst=&gt;rst_line,a0=&gt;qb0_line,a1=&gt;qb1_line,din=&gt;bin,dout=&gt;bin_line);
+multiplier_booth_8bitadder_inst:multiplier_booth_8bitadder port map(clk=&gt;clk_line,rst=&gt;rst_line,ain=&gt;sout(15 downto 8),bin=&gt;bin_line,sout=&gt;sout_line);
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d3e67513e1e27963a8e15f23f6a8cc7c.png"></p>
+<p>testbench：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity multiplier_booth_tb is
+--  Port ( );
+end multiplier_booth_tb;
+
+architecture Behavioral of multiplier_booth_tb is
+component multiplier_booth
+    Port(
+        clk,start:in std_logic;
+        ain,bin:in std_logic_vector(7 downto 0);
+        done:out std_logic;
+        sout:inout std_logic_vector(15 downto 0)
+    );
+end component;
+signal clk,start: std_logic;
+signal ain,bin: std_logic_vector(7 downto 0);
+signal done: std_logic;
+signal sout: std_logic_vector(15 downto 0);
+begin
+multiplier_booth_inst:multiplier_booth port map(clk,start,ain,bin,done,sout);
+
+clock_gen:process
+begin  
+    clk&lt;=&#39;1&#39;;
+    wait for 10ns;
+    clk&lt;=&#39;0&#39;;
+    wait for 10ns;
+end process;
+
+test:process
+begin
+    ain&lt;=&quot;00000010&quot;;
+    bin&lt;=&quot;10000010&quot;;
+    wait for 25ns;
+    start&lt;=&#39;1&#39;;
+    wait for 25ns;
+    start&lt;=&#39;0&#39;;    
+    wait for 200ns;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4cd31e8dc5958ee6e4b4eedfd590f2fa.png"></p>
+<p>模块：</p>
+<p>multiplier_booth_ctrl：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_booth_ctrl is
+    Port (
+        clk,start:in std_logic;
+        clkout,rstall,done:out std_logic
+     );
+end multiplier_booth_ctrl;
+
+architecture Behavioral of multiplier_booth_ctrl is
+
+signal cnt4b:std_logic_vector(3 downto 0);
+
+begin
+
+process(clk,start)
+begin
+    rstall&lt;=start;
+    if(start=&#39;1&#39;)then cnt4b&lt;=&quot;0000&quot;;
+    elsif clk&#39;event and clk=&#39;1&#39;then if cnt4b&lt;=8 then cnt4b&lt;=cnt4b+1;end if;
+    end if;
+end process;
+
+process(clk,cnt4b,start)
+begin
+    if (start=&#39;1&#39;)then
+        clkout&lt;=&#39;0&#39;;done&lt;=&#39;0&#39;; 
+    elsif(start=&#39;0&#39;)then    
+        if cnt4b&lt;=8 then clkout&lt;=clk;
+        else clkout&lt;=&#39;0&#39;;done&lt;=&#39;1&#39;;
+        end if; 
+    end if;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/83c13baff1be05be6cda0e582d59099f.png"></p>
+<p>multiplier_booth_8bitshiftreg：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_booth_8bitshiftreg is
+    Port (
+        clk,load:in std_logic;
+        din:in std_logic_vector(7 downto 0);
+        qb0,qb1:out std_logic
+     );
+end multiplier_booth_8bitshiftreg;
+
+architecture Behavioral of multiplier_booth_8bitshiftreg is
+
+signal reg8b:std_logic_vector(8 downto 0);
+
+begin
+
+process(clk,load)
+begin
+    if load=&#39;1&#39;then 
+        if(din(7)=&#39;1&#39;)then reg8b(8 downto 1)&lt;=(din(7)&amp;(not din(6 downto 0)))+1;else reg8b(8 downto 1)&lt;=din;end if;  --取补码
+        reg8b(0)&lt;=&#39;0&#39;;
+        qb0&lt;=&#39;0&#39;;qb1&lt;=&#39;0&#39;;
+    end if;
+    if(load=&#39;0&#39;and clk=&#39;1&#39;)then 
+        qb0&lt;=reg8b(0);
+        qb1&lt;=reg8b(1);
+        reg8b(7 downto 0)&lt;=reg8b(8 downto 1);
+        reg8b(8)&lt;=&#39;0&#39;;   
+    end if;     
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/61bbc405e10beaea2c2635a94871b4cb.png"></p>
+<p>multiplier_booth_16bitreg：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_booth_16bitreg is
+    Port (
+        clk,clr:in std_logic;
+        d:in std_logic_vector(8 downto 0);
+        q:out std_logic_vector(15 downto 0)
+     );
+end multiplier_booth_16bitreg;
+
+architecture Behavioral of multiplier_booth_16bitreg is
+
+begin
+
+process(clk,clr)
+variable sr16b:std_logic_vector(15 downto 0);
+begin
+    if clr=&#39;1&#39;then
+        sr16b:=&quot;0000000000000000&quot;;
+    elsif(clr=&#39;0&#39;and clk&#39;event and clk=&#39;1&#39;)then  
+        sr16b(15 downto 8):=d(7 downto 0);
+        sr16b(14 downto 0):=sr16b(15 downto 1);
+        sr16b(15):=d(8);    --移位复制符号位
+    end if;   
+    q&lt;=sr16b;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/78e8dae445e0aa8620fd29c657228abd.png"></p>
+<p>multiplier_booth_selector：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_booth_selector is
+    Port (
+        clk,rst:in std_logic;
+        a0,a1:in std_logic;
+        din:in std_logic_vector(7 downto 0);
+        dout:out std_logic_vector(7 downto 0)
+     );
+end multiplier_booth_selector;
+
+architecture Behavioral of multiplier_booth_selector is
+
+begin
+
+process(clk,a0,a1,din)
+variable complement_x:std_logic_vector(7 downto 0);
+variable complement_x_negative:std_logic_vector(7 downto 0);
+begin
+    if(rst=&#39;1&#39;)then dout&lt;=&quot;00000000&quot;;
+    elsif(rst=&#39;0&#39;and clk&#39;event and clk=&#39;0&#39;)then
+        if(din(7)=&#39;1&#39;)then complement_x:=(din(7)&amp;(not din(6 downto 0)))+1;else complement_x:=din;end if;    --取X补码
+        if((not din(7))=&#39;1&#39;)then complement_x_negative:=((not din(7))&amp;(not din(6 downto 0)))+1;else complement_x_negative:=(not din(7))&amp;din(6 downto 0);end if; --取-X补码
+        if(a1=a0)then dout&lt;=&quot;00000000&quot;;
+        elsif(a0=&#39;1&#39;and a1=&#39;0&#39;)then dout&lt;=complement_x;
+        elsif(a0=&#39;0&#39;and a1=&#39;1&#39;)then dout&lt;=complement_x_negative;
+        end if;
+    end if;    
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9597c2a19cccbc17358d377d0ee32df8.png"></p>
+<p>multiplier_booth_8bitadder：</p>
+<pre><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity multiplier_booth_8bitadder is
+    Port (
+        clk,rst:in std_logic;
+        ain,bin:in std_logic_vector(7 downto 0);
+        sout:out std_logic_vector(8 downto 0)
+     );
+end multiplier_booth_8bitadder;
+
+architecture Behavioral of multiplier_booth_8bitadder is
+begin
+
+process(clk,rst,ain,bin)
+begin
+    if(rst=&#39;1&#39;)then sout&lt;=&quot;000000000&quot;;
+    elsif(rst=&#39;0&#39;and clk=&#39;0&#39;)then
+        sout&lt;=(ain(7) &amp; ain)+(bin(7)  &amp; bin);   --符号位扩展加法
+    end if;
+end process;
+
+end Behavioral;
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d7c983ed1ce45af2d329d820c088e9dd.png"></p>
+<p><strong>设计注意点：</strong></p>
+<p>1.求补码的方法：</p>
+<pre><code>if(din(7)=&#39;1&#39;)then 
+    reg8b(8 downto 1)&lt;=(din(7)&amp;(not din(6 downto 0)))+1;
+else reg8b(8 downto 1)&lt;=din;
+end if;  
+--取补码
+</code></pre>
+<p>2.求和时符号位拓展：</p>
+<pre><code>sout&lt;=(ain(7) &amp; ain)+(bin(7)  &amp; bin);   --符号位扩展加法
+</code></pre>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/137247923">https://blog.csdn.net/qq_32971095/article/details/137247923</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/02/08/%E4%BD%8D%E5%9B%BE%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6%E7%BC%A9%E6%94%BE-%E8%A5%BF%E5%AE%89%E7%94%B5%E5%AD%90%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/02/08/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-VHDL%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.</span> <span class="nav-text">一.VHDL设计作业</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E4%BA%8E%E7%A1%AC%E4%BB%B6%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80%E7%9A%843-8%E8%AF%91%E7%A0%81%E5%99%A8%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1.基于硬件描述语言的3-8译码器逻辑电路设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8%E4%BD%8D%E5%8F%8C%E5%90%91%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.</span> <span class="nav-text">2.8位双向移位寄存器设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9F%BA%E4%BA%8E%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9A%84%E8%87%AA%E5%8A%A9%E5%94%AE%E7%A5%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.3.</span> <span class="nav-text">3.基于有限状态机的自助售票系统设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.</span> <span class="nav-text">4.按键消抖电路设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%90%8C%E6%AD%A5%E7%8E%AF%E5%BD%A2FIFO%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.5.</span> <span class="nav-text">5.同步环形FIFO设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E7%BA%BF%E4%B8%8A%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E6%97%B6%E9%92%9F%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.6.</span> <span class="nav-text">6.线上实验——时钟模块设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E7%BA%BF%E4%B8%8A%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%8E%9F%E7%A0%81%E4%BA%8C%E4%BD%8D%E4%B9%98%E6%B3%95%E5%99%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.7.</span> <span class="nav-text">7.线上实验——原码二位乘法器设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E7%BA%BF%E4%B8%8A%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%B8%83%E6%96%AF%E4%B9%98%E6%B3%95%E5%99%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.8.</span> <span class="nav-text">8.线上实验——布斯乘法器设计</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fab fa-csdn fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">698k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">10:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

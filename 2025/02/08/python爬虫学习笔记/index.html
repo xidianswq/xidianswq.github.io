@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="注释给了一些要点 用requests库爬取时网页可能加载不完整，故用selenium库，加sleep延时使加载充分 主要利用re库，利用正则表达式提取html文件中的信息 threading是多线程运行，节省时间 如何使用？     配置selenium库，下载chomedriver，网上有教程      更改range函数的范围就可以对该范围内用户信息爬取  存在问题：     太慢">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2025/02/08/hello-world/index.html">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2025/02/08/python%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="注释给了一些要点 用requests库爬取时网页可能加载不完整，故用selenium库，加sleep延时使加载充分 主要利用re库，利用正则表达式提取html文件中的信息 threading是多线程运行，节省时间 如何使用？     配置selenium库，下载chomedriver，网上有教程      更改range函数的范围就可以对该范围内用户信息爬取  存在问题：     太慢">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-02-07T16:33:48.123Z">
-<meta property="article:modified_time" content="2025-02-07T16:33:48.123Z">
+<meta property="article:published_time" content="2025-02-08T03:46:35.876Z">
+<meta property="article:modified_time" content="2025-02-08T01:31:52.178Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2025/02/08/hello-world/">
+<link rel="canonical" href="http://example.com/2025/02/08/python%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Hello World | Hexo</title>
+  <title> | Hexo</title>
   
 
 
@@ -157,7 +157,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/08/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/08/python%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -170,7 +170,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          
         </h1>
 
         <div class="post-meta">
@@ -179,8 +179,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2025-02-08 00:33:48" itemprop="dateCreated datePublished" datetime="2025-02-08T00:33:48+08:00">2025-02-08</time>
+              <time title="创建时间：2025-02-08 11:46:35 / 修改时间：09:31:52" itemprop="dateCreated datePublished" datetime="2025-02-08T11:46:35+08:00">2025-02-08</time>
             </span>
 
           <br>
@@ -189,14 +190,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>367</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -208,19 +209,158 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <p>注释给了一些要点</p>
+<p>用requests库爬取时网页可能加载不完整，故用selenium库，加sleep延时使加载充分</p>
+<p>主要利用re库，利用正则表达式提取html文件中的信息</p>
+<p>threading是多线程运行，节省时间</p>
+<p>如何使用？</p>
+<pre><code>    配置selenium库，下载chomedriver，网上有教程
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+    更改range函数的范围就可以对该范围内用户信息爬取
+</code></pre>
+<p>存在问题：</p>
+<pre><code>    太慢
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+    不稳定，会漏用户，测试中        
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+    用正则表达式麻烦
+</code></pre>
+<p>改进：</p>
+<pre><code>    学习xpath、scrapy爬虫框架、线程池等
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+from selenium import webdriver
+import re
+import time
+import threading
+
+def blbl_uid_get(uid):
+
+    url=&quot;https://space.bilibili.com/&quot;+str(uid)
+    
+    # 不开网页显示
+    option = webdriver.ChromeOptions()
+    option.add_argument(&quot;headless&quot;)
+
+    # 使用selenium模块得到网页完整源码
+    driver=webdriver.Chrome(chrome_options=option)
+    driver.get(url) 
+    respond=driver.page_source
+    time.sleep(8)
+
+    # 网页内容爬取测试
+    # with open(&quot;blbl.html&quot;,&quot;wb+&quot;) as f:
+    #     f.write(respond.encode())
+
+    up_name=re.findall(r&#39;&lt;span id=&quot;h-name&quot;&gt;\s*(.*?)\s*&lt;/span&gt;&#39;,respond,re.S)
+    up_fans=re.findall(r&#39;&lt;p id=&quot;n-fs&quot; class=&quot;n-data-v space-fans&quot;&gt;\s*(.*?)\s*&lt;/p&gt;&#39;,respond,re.S)
+    # 网页还是缺失了部分信息如下
+    # zan_num=re.findall(r&#39;视频、动态、专栏累计获赞([^&quot;]*)&#39;,respond,re.S)
+    # watch_num=re.findall(r&#39;截止昨天，播放数总计为([^&quot;]*)&#39;,respond,re.S)
+    # read_num=re.findall(r&#39;截止昨天，阅读数总计为([^&quot;]*)&#39;,respond,re.S)
+    if len(up_fans)!=0 and len(up_name)!=0:
+        # 摘取要寻找的信息
+        record=&quot;&quot;
+        record=up_name[0]+&quot; &quot;+up_fans[0]+&#39;\n&#39;# +&quot; &quot;+zan_num[0]+&quot; &quot;+watch_num[0]+&quot; &quot;+read_num[0]
+        # 写入文件
+        with open(&quot;up_fans.txt&quot;,&quot;a+&quot;) as f:
+            f.write(record)
+            f.close()
+
+    # 一定要quit
+    driver.quit()
+
+# 并发执行爬虫
+for i in range(348651384,348651400):
+    t = threading.Thread(target=blbl_uid_get, args=(i,))
+    t.start()
+</code></pre>
+<p>结果：</p>
+<p>70975784467_bili 0<br>chnksxf 0<br>深蓝色五角枫 8<br>-SWQ- 27<br>w773727 0<br>If-There-If 2<br>bili75588510448 0<br>u723510 1<br>o206413 0<br>10292619012_bili 1<br>丶帝丶弑 0<br>t252791 0<br>why13643485777 0<br>丁嘉丽12334 0<br>80204814302_bili 0<br>ddzn17ZXZ 1</p>
+<p>结论：显然，-SWQ-在一定范围内粉丝最多</p>
+<p>2023年3月20日21:40:43更新</p>
+<p>学习了xpath语言，利用lxml库，可以代替re正则表达式</p>
+<p>相比正则表达式，xpath更加简单简洁！</p>
+<p>注意tree的两种创建方式的不同：本地文件和网络请求</p>
+<p>使用xpath要注重标签之间的结构！找好属性即其值，尽量缩小范围，不然很容易多得！</p>
+<pre><code>from selenium import webdriver
+import time
+import threading
+from lxml import etree
+
+def blbl_uid_get(uid):
+
+    url=&quot;https://space.bilibili.com/&quot;+str(uid)
+    
+    # 不开网页显示
+    option = webdriver.ChromeOptions()
+    option.add_argument(&quot;headless&quot;)
+
+    # 使用selenium模块得到网页完整源码
+    driver=webdriver.Chrome(chrome_options=option)
+    driver.get(url) 
+    time.sleep(2)
+    respond=driver.page_source
+    with open(&quot;blbl_xpath.html&quot;,&quot;wb&quot;) as f:
+        f.write(respond.encode())
+
+    # 利用xpath提取内容(本地调用方式！)
+    # paser=etree.HTMLParser(encoding=&#39;utf-8&#39;)
+    # tree=etree.parse(&#39;blbl_xpath.html&#39;,parser=paser)
+
+    # 利用xpath提取内容(互联网中响应)
+    tree=etree.HTML(respond)
+
+    up_name=tree.xpath(&#39;//div[@class=&quot;h-basic&quot;]//span[@id=&quot;h-name&quot;]/text()&#39;)
+    fans_num=tree.xpath(&#39;//div[@class=&quot;n-statistics&quot;]//p[@id=&quot;n-fs&quot;]/text()&#39;)[0].replace(&#39;\n&#39;,&#39;&#39;).replace(&#39; &#39;,&#39;&#39;)
+    # statistics=tree.xpath(&#39;//div[@class=&quot;n-statistics&quot;]//p[@id=&quot;n-bf&quot;]/text()&#39;)
+    work_title=tree.xpath(&#39;//div[@class=&quot;content clearfix&quot;]//a[@class=&quot;title&quot;]/text()&#39;)
+    work_length=tree.xpath(&#39;//div[@class=&quot;content clearfix&quot;]//span[@class=&quot;length&quot;]/text()&#39;)
+    work_play=tree.xpath(&#39;//div[@class=&quot;content clearfix&quot;]//span[@class=&quot;play&quot;]/text()&#39;)
+    work_time=tree.xpath(&#39;//div[@class=&quot;content clearfix&quot;]//span[@class=&quot;time&quot;]/text()&#39;)
+    min_num=min(len(work_time),len(work_length),len(work_title),len(work_play))
+
+    # 摘取要寻找的信息
+    record=&quot;&quot;
+    record=&quot;up昵称:&quot;+up_name[0]+&quot;\n&quot;+&quot;粉丝数:&quot;+fans_num+&#39;\n&#39;
+    if(min_num!=0):
+        record+=&#39;代表作:&#39;+&#39;\n&#39;
+        for i in range(0,min_num):
+            record+=&quot;作品名:&quot;+work_title[i]+&quot;\n&quot;+&quot;时长:&quot;+work_length[i]+&quot;\n&quot;+&quot;播放量:&quot;+work_play[i].replace(&#39;\n&#39;,&#39;&#39;).replace(&#39; &#39;,&#39;&#39;)+&quot;\n&quot;+&quot;发布时间:&quot;+work_time[i].replace(&#39;\n&#39;,&#39;&#39;).replace(&#39; &#39;,&#39;&#39;)
+    record+=&#39;\n\n&#39;
+
+    # 写入文件
+    with open(&quot;blbl_xpath_2.txt&quot;,&quot;w+&quot;,encoding=&#39;utf-8&#39;) as f:
+        f.write(record)
+        f.close()
+
+    
+    # 一定要quit
+    driver.quit()
+
+# 并发执行爬虫
+for i in range(348651375,348651390):
+    t = threading.Thread(target=blbl_uid_get, args=(i,))
+    t.start()
+</code></pre>
+<p>结果如下：</p>
+<p>up昵称:68228791709_bili<br>粉丝数:0</p>
+<p>up昵称:-SWQ-<br>粉丝数:27<br>代表作:<br>作品名:《刺客信条》6分49秒极限攀爬，同步率1000%<br>时长:04:18<br>播放量:164<br>发布时间:2022-3-20作品名:《消逝的光芒》对断桥、云端的向往以及信仰之跃<br>时长:09:35<br>播放量:419<br>发布时间:2022-2-1作品名:《生化危机2重制版》克莱尔打光弹药后手刃威廉G4<br>时长:12:14<br>播放量:310<br>发布时间:2022-2-1作品名:在西电中秋快乐的一天<br>时长:07:07<br>播放量:166<br>发布时间:2021-9-22作品名:4年菜鸡唯一一次五杀<br>时长:00:52<br>播放量:158<br>发布时间:2021-9-10作品名:沙雕室友们的日常<br>时长:00:21<br>播放量:51<br>发布时间:2020-8-22作品名:2020班级元旦晚会快来康康<br>时长:03:03<br>播放量:109<br>发布时间:2020-1-12作品名:社会我祥哥，同学冒死拍班主任<br>时长:00:13<br>播放量:114<br>发布时间:2019-8-19作品名:【建筑模型】建模锦标赛中华庭院模型展示<br>时长:02:39<br>播放量:2797<br>发布时间:2019-8-19</p>
+<p>up昵称:p604904<br>粉丝数:0</p>
+<p>up昵称:78992601564_bili<br>粉丝数:0</p>
+<p>up昵称:10292619012_bili<br>粉丝数:1</p>
+<p>up昵称:DMAP_<br>粉丝数:9<br>代表作:<br>作品名:拍拍猫猫<br>时长:02:03<br>播放量:89<br>发布时间:2022-11-29</p>
+<p>up昵称:82212894921_bili<br>粉丝数:0</p>
+<p>up昵称:bili75588510448<br>粉丝数:0</p>
+<p>up昵称:丁嘉丽12334<br>粉丝数:0</p>
+<p>up昵称:68228791709_bili<br>粉丝数:0</p>
+<p>up昵称:80204814302_bili<br>粉丝数:0</p>
+<p>up昵称:t229231<br>粉丝数:0</p>
+<p>up昵称:chnksxf<br>粉丝数:0</p>
+<p>up昵称:GH952105677<br>粉丝数:0</p>
+<p>up昵称:52393731947_bili<br>粉丝数:0</p>
+<p>up昵称:流口水的南方<br>粉丝数:0</p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/129629331">https://blog.csdn.net/qq_32971095/article/details/129629331</a>，如有侵权，请联系删除。</p>
 
     </div>
 
@@ -235,9 +375,12 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2025/02/08/2023%E5%B9%B4%E7%94%B5%E8%B5%9BE%E9%A2%98%E5%AE%8C%E6%95%B4%E8%AE%BE%E8%AE%A1%E6%9A%A8%E7%94%B5%E8%B5%9B%E5%85%A8%E8%AE%B0%E5%BD%95/" rel="next" title="">
+    <a href="/2025/02/08/OpenCV%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/02/08/PID%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3/" rel="next" title="">
        <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -298,7 +441,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
