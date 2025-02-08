@@ -24,7 +24,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="FreeRTOS学习笔记（一）">
 <meta property="og:url" content="http://example.com/2023/04/24/FreeRTOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
-<meta property="og:site_name" content="舟遥遥以轻飏，风飘飘而吹衣">
+<meta property="og:site_name" content="Switch">
 <meta property="og:description" content="FreeRTOS学习笔记 第一天摘要： Key： 移植方法，TCB的结构及创建,任务栈，列表和列表项定义及相关函数 实践：rtos移植执行led闪烁 注意点：keil下载device要正确；内存不够删去不需要的heap.c及其他内 核等多余文件（MemMang,RVDS） 代码风格： FreeRTOS 中详细的数据类型重定义在 portmacro.h 这个头文件中实现，具体 如下 1.2.4.2">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/18f990da82a5f9f6eb5a94ff344eb171.png">
@@ -57,7 +57,7 @@
   };
 </script>
 
-  <title>FreeRTOS学习笔记（一） | 舟遥遥以轻飏，风飘飘而吹衣</title>
+  <title>FreeRTOS学习笔记（一） | Switch</title>
   
 
 
@@ -88,7 +88,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/rss2.xml" title="舟遥遥以轻飏，风飘飘而吹衣" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -109,10 +109,10 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">舟遥遥以轻飏，风飘飘而吹衣</h1>
+      <h1 class="site-title">Switch</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
-      <p class="site-subtitle" itemprop="description">归去来兮</p>
+      <p class="site-subtitle" itemprop="description">舟遥遥以轻飏，风飘飘而吹衣</p>
   </div>
 
   <div class="site-nav-right">
@@ -204,11 +204,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="SWQ">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="归去来兮">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="舟遥遥以轻飏，风飘飘而吹衣">
+      <meta itemprop="name" content="Switch">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -491,7 +491,7 @@
     <img class="site-author-image" itemprop="image" alt="SWQ"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">SWQ</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">归去来兮</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
