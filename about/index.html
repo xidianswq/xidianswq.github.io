@@ -227,7 +227,7 @@
 <li>Birthday：<em>2003</em></li>
 <li>Hometown：<em>Hefei, Anhui Province, China</em></li>
 <li>How to Contact Me：<ul>
-<li>E-mail：<em><a href="mailto:&#51;&#50;&#48;&#x39;&#x35;&#x30;&#55;&#x38;&#48;&#x30;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#109;">3209507800@qq.com</a></em></li>
+<li>E-mail：<em><a href="mailto:&#x33;&#x32;&#48;&#57;&#x35;&#48;&#55;&#56;&#48;&#48;&#x40;&#x71;&#x71;&#46;&#x63;&#x6f;&#109;">3209507800@qq.com</a></em></li>
 <li>QQ number: <em>3209507800</em></li>
 <li>WeChat: <em>SWQ3209507800</em></li>
 </ul>
@@ -499,6 +499,35 @@ $(document).ready(function() {
   
 
   
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'H2FYHQwVGaUkawg5DkrA6d6M-gzGzoHsz',
+      appKey     : 'zndS0u9Qj7qj8CqnJINs2MGT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : 'https://h2fyhqwv.lc-cn-n1-shared.com'
+    });
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>
