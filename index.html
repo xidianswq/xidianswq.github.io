@@ -125,12 +125,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">29</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">42</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -390,6 +390,118 @@
 </ul>
 <p><em>AddInfo_CSDN.py</em> 内容如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 为所有md文件开头添加对应CSDN_INFO.txt中的信息</span></span><br><span class="line"><span class="comment"># ---</span></span><br><span class="line"><span class="comment"># title: &quot;标题&quot;</span></span><br><span class="line"><span class="comment"># date: 2020-01-01 00:00:00</span></span><br><span class="line"><span class="comment"># tags: [&quot;标签1&quot;, &quot;标签2&quot;...]</span></span><br><span class="line"><span class="comment"># ---</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取CSDN_INFO.txt，提取每篇文章对应的文章标题title、日期postTime、标签tags</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">readCSDNInfo</span>():</span><br><span class="line">    CSDNInfo = &#123;&#125;</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;CSDN_INFO.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="comment"># 字符匹配title、postTime、tags</span></span><br><span class="line">        title = re.findall(<span class="string">r&quot;title\&quot;: \&quot;(.*?)\&quot;&quot;</span>, f.read())</span><br><span class="line">        f.seek(<span class="number">0</span>)<span class="comment">#文件指针重置</span></span><br><span class="line">        postTime = re.findall(<span class="string">r&quot;postTime\&quot;: \&quot;(.*?)\&quot;&quot;</span>, f.read())</span><br><span class="line">        f.seek(<span class="number">0</span>)</span><br><span class="line">        all_tags = re.findall(<span class="string">r&#x27;&quot;tags&quot;:\s*\[([^\]]+)\]&#x27;</span>, f.read())</span><br><span class="line">        tags = [<span class="literal">None</span>] * <span class="built_in">len</span>(title)</span><br><span class="line">        <span class="comment"># 进一步提取每个标签</span></span><br><span class="line">        <span class="keyword">for</span> tag_group <span class="keyword">in</span> all_tags:</span><br><span class="line">            <span class="comment"># 提取双引号中的内容</span></span><br><span class="line">            tags[all_tags.index(tag_group)] = re.findall(<span class="string">r&#x27;&quot;([^&quot;]+)&quot;&#x27;</span>, tag_group)</span><br><span class="line">        <span class="comment"># 提取title、postTime、tags</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(title)):</span><br><span class="line">            CSDNInfo[title[i]] = &#123;&#125;</span><br><span class="line">            CSDNInfo[title[i]][<span class="string">&quot;postTime&quot;</span>] = postTime[i]</span><br><span class="line">            CSDNInfo[title[i]][<span class="string">&quot;tags&quot;</span>] = tags[i]</span><br><span class="line">    <span class="keyword">return</span> CSDNInfo</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 为md文件开头添加对应CSDN_INFO.txt中的信息</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">addInfo2MD</span>(<span class="params">mdPath, CSDNInfo</span>):</span><br><span class="line">    title = os.path.basename(mdPath).split(<span class="string">&quot;.&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> title <span class="keyword">in</span> CSDNInfo:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(mdPath, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            lines = f.readlines()</span><br><span class="line">            <span class="keyword">if</span> lines[<span class="number">0</span>].startswith(<span class="string">&quot;---&quot;</span>):</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(mdPath, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            content = f.read()</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(mdPath, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(<span class="string">&quot;---\n&quot;</span>)</span><br><span class="line">            f.write(<span class="string">f&quot;title: \&quot;<span class="subst">&#123;title&#125;</span>\&quot;\n&quot;</span>)</span><br><span class="line">            f.write(<span class="string">f&quot;date: <span class="subst">&#123;CSDNInfo[title][<span class="string">&#x27;postTime&#x27;</span>]&#125;</span>\n&quot;</span>)</span><br><span class="line">            f.write(<span class="string">f&quot;tags: <span class="subst">&#123;CSDNInfo[title][<span class="string">&#x27;tags&#x27;</span>]&#125;</span>\n&quot;</span>)</span><br><span class="line">            f.write(<span class="string">&quot;---\n&quot;</span>)</span><br><span class="line">            f.write(content)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;AddInfo: <span class="subst">&#123;title&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Error: <span class="subst">&#123;title&#125;</span> not in CSDN_INFO.txt&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历所有md文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">traverseMDFiles</span>(<span class="params">mdDir, CSDNInfo</span>):</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(mdDir):</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> file.endswith(<span class="string">&quot;.md&quot;</span>):</span><br><span class="line">                mdPath = os.path.join(root, file)</span><br><span class="line">                addInfo2MD(mdPath, CSDNInfo)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    mdDir = <span class="string">&quot;md&quot;</span></span><br><span class="line">    CSDNInfo = readCSDNInfo()</span><br><span class="line">    traverseMDFiles(mdDir, CSDNInfo)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Done!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/06/%E5%B0%8F%E5%AD%A6%E4%BA%8B%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻飏，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/02/06/%E5%B0%8F%E5%AD%A6%E4%BA%8B%E8%AE%B0/" class="post-title-link" itemprop="url">小学事记</a>
+        </h2>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-02-06 17:57:00" itemprop="dateCreated datePublished" datetime="2025-02-06T17:57:00+08:00">2025-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-08 20:14:06" itemprop="dateModified" datetime="2025-02-08T20:14:06+08:00">2025-02-08</time>
+              </span>
+
+          
+            <span id="/2025/02/06/%E5%B0%8F%E5%AD%A6%E4%BA%8B%E8%AE%B0/" class="post-meta-item leancloud_visitors" data-flag-title="小学事记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/02/06/%E5%B0%8F%E5%AD%A6%E4%BA%8B%E8%AE%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/02/06/%E5%B0%8F%E5%AD%A6%E4%BA%8B%E8%AE%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&ensp;我无比怀念小学的时光：</p>
+<p>&ensp;幼儿园吃得多喝西红柿鸡蛋汤、酸奶放书包弄撒、看窗外挂小旗子的电线连到地面、二楼大活动间算广阔、一楼集体睡假装睡、晚上一楼围栏内迟迟等不到以为不要我了；阳台的婴儿床箱子看起来巨大 后面狭小空间秘密基地、老家回来看阿里巴巴与三十大盗光盘、和乐天斗鸡、去他家玩大沙发看奥特曼院子玩、大班数学期末带计算器靠70几；电脑房一个人睡 珍藏奥特曼画册贴画；下午奶奶房看电视天线宝宝睡着 醒了去玩葡萄架、</p>
+<p>&ensp;初入班级大家都在哭唯我不哭、打乒乓球、楼后打弹子、生病没记作业去心茹家问；去隔壁找费哥玩电脑、晚自习带去办公室里玩、阳台漂亮书桌上写作业 墙上画画；晚上睡奶奶房使劲蹬腿显力大 衣服堵住床头缝、</p>
+<p>&ensp;大狼狗入侵闭门紧张、数学一整节课扔飞机、施工建新楼围上蓝铁皮、面包车回来跟猴子掐；电脑千千静听放班得瑞、办公楼一楼志明二楼永水大办公室玩电脑 三楼校长会议室、楼上老头的小花园小池塘里玩、小卖部买辣条吃、</p>
+<p>&ensp;课间拍卡片、装天使样被班主任看见喜笑、放映厅看疯狂的石头、学校门口等开门、撕书后上课被老师发现、仰卧起坐大家围观鼓气20个；放学回家吃炸串、暑假来我家补课看熊出没睡空调房、晚自习假剑桥英语实打游戏、超大树下放大镜烤蚂蚁、骑自行车滑下大坡 上篮球场到乒乓球场斜坡、斜坡旁一排柳树 爬上最粗、钻水泥乒乓球桌下玩、桌椅仓库爬上爬下灰尘蛛网、五楼朱家卧室玩lol魔兽、中午等报纸每月等杂志、晚上听着时钟入睡早上盯着时钟起床、雨夜调好小锅看《蓝猫龙骑团》、晚上抱被子想象；回奶奶家红烧鸡汤泡饭、看科教频道所有、</p>
+<p>&ensp;松树花坛玩松针、学校角落上信息课 见纪念碑、盖好新楼后去逛 大树干上掏天牛玩、少年宫笛子表演装模作样、考的好让当班长名存实亡仍是乐乐、欺负伟业使劲掐  他一脸委屈 ；暑假来补课凌晨偷玩赛亚号、获得mp4晚上研究玩大鱼吃小鱼、爬健身杆子上玩 标语红布做吊床、 </p>
+<p>&ensp;放假前窗台养圣诞树回来后很大、芜湖方特玩出发前看阿凡达 六年级眼睁睁阳台看、好兄弟无端打架椅子倒 后办公室训门口罚站、排队被手插口袋竟大声呵斥、被楼上吐口水向我诉苦竟故作无情、全校大会获奖、获奖后书上玩翘板被训、后花园打扫卫生；晚上电脑放小苹果QQ聊天、笔记本电脑晚自习游戏、</p>
+<p>&ensp;艰难爬楼被拍面粉、下楼梯用胳膊滑扶梯擦伤、放学明天会更好排队走、黑树颗出事后焦急等待、厕所前交易充值卡、竹林找小宝剑、备战运动会同友练习铅球到傍晚 上电动车回家、新楼打扫卫生、好哥们体贴送火麒麟、数学考试传答案抄、楼前拍毕业照；迷上拼小号手舰船和高达 昏暗客厅浇水粘、迷上望远镜和淘宝网购、</p>
+<p>&ensp;上高中和大学时无比怀念初中，是因为正值青春奋斗，而再也找不到向小学那样纯粹地向善，即使是班会的鸡汤也觉得鲜美可口，坚信不疑，始终有一股对知识和学习的纯粹动力；上初中时不怀念小学，可能是因为初中时的友谊同样单纯美好，情感发生转移，并且渴望着长大成熟，与幼稚的小学做切割；而本科毕业的间隙，我现在无比怀念小学，无忧无虑的很舒服，但更为当时的一些幼稚举动而遗憾而耿耿于怀难以释怀。思念曾经玩到大的伙伴，甚至没有了联系方式；想见一面，但其实是想也只敢回到过去，去珍惜眼前之人。</p>
+<p>&ensp;随着年龄的增长，心态变了许多，能否找回曾经儿时无邪率真的情愫，对待他人，那将会很美好，很富有生机了。 </p>
 
       
     </div>
@@ -11820,344 +11932,6 @@ int main(void)
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/27/Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="SWQ">
-      <meta itemprop="description" content="舟遥遥以轻飏，风飘飘而吹衣">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Switch">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/02/27/Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">Xilinx Vitis API常用部分解析</a>
-        </h2>
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-02-27 16:57:03" itemprop="dateCreated datePublished" datetime="2024-02-27T16:57:03+08:00">2024-02-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-02-08 11:45:06" itemprop="dateModified" datetime="2025-02-08T11:45:06+08:00">2025-02-08</time>
-              </span>
-
-          
-            <span id="/2024/02/27/Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/" class="post-meta-item leancloud_visitors" data-flag-title="Xilinx Vitis API常用部分解析" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2024/02/27/Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/02/27/Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>注：在源代码中 “ctrl+单击” 可查看详细信息  </p>
-<h2 id="一-头文件"><a href="#一-头文件" class="headerlink" title="一.头文件"></a>一.头文件</h2><pre><code>#include &quot;xparameters.h&quot; //器件参数信息
-#include &quot;xstatus.h&quot; //包含 XST_FAILURE 和 XST_SUCCESS 的宏定义
-#include &quot;xil_printf.h&quot; //包含 print()函数
-#include &quot;xgpiops.h&quot; //包含 PS GPIO 的函数
-#include &quot;sleep.h&quot; //包含 sleep()函数
-</code></pre>
-<h2 id="二-宏定义"><a href="#二-宏定义" class="headerlink" title="二.宏定义"></a>二.宏定义</h2><pre><code>//PS_LED1 连接到 MIO38
-#define MIO_LED1 38 
-
-//宏定义 GPIO_DEVICE_ID
-#define GPIO_DEVICE_ID XPAR_XGPIOPS_0_DEVICE_ID
-</code></pre>
-<h2 id="三-函数"><a href="#三-函数" class="headerlink" title="三.函数"></a>三.函数</h2><h3 id="1-配置"><a href="#1-配置" class="headerlink" title="1.配置"></a>1.配置</h3><h4 id="器件初始化"><a href="#器件初始化" class="headerlink" title="&lt;1&gt;器件初始化"></a>&lt;1&gt;器件初始化</h4><pre><code>//PS 端 GPIO 驱动实例
-XGpioPs gpiops_inst; 
-//PS 端 GPIO 配置信息
-XGpioPs_Config *gpiops_cfg_ptr; 
-
-
-//根据器件 ID 查找配置信息
-gpiops_cfg_ptr = XGpioPs_LookupConfig(GPIOPS_ID);
-//初始化器件驱动
-Status = XGpioPs_CfgInitialize(&amp;Gpio, ConfigPtr,ConfigPtr-&gt;BaseAddr);
-//判断是否初始化成功
-if (Status != XST_SUCCESS)return XST_FAILURE;
-
-
-
-
-
-
-XGpioPs_Config *XGpioPs_LookupConfig(u16 DeviceId);
-/**
-*
-* This function looks for the device configuration based on the unique device
-* ID. The table XGpioPs_ConfigTable[] contains the configuration information
-* for each device in the system.
-*
-* @param	DeviceId is the unique device ID of the device being looked up.
-*
-* @return	A pointer to the configuration table entry corresponding to the
-*		given device ID, or NULL if no match is found.
-*
-* @note		None.
-*
-******************************************************************************/
-
-
-
-s32 XGpioPs_CfgInitialize(XGpioPs *InstancePtr, const XGpioPs_Config *ConfigPtr,u32 EffectiveAddr);
-/*****************************************************************************/
-/**
-*
-* This function initializes a XGpioPs instance/driver.
-* All members of the XGpioPs instance structure are initialized and
-* StubHandlers are assigned to the Bank Status Handlers.
-*
-* @param	InstancePtr is a pointer to the XGpioPs instance.
-* @param	ConfigPtr points to the XGpioPs device configuration structure.
-* @param	EffectiveAddr is the device base address in the virtual memory
-*		address space. If the address translation is not used then the
-*		physical address should be passed.
-*		Unexpected errors may occur if the address mapping is changed
-*		after this function is invoked.
-*
-* @return	XST_SUCCESS always.
-*
-* @note		None.
-*
-******************************************************************************/
-
-
-
-int XGpio_Initialize(XGpio *InstancePtr, u16 DeviceId);
-/****************************************************************************/
-/**
-* Initialize the XGpio instance provided by the caller based on the
-* given DeviceID.
-*
-* Nothing is done except to initialize the InstancePtr.
-*
-* @param	InstancePtr is a pointer to an XGpio instance. The memory the
-*		pointer references must be pre-allocated by the caller. Further
-*		calls to manipulate the instance/driver through the XGpio API
-*		must be made with this pointer.
-* @param	DeviceId is the unique id of the device controlled by this XGpio
-*		instance. Passing in a device id associates the generic XGpio
-*		instance to a specific device, as chosen by the caller or
-*		application developer.
-*
-* @return
-*		- XST_SUCCESS if the initialization was successful.
-*		- XST_DEVICE_NOT_FOUND  if the device configuration data was not
-*		  found for a device with the supplied device ID.
-*
-* @note		None.
-*
-*****************************************************************************/
-</code></pre>
-<h4 id="中断配置"><a href="#中断配置" class="headerlink" title="&lt;2&gt;中断配置"></a>&lt;2&gt;中断配置</h4><pre><code>//建立中断系统，使能KEY按键的下降沿中断
-//  @param   GicInstancePtr是一个指向XScuGic驱动实例的指针
-//  @param   gpio是一个指向连接到中断的GPIO组件实例的指针
-//  @param   GpioIntrId是Gpio中断ID
-//  @return  如果成功返回XST_SUCCESS, 否则返回XST_FAILURE
-int setup_interrupt_system(XScuGic *gic_ins_ptr, XGpioPs *gpio, u16 GpioIntrId)
-&#123;
-    int status;
-    XScuGic_Config *IntcConfig;     //中断控制器配置信息
-
-    //查找中断控制器配置信息并初始化中断控制器驱动
-    IntcConfig = XScuGic_LookupConfig(INTC_DEVICE_ID);
-    if (NULL == IntcConfig) &#123;
-        return XST_FAILURE;
-    &#125;
-
-    status = XScuGic_CfgInitialize(gic_ins_ptr, IntcConfig,
-            IntcConfig-&gt;CpuBaseAddress);
-    if (status != XST_SUCCESS) &#123;
-        return XST_FAILURE;
-    &#125;
-
-
-    //设置并使能中断异常
-    Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
-            (Xil_ExceptionHandler) XScuGic_InterruptHandler, gic_ins_ptr);
-    Xil_ExceptionEnable();
-    //为中断设置中断处理函数
-    status = XScuGic_Connect(gic_ins_ptr, GpioIntrId,
-            (Xil_ExceptionHandler) intr_handler, (void *) gpio);
-    if (status != XST_SUCCESS) &#123;
-        return status;
-    &#125;
-    //使能来自于Gpio器件的中断
-    XScuGic_Enable(gic_ins_ptr, GpioIntrId);
-    //设置KEY按键的中断类型为下降沿中断，按ctrl+单击查看其他类型
-    XGpioPs_SetIntrTypePin(gpio, KEY, XGPIOPS_IRQ_TYPE_EDGE_FALLING);
-    //使能按键KEY中断
-    XGpioPs_IntrEnablePin(gpio, KEY);
-
-    return XST_SUCCESS;
-&#125;
-
-
-//设置中断优先级和触发类型(高电平触发)
-XScuGic_SetPriorityTriggerType(&amp;scugic_inst, GPIO_INT_ID, 0xA0, 0x1);
-</code></pre>
-<p> 中断处理函数：</p>
-<pre><code>//中断处理函数
-//  @param   CallBackRef是指向上层回调引用的指针
-static void intr_handler(void *callback_ref)
-&#123;
-    XGpioPs *gpio = (XGpioPs *) callback_ref;
-
-    //读取KEY按键引脚的中断状态，判断是否发生中断
-    if (XGpioPs_IntrGetStatusPin(gpio, KEY))&#123;
-        key_press = TRUE;
-        XGpioPs_IntrDisablePin(gpio, KEY);         //屏蔽按键KEY中断
-        //XGpioPs_IntrClearPin(&amp;gpio, KEY);      //清除按键KEY中断
-        //XGpioPs_IntrEnablePin(&amp;gpio, KEY);     //使能按键KEY中断
-    &#125;
-&#125;
-</code></pre>
-<h4 id="uart配置"><a href="#uart配置" class="headerlink" title="&lt;3&gt;uart配置"></a>&lt;3&gt;uart配置</h4><pre><code>//UART初始化函数
-int uart_init(XUartPs* uart_ps)
-&#123;
-    int status;
-    XUartPs_Config *uart_cfg;
-
-    uart_cfg = XUartPs_LookupConfig(UART_DEVICE_ID);
-    if (NULL == uart_cfg)
-        return XST_FAILURE;
-    status = XUartPs_CfgInitialize(uart_ps, uart_cfg, uart_cfg-&gt;BaseAddress);
-    if (status != XST_SUCCESS)
-        return XST_FAILURE;
-
-    //UART设备自检
-    status = XUartPs_SelfTest(uart_ps);
-    if (status != XST_SUCCESS)
-        return XST_FAILURE;
-
-    //设置工作模式:正常模式
-    XUartPs_SetOperMode(uart_ps, XUARTPS_OPER_MODE_NORMAL);
-    //设置波特率:115200
-    XUartPs_SetBaudRate(uart_ps,115200);
-    //设置RxFIFO的中断触发等级
-    XUartPs_SetFifoThreshold(uart_ps, 1);
-
-    return XST_SUCCESS;
-&#125;
-</code></pre>
-<p>中断函数</p>
-<pre><code>//UART中断处理函数
-void uart_intr_handler(void *call_back_ref)
-&#123;
-    XUartPs *uart_instance_ptr = (XUartPs *) call_back_ref;
-    u32 rec_data = 0 ;
-    u32 isr_status ;                           //中断状态标志
-
-    //读取中断ID寄存器，判断触发的是哪种中断
-    isr_status = XUartPs_ReadReg(uart_instance_ptr-&gt;Config.BaseAddress,
-                   XUARTPS_IMR_OFFSET);
-    isr_status &amp;= XUartPs_ReadReg(uart_instance_ptr-&gt;Config.BaseAddress,
-                   XUARTPS_ISR_OFFSET);
-
-    //判断中断标志位RxFIFO是否触发
-    if (isr_status &amp; (u32)XUARTPS_IXR_RXOVR)&#123;
-    	rec_data = XUartPs_RecvByte(XPAR_PSU_UART_0_BASEADDR);
-        //清除中断标志
-        XUartPs_WriteReg(uart_instance_ptr-&gt;Config.BaseAddress,
-                XUARTPS_ISR_OFFSET, XUARTPS_IXR_RXOVR) ;
-    &#125;
-    XUartPs_SendByte(XPAR_PSU_UART_0_BASEADDR,rec_data);
-&#125;
-</code></pre>
-<h3 id="2-GPIO操作"><a href="#2-GPIO操作" class="headerlink" title="2.GPIO操作"></a>2.GPIO操作</h3><pre><code>//设置指定引脚的方向：0 输入，1 输出
-XGpioPs_SetDirectionPin(&amp;Gpio, MIOLED0, 1);
-//使能指定引脚输出：0 禁止输出使能，1 使能输出
-XGpioPs_SetOutputEnablePin(&amp;Gpio, MIOLED0, 1);
-//向指定引脚写入数据：0 或 1
-XGpioPs_WritePin(&amp;Gpio, MIOLED0, 0x0); 
-//从指定引脚读入数据
-XGpioPs_ReadPin(&amp;gpiops_inst, MIO_KEY2)
-
-
-//配置PL AXI GPIO
-XGpio_SetDataDirection(&amp;axi_gpio_inst, KEY_CHANNEL, 1);  //设置PL AXI GPIO 通道1为输入
-XGpio_InterruptEnable(&amp;axi_gpio_inst, KEY_MASK);         //使能通道1中断
-XGpio_InterruptGlobalEnable(&amp;axi_gpio_inst);             //使能AXI GPIO全局中断
-</code></pre>
-<h3 id="3-其他"><a href="#3-其他" class="headerlink" title="3.其他"></a>3.其他</h3><pre><code>    //uart打印	
-    print(&quot;MIO Test! \n\r&quot;);    
-
-    //延时 1 秒
-	sleep(1); 
-</code></pre>
-<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/136315297">https://blog.csdn.net/qq_32971095/article/details/136315297</a>，如有侵权，请联系删除。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -12229,14 +12003,14 @@ XGpio_InterruptGlobalEnable(&amp;axi_gpio_inst);             //使能AXI GPIO全
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -12291,13 +12065,13 @@ XGpio_InterruptGlobalEnable(&amp;axi_gpio_inst);             //使能AXI GPIO全
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">791k</span>
+    <span title="站点总字数">793k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">11:59</span>
+    <span title="站点阅读时长">12:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
