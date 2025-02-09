@@ -2530,7 +2530,7 @@ nano上电启动串口权限">永久修改jetson<br>nano上电启动串口权限
 <p>​<br>​    &#x2F;&#x2F; Define Constants<br>​    const char *uart_target &#x3D; “&#x2F;dev&#x2F;ttyTHS1”;<br>​    #define     NSERIAL_CHAR   256<br>​    #define     VMINX          1<br>​    #define     BAUDRATE       B115200</p>
 <p>​<br>​    class Uart {<br>​    private:<br>​      &#x2F;* data *&#x2F;<br>​      int fid;<br>​    public:<br>​      char serial_message[NSERIAL_CHAR];</p>
 <p>​<br>​      Uart ();<br>​      void sendUart(char *msg);<br>​      void readUart();<br>​      void closeUart();<br>​<br>    };<br>    #endif</p>
-<p>​<br>​<br>​    &#x2F;<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;<br>​    &#x2F;* @auteur Mathieu Bahin            <em>&#x2F;<br>​    &#x2F;</em> @date_création mars 2020         <em>&#x2F;<br>​    &#x2F;</em> @version 1.0                     <em>&#x2F;<br>​    &#x2F;</em> @email <a href="mailto:&#x62;&#x61;&#x68;&#105;&#x6e;&#46;&#x6d;&#97;&#116;&#x68;&#105;&#101;&#117;&#64;&#x67;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#x6f;&#109;">bahin.mathieu@gmail.com</a>   *&#x2F;<br>​    &#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>&#x2F;<br>​<br>    #include “uart.h”<br>    #include &lt;stdio.h&gt;<br>    #include &lt;unistd.h&gt;       &#x2F;&#x2F; Used for UART<br>    #include &lt;sys&#x2F;fcntl.h&gt;    &#x2F;&#x2F; Used for UART<br>    #include &lt;termios.h&gt;      &#x2F;&#x2F; Used for UART<br>    #include &lt;string.h&gt;</p>
+<p>​<br>​<br>​    &#x2F;<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;<br>​    &#x2F;* @auteur Mathieu Bahin            <em>&#x2F;<br>​    &#x2F;</em> @date_création mars 2020         <em>&#x2F;<br>​    &#x2F;</em> @version 1.0                     <em>&#x2F;<br>​    &#x2F;</em> @email <a href="mailto:&#x62;&#x61;&#104;&#105;&#x6e;&#46;&#109;&#97;&#116;&#104;&#x69;&#101;&#117;&#x40;&#x67;&#109;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#x6d;">bahin.mathieu@gmail.com</a>   *&#x2F;<br>​    &#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>&#x2F;<br>​<br>    #include “uart.h”<br>    #include &lt;stdio.h&gt;<br>    #include &lt;unistd.h&gt;       &#x2F;&#x2F; Used for UART<br>    #include &lt;sys&#x2F;fcntl.h&gt;    &#x2F;&#x2F; Used for UART<br>    #include &lt;termios.h&gt;      &#x2F;&#x2F; Used for UART<br>    #include &lt;string.h&gt;</p>
 <pre><code>using namespace std;
 
 Uart :: Uart ()&#123;
@@ -3165,7 +3165,7 @@ void on_Trackbar_6(int, void*)
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%97%B6%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0.../">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%98%AF%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -3179,7 +3179,7 @@ void on_Trackbar_6(int, void*)
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%97%B6%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0.../" class="post-title-link" itemprop="url">声音时一种干扰...</a>
+            <a href="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%98%AF%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0/" class="post-title-link" itemprop="url">声音是一种干扰.</a>
         </h2>
 
         <div class="post-meta">
@@ -3197,7 +3197,7 @@ void on_Trackbar_6(int, void*)
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-02-09 20:30:35" itemprop="dateModified" datetime="2025-02-09T20:30:35+08:00">2025-02-09</time>
+                <time title="修改时间：2025-02-10 00:41:27" itemprop="dateModified" datetime="2025-02-10T00:41:27+08:00">2025-02-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -3210,7 +3210,7 @@ void on_Trackbar_6(int, void*)
             </span>
 
           
-            <span id="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%97%B6%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0.../" class="post-meta-item leancloud_visitors" data-flag-title="声音时一种干扰..." title="阅读次数">
+            <span id="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%98%AF%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0/" class="post-meta-item leancloud_visitors" data-flag-title="声音是一种干扰." title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -3225,8 +3225,8 @@ void on_Trackbar_6(int, void*)
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%97%B6%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0.../#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%97%B6%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0.../" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%98%AF%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%98%AF%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -3255,7 +3255,7 @@ void on_Trackbar_6(int, void*)
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>​       声音时一种干扰，吵闹的声音让人无法专心，娱乐游戏的声音吸引人的注意力，诱导脱离现实，忘记现实，迷失自我。</p>
+          <p>​       声音是一种干扰，吵闹的声音让人无法专心，娱乐游戏的声音吸引人的注意力，诱导脱离现实，忘记现实，迷失自我。</p>
 
       
     </div>
@@ -3277,7 +3277,7 @@ void on_Trackbar_6(int, void*)
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91../">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -3291,7 +3291,7 @@ void on_Trackbar_6(int, void*)
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91../" class="post-title-link" itemprop="url">应当时刻保持一个清晰的头脑...</a>
+            <a href="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91/" class="post-title-link" itemprop="url">应当时刻保持一个清晰的头脑</a>
         </h2>
 
         <div class="post-meta">
@@ -3309,7 +3309,7 @@ void on_Trackbar_6(int, void*)
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-02-09 20:31:32" itemprop="dateModified" datetime="2025-02-09T20:31:32+08:00">2025-02-09</time>
+                <time title="修改时间：2025-02-10 00:43:25" itemprop="dateModified" datetime="2025-02-10T00:43:25+08:00">2025-02-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -3322,7 +3322,7 @@ void on_Trackbar_6(int, void*)
             </span>
 
           
-            <span id="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91../" class="post-meta-item leancloud_visitors" data-flag-title="应当时刻保持一个清晰的头脑..." title="阅读次数">
+            <span id="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91/" class="post-meta-item leancloud_visitors" data-flag-title="应当时刻保持一个清晰的头脑" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -3337,8 +3337,8 @@ void on_Trackbar_6(int, void*)
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91../#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91../" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%BA%94%E5%BD%93%E6%97%B6%E5%88%BB%E4%BF%9D%E6%8C%81%E4%B8%80%E4%B8%AA%E6%B8%85%E6%99%B0%E7%9A%84%E5%A4%B4%E8%84%91/" itemprop="commentCount"></span>
     </a>
   </span>
   
