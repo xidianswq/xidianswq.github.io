@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="命令行参数如下： Libsim –a(-u) xxxx 第一个参数为可执行程序名称；第二个参数为用户身份，-a表示管理员，-u表示读者；第三个参数为用户名  问题分析：  由于无法直接在文件中插入数据（不是简单覆盖），固采用将文件数据提取为链表的方法，对链表进行操作，最后将链表信息导入文件中。  实现时的困难：  如何实现管理员和读者双菜单？ 文件该以哪种方式打开？ 文件信息读取不全是什么造成的？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单文件数据库-模拟图书馆管理系统-西安电子科技大学大一程序基础设计课程设计作业">
+<meta property="og:url" content="http://example.com/2022/04/30/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A5%BF%E7%94%B5%E7%A7%91%E5%A4%A7%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A-%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A8%A1%E6%8B%9F%E5%9B%BE%E4%B9%A6%E9%A6%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="Switch">
+<meta property="og:description" content="命令行参数如下： Libsim –a(-u) xxxx 第一个参数为可执行程序名称；第二个参数为用户身份，-a表示管理员，-u表示读者；第三个参数为用户名  问题分析：  由于无法直接在文件中插入数据（不是简单覆盖），固采用将文件数据提取为链表的方法，对链表进行操作，最后将链表信息导入文件中。  实现时的困难：  如何实现管理员和读者双菜单？ 文件该以哪种方式打开？ 文件信息读取不全是什么造成的？">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-30T01:50:54.000Z">
+<meta property="article:modified_time" content="2025-02-09T06:22:49.292Z">
+<meta property="article:author" content="SWQ">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="作业解答">
+<meta property="article:tag" content="c语言">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/04/30/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A5%BF%E7%94%B5%E7%A7%91%E5%A4%A7%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A-%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A8%A1%E6%8B%9F%E5%9B%BE%E4%B9%A6%E9%A6%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>简单文件数据库-模拟图书馆管理系统-西安电子科技大学大一程序基础设计课程设计作业 | Switch</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Switch</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to My Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">135</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/30/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A5%BF%E7%94%B5%E7%A7%91%E5%A4%A7%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A-%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A8%A1%E6%8B%9F%E5%9B%BE%E4%B9%A6%E9%A6%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻飏，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          简单文件数据库-模拟图书馆管理系统-西安电子科技大学大一程序基础设计课程设计作业
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-30 09:50:54" itemprop="dateCreated datePublished" datetime="2022-04-30T09:50:54+08:00">2022-04-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-09 14:22:49" itemprop="dateModified" datetime="2025-02-09T14:22:49+08:00">2025-02-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/04/30/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A5%BF%E7%94%B5%E7%A7%91%E5%A4%A7%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A-%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A8%A1%E6%8B%9F%E5%9B%BE%E4%B9%A6%E9%A6%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" class="post-meta-item leancloud_visitors" data-flag-title="简单文件数据库-模拟图书馆管理系统-西安电子科技大学大一程序基础设计课程设计作业" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/30/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A5%BF%E7%94%B5%E7%A7%91%E5%A4%A7%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A-%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A8%A1%E6%8B%9F%E5%9B%BE%E4%B9%A6%E9%A6%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/30/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A5%BF%E7%94%B5%E7%A7%91%E5%A4%A7%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A-%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A8%A1%E6%8B%9F%E5%9B%BE%E4%B9%A6%E9%A6%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>命令行参数如下：</p>
+<p>Libsim –a(-u) xxxx</p>
+<p>第一个参数为可执行程序名称；第二个参数为用户身份，-a表示管理员，-u表示读者；第三个参数为用户名</p>
+<ul>
+<li>问题分析：</li>
+</ul>
+<p>由于无法直接在文件中插入数据（不是简单覆盖），固采用将文件数据提取为链表的方法，对链表进行操作，最后将链表信息导入文件中。</p>
+<ol>
+<li>实现时的困难： <ol>
+<li>如何实现管理员和读者双菜单？<ol start="2">
+<li>文件该以哪种方式打开？<ol start="3">
+<li>文件信息读取不全是什么造成的？<ol start="4">
+<li>操作后再读取文件出错，打开文件信息连在一起？<ol start="5">
+<li>删除最后一个数据时出错？<ol start="6">
+<li>如果用户输入的操作都无效（要修改的信息不存在）怎么办？</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>对应解决方案 <ol>
+<li>判断命令行参数信息，用if判断语句分别进入功能即可。<ol start="2">
+<li>操作者只需选择“r（只读）”和“a+（追加）”方式打开文件，防止文件数据意外损失。其中在只有管理员增加数据时才用“a+”，其他模式均以“r”方式打开！<ol start="3">
+<li>因为程序有继续操作选项，而上次操作后文件标志已经为EOF，采用rewind函数即可将文件标志位重置<ol start="4">
+<li>在写入、修改、删除信息时注意最后写入换行符，保证文件可读性以及下一次操作可行<ol start="5">
+<li>因为采用的是链表操作，删除非末尾元素时，下一个链节内容完全拷贝到要删字节，再释放下一个链节即可。但是链表尾指向NULL，访问NULL会出错，要单独考虑。<ol start="6">
+<li>定义变量int sign &#x3D; 0；只有操作有效时sign &#x3D; 1，进入下一步操作，防止文件信息丢失。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>​<br>​    &#x2F;&#x2F;程序基本配置文件：1.文件名为“book.txt”的文件；2.文件名为“reader.txt”的文件<br>​    #define _CRT_SECURE_NO_WARNINGS<br>​    #include&lt;stdio.h&gt;<br>​    #include&lt;stdlib.h&gt;<br>​    #include&lt;string.h&gt;<br>​    &#x2F;&#x2F;测试方式选择：1.AUTO：命令行运行；2.标准文件流读入数据；3.手动输入输出数据（用哪个将另外两个#define注释掉即可）<br>​    &#x2F;&#x2F;#define AUTO<br>​    &#x2F;&#x2F;#define MANUAL1<br>​    #define MANUAL2<br>​    #define LEN1 sizeof(book_info)<br>​    #define LEN2 sizeof(reader_info)<br>​    &#x2F;&#x2F;定义两个结构体，分别存储书本信息和读者借阅信息<br>​    typedef struct Book {<br>​    	char code[20];<br>​    	char title[100];<br>​    	int number;<br>​    	struct Book* next;<br>​    }book_info;<br>​    typedef struct Reader {<br>​    	char order[20];<br>​    	char name[100];<br>​    	char borrow_code[20];<br>​    	struct Reader* next;<br>​    }reader_info;<br>​    const char* book_format &#x3D; “%s %s %d”, * reader_format &#x3D; “%s %s %s”;<br>​    char file_name[101] &#x3D; { 0 };</p>
+<p>​<br>​    int main(int argc, char* argv[]) {<br>​    	void format_judge(char* type, char* name);<br>​    	FILE* open_file();<br>​    	void function(char* type, char* name);<br>​    	char type[3], name[100];<br>​<br>    #ifdef AUTO<br>    	strcpy(type, argv[1]);<br>    	strcpy(name, argv[2]);<br>    #endif<br>    #ifdef MANUAL1<br>    	freopen(“in.txt”, “r”, stdin);<br>    	freopen(“out.txt”, “w”, stdout);<br>    #endif<br>    #ifdef MANUAL2<br>    	printf(“Enter user’s type(-a&#x2F;-u) and username:\n”);<br>    	scanf(“%s %s”, type, name);<br>    #endif </p>
+<pre><code>	//输入参数格式正误判断 
+	format_judge(type, name);
+
+	//操作函数 
+	function(type, name);
+
+	return 0;
+&#125;
+
+//打开文件函数 
+FILE* open_file() &#123;
+	FILE* fp;
+	char  ope_way[3] = &#123; 0 &#125;;
+	//输入文件名和打开方式 
+	printf(&quot;Enter the path of data:&quot;);
+	scanf(&quot;%s&quot;, file_name);
+	//*****注意操作者只需选择“r（只读）”和“a+（追加）”方式打开文件，防止文件数据意外损失！！！ 
+	printf(&quot;Enter the way to operate(r/a+):&quot;);
+	scanf(&quot;%s&quot;, ope_way);
+	//如果文件不存在，报错 
+	if ((fp = fopen(file_name, ope_way)) == NULL) &#123;
+		printf(&quot;File not exist\n&quot;);
+		exit(0);
+	&#125;
+	return fp;
+&#125;
+
+//显示文件的所有信息 
+void show_file(FILE* fp) &#123;
+	if (fp == NULL) &#123;
+		printf(&quot;File failed to open\n&quot;);
+		return;
+	&#125;
+
+	//文件位置标志重置，以输出完整程序 
+	rewind(fp);
+	char c;
+	//当文件位置为EOF(文件尾) 
+	while (!feof(fp)) &#123;
+		c = fgetc(fp);
+		printf(&quot;%c&quot;, c);
+	&#125;
+	printf(&quot;\n&quot;);
+&#125;
+
+//命令行输入参数判断 
+void format_judge(char* type, char* name) &#123;
+	if (type[0] != &#39;-&#39; || (type[1] != &#39;a&#39; &amp;&amp; type[1] != &#39;u&#39;)) &#123;
+		printf(&quot;Format Error!\n&quot;);
+		exit(0);
+	&#125;
+&#125;
+
+//覆盖文件函数，用于一次操作结束后将新文件内的数据覆盖到老文件上 
+//参数列表：指向原文件指针，指向操作产生的新文件的指针 
+void revise_file(FILE* fp, FILE* fp_n) &#123;
+	if (fp_n == NULL) &#123;
+		printf(&quot;New file failed to open\n&quot;);
+		return;
+	&#125;
+	char c;
+	fclose(fp);
+	//以“w”方式打开文件，文件原内容擦除 
+	fopen(file_name, &quot;w&quot;);
+	rewind(fp_n);
+	//一个字符一个字符地拷贝到原文件中 
+	while ((c = fgetc(fp_n)) != EOF) &#123;
+		fputc(c, fp);
+	&#125;
+	fclose(fp);
+&#125;
+
+//功能集成函数
+//参数列表：用户类型（-a：管理员/-u：用户）；用户名 
+void function(char* type, char* name) &#123;
+	FILE* open_file();
+	void add_info(FILE * fp, int object);
+	void revise_info(FILE * fp, int object);
+	void delete_info(FILE * fp, int object);
+	void borrow_book(FILE * fp, FILE * fp_r);
+	void return_book(FILE * fp_r);
+	void search_info(FILE * fp, FILE * fp_r);
+
+	//定义变量：1.option：操作类型；2.object：操作对象；3.sign：判断是否继续操作标志；4.fp：打开文件指针；5.fp_r:读者信息文件指针 
+	int option, object, sign = 1;
+	FILE* fp = NULL, * fp_r = NULL;
+
+	//管理员模式 
+	if (type[1] == &#39;a&#39;) &#123;
+		printf(&quot;Administrator, what do you want to do\n\t1.Add information\n\t2.Revise information\n\t3.Delete information\n\t4.Show all the information\nOperate object:\n\t1.book\n\t2.reader\nAnswer:&quot;);
+		while (sign) &#123;
+			scanf(&quot;%d%d&quot;, &amp;option, &amp;object);
+			//进入功能选择，详细见后面各功能函数 
+			switch (option) &#123;
+			case 1: //增加数据 
+			&#123;
+				fp = open_file();
+				add_info(fp, object);
+				break;
+			&#125;
+			case 2: //修改数据 
+			&#123;
+				fp = open_file();
+				revise_info(fp, object);
+				break;
+			&#125;
+			case 3: //删除数据 
+			&#123;
+				fp = open_file();
+				delete_info(fp, object);
+				break;
+			&#125;
+			case 4: //总览数据 
+			&#123;
+				if (object == 1) &#123;
+					fp = fopen(&quot;book.txt&quot;, &quot;r&quot;);
+					show_file(fp);
+				&#125;
+				else &#123;
+					fp_r = fopen(&quot;reader.txt&quot;, &quot;r&quot;);
+					show_file(fp_r);
+				&#125;
+				break;
+			&#125;
+			default:printf(&quot;Option Error\n&quot;);
+			&#125;
+			//是否继续进行操作 
+			printf(&quot;Continue to operate\n\t1-&gt;yes\n\t0-&gt;no\nAnswer:&quot;);
+			scanf(&quot;%d&quot;, &amp;sign);
+		&#125;
+		fclose(fp);
+		fclose(fp_r);
+	&#125;
+	//用户模式 
+	else &#123;
+		printf(&quot;User, what do you want to do\n\t1.Borrow books\n\t2.Return books\n\t3.Search information\nAnswer:&quot;);
+		while (sign) &#123;
+			scanf(&quot;%d&quot;, &amp;option);
+			switch (option) &#123;
+			case 1: //借书 
+			&#123;
+				fp = fopen(&quot;book.txt&quot;, &quot;r&quot;);
+				fp_r = fopen(&quot;reader.txt&quot;, &quot;a+&quot;);
+				if (fp == NULL || fp_r == NULL) &#123;
+					printf(&quot;File missing\n&quot;);
+				&#125;
+				else borrow_book(fp, fp_r);
+				break;
+			&#125;
+			case 2: //还书 
+			&#123;
+				fp_r = fopen(&quot;reader.txt&quot;, &quot;r+&quot;);
+				strcpy(file_name, &quot;reader.txt\0&quot;);
+				if (fp_r == NULL) &#123;
+					printf(&quot;File missing\n&quot;);
+				&#125;
+				else return_book(fp_r);
+				break;
+			&#125;
+			case 3: //查数据 
+			&#123;
+				fp = fopen(&quot;book.txt&quot;, &quot;r&quot;);
+				fp_r = fopen(&quot;reader.txt&quot;, &quot;r&quot;);
+				if (fp == NULL || fp_r == NULL) &#123;
+					printf(&quot;File missing\n&quot;);
+				&#125;
+				else search_info(fp, fp_r);
+				break;
+			&#125;
+			default:printf(&quot;Option Error\n&quot;);
+			&#125;
+			printf(&quot;Continue to operate\n\t1-&gt;yes\n\t0-&gt;no\nAnswer:&quot;);
+			scanf(&quot;%d&quot;, &amp;sign);
+		&#125;
+		fclose(fp);
+	&#125;
+&#125;
+
+//添加数据函数
+//参数列表：指向操作文件的指针；操作对象 
+void add_info(FILE* fp, int object) &#123;
+	if (fp == NULL) &#123;
+		printf(&quot;File failed to open\n&quot;);
+		return;
+	&#125;
+	//定义变量：1.num：操作次数；2.book：添加的图书信息的结构体；3.reader：添加的借阅信息结构体 
+	int num;
+	book_info book;
+	reader_info reader;
+	//添加图书信息 
+	if (object == 1) &#123;
+		printf(&quot;How many books you want to add\nAnswer:&quot;);
+		scanf(&quot;%d&quot;, &amp;num);
+		//提示输入图书信息的格式 
+		printf(&quot;Information format:book_number title amount\nEnter:\n&quot;);
+		while (num--) &#123;
+			scanf(book_format, &amp;book.code, &amp;book.title, &amp;book.number);
+			fprintf(fp, book_format, book.code, book.title, book.number);
+			//*****注意添加完后换行！ 
+			fprintf(fp, &quot;\n&quot;);
+		&#125;
+		printf(&quot;Succeed to operate\n&quot;);
+	&#125;
+	//添加借阅者信息 
+	else if (object == 2) &#123;
+		printf(&quot;How many readers you want to add\nAnswer:&quot;);
+		scanf(&quot;%d&quot;, &amp;num);
+		printf(&quot;Information format:reader_number name book_code\nEnter:\n&quot;);
+		while (num--) &#123;
+			scanf(reader_format, &amp;reader.order, &amp;reader.name, &amp;reader.borrow_code);
+			fprintf(fp, reader_format, reader.order, reader.name, reader.borrow_code);
+			fprintf(fp, &quot;\n&quot;);
+		&#125;
+		printf(&quot;Succeed to operate\n&quot;);
+	&#125;
+	else printf(&quot;Object error\n&quot;);
+&#125;
+
+//修改数据函数
+//参数列表：指向操作文件的指针；操作对象 
+void revise_info(FILE* fp, int object) &#123;
+	if (fp == NULL) &#123;
+		printf(&quot;File failed to open\n&quot;);
+		return;
+	&#125;
+	rewind(fp);
+
+	book_info* original_information_input_b(FILE * fp);
+	reader_info* original_information_input_r(FILE * fp);
+	void information_save_b(book_info * head, FILE * fp_n);
+	void information_save_r(reader_info * head, FILE * fp_n);
+	book_info* get_adress_b(book_info * head_adress, char* search);
+	reader_info* get_adress_r(reader_info * head_adress, char* search);
+	void revise_file(FILE * fp, FILE * fp_n);
+
+	//定义变量：1.num:操作数；2.sign：操作是否有效标志；3.search：搜素信息（图书号或书名或读者编号或人名）；4.fp_n:指向新文件（存贮操作后的信息）的指针 
+	int num, sign = 0;
+	char search[100] = &#123; 0 &#125;;
+	FILE* fp_n = NULL;
+	//修改图书信息 
+	if (object == 1) &#123;
+		//定义变量：1.head：存储了图书信息的链表头；2. book：存贮修改信息的结构体；3.locat：指向修改数据所在链节的指针  
+		book_info* head = original_information_input_b(fp), book, * locat;
+		printf(&quot;How many books you want to revise\nAnswer:&quot;);
+		scanf(&quot;%d&quot;, &amp;num);
+		while (num--) &#123;
+			printf(&quot;Enter book_code or title:&quot;);
+			//输入要找的图书号或书名 
+			scanf(&quot;%s&quot;, search);
+			//得到所在链表的位置，如果不存在，locat=NULL，不进行下列操作 
+			locat = get_adress_b(head, search);
+			if (locat != NULL) &#123;
+				printf(&quot;Enter the new information(Format:book_number title amount):&quot;);
+				//输入要用于替换的数据 
+				scanf(book_format, &amp;book.code, &amp;book.title, &amp;book.number);
+				strcpy(locat-&gt;code, book.code);
+				strcpy(locat-&gt;title, book.title);
+				locat-&gt;number = book.number;
+				//操作有效 
+				sign = 1;
+			&#125;
+		&#125;
+		//如果输入的书本都不存在，即操作无效，不进行下列操作，防止书本信息文件内容被清空（revise_file函数有以“w”方式打开文件，文件内容清空） 
+		if (sign) &#123;
+			//打开存储修改信息的新文件“book_n.txt” 
+			fp_n = fopen(&quot;book_n.txt&quot;, &quot;w+&quot;);
+			//将链表信息存入新文件 
+			information_save_b(head, fp_n);
+			//拷贝新文件中信息到原文件 
+			revise_file(fp, fp_n);
+			printf(&quot;Succeed to operate\n&quot;);
+		&#125;
+
+	&#125;
+
+	if (object == 2) &#123;
+		reader_info* head = original_information_input_r(fp), reader, * locat = head;
+		//确认是否修改找到信息（针对一个人借多本书的情况） 
+		int answer;
+		printf(&quot;How many readers you want to revise\nAnswer:&quot;);
+		scanf(&quot;%d&quot;, &amp;num);
+		while (num--) &#123;
+			printf(&quot;Enter reader_order or name\n:&quot;);
+			scanf(&quot;%s&quot;, search);
+			while (locat != NULL) &#123;
+				//*****得到该读者的第一条信息(注意搜索起点是locat，结合while循环实现搜索所有而非第一个出现的)！ 
+				locat = get_adress_r(locat, reader.order);
+				if (locat != NULL) &#123;
+					//输出该条信息的内容 
+					printf(reader_format, locat-&gt;order, locat-&gt;name, locat-&gt;borrow_code);
+					printf(&quot;\nRevise or not\n\t1.yes\n\t2.no\nAnswer:&quot;);
+					//确认是否修改该条信息 
+					scanf(&quot;%d&quot;, &amp;answer);
+					if (answer == 1) &#123;
+						printf(&quot;Enter the new information(Format:reader_order name borrow_code):\n&quot;);
+						scanf(reader_format, &amp;reader.order, &amp;reader.name, &amp;reader.borrow_code);
+						strcpy(locat-&gt;order, reader.order);
+						strcpy(locat-&gt;name, reader.name);
+						strcpy(locat-&gt;borrow_code, reader.borrow_code);
+						sign = 1;
+					&#125;
+					//标记为指向下一个 
+					locat = locat-&gt;next;
+				&#125;
+			&#125;
+		&#125;
+		if (sign == 1) &#123;
+			fp_n = fopen(&quot;reader_n.txt&quot;, &quot;w+&quot;);
+			information_save_r(head, fp_n);
+			revise_file(fp, fp_n);
+			printf(&quot;Succeed to operate\n&quot;);
+		&#125;
+	&#125;
+
+&#125;
+
+//删除数据函数
+//参数列表：指向操作文件的指针；操作对象 
+void delete_info(FILE* fp, int object) &#123;
+	if (fp == NULL) &#123;
+		printf(&quot;File failed to open\n&quot;);
+		return;
+	&#125;
+	rewind(fp);
+
+	book_info* original_information_input_b(FILE * fp);
+	reader_info* original_information_input_r(FILE * fp);
+	book_info* get_adress_b(book_info * head_adress, char* search);
+	reader_info* get_adress_r(reader_info * head_adress, char* search);
+	void information_save_b(book_info * head, FILE * fp_n);
+	void information_save_r(reader_info * head, FILE * fp_n);
+	void revise_file(FILE * fp, FILE * fp_n);
+
+	int num, answer, sign = 0;
+	char search[100];
+
+	if (object == 1) &#123;
+		//定义变量：3.free_adress：指向要删除数据链节的指针 
+		book_info* head = original_information_input_b(fp), * locat = NULL, * free_adress = NULL;
+		printf(&quot;How many books you want to delete\nAnswer:&quot;);
+		scanf(&quot;%d&quot;, &amp;num);
+		while (num--) &#123;
+			printf(&quot;Search book_code or title to delete:&quot;);
+			scanf(&quot;%s&quot;, search);
+			locat = get_adress_b(head, search);
+			//删除链节的方式采用复制——释放法，即将下一个链节内容完全拷贝到要删字节，再释放下一个链节 
+			if (locat != NULL) &#123;
+				//不是链表尾的情况 
+				if (locat-&gt;next != NULL) &#123;
+					free_adress = locat-&gt;next;
+					*locat = *(locat-&gt;next);
+					free(free_adress);
+				&#125;
+				//*****链表尾的情况！（locat-&gt;next=NULL！访问会出错！） 
+				else &#123;
+					book_info* taget = head;
+					//找到要删链节的上一个链节 
+					for (; taget-&gt;next != locat; taget = taget-&gt;next);
+					//将上一个链节的指向该为NULL，即可去除原先链表尾 
+					taget-&gt;next = NULL;
+					free(locat);
+				&#125;
+				sign = 1;
+			&#125;
+		&#125;
+		if (sign) &#123;
+			FILE* fp_n = fopen(&quot;book_n.txt&quot;, &quot;w+&quot;);
+			information_save_b(head, fp_n);
+			revise_file(fp, fp_n);
+			printf(&quot;Succeed to operate\n&quot;);
+		&#125;
+	&#125;
+
+	//删除读者信息，基本和修改读者信息部分相同 
+	if (object == 2) &#123;
+		reader_info* head = original_information_input_r(fp), * locat = head, * free_adress = NULL;
+		printf(&quot;How many readers you want to delete\nAnswer:&quot;);
+		scanf(&quot;%d&quot;, &amp;num);
+		while (num--) &#123;
+			printf(&quot;Search reader_order or name to delete:&quot;);
+			scanf(&quot;%s&quot;, search);
+			while (locat != NULL) &#123;
+				locat = get_adress_r(locat, search);
+				if (locat != NULL) &#123;
+					printf(&quot;This person&#39;s one record:&quot;);
+					printf(reader_format, locat-&gt;order, locat-&gt;name, locat-&gt;borrow_code);
+					printf(&quot;\nDelelt this record or not?\n\t1.yes\n\t2.no\nAnswer:&quot;);
+					scanf(&quot;%d&quot;, &amp;answer);
+					if (answer == 1) &#123;
+						if (locat-&gt;next != NULL) &#123;
+							free_adress = locat-&gt;next;
+							*locat = *(locat-&gt;next);
+							free(free_adress);
+						&#125;
+						else &#123;
+							reader_info* taget = head;
+							for (; taget-&gt;next != locat; taget = taget-&gt;next);
+							taget-&gt;next = NULL;
+							free(locat);
+						&#125;
+						sign = 1;
+					&#125;
+					locat = locat-&gt;next;
+				&#125;
+			&#125;
+		&#125;
+		if (sign) &#123;
+			FILE* fp_n = fopen(&quot;reader_n.txt&quot;, &quot;w+&quot;);
+			information_save_r(head, fp_n);
+			revise_file(fp, fp_n);
+			printf(&quot;Succeed to operate\n&quot;);
+		&#125;
+	&#125;
+&#125;
+
+//借书函数 
+//参数列表：指向图书信息文件的指针；指向读者信息文件的指针 
+void borrow_book(FILE* fp, FILE* fp_r) &#123;
+	if (fp == NULL || fp_r == NULL) &#123;
+		printf(&quot;File failed to open\n&quot;);
+		return;
+	&#125;
+	rewind(fp);
+
+	book_info* original_information_input_b(FILE * fp);
+	book_info* get_adress_b(book_info * head_adress, char* search);
+
+	int num, answer;
+	char search[100];
+	book_info* head = original_information_input_b(fp), * locat;
+
+	//询问是否列出馆藏图书列表 
+	printf(&quot;Show book list\n\t1.yes\n\t2.no\nAnswer:&quot;);
+	scanf(&quot;%d&quot;, &amp;answer);
+	if (answer == 1)show_file(fp);
+	printf(&quot;How many books you want to borrow\nAnswer:&quot;);
+	scanf(&quot;%d&quot;, &amp;num);
+	while (num--) &#123;
+		printf(&quot;Search book_code or title to borrow:&quot;);
+		scanf(&quot;%s&quot;, search);
+		locat = get_adress_b(head, search);
+		if (locat != NULL) &#123;
+			char order[20], name[100];
+			printf(&quot;Enter your personal_order and your name:&quot;);
+			scanf(&quot;%s%s&quot;, order, name);
+			//将借阅信息存储到读者信息文件 
+			fprintf(fp_r, reader_format, order, name, locat-&gt;code);
+			fprintf(fp_r, &quot;\n&quot;);
+			printf(&quot;Succeed to operate\n&quot;);
+		&#125;
+	&#125;
+&#125;
+
+//还书函数
+//参数列表：指向读者信息文件的指针 
+void return_book(FILE* fp) &#123;
+	if (fp == NULL) &#123;
+		printf(&quot;File failed to open\n&quot;);
+		return;
+	&#125;
+	rewind(fp);
+
+	reader_info* original_information_input_r(FILE * fp);
+	reader_info* get_adress_r(reader_info * head_adress, char* search);
+	void information_save_r(reader_info * head, FILE * fp_n);
+
+	int num, sign = 0;
+	reader_info reader, * head = original_information_input_r(fp), * locat = head;
+
+	printf(&quot;How many books you want to return\nAnswer:&quot;);
+	scanf(&quot;%d&quot;, &amp;num);
+	while (num--) &#123;
+		printf(&quot;Enter your person_order name and book_code:&quot;);
+		scanf(reader_format, reader.order, reader.name, reader.borrow_code);
+		//*****同时判断读者编号和姓名是否符合,直到链表尾 (注意下一次搜寻的起始地址为locat-&gt;next！)
+		for (; locat != NULL &amp;&amp; strcmp(locat-&gt;order, reader.order) != 0; locat = get_adress_r(locat-&gt;next, reader.name));
+		if (locat != NULL) &#123;
+			if (locat-&gt;next != NULL) &#123;
+				reader_info* free_adress = locat-&gt;next;
+				*locat = *(locat-&gt;next);
+				free(free_adress);
+			&#125;
+			else &#123;
+				reader_info* taget = head;
+				for (; taget-&gt;next != locat; taget = taget-&gt;next);
+				taget-&gt;next = NULL;
+				free(locat);
+			&#125;
+			sign = 1;
+		&#125;
+		else printf(&quot;Record doesn&#39;t exist\n&quot;);
+	&#125;
+	if (sign) &#123;
+		FILE* fp_n = fopen(&quot;reader_n.txt&quot;, &quot;w+&quot;);
+		information_save_r(head, fp_n);
+		revise_file(fp, fp_n);
+		printf(&quot;Succeed to operate\n&quot;);
+	&#125;
+
+&#125;
+
+//查数据函数
+//参数列表：指向图书信息文件的指针；指向读者信息文件的指针 
+void search_info(FILE* fp, FILE* fp_r) &#123;
+	book_info* original_information_input_b(FILE * fp);
+	reader_info* original_information_input_r(FILE * fp);
+	book_info* get_adress_b(book_info * head_adress, char* search);
+	reader_info* get_adress_r(reader_info * head_adress, char* search);
+
+	int answer, num, i = 1;
+	char search[100];
+	printf(&quot;Want to know what\n\t1.Show all books\n\t2.Search one book\n\t3.Remain to return\nAnswer:&quot;);
+	scanf(&quot;%d&quot;, &amp;answer);
+	//展示所有馆藏图书 
+	if (answer == 1) show_file(fp);
+	//输入图书号或书名看有没有 
+	else if (answer == 2) &#123;
+		book_info* head = original_information_input_b(fp);
+		printf(&quot;How many books you want to search\nAnswer:&quot;);
+		scanf(&quot;%d&quot;, &amp;num);
+		while (num--) &#123;
+			printf(&quot;Search book_code or title to show:&quot;);
+			scanf(&quot;%s&quot;, search);
+			book_info* locat = get_adress_b(head, search);
+			if (locat != NULL) &#123;
+				printf(book_format, locat-&gt;code, locat-&gt;title, locat-&gt;number);
+				printf(&quot;\n&quot;);
+				reader_info* head_r = original_information_input_r(fp_r), * locat_r = head_r;
+				printf(&quot;Borrow record:\n&quot;);
+				for (i = 1; locat_r != NULL; locat_r = locat_r-&gt;next, i++) &#123;
+					if (strcmp(locat-&gt;code, locat_r-&gt;borrow_code) == 0)
+						printf(&quot;%d : %s %s\n&quot;, i, locat_r-&gt;order, locat_r-&gt;name);
+				&#125;
+			&#125;
+		&#125;
+	&#125;
+	//输入个人信息查找待还图书 
+	else if (answer == 3) &#123;
+		reader_info reader, * head = original_information_input_r(fp_r), * locat = head;
+		printf(&quot;Enter your personal_order and name:&quot;);
+		scanf(&quot;%s%s&quot;, reader.order, reader.name);
+		while (locat != NULL) &#123;
+			for (; locat != NULL &amp;&amp; strcmp(locat-&gt;name, reader.name) != 0 &amp;&amp; strcmp(locat-&gt;order, reader.order) != 0; locat = get_adress_r(locat-&gt;next, reader.order));
+			if (locat == NULL)break;
+			else &#123;
+				printf(&quot;Borrowed book %d:&quot;, i++);
+				printf(&quot;%s&quot;, locat-&gt;borrow_code);
+				printf(&quot;\n&quot;);
+				locat = locat-&gt;next;
+			&#125;
+		&#125;
+
+	&#125;
+
+&#125;
+
+//创建链表函数，将图书信息文件提取成链表
+//参数列表：指向图书信息文件指针；返回值：链表链头 
+book_info* original_information_input_b(FILE* fp) &#123;
+	if (fp == NULL) &#123;
+		printf(&quot;File failed to open\n&quot;);
+		return NULL;
+	&#125;
+	//定义变量：1.head：链表头；2.当前链表操作位置指针；3.暂存数据的结构体 
+	book_info* head = NULL, * p = NULL, temp;
+	int i = 0;
+	//从文件中读取信息直道文件尾 
+	while (fscanf(fp, book_format, &amp;temp.code, &amp;temp.title, &amp;temp.number) != EOF) &#123;
+		i++;
+		//如果是链表头，开辟空间地址即为head，不是表头则依照赋值表达式的右结合性将链表进行延伸 
+		if (i == 1)head = p = (book_info*)malloc(LEN1);
+		else p = p-&gt;next = (book_info*)malloc(LEN1);
+
+		strcpy(p-&gt;code, temp.code);
+		strcpy(p-&gt;title, temp.title);
+		p-&gt;number = temp.number;
+
+	&#125;
+	//链表尾部处理 
+	if (i != 0)p-&gt;next = NULL;
+	return head;
+&#125;
+
+//创建链表函数，将读者信息文件提取成链表
+//参数列表：指向读者信息文件指针 返回值：链表链头
+reader_info* original_information_input_r(FILE* fp) &#123;
+	if (fp == NULL) &#123;
+		printf(&quot;File failed to open\n&quot;);
+		return NULL;
+	&#125;
+	reader_info* head = NULL, * p = NULL, temp;
+	int i = 0;
+
+	while (fscanf(fp, reader_format, &amp;temp.order, &amp;temp.name, &amp;temp.borrow_code) != EOF) &#123;
+
+		i++;
+		if (i == 1)head = p = (reader_info*)malloc(LEN2);
+		else p = p-&gt;next = (reader_info*)malloc(LEN2);
+
+		strcpy(p-&gt;order, temp.order);
+		strcpy(p-&gt;name, temp.name);
+		strcpy(p-&gt;borrow_code, temp.borrow_code);
+
+	&#125;
+
+	if (i != 0)p-&gt;next = NULL;
+	return head;
+&#125;
+
+//保存链表信息函数，将图书信息链表保存到新文件中 
+//参数列表：指向图书信息新文件指针 
+void information_save_b(book_info* head, FILE* fp_n) &#123;
+	book_info* p = head;
+	for (; p != NULL; p = p-&gt;next) &#123;
+		fprintf(fp_n, book_format, p-&gt;code, p-&gt;title, p-&gt;number);
+		fprintf(fp_n, &quot;\n&quot;);
+	&#125;
+&#125;
+
+//保存链表信息函数，将读者信息链表保存到新文件中 
+//参数列表：指向读者信息新文件指针 
+void information_save_r(reader_info* head, FILE* fp_n) &#123;
+	reader_info* p = head;
+	for (; p != NULL; p = p-&gt;next) &#123;
+		fprintf(fp_n, reader_format, p-&gt;order, p-&gt;name, p-&gt;borrow_code);
+		fprintf(fp_n, &quot;\n&quot;);
+	&#125;
+&#125;
+
+//搜索信息函数 
+//参数列表：指向图书信息新文件指针 返回值：所找链节地址，无返回NULL 
+book_info* get_adress_b(book_info* head_adress, char* search) &#123;
+	//定义变量：1.search_adress：当前搜索链节地址 
+	book_info* search_adress = head_adress;
+	//先对图书号进行匹配，是否满足输入的信息 
+	for (; search_adress != NULL &amp;&amp; strcmp(search_adress-&gt;code, search) != 0; search_adress = search_adress-&gt;next);
+	//如果没有，重置当前搜索地址，再和书名进行匹配 
+	if (search_adress == NULL) &#123;
+		for (search_adress = head_adress; search_adress != NULL &amp;&amp; strcmp(search_adress-&gt;title, search) != 0; search_adress = search_adress-&gt;next);
+		if (search_adress != NULL)	return search_adress;
+		else &#123;
+			printf(&quot;This book doesn&#39;t exist\n&quot;);
+			return NULL;
+		&#125;
+	&#125;
+	else return search_adress;
+&#125;
+
+//搜索信息函数
+//参数列表：指向读者信息新文件指针 返回值：所找链节地址，无返回NULL
+reader_info* get_adress_r(reader_info* head_adress, char* search) &#123;
+	reader_info* search_adress = head_adress;
+	for (; search_adress != NULL &amp;&amp; strcmp(search_adress-&gt;order, search) != 0; search_adress = search_adress-&gt;next);
+	if (search_adress == NULL) &#123;
+		for (search_adress = head_adress; search_adress != NULL &amp;&amp; strcmp(search_adress-&gt;name, search) != 0; search_adress = search_adress-&gt;next);
+		if (search_adress != NULL)	return search_adress;
+		else &#123;
+			printf(&quot;This person doesn&#39;t exist\n&quot;);
+			return NULL;
+		&#125;
+	&#125;
+	else return search_adress;
+
+&#125;
+</code></pre>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/124508883">https://blog.csdn.net/qq_32971095/article/details/124508883</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------THE END-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>SWQ
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/04/30/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A5%BF%E7%94%B5%E7%A7%91%E5%A4%A7%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A-%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A8%A1%E6%8B%9F%E5%9B%BE%E4%B9%A6%E9%A6%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" title="简单文件数据库-模拟图书馆管理系统-西安电子科技大学大一程序基础设计课程设计作业">http://example.com/2022/04/30/学习笔记/西电科大大一程序基础设计课程设计作业-简单文件数据库-模拟图书馆管理系统/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/%E4%BD%9C%E4%B8%9A%E8%A7%A3%E7%AD%94/" rel="tag"># 作业解答</a>
+              <a href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag"># c语言</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/30/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E7%8A%B6%E6%80%81%E4%B8%8D%E4%BD%B3%EF%BC%8C%E4%BA%9F%E5%BE%85%E8%B0%83%E6%95%B4!/" rel="prev" title="状态不佳，亟待调整!">
+      <i class="fa fa-chevron-left"></i> 状态不佳，亟待调整!
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%A5%BF%E7%94%B5%E7%A7%91%E5%A4%A7%E5%A4%A7%E4%B8%80%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A-%E4%BD%8D%E5%9B%BE%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6%E7%BC%A9%E6%94%BE/" rel="next" title="位图图像文件缩放-西安电子科技大学大一程序基础设计课程设计作业">
+      位图图像文件缩放-西安电子科技大学大一程序基础设计课程设计作业 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SWQ"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SWQ</p>
+  <div class="site-description" itemprop="description">舟遥遥以轻飏，风飘飘而吹衣</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:18</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'H2FYHQwVGaUkawg5DkrA6d6M-gzGzoHsz',
+      appKey     : 'zndS0u9Qj7qj8CqnJINs2MGT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : 'https://h2fyhqwv.lc-cn-n1-shared.com'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

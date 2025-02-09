@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="参考资料：《MPSoc 之 HLS 开发指南——正点原子》  一.HLS 简介​    Xilinx 推出的 Vivado HLS 工具可以直接使用 C、C++或 System C 来对 Xilinx 系列的 FPGA 进行编程，从而提高抽象的层级，大大减少了使用传统 RTL 描述进行 FPGA 开发所需的时间。 1.高层综合简介FPGA 设计过程中的不同抽象层级:  编辑 ​    其中最底层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xilinx_HLS开发——FPGA学习笔记＜＞">
+<meta property="og:url" content="http://example.com/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="Switch">
+<meta property="og:description" content="参考资料：《MPSoc 之 HLS 开发指南——正点原子》  一.HLS 简介​    Xilinx 推出的 Vivado HLS 工具可以直接使用 C、C++或 System C 来对 Xilinx 系列的 FPGA 进行编程，从而提高抽象的层级，大大减少了使用传统 RTL 描述进行 FPGA 开发所需的时间。 1.高层综合简介FPGA 设计过程中的不同抽象层级:  编辑 ​    其中最底层">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e5abd4fdcb0a0970dbd3ce50c1c01602.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/aec38c321a6bf7a994413b1edb723d07.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2e408ec7f3b9cae80eafbcc011da6e8f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c61025b943652cd6fc057563920672d1.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/351a12b93c8037f1019dcaad00ad7c22.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/889b33c07a7044ca7df90c931447707f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2c7595868a494680867cf8023c255c94.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/1e547e1c5df802bc2406abdeb61a4051.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b246d0c3b70c32697b08693633dce5c5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/33d51a6cb2b3b1ab893b7172b6a77fff.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b54665f7676d98480928b9363bbd6084.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/91c8753e312ef0c01bbe6c7cd7b75721.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0c4e2cb246714c05eb1b58fb0d8acdd6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4b852ee605eefa043f5cd17466f8e745.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/793de4cde8dfd5689d329382c7a3eb51.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/6bc774d9359348525d2204f30d6fd681.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e92fa8f7f252ad6669e978dcc31e1f35.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/17ba4bf86ab4e63bc5c0fe4ee947a4cb.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c8b98eefc39c533a194f6987421d43cb.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5d77a34f4630600fa8256187b70dacb0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5cd05000847a4d3ae46400f343b8b2e5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/49a4715bf221a5789c3454bff0288803.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a43a6a14416e7047db4a669071900f0b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/35a88c6e41c0f86f67c5711960a8c35e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/450456fdb0a2090fa5a48b51c39453e5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ffe6a1dbc5ccf49490ec9f0b610ecdfe.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7e717f760384f738ba207ea01fbdba4d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/39088a1bb162810c80f9a2e28567ef1a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/036e502f4f15fa8379f8e3e328a596c0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/9b38ceee4d5a140a6fae67fa52209db9.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/cebbc80fca41a896d65fa133a2399d84.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/659f6dff8cade0ee80cac62172ddf35a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7092056d83f4a8444b3aeb6636f4201f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c3a0b992e672ea377bd9ba7e9650c047.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/91e3aa85aa16e0bade8cf94d8ea59ccf.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c9633f9db0cd48250b284abe59eb59ea.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/6279b86b6ca404aefdcbc221edabf93c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/62f337ae9489407d2070308c80f4bd3f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3a0e8c33df9433c9bf052d4135d447c6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/be840f04985aec9af5d9931e22cfb2f0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2f447d745dc0c981fb4f3a462ab3464b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e83fc389eaa196a56092158a99a2e375.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/33694d0e5f5d8a389e45367b2d49a098.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0d4eff34e0a5cf56fff08cdae9a3def8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/185e58c030b16b555d98724227df2f9a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a2c4c26353a6835e83917ac1c36fdfc1.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2ecbb1b564ad078294c72519bb29efaa.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/355f1871125eb82e26f24ac56d929851.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2999a4859b5376e33db87ae7d77d6c22.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4fb76f111078e9e95818eba40c004c9e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/8ae2f3ff7bcbe7aa300ccaef91437ccd.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/18bb070fd72c71bb4220b2b4206e53bc.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/480baf55369c6200a43dcb6788d8cdfe.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/29d583a658443fcc09a3f1f7f683824f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7ab36254ac012e21038e273d5f657eae.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f29f8ff5102ba9626bc447c37048f6f0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ebacb3345ababefb2152706af2ce18f0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/6db8f1f58120ba5512c5c4296b53b4cf.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2c385850af5094bb04995179ed532b0a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/12c0b8b854f10f49a386f6b2008e9e54.png">
+<meta property="article:published_time" content="2023-09-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-09T07:41:36.241Z">
+<meta property="article:author" content="SWQ">
+<meta property="article:tag" content="fpga开发">
+<meta property="article:tag" content="嵌入式硬件">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/e5abd4fdcb0a0970dbd3ce50c1c01602.png">
+
+<link rel="canonical" href="http://example.com/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Xilinx_HLS开发——FPGA学习笔记＜＞ | Switch</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Switch</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to My Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">135</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻飏，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Xilinx_HLS开发——FPGA学习笔记＜＞
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-10-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-10-01T00:00:00+08:00">2023-10-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-09 15:41:36" itemprop="dateModified" datetime="2025-02-09T15:41:36+08:00">2025-02-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/" class="post-meta-item leancloud_visitors" data-flag-title="Xilinx_HLS开发——FPGA学习笔记＜＞" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>23k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>21 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p> 参考资料：《MPSoc 之 HLS 开发指南——正点原子》 </p>
+<h1 id="一-HLS-简介"><a href="#一-HLS-简介" class="headerlink" title="一.HLS 简介"></a>一.HLS 简介</h1><p>​    Xilinx 推出的 Vivado HLS 工具可以直接<strong>使用 C、C++或 System C 来对 Xilinx 系列的 FPGA 进行编程</strong>，从而提高抽象的层级，大大减少了使用传统 RTL 描述进行 FPGA 开发所需的时间。</p>
+<h2 id="1-高层综合简介"><a href="#1-高层综合简介" class="headerlink" title="1.高层综合简介"></a>1.高层综合简介</h2><p>FPGA 设计过程中的不同抽象层级:</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e5abd4fdcb0a0970dbd3ce50c1c01602.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    其中最底层的抽象（结构性的）涉及到对底层硬件单元直接的例化，<strong>比如逻辑门，甚至是更 底层的 LUT 或者触发器</strong>。设计者更常用的是在“<strong>寄存器传输级（Register Transfer Level，RTL）</strong>”进行设计， 这个层级的抽象隐藏了底层的细节，是在<strong>描述寄存器和寄存器之间可执行的操作</strong>。更上层的“行为性的” 描述是对电路的算法描述，也就是描述电路表现出什么样的功能（行为），而不是描述每个寄存器该如何进行操作。</p>
+<p>​    前面介绍的几种抽象层级都是在使用硬件描述语言 HDL 进行设计，可以看出，随着抽象层级的提升， 设计最终在硬件上实现的细节逐渐被弱化。而本章重点介绍的“高层”设计方法则直接使用高级语言，如 C&#x2F;C++进行设计，然后由 Vivado HLS 编译器将 C 代码综合成 HDL 描述，最后再进行逻辑综合得到网表， 这个网表最终会被映射到具体的 FPGA 器件上。</p>
+<p>​    就像 C 语言或者其他高级语言针对不同的处理器架构有着不同的编译器，<strong>Xilinx Vivado High-Level Synthesis（高层综合，HLS）工具同样是一种编译器，只不过它是用来将 C 或者 C++程序部署到 FPGA 上， 而不是部署到传统的处理器上。</strong></p>
+<p>​    C++是一个基于 C 的面向对象的语言，它在 C 的基础上扩展了<strong>类、模板、多态和虚函数</strong>的概念，还有 一些其他的特性。C++的抽象层次总的来说比 C 要高，能做更精密、灵活的代码开发。另一方面来说，C 的语言特性和编程风格和 C++是兼容的，因此 C++可以认为是 C 的扩展集。总的来说，C++是比 C 更高级 的语言，但是仍保留对低层 C 程序的支持。</p>
+<p>​    严格来说它是 C++的一种扩展。SystemC 能以 C++ 风格的代码来实现 HDL 的以硬件为中心的概念，比如层次结构、并行和周期精确，这些都无法以标准 C++ 的形式来表达。</p>
+<h2 id="2-HLS-设计流程"><a href="#2-HLS-设计流程" class="headerlink" title="2.HLS 设计流程"></a>2.HLS 设计流程</h2><p>使用 Vivado HLS 进行设计的流程如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/aec38c321a6bf7a994413b1edb723d07.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    HLS 设计的主要输入是一个 C&#x2F;C++&#x2F;SystemC 设计，以及一个基于 C 的测试集（TestBench）。我们首先 要知道 C 语言的本质就是函数，那么这个测试集就是用于验证 C 设计中的函数，验证过程需要一个“黄金 参考”。这个“黄金参考”类似于一个标准答案，用来和 C 设计中函数所产生的输出做比对。、</p>
+<p>​    在对 HLS 设计进行综合之前，我们要先对其进行“功能性验证”，也就是 C 仿真，其目的是验证 HLS 输入的 C 代码的功能是否正确。验证的方式就是在 TestBench 中调用 C 设计的函数，然后将其输出与“黄 金参考”进行比对，如果与黄金参考有差异就需要先对 C 设计进行修改调试。</p>
+<p>​    接下来就是对设计进行高层综合，即 HLS 过程本身。该过程涉及到分析和处理基于 C 的代码，加上 用户所给出的指令和约束，来创建 RTL 描述。高层综合结束后会产生一组输出文件，包括以 Verilog 或者 VHDL 语言编写的 RTL 设计文件。</p>
+<p>​    综合过程结束后得到的 RTL 模型，可以在 Vivado HLS 中进行 <strong>C&#x2F;RTL 协同仿真</strong>，来进一步验证综合得到的 RTL 设计的正确性。在这个过程中 Vivado HLS 会自动产生一个测试集为 RTL 设计提供输入，然后拿 它的输出与预期的值做比对。C 功能性验证和 C&#x2F;RTL 协同仿真的区别如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2e408ec7f3b9cae80eafbcc011da6e8f.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    在图左侧的功能性验证（C 仿真）中，原始测试集是用户输入的测试文件 TestBench。而右侧的 C&#x2F;RTL 协同仿真所需的 RTL 测试集是由 Vivado HLS 自动产生的，这样就不再需要人工创建了，所产生的测 试集包括了原始测试集和被测 RTL 模块之间的数据传递。</p>
+<p>​    在设计被验证了之后，而且实现也满足了期望的设计目标，那么就可以集成进更大的系统里了。我们 可以直接使用 HLS 过程所产生的 RTL 文件（即 VHDL 或 Verilog 代码），更方便的做法是使用 Vivado HLS 的 <strong>IP 打包功能</strong>。对 Vivado HLS 所产生的输出打包意味着 HLS 设计能够以 IP 核的形式引入其他 Xilinx 工具 中，比如 Vivado 中的 IP 集成器。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c61025b943652cd6fc057563920672d1.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<h2 id="3-接口综合"><a href="#3-接口综合" class="headerlink" title="3.接口综合"></a>3.接口综合</h2><p>在做 HLS 的时候，设计者需要分析设计的两个主要方面：</p>
+<p>• 设计的接口，也就是它的顶层连接；</p>
+<p>• 设计的功能，也就是它所实现的算法；</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/351a12b93c8037f1019dcaad00ad7c22.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    在上图中，两端的绿色区域表示设计的输入和输出接口，其中展示了部分接口类型，如 RAM 接口、FIFO 接口，以及总线类型的接口等。这些接口<strong>可以是工具从代码中通过接口综合（Interface Synthesis）得到的， 也可以由设计者手动指定具体的接口类型</strong>。</p>
+<p>​    图中间黄色的区域表示 HLS 设计具体能够实现的功能，对于不同的应用，其功能也各不相同。在 Vivado HLS 设计中，功能是从输入的代码中，经过算法综合（Algorithm Synthesis）的过程得到的。</p>
+<p>​    在这里我们先简单介绍一下接口综合。顾名思义，Interface Synthesis 指的是 HLS 设计中对接口的综合， 综合出来的接口能够与系统中的其他模块通信，还有可能需要与系统中的处理器进行通信。</p>
+<p>​    <strong>这里接口的概念既包括端口（port），也包含所使用的协议</strong>。所有<strong>端口的细节（如类型、位宽和方向） 是从 C&#x2F;C++文件中顶层函数的参数和返回值里推断出来的</strong>；而协议是从端口的表现（行为）推断出来的。 比如，最简单的接口可以是一条 1 比特的线（wire），而更复杂的接口，可能要用总线或 RAM 接口。<strong>接口综合能够推断出来的接口类型包括：线、寄存器、单向和双向握手信号、FIFO、存储器和总线等。</strong></p>
+<p>​    下面我们给出一个简单的 C 设计的顶层函数，函数名为 find_average_of_best_X()，其参数如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/889b33c07a7044ca7df90c931447707f.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    这个函数定义包含三个参数，数组“sample”和整数“X”是函数的输入，而 average 作为函数的输出。 因此，简单来说，这三个函数参数要被 HLS 转换成两个输入接口和一个输出接口，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2c7595868a494680867cf8023c255c94.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    需要注意的是，图只是一个简化了的接口示意图。根据所用的协议，这些接口可能包括数据端口 自身以外的控制输入或输出，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/1e547e1c5df802bc2406abdeb61a4051.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    图是函数 find_average_of_best_X()经 HLS 综合出来的完整的 RTL 模块的接口图。从图中可以看 到由函数的三个参数所综合出来的接口分别拥有了各自的协议，如 ap_memory 协议、ap_none 协议和 ap_vld 协议。同时模块还多出来了一些端口，如 ap_clk 和 ap_rst 等，它们使用的是 ap_ctrl_hs 协议。这些协议决定 了相应的接口是如何与系统中其他模块进行交互的，至于各协议具体的含义以及如何为接口选择其协议， 我们将在后续的章节中介绍。</p>
+<h2 id="4-算法综合"><a href="#4-算法综合" class="headerlink" title="4.算法综合"></a>4.算法综合</h2><p>算法综合包括三个主要阶段，依次是：</p>
+<p>1.解析出数据通路和控制电路；</p>
+<p>2.调度和绑定；</p>
+<p>3.优化；</p>
+<p><strong>解析出数据通路和控制电路</strong></p>
+<p>​    HLS 的第一个阶段是分析 C&#x2F;C++&#x2F;SystemC 代码，并且解释所需的功能。Vivado HLS 从以下几个方面分 析程序：逻辑和算法的运算、条件语句和分支、数组运算和循环等。</p>
+<p>​    所产生的实现会具有一个数据通路元件，一般还会有一个控制元件。需要澄清的是，这里的“数据通路”处理指的是在数据样本上作的运算，而“控制”是需要协同数据流处理所需的电路。算法的本质定义出数据通路和控制元件，设计者可以在 HLS 中<strong>采取专门的步骤来最小化控制元件的复杂度</strong>。</p>
+<p><strong>调度和绑定</strong></p>
+<p>​    HLS 是由两个主要过程组成的：调度（Scheduling）和绑定（Binding）。它们是交替进行的，彼此互相 影响，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/b246d0c3b70c32697b08693633dce5c5.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>•<strong>调度</strong>是把由 C 代码解释得到的 RTL 语句翻译成一组运算，每个运算都关联着一定的执行时间，以时 钟周期为单位。这个阶段所作的决策，受时钟频率和不确定度、目标芯片的技术和用户所施加的指令所影响。</p>
+<p>•<strong>绑定</strong>是调度好了的运算和目标芯片上的实际资源联系起来的过程。这些资源的功能和时序特征可能会影响调度，因此绑定信息会反馈给调度过程。比如使用 DSP48x 资源就表明关键路径比采用逻辑资源的方案要短。</p>
+<p><strong>优化</strong></p>
+<p>有两种方法可以用来调整 HLS 过程的行为，让高层综合朝着设计者的实现目标而努力，从而影响结果：</p>
+<p><strong>•约束</strong>—设计者可以对设计的某些指标加以限制。比如，可以指定最低的时钟周期。这样就能确保实现结果能够满足要集成进去的系统的要求。类似的，设计者可以选择约束资源的利用情况或其他的指标，从而优化应用的设计。</p>
+<p>•<strong>指令</strong>—设计者可以通过指令对 RTL 的实现参数施加更具体的影响。有各种类型的指令，分别映射在代码的某些特征上，比如让设计者可以指定 HLS 引擎如何处理 C 代码中识别出来的循环或数组，或是某个特定运算的延迟。这能导致 RTL 输出的巨大改变。因此，具有了指令的知识，设计者就可以根据应用的需求来做优化了。</p>
+<h2 id="5-HLS-库"><a href="#5-HLS-库" class="headerlink" title="5.HLS 库"></a>5.HLS 库</h2><p>​    Vivado HLS 中包含了一系列的 C 库（包括 C 和 C++），方便对一些常用的硬件结构或功能使用 C&#x2F;C++ 进行建模，并且能够综合成 RTL。在 Vivado HLS 中提供的 C 库有下面几种类型：</p>
+<p>1、任意精度数据类型库<br> 2、HLS Stream 库<br> 3、HLS 数学库<br> 4、HLS 视频库<br> 5、HLS IP 库<br> 6、HLS 线性代数库</p>
+<p>​    在 HLS 设计中调用库中的函数可以大大提高开发效率，比如在本教程中我们用到了大量的“HLS 视频 库”中的函数，来进行基于 HLS 的视频图像处理。</p>
+<h2 id="6-报错及解决方案"><a href="#6-报错及解决方案" class="headerlink" title="6.报错及解决方案"></a>6.报错及解决方案</h2><p>见参考资料</p>
+<h1 id="二-LED闪烁实验"><a href="#二-LED闪烁实验" class="headerlink" title="二.LED闪烁实验"></a>二.LED闪烁实验</h1><p>​    数字系统设计加速开发的周期两个方面考虑：<strong>（一）设计的重用和（二）抽象层次的提升</strong>。Xilinx Vivado 开发套件中的 IP 集成功能可以实现设计的重用，而 Vivado HLS 工具则能够实现对高层次设计的综合。</p>
+<p>​    Vivado High Level Synthesis（即 HLS，高层次综合）工具使用 <strong>C、C++或 System C 语言</strong>在更抽象的<strong>算法层次描述设计</strong>，并将 C 代码综合成 RTL 级的 HDL 描述。使用 Vivado HLS 进行高层次综合的过程如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/33d51a6cb2b3b1ab893b7172b6a77fff.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<h2 id="1-HLS设计"><a href="#1-HLS设计" class="headerlink" title="1.HLS设计"></a>1.HLS设计</h2><h3 id="创建HLS工程"><a href="#创建HLS工程" class="headerlink" title="&lt;1&gt;创建HLS工程"></a>&lt;1&gt;创建HLS工程</h3><p>​    打开 Vivado HLS 软件**（最新版为 Vitis HLS）**。在 Vivado HLS 的开始界面中点击左“Create New Project”，创建一个新 的工程。然后会弹出新建 Vivado HLS 工程向导界面。</p>
+<p>​    在“Project name”一栏输入工程名“xxx_hls”，然后在“Location”一栏通过点击 右侧的“Browse…”按钮，选择工程路径。需要注意的是，工程名以及路径只能由英文字 母、数字和下划线组成，不能包含中文、空格以及其他特殊字符。 设置好工程名及路径之后，点击“Next”。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/b54665f7676d98480928b9363bbd6084.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/91c8753e312ef0c01bbe6c7cd7b75721.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    在“Top Function”一栏设置设计的顶层函数为“led_twinkle”，然后点击“Next”，之后我们可以添加 C 测试文件，这里我们不需要添加，直接点击“Next”</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/0c4e2cb246714c05eb1b58fb0d8acdd6.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    DFZU2EG&#x2F;4EV MPSOC 开发板上的芯片有三种型号，XCZU4EV-sfvc784-1-i、XCZU2EG-sfvc784-2-i 和 XCZU2CG-sfvc784-2-i。</p>
+<p>​    创建工程完成后，Vivado HLS 会打开工程界面，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4b852ee605eefa043f5cd17466f8e745.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    在工程面板中的“source”目录上点击右键，然后在打开的列表中选择“New File”新建源文件。然后在弹出的对话框中输入源文件的名称“led_twinkle.c”，如图 2.3.11 所示。源文件默认的保存路径 为 HLS 工程目录，为方便源文件的管理，我们在工程目录下新建一个名为“src”的文件下，将源文件保存。输入的源文件的后缀名为“.c”，即使用 C 语言进行设计。如果使用 c++进行设计， 那么后缀名需要设置为“.cpp”。设置好文件名和路径之后，点击“保存”。</p>
+<p>​    在创建了源文件之后，在 Vivado HLS 工程面板中的 Source 目录下可以看到我们新建的源文件： led_twinkle.c，同时信息面板自动打开了该文件的编辑界面，我们可以在里面输入 C 代码。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/793de4cde8dfd5689d329382c7a3eb51.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>输入代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ap_cint.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DELAY 100000000</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">led_twinkle</span><span class="params">(uint1 *led)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; DELAY; i++)&#123;</span><br><span class="line">	<span class="keyword">if</span>(i &lt; DELAY/<span class="number">2</span>)</span><br><span class="line">		*led = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		*led = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>​    在代码的第 1 行，包含了一个名为“<strong>ap_cint</strong>.h”的头文件，该头文件包含了对任意精度整数类型的支持。 在代码的第 5 行，我们在定义函数参数<em>led 的类型时，就使用了这种数据类型——**“uint1”，它表示 1 位无符号整数*</em>。</p>
+<p>​    C 和 C++语言自带的数据类型是从四个基本数值类型中派生出来的 char、int、float 和 double，它们的 位宽分别是 8 位、32 位、32 位和 64 位。另外还支持 short int 类型（16 位），以及布尔类型（8 位）等。</p>
+<p>​    为了优化硬件实现，用于高层次综合的设计中不应该有多余的位存在，因为那样会导致额外的 硬件开销。比如在本次实验中，我们只需要控制一个 LED，即需要的位宽为 1。如果使用 C 语言自带的 数据类型，即使是将其定义成位宽最小的 char 类型，最终综合出来的模块端口也是 8 位。除了模块的 端口，与之相关的任何寄存器以及其他运算资源也都会超过必须的大小。因此，<strong>在 HLS 中需要支持任 意字长来满足电路需要的任意程度的精度</strong>。</p>
+<h3 id="综合代码"><a href="#综合代码" class="headerlink" title="&lt;2&gt;综合代码"></a>&lt;2&gt;综合代码</h3><p>​    代码输入完成后，按快捷键 Ctrl+S 保存。然后点击工具栏中向右的绿色三角形对 C 代码进行综合，如 下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/6bc774d9359348525d2204f30d6fd681.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    综合完成后，会自动打开综合结果（solution）的报告，给出了设计的性能评估、资源评估以及接口等信息。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e92fa8f7f252ad6669e978dcc31e1f35.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    如图所示，在接口信息的各个列中分别给出了设计综合出来的 **RTL 端口（Ports）、方向（Dir）、 位宽（Bits）以及协议（Protocol）**等信息。</p>
+<p>​    从第二行和第三行可以看到，综合之后的模块<strong>包含了时钟 ap_clk 和复位 ap_rst</strong> 两个端口。在本设计中， 这两个端口是必须的：<strong>因为模块的运算无法在一个时钟周期内完成，且模块内部的操作是同步的，因此它 需要一个时钟信号</strong>；而模块需要能够从外部被重置，因此需要一个复位信号。</p>
+<p>​    而图中蓝色方框内的一组接口用于实现<strong>模块级的协议</strong>，即 Protocol 一栏中的 <strong>ap_ctrl_hs（Control Handshake，控制握手协议）</strong>。所谓的模块级的协议主要是用于控制模块的运行，而协议具体的内容在本次实验中并不必深究，因为我们实现的功能相对比较简单，<strong>因此可以使用一个更简单的协议——ap_ctrl_none</strong>， 也就是不需要额外的控制端口。</p>
+<p>​    图中红色方框内的一组接口是本次<strong>模块的输出端口</strong>，其中 led 端口用于控制开发板上的两个 LED， 而 <strong>led_ap_vld</strong> 则用于实现<strong>端口的协议</strong>，即 Protocol 一栏中的 ap_vld。对于 led 端口，我们同样不需要额外的 控制信号，因此可以使用 <strong>ap_none</strong> 协议来替换 ap_vld 协议。替换之后模块的接口会更加简洁明了。</p>
+<p>​    接下来我们就通过<strong>插入“指令”（Directive）<strong>来指导综合的过程，从而得到</strong>使用 ap_ctrl_none 和 ap_none 协议</strong>的综合结果。</p>
+<p>​    在右侧的辅助面板中，打开 Directive 标签页，将鼠标放在顶层函数 <strong>led_twinkle</strong> 上，然后右 击选择“Insert Directive”：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/17ba4bf86ab4e63bc5c0fe4ee947a4cb.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>在弹出的 Vivado HLS 指令编辑框中作如下配置：</p>
+<p>1、 在 <strong>Directive</strong>（指令）一栏选择“<strong>INTERFACE</strong>”，即<strong>选择与接口相关的指令</strong>；</p>
+<p>2、 在 <strong>Destination</strong>（目标）一栏选择“<strong>Source File</strong>”，即<strong>将指令插入源文件</strong>；</p>
+<p>3、 在 Options 下的 <strong>mode</strong>（模式）一栏选择“<strong>ap_ctrl_none</strong>”，即接口使用 <strong>ap_ctrl_none</strong> 协议。</p>
+<p>设置完成后点击“OK”，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c8b98eefc39c533a194f6987421d43cb.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>插入指令完成后，源代码中多了一行语句。在代码的第 6 行多了一行<strong>以#pragma 开头</strong>的指令，pragma 的含义是“<strong>编译指示</strong>”。通过插入指令，设计者可以对 C 源码的实现过程加以控制。指令中的“INTERFACE”表示这是一条 控制接口综合过程的指令，而“ap_ctrl_none”表示相应的端口在综合的过程中使用 ap_ctrl_none 协议。需 要注意的是该指令的最后一部分**“port&#x3D;return”，它表示该接口指令是模块级的，而不是针对模块上的某一 个端口。<strong>接下来我们就要插入一条</strong>针对端口**的接口指令。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5d77a34f4630600fa8256187b70dacb0.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    按照同样的方法，在信息面板中保持 led_twinkle.c 的编辑页面打开，然后在右侧的辅助面板中，打开 Directive 标签页，将鼠标放在<strong>函数的参数 led</strong> 上，然后右击选择“Insert Directive”</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5cd05000847a4d3ae46400f343b8b2e5.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/49a4715bf221a5789c3454bff0288803.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    图中红色方框所指示的是新增的指令，与第 7 行的指令类似，它表示综合过程中接口使用的协议 为“ap_none”。与第 7 行指令末尾的“port&#x3D;return”不同，在该指令末尾的**“port&#x3D;led”表明该指令是针对 端口 led 的**。</p>
+<p>​    在指令添加完成后，按快捷键 Ctrl+S 保存源文件。然后重新点击工具栏中的绿色三角形，运行 C 综合 过程。综合完成后，会重新打开综合报告，其中接口部分如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a43a6a14416e7047db4a669071900f0b.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    在插入了两条综合指令后，HLS 重新综合之后得到的设计的端口简单了很多， 只有时钟（ap_clk）、复位（ap_rst）和 LED 端口。<strong>如果需要设置的端口较多，可以先通过上述方式插入一个端口的描述，然后复制粘贴生成的代码修改端口，在辅助设计栏会自动同步约束。</strong></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/35a88c6e41c0f86f67c5711960a8c35e.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<h3 id="生成-IP-核"><a href="#生成-IP-核" class="headerlink" title="&lt;3&gt;生成 IP 核"></a>&lt;3&gt;生成 IP 核</h3><p>​    我们需要通过查看综合报告，对高层次综合得到的结果进行评估。如果不满足要求（比如速度或资源 的要求），那么需要返回修改设计，然后再次进行综合。经过反复迭代得到我们满意的实现结果之后，就 来到了高层次综合流程的最后一步，将设计打包成 IP 模块，以供 Vivado 开发套件中的其他工具（如 IP 集 成器）使用。</p>
+<p>​    在工具栏中点击黄色的“田”字按钮（Export RTL），导出 RTL，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/450456fdb0a2090fa5a48b51c39453e5.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    在弹出的对话框中保持默认设置，直接点击“OK”</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ffe6a1dbc5ccf49490ec9f0b610ecdfe.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    设计导出完成后，HLS 设计部分就结束了，我们在 HLS 工程目录下可以找到导出的 IP 核</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7e717f760384f738ba207ea01fbdba4d.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    IP 核的存储路径如下： </p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/39088a1bb162810c80f9a2e28567ef1a.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    最后这里补充一下，如果 Vivado HLS 工程关闭后，下次如何打开工程。我们可以重新打开 Vivado HLS 软件，选择“Open Project”，此时会弹出选择 HLS 工程的文件夹，<strong>指定 HLS 工程所在的路径即可</strong>。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/036e502f4f15fa8379f8e3e328a596c0.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<h2 id="2-IP-验证"><a href="#2-IP-验证" class="headerlink" title="2.IP 验证"></a>2.IP 验证</h2><h3 id="IP-核添加"><a href="#IP-核添加" class="headerlink" title="&lt;1&gt; IP 核添加"></a>&lt;1&gt; IP 核添加</h3><p>​    工程创建完成后，需要先将 HLS 设计过程中导出的 IP 核拷贝到 Vivado 工程目录下。我们在 Vivado 工 程目录下新建一个名为“ip_repo”的文件夹，然后将压缩包拷贝到该文件夹中并解压：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9b38ceee4d5a140a6fae67fa52209db9.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    接下来在 Vivado 中将该 IP 添加到工程的 IP 库中。 点击菜单栏的**“Tools”，选择“Setting”**，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/cebbc80fca41a896d65fa133a2399d84.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    点击“IP”一栏下的“Repository”，然后点击“+”来添加自定义的 IP 核：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/659f6dff8cade0ee80cac62172ddf35a.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    接下来会弹出添加自定义 IP 核的路径，选择刚解压的文件夹，点击“Select”， 在弹出的界面中可以看到识别到的 IP 核，点击“OK”按钮添加 IP 核：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7092056d83f4a8444b3aeb6636f4201f.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>&lt;2&gt;IP 核验证 </p>
+<p>​    随后即可进行 IP 核的验证，通过 Verilog 语言或者**“Create Block Design”进行验证**：</p>
+<p>​    在 Block Design 中添加所需其他 IP 核并连接，在 Diagram 窗口空白处右击，然后选择“Validate Design” 验证设计。验证完成后弹出对话框提示**“Validation Successful”**表明设计无误，点击“OK”确认。最后按 快捷键“Ctrl+S”保存设计。</p>
+<p>​    接下来在 Source 窗口中右键点击 Block Design 设计文件“system.bd”，然后依次执行**“Generate Output Products”和“Create HDL Wrapper”**。</p>
+<p>​    然后我们还要为设计创建约束文件 <strong>system_wrapper.xdc</strong>，并在文件中添加以下管脚约束信息。</p>
+<p>​    最后在左侧 Flow Navigator 导航栏中找到 PROGRAM AND DEBUG，点击该选项中的**“Generate Bitstream”**，对设计进行综合、实现、并生成 Bitstream 文件。</p>
+<h1 id="三-按键控制-LED-灯实验"><a href="#三-按键控制-LED-灯实验" class="headerlink" title="三.按键控制 LED 灯实验"></a>三.按键控制 LED 灯实验</h1><p>​    在使用 Vivado HLS 工具进行设计的时候，如果设计完成之后发现功能不正确，然后确定问题产生的原 因是非常耗时的。为了提高效率，我们<strong>使用测试平台在设计完成之后验证 C 函数在功能上是否正确。</strong></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c3a0b992e672ea377bd9ba7e9650c047.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    从图中可以看出在 Vivado HLS 的设计流程中，设计的输入包括 **C&#x2F;C++设计、Testbench（测试集）编写 以及 Constraints（约束）&#x2F;directives（指令）的添加。**Vivado HLS 最主要的输出结果是以 VHDL&#x2F;Verilog 语言 描述的 RTL 实现，并打包成 IP 模块的形式以方便 Xilinx 设计工具使用，如 System Generator 等。</p>
+<p>​    我们可以使用 <strong>C testbench 在*综合之前*对 C 函数进行仿真</strong>，<strong>验证函数输出的正确性</strong>，这一过程被称之为 C 仿真，对应于图中的“C Simulation”。它还可以<strong>在综合之后对*综合得到的 RTL* 设计进行仿真</strong>，这一仿真 过程同样是使用 C testbench 进行的，这一过程被称为 <strong>C&#x2F;RTL 协同仿真</strong>，对应于图中的“RTL Simulation”。</p>
+<h2 id="1-HLS设计-1"><a href="#1-HLS设计-1" class="headerlink" title="1.HLS设计"></a>1.HLS设计</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;key_led.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">key_led</span><span class="params">(uint2 key,uint2* led)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE ap_none port=led</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE ap_none port=key</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE ap_ctrl_none port=return</span></span><br><span class="line"></span><br><span class="line">uint2 key_value = key;</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span>(key_value)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">		*led = <span class="number">3</span>;</span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">		*led = <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">		*led = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		*led = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>​    在代码的第 1 行，包含了一个名为“key_led.h”的头文件，这个是我们自己创建的头文件。“key_led.h” 的创建方式和“key_led.c”的创建方式相同。<strong>创建此头文件的目的是为了函数声明，以便在测试文件中引入 此头文件，从而在测试文件中可以调用我们所编写的函数。</strong></p>
+<p>​    头文件“key_led.h”的代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ap_cint.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _KEY_LED_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _KEY_LED_H_</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">key_led</span><span class="params">(uint2 key,uint2* led)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>​    在工程面板中的“<strong>Test Bench”目录</strong>上点击右键，然后在打开的列表中选择“New File”新建测试文件， 在弹出的对话框中输入测试文件的名称“key_led_tb.c”，如图 1.3.6 所示。测试文件的保存路径为 src 目录。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/91e3aa85aa16e0bade8cf94d8ea59ccf.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    在测试文件中编写如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;key_led.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	uint2 key,led;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">key_led</span>(<span class="number">0</span>,&amp;led);</span><br><span class="line">	<span class="built_in">key_led</span>(<span class="number">1</span>,&amp;led);</span><br><span class="line">	<span class="built_in">key_led</span>(<span class="number">2</span>,&amp;led);</span><br><span class="line">	<span class="built_in">key_led</span>(<span class="number">3</span>,&amp;led);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>​    在测试文件中，我们通过调用按键控制函数，并给按键赋不同的值，来实现按键控制的仿真。 代码输入完成后，按快捷键 Ctrl+S 保存。然后点击工具栏中向右的绿色三角形对 C 代码进行综合，综合完成后，会自动打开综合结果（solution）的报告，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c9633f9db0cd48250b284abe59eb59ea.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    从接口信息中，我们可以看到按键 key 的 C 语言类型是变量，在 RTL 级别中被映射为输入端口。led 的 C 语言类型是指针，在 RTL 级别中被映射为输出端口。这是因为 HLS 规定了协议、端口类型和方向之间的相关性，在 Vivado HLS 开发过程中，考虑 C&#x2F;C++ 函数参数的类型是很重要的。Vivado HLS 规定<strong>可以传入&#x2F;传出 C&#x2F;C++函数的值有四种不同的数据类型</strong>，分别是：<strong>变量、指针、数组和引用</strong>。这也就是说，一种特定的参数类型只对应于有限的几种协议。比如，<strong>传入一个数组作为形参输入，能使用的协议就只有：ap_hs、ap_memory、bram、ap_fifo、ap_bus、axis 和 m_axi</strong>， 其中 ap_memory 是默认的。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/6279b86b6ca404aefdcbc221edabf93c.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    本实验中，我们规定接口所使用的协议为 ap_none。图中的“D”表示“default”，表示 Vivado HLS 工 具默认综合出来的接口。“S”表示“support”，表示 Vivado HLS 工具支持综合出来的接口。从图中我们可 以看出，**使用 ap_none 时，当变量作为形参时，接口只能被综合成输入而不能被综合成输出，当指针变量作为形参时，接口可以被综合成输入、输出和双向端口。**本节实验中，我们定义按键 key 的类型为变量，led 的类型指针，从而实现了将按键 key 作为输入接口，led 作为输出接口。</p>
+<p>​    下面我们进行仿真，来测试 HLS 设计是否满足要求。点击工具栏中的仿真按钮，进入仿真，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/62f337ae9489407d2070308c80f4bd3f.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    弹出仿真配置界面，我们在配置界面中启动 C 调试器，并清除编译残留文件。设置如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3a0e8c33df9433c9bf052d4135d447c6.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    点击“OK”按钮，打开 C 调试器，在 C 调试器工具栏中点击单步调试按钮，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/be840f04985aec9af5d9931e22cfb2f0.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    执行单步调试，在右侧变量观察窗口中可以看到当按键值 key 为 1 的时候，*LED 值变为了 1。如下图 所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2f447d745dc0c981fb4f3a462ab3464b.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    其他内容同二。</p>
+<h1 id="四-呼吸灯实验"><a href="#四-呼吸灯实验" class="headerlink" title="四.呼吸灯实验"></a>四.呼吸灯实验</h1><p>​    学习如何使用 Vivado HLS 工具生成一个带有 AXI4-Lite 总线接口的 IP 核，并学 习 Vivado HLS 工具 C&#x2F;RTL 协同仿真平台的使用，以及在 Vivado 中对综合结果进行验证的流程。</p>
+<h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p>​    通过 Vivado HLS 生成一个带有 AXI4-Lite 总线接口的 IP 核，然后在 MPSOC PS 端通过 AXI4-Lite 总线来配置此 IP 核。</p>
+<p>​    AXI4 协议支持突发传输，主要用于处理器访问存储器等需要指定地址的高速数据传输场景。<strong>AXI4-Lite</strong> 为外设提供单个数据传输，主要用于访问一些<strong>低速外设</strong>中的寄存器。而 <strong>AXI-Stream</strong> 接口则像 FIFO 一样， 数据传输时<strong>不需要地址</strong>，在主从设备之间直接连续读写数据，主要用于如视频、高速 AD、PCIe、DMA 接 口等需要高速数据传输的场合。</p>
+<p>​    使用开发板上的 PL LED实现呼吸灯的效果，即由 灭渐亮，然后再由亮渐灭，并且 PS 可以通过 AXI 接口来控制呼吸灯的开关和呼吸的频率。</p>
+<p>波形图：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e83fc389eaa196a56092158a99a2e375.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<h2 id="2-HLS设计"><a href="#2-HLS设计" class="headerlink" title="2.HLS设计"></a>2.HLS设计</h2><p>​    新建一个名为 breath_led 的文件夹，作为本 次实验的工程目录。然后打开 Vivado HLS 工具，创建一个新的工程。设置工程名为“breath_led_hls”……在工程面板中的“source”目录上点击右键，然后在打开的列表中选择“New File” 新建源文件，在弹出的对话框中输入源文件的名称“breath_led.c”。</p>
+<p>代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;breath_led.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">breath_led</span><span class="params">(uint32 sw_ctrl, uint32 freq_step, uint1* led)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE ap_none port=led</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE s_axilite port=freq_step</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE s_axilite port=sw_ctrl</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE ap_ctrl_none port=return</span></span><br><span class="line">	uint32 duty_cycle,period_cnt;</span><br><span class="line">	<span class="keyword">if</span>(sw_ctrl == <span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">for</span>(duty_cycle=<span class="number">0</span>;duty_cycle&lt;<span class="number">100000</span>;duty_cycle=duty_cycle+freq_step)&#123;</span><br><span class="line">			<span class="keyword">for</span>(period_cnt=<span class="number">0</span>;period_cnt&lt;<span class="number">100000</span>;period_cnt++)</span><br><span class="line">				*led = (period_cnt &lt;= duty_cycle) ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>(duty_cycle=<span class="number">100000</span>;duty_cycle&gt;<span class="number">0</span>;duty_cycle= duty_cycle-freq_step)&#123;</span><br><span class="line">			<span class="keyword">for</span>(period_cnt=<span class="number">0</span>;period_cnt&lt;<span class="number">100000</span>;period_cnt++)</span><br><span class="line">				*led = (period_cnt &lt;= duty_cycle) ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">		*led = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>在source中添加头文件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ap_cint.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _BREATH_LED_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _BREATH_LED_H_</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">breath_led</span><span class="params">(uint32 sw_ctrl, uint32 freq_step, uint1* led)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>在test bench中添加测试文件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;breath_led.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	uint1 led;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">breath_led</span>(<span class="number">1</span>, <span class="number">4000</span>, &amp;led);   <span class="comment">//打开呼吸灯，频率步长设置为4000</span></span><br><span class="line">	<span class="built_in">breath_led</span>(<span class="number">0</span>, <span class="number">4000</span>, &amp;led);   <span class="comment">//关闭呼吸灯</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;test passed!\n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>​    在代码的第 3 行，我们在定义函数参数类型时，使用了“uint1”这种数据类型，它表示 1 位无符号整 数。在代码的第 5 行到代码的第 7 行，#pragma 为 HLS 优化指令，它表示 led 使用的是“ap_none”协议， 呼吸灯开关“sw_ctrl”和频率控制字“freq_step”使用的是 AXI4-Lite 协议。在代码的第 8 行“ap_ctrl_none” 表明没有添加包级别的协议，而是完全在端口接口级别用端口级别协议来做控制。在代码的第 1 行我们引入了“ap_cint.h”的头文件来包含任意精度数据类型。</p>
+<h3 id="Vitis-HLS相对vivado-hls变化"><a href="#Vitis-HLS相对vivado-hls变化" class="headerlink" title="Vitis HLS相对vivado hls变化"></a>Vitis HLS相对vivado hls变化</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ap_int.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _BREATH_LED_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _BREATH_LED_H_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> ap_int&lt;<span class="number">32</span>&gt; uint32;</span><br><span class="line"><span class="keyword">typedef</span> ap_uint&lt;<span class="number">1</span>&gt; uint1;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">breath_led</span><span class="params">(uint32 sw_ctrl, uint32 freq_step, uint1* led)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>​    主要区别在相关库的变化和任意精度数据类型的定义。参考用户手册UG1399<a target="_blank" rel="noopener" href="https://xilinx.eetrend.com/files/2021-11/wen_zhang_/100555486-227863-ug1399-vitis-hls.pdf">Vitis High-Level Synthesis User Guide</a>：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/33694d0e5f5d8a389e45367b2d49a098.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p> 可知如果要定义任意精度数据类型，需要引用头文件ap_int（vivadohls是ap_cint），且定义形式为ap_[u]int<w>。为了减少代码修改量，可以创建头文件public.h，在里面进行typedef。</w></p>
+<p>另外可以参考Vitis HLS示例代码：<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-HLS-Introductory-Examples">GitHub - Xilinx&#x2F;Vitis-HLS-Introductory-Examples</a></p>
+<p>​    </p>
+<h2 id="3-C-RTL联合仿真"><a href="#3-C-RTL联合仿真" class="headerlink" title="3.C&#x2F;RTL联合仿真"></a>3.C&#x2F;RTL联合仿真</h2><p>​    先点击工具栏中向右的绿色三角形对 C 代码进行综合，综合完成后，会自动打开综合结果。</p>
+<p>​    因为 Vivado HLS 工具不支持“ap_ctrl_none”包 级别协议的仿真，所以我们在仿真前先注释所有的优化指令#pragma。然后再点击工具栏中的“Solution”按钮，在打开的列表中选择“Run C&#x2F;RTL Cosimulation”进入 C&#x2F;RTL 协同仿真。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/0d4eff34e0a5cf56fff08cdae9a3def8.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    弹出 C&#x2F;RTL 仿真配置界面，我们在配置界面中选择使用“Vivado Simulator”仿真器，<strong>“Dump Trace”选 择“all”表示生成仿真波形</strong>。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/185e58c030b16b555d98724227df2f9a.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>   仿真结束后会自动打开报告，在工具栏或在侧边栏 flow navigator打开仿真波形图 Vivado HLS 会<strong>自动打开 Vivado Simulation 仿真工具（加载需要一定时间，不要手动打开防止崩溃）</strong>。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a2c4c26353a6835e83917ac1c36fdfc1.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2ecbb1b564ad078294c72519bb29efaa.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>将图中所示信号添加到波形窗口中：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/355f1871125eb82e26f24ac56d929851.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    下面我们 将设计打包成 IP 模块，以供 Vivado 开发套件中的其他工具（如 IP 集成器）使用。将之前注释的优化指令重修添加到 Vivado HLS 工程中，在工具栏中点击黄色的“田”字按钮，导出 RTL。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2999a4859b5376e33db87ae7d77d6c22.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4fb76f111078e9e95818eba40c004c9e.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    到计算机工程目录所指向的文件夹中同样可以看到以ZIP压缩文件形式存在的IP核。</p>
+<p>​    解压压缩包，在相关路径下可也看到HLS给我们生成的c文件：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/8ae2f3ff7bcbe7aa300ccaef91437ccd.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    其中xbreath_led.h文件包含VITIS所需的函数，文件内容如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ==============================================================</span></span><br><span class="line"><span class="comment">// Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2023.1 (64-bit)</span></span><br><span class="line"><span class="comment">// Tool Version Limit: 2023.05</span></span><br><span class="line"><span class="comment">// Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.</span></span><br><span class="line"><span class="comment">// Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.</span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">// ==============================================================</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> XBREATH_LED_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XBREATH_LED_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/***************************** Include Files *********************************/</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __linux__</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;xil_types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;xil_assert.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;xstatus.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;xil_io.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stddef.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;xbreath_led_hw.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**************************** Type Definitions ******************************/</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __linux__</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">uint8_t</span> u8;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">uint16_t</span> u16;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">uint32_t</span> u32;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">uint64_t</span> u64;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line">    u16 DeviceId;</span><br><span class="line">    u64 Control_BaseAddress;</span><br><span class="line">&#125; XBreath_led_Config;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line">    u64 Control_BaseAddress;</span><br><span class="line">    u32 IsReady;</span><br><span class="line">&#125; XBreath_led;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> u32 word_type;</span><br><span class="line"></span><br><span class="line"><span class="comment">/***************** Macros (Inline Functions) Definitions *********************/</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __linux__</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XBreath_led_WriteReg(BaseAddress, RegOffset, Data) \</span></span><br><span class="line"><span class="meta">    Xil_Out32((BaseAddress) + (RegOffset), (u32)(Data))</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XBreath_led_ReadReg(BaseAddress, RegOffset) \</span></span><br><span class="line"><span class="meta">    Xil_In32((BaseAddress) + (RegOffset))</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XBreath_led_WriteReg(BaseAddress, RegOffset, Data) \</span></span><br><span class="line"><span class="meta">    *(volatile u32*)((BaseAddress) + (RegOffset)) = (u32)(Data)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XBreath_led_ReadReg(BaseAddress, RegOffset) \</span></span><br><span class="line"><span class="meta">    *(volatile u32*)((BaseAddress) + (RegOffset))</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Xil_AssertVoid(expr)    assert(expr)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Xil_AssertNonvoid(expr) assert(expr)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XST_SUCCESS             0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XST_DEVICE_NOT_FOUND    2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XST_OPEN_DEVICE_FAILED  3</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XIL_COMPONENT_IS_READY  1</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/************************** Function Prototypes *****************************/</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __linux__</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">XBreath_led_Initialize</span><span class="params">(XBreath_led *InstancePtr, u16 DeviceId)</span></span>;</span><br><span class="line"><span class="function">XBreath_led_Config* <span class="title">XBreath_led_LookupConfig</span><span class="params">(u16 DeviceId)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">XBreath_led_CfgInitialize</span><span class="params">(XBreath_led *InstancePtr, XBreath_led_Config *ConfigPtr)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">XBreath_led_Initialize</span><span class="params">(XBreath_led *InstancePtr, <span class="type">const</span> <span class="type">char</span>* InstanceName)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">XBreath_led_Release</span><span class="params">(XBreath_led *InstancePtr)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">XBreath_led_Set_sw_ctrl</span><span class="params">(XBreath_led *InstancePtr, u32 Data)</span></span>;</span><br><span class="line"><span class="function">u32 <span class="title">XBreath_led_Get_sw_ctrl</span><span class="params">(XBreath_led *InstancePtr)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">XBreath_led_Set_freq_step</span><span class="params">(XBreath_led *InstancePtr, u32 Data)</span></span>;</span><br><span class="line"><span class="function">u32 <span class="title">XBreath_led_Get_freq_step</span><span class="params">(XBreath_led *InstancePtr)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h2 id="4-IP验证"><a href="#4-IP验证" class="headerlink" title="4.IP验证"></a>4.IP验证</h2><p>​    创建工程、配置硬件平台（参考VITIS设计二——“AXI GPIO 按键控制 LED 实验”第 3 小节硬件设计部分），添加HLS IP，自动布线。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/18bb070fd72c71bb4220b2b4206e53bc.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    右击，然后选择“Validate Design” 验证设计。验证完成后弹出对话框提示“Validation Successful”表明设计无误。接下来在 Source 窗口中右键点击 Block Design 设计文件“system.bd”，然后依次执行“Generate Output Products”和“Create HDL Wrapper”。</p>
+<p>​    然后我们还要为设计创建约束文件 system_wrapper.xdc，并添加以下管脚约束信息：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_property -dict &#123;PACKAGE_PIN AE10 IOSTANDARD LVCMOS33&#125; [get_ports &#123;led&#125;]</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>​    然后点击 RTL ANALYSIS——Schematic，最后在左侧 Flow Navigator 导航栏中找到 PROGRAM AND DEBUG，点击该选项中的“Generate Bitstream”，对设计进行综合、实现、并生成 Bitstream 文件。</p>
+<p>​    在生成 Bitstream 之后，在菜单栏中选择 File&gt;Export&gt;Export hardware 导出硬件，并在弹出的对话框中， 勾选“Include bitstream”。然后在菜单栏选择 Tools&gt;Launch Vitis，启动 Vitis 软件。</p>
+<p>​    在 Vitis 软件中新建一个 BSP 工程和一个空的应用工程，应用工程名为“breath_led”。然后为应用工程新建一个源文件“main.c”，我们在新建的 main.c 文件中输入本次实验的代码。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;xbreath_led.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;unistd.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	XBreath_led led;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">XBreath_led_Initialize</span>(&amp;led, XPAR_BREATH_LED_0_DEVICE_ID);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">XBreath_led_Set_freq_step</span>(&amp;led,<span class="number">80</span>);</span><br><span class="line">		<span class="built_in">XBreath_led_Set_sw_ctrl</span>(&amp;led,<span class="number">1</span>);      <span class="comment">//打开呼吸灯</span></span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">5</span>);</span><br><span class="line">		<span class="built_in">XBreath_led_Set_sw_ctrl</span>(&amp;led,<span class="number">0</span>);      <span class="comment">//关闭呼吸灯</span></span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">2</span>);</span><br><span class="line">		<span class="built_in">XBreath_led_Set_freq_step</span>(&amp;led,<span class="number">400</span>);</span><br><span class="line">		<span class="built_in">XBreath_led_Set_sw_ctrl</span>(&amp;led,<span class="number">1</span>);      <span class="comment">//打开呼吸灯</span></span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>​    第 1 行引入的“xbreath_led.h”即为 Vivado HLS 工具自动为我们生成的头文件（见前），这个头文件包含了初始化 和配置 Vivado HLS 生成 IP 核的函数。</p>
+<p>​    接着下载验证即可，具体见<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/136352300?spm=1001.2014.3001.5501">Vitis开发二——FPGA学习笔记</a>。</p>
+<h1 id="五-彩条显示实验"><a href="#五-彩条显示实验" class="headerlink" title="五.彩条显示实验"></a>五.彩条显示实验</h1><p>​    使用Vivado HLS设计彩条显示的IP核，并在Vivado中对设计出来的IP 核进行验证。</p>
+<h2 id="1-简介-1"><a href="#1-简介-1" class="headerlink" title="1.简介"></a>1.简介</h2><p>​    <strong>AXI4-Stream 总线</strong>协议由 ARM 公司提出，该协议专门针对<strong>视频、音频、数组等数据</strong>在<strong>片内通信设计</strong>。 在本章我们将实现彩条显示的功能，来学习如何使用 Vivado HLS 工具生成一个<strong>带有 AXI4-Stream 总线接口 的 IP 核</strong>，以及在 Vivado 中对综合结果进行验证的流程。</p>
+<p>关于 AXI Stream 的基本概念解释如下：</p>
+<p>传输（Transfer）：通过 AXI4 流接口进行的一个单一数据传输。一个单一数据传输由 TVALID 和 TREADY 握手信号定义。</p>
+<p>包（Packet）：通过 AXI4 流接口被一起传输的一组字节，包类似于 AXI4 的突发。</p>
+<p>帧（Frame）：一个 AXI4 流中最高级别的字节编组。一帧可以包含很大数量的字节数，例如，一个完 整的视频帧缓存。</p>
+<p>数据流（Data Stream）：从一个源设备到一个目标设备传输的数据。</p>
+<p><strong>相关详细介绍可以参考《计算机通信》与*<em><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133984011?spm=1001.2014.3001.5501">进阶设计一（DDR3）——一.5</a>*</em></strong></p>
+<p>​    TVALID 和 TREADY 信号的握手包含三种情况：TVALID 先于 TREADY 的握手、TREADY 先于 TVALID 的握手、TVALID 和 TREADY 同时发生的握手：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/480baf55369c6200a43dcb6788d8cdfe.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/29d583a658443fcc09a3f1f7f683824f.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7ab36254ac012e21038e273d5f657eae.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    <strong>“AXI4-Stream to Video Out”IP核</strong>模块中的 AXI4-Stream 接口：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f29f8ff5102ba9626bc447c37048f6f0.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    重点关注图中的“s_axis_video_tlast”和“s_axis_video_tuser”信号，其中“<strong>s_axis_video_tlast</strong>”是 AXI4-Stream 协议中“<strong>TLAST</strong>”信号，这个信号设置为高表示<strong>一行像素传输结束</strong>，“<strong>s_axis_video_tuser</strong>”是 AXI4-Stream 协议中的“<strong>TUSER</strong>”信号，这个信号设置为高表示<strong>一帧图像传输开始</strong>。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ebacb3345ababefb2152706af2ce18f0.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    图中的“EOL”表示“End of line”是行传输结束信号，它在一行图像像素传输结束的时候拉高一个时 钟周期；图中的“SOF”表示“Start of frame”是帧传输开始信号。它在一帧图像像素传输开始的时候拉高 一个时钟周期。</p>
+<h2 id="2-HLS设计-1"><a href="#2-HLS设计-1" class="headerlink" title="2.HLS设计"></a>2.HLS设计</h2><p>​    创建HLS工程lcd_colorbar_hls，指定顶层函数lcd_colorbar，添加src文件lcd_colorbar.c：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入数据类型头文件</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ap_cint.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义axi4-stream类型的结构体</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">ap_axi_stream</span>&#123;</span><br><span class="line">        uint24 data;</span><br><span class="line">        uint1 user;		<span class="comment">//帧传输开始信号</span></span><br><span class="line">        uint1 last;		<span class="comment">//行传输结束信号</span></span><br><span class="line">&#125;axi_stream;</span><br><span class="line"></span><br><span class="line"><span class="comment">//彩条显示顶层函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">lcd_colorbar</span><span class="params">(axi_stream* color,<span class="type">int</span> rows,<span class="type">int</span> cols)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">//Vivado HLS接口定义</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE s_axilite port=cols</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE s_axilite port=rows</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE axis port=color</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE ap_ctrl_none port=return</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> x_pos,y_pos;</span><br><span class="line">    <span class="type">int</span> color_edge = cols/<span class="number">7</span>;	<span class="comment">//显示7个彩条数据</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(y_pos=<span class="number">0</span>; y_pos&lt;rows; y_pos++)&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS PIPELINE</span></span><br><span class="line">        <span class="keyword">for</span>(x_pos=<span class="number">0</span>; x_pos&lt;cols; x_pos++)&#123;</span><br><span class="line">        	<span class="comment">//帧传输开始拉高一个时钟周期</span></span><br><span class="line">            <span class="keyword">if</span>((x_pos==<span class="number">0</span>) &amp;&amp; (y_pos==<span class="number">0</span>))&#123;</span><br><span class="line">                (*color).user = <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                (*color).user = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//行传输结束拉高一个时钟周期</span></span><br><span class="line">            <span class="keyword">if</span>(x_pos == (cols<span class="number">-1</span>))&#123;</span><br><span class="line">                (*color).last = <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                (*color).last = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//像素点彩条数据赋值</span></span><br><span class="line">            <span class="keyword">if</span>(x_pos &lt; color_edge)&#123;</span><br><span class="line">                (*color).data = <span class="number">0xff0000</span>;    <span class="comment">//红色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge &amp;&amp; x_pos &lt; color_edge*<span class="number">2</span>)&#123;</span><br><span class="line">                (*color).data = <span class="number">0xff7f00</span>;    <span class="comment">//橙色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">2</span> &amp;&amp; x_pos &lt; color_edge*<span class="number">3</span>)&#123;</span><br><span class="line">                (*color).data = <span class="number">0xffff00</span>;    <span class="comment">//黄色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">3</span> &amp;&amp; x_pos &lt; color_edge*<span class="number">4</span>)&#123;</span><br><span class="line">                (*color).data = <span class="number">0x00ff00</span>;    <span class="comment">//绿色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">4</span> &amp;&amp; x_pos &lt; color_edge*<span class="number">5</span>)&#123;</span><br><span class="line">                (*color).data = <span class="number">0x00ffff</span>;    <span class="comment">//青色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">5</span> &amp;&amp; x_pos &lt; color_edge*<span class="number">6</span>)&#123;</span><br><span class="line">                (*color).data = <span class="number">0x0000ff</span>;    <span class="comment">//蓝色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">6</span> &amp;&amp; x_pos &lt; cols)&#123;</span><br><span class="line">                (*color).data = <span class="number">0x8b00ff</span>;    <span class="comment">//紫色</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>​    我们这里将 data 置为 24 位，是因为采用 RGB888 格式的数据进行传输，数据位宽为 24。</p>
+<p>​    在代码的第 12 行，定义了顶层函数“lcd_colorbar”，这里我们传入 axi_stream 结构体类型的指针是因 为 vivodo HLS 规定如果用户想要<strong>生成带有 AXI4-Stream 接口的 IP 核，只能传入指针或者数组的类型作为输出接口</strong>。“rows”表示图像行数，“cols”表示图像列数。<strong>这里我们可以通过 MPSOC 的 PS 端来配置这些 参数，从而兼容不同分辨率的 LCD 屏幕</strong>。</p>
+<p>​    在代码的第 15 行到第 17 行，<strong>“axis”指定了颜色数据传输采用 AXI4-Stream 总线协议，“s_axilite” 指定了行和列控制信号传输采用 AXI4-Lite 总线协议</strong>。“ap_ctrl_none”表明没有添加包级别的协议，而是完全在端口接口级别用端口级别协议来做控制。</p>
+<p>​    代码的第 24 行使用 <strong>PIPELINE 指令</strong>对代码进行优化。HLS 优化设计的最关键指令有两个：一个是<strong>流水线(pipeline)指令，一个是数据流(dataflow)指令</strong>。正确地使用好这两个指令能够<strong>增强算法地并行性，提升吞吐量，降低延迟</strong>，但是需要遵循一定的代码风格。<strong>Pipeline 指令在循环和函数两个层级都可以使用，通过增 加重复的操作指令（如增加资源使用量等等）来减小初始化间隔。Dataflow 指令是一个任务级别的流水线 指令，从更高的任务层次使得循环或函数可以并行执行，目的在于减小延迟增加吞吐量。</strong></p>
+<p>​    优化指令#pragma HLS PIPELINE 的作用是<strong>缩短 C 函数或 C 循环之内的指令触发间隔（initial interval， II）</strong>。在不使用该指令的情况下，函数或循环默认的指令触发间隔 II 为 N；使用该指令后，编译器将将对 II 进行优化，默认将其缩短为 1，用户也可以在优化指令中指定期望的 II 值。如果 Vivado HLS 编译器不能将 II 优化为指定值，那么会在默认情况下把 II 优化到最小。</p>
+<p>​    对于本次实验来说，如果不添加 PIPELINE 指令，会影响产生彩条数据的速率，从而无法支持 10 寸 RGB LCD 液晶屏；而添加 PIPELINE 指令后，则可以提升该 IP 核产生彩条的速率，从而可以支持 10 寸 RGB LCD 液晶屏，但与此同时，所消耗的逻辑资源也有所增加。</p>
+<p>​    代码的第 27 行到第 31 行是一个条件判断语句，通过判断像素点的位置来设置“user”和“last”信号 的值。(“<strong>x_pos&#x3D;&#x3D;0”&amp;&amp;“y_pos&#x3D;&#x3D;0”)表示一帧图像数据开始传输</strong>，此时将 user 信号置高一个时钟周期， 在其它情况下将 user 信号置低。代码的第 33 行到第 37 行，<strong>“x_pos &#x3D;&#x3D; (cols – 1)”表示一行像素传输到最 后一个位置</strong>，这里我们将 cols 减一是因为 cols 是从零开始计数。当一行数据传输结束的时候将 last 信号置 高一个时钟周期，在其它情况下将 last 信号置低。</p>
+<p>​    在代码的第 39 行到第 52 行，通过比较“x_pos”和“color_edge”的大小，来对像素点的颜色数据进行 赋值。其中“0xff0000”表示 RGB888 格式的数据高 8 位为 1，从而像素点显示红色。</p>
+<p>注：VITIS HLS下的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入数据类型头文件</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ap_int.h&quot;</span></span></span><br><span class="line"><span class="keyword">typedef</span> ap_uint&lt;<span class="number">24</span>&gt; uint24;</span><br><span class="line"><span class="keyword">typedef</span> ap_uint&lt;<span class="number">1</span>&gt; uint1;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义axi4-stream类型的结构体</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">ap_axi_stream</span>&#123;</span><br><span class="line">        uint24 data;</span><br><span class="line">        uint1 user;		<span class="comment">//帧传输开始信号</span></span><br><span class="line">        uint1 last;		<span class="comment">//行传输结束信号</span></span><br><span class="line">&#125;axi_stream;</span><br><span class="line"></span><br><span class="line"><span class="comment">//彩条显示顶层函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">lcd_colorbar</span><span class="params">(axi_stream* color,<span class="type">int</span> rows,<span class="type">int</span> cols)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">//Vivado HLS接口定义</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE s_axilite port=cols</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE s_axilite port=rows</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE axis port=color</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS INTERFACE ap_ctrl_none port=return</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> x_pos,y_pos;</span><br><span class="line">    <span class="type">int</span> color_edge = cols/<span class="number">7</span>;	<span class="comment">//显示7个彩条数据</span></span><br><span class="line">    axi_stream temp;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(y_pos=<span class="number">0</span>; y_pos&lt;rows; y_pos++)&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> HLS PIPELINE</span></span><br><span class="line">        <span class="keyword">for</span>(x_pos=<span class="number">0</span>; x_pos&lt;cols; x_pos++)&#123;</span><br><span class="line">        	<span class="comment">//帧传输开始拉高一个时钟周期</span></span><br><span class="line">            <span class="keyword">if</span>((x_pos==<span class="number">0</span>) &amp;&amp; (y_pos==<span class="number">0</span>))&#123;</span><br><span class="line">                temp.user = <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                temp.user = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//行传输结束拉高一个时钟周期</span></span><br><span class="line">            <span class="keyword">if</span>(x_pos == (cols<span class="number">-1</span>))&#123;</span><br><span class="line">                temp.last = <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                temp.last = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//像素点彩条数据赋值</span></span><br><span class="line">            <span class="keyword">if</span>(x_pos &lt; color_edge)&#123;</span><br><span class="line">                temp.data = <span class="number">0xff0000</span>;    <span class="comment">//红色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge &amp;&amp; x_pos &lt; color_edge*<span class="number">2</span>)&#123;</span><br><span class="line">                temp.data = <span class="number">0xff7f00</span>;    <span class="comment">//橙色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">2</span> &amp;&amp; x_pos &lt; color_edge*<span class="number">3</span>)&#123;</span><br><span class="line">                temp.data = <span class="number">0xffff00</span>;    <span class="comment">//黄色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">3</span> &amp;&amp; x_pos &lt; color_edge*<span class="number">4</span>)&#123;</span><br><span class="line">                temp.data = <span class="number">0x00ff00</span>;    <span class="comment">//绿色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">4</span> &amp;&amp; x_pos &lt; color_edge*<span class="number">5</span>)&#123;</span><br><span class="line">                temp.data = <span class="number">0x00ffff</span>;    <span class="comment">//青色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">5</span> &amp;&amp; x_pos &lt; color_edge*<span class="number">6</span>)&#123;</span><br><span class="line">                temp.data = <span class="number">0x0000ff</span>;    <span class="comment">//蓝色</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x_pos &gt;= color_edge*<span class="number">6</span> &amp;&amp; x_pos &lt; cols)&#123;</span><br><span class="line">                temp.data = <span class="number">0x8b00ff</span>;    <span class="comment">//紫色</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            *color = temp;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>注意axi_stream流数据：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/6db8f1f58120ba5512c5c4296b53b4cf.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>故对代码做了相关修改，参考：<a target="_blank" rel="noopener" href="https://docs.xilinx.com/r/2022.2-English/ug1448-hls-guidance/Streaming">Streaming • Vitis HLS Messaging (UG1448)</a> </p>
+<p>​    点击工具栏进行综合，结果如下：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2c385850af5094bb04995179ed532b0a.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    图中 Protocol 一栏，“s_axi”和“axis”分别表示 Vivado HLS 生成了一个带有“AXI4-Lite”从接口和 “AXI4-Stream”总线接口的 IP 核。其中“AX4-Lite”总线接口用于控制彩条显示的分辨率，“AXI4-Stream” 总线接口用于传输彩条数据。 </p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/12c0b8b854f10f49a386f6b2008e9e54.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<p>​    最后导出RTL，HLS设计部分结束。</p>
+<h3 id="3-IP验证"><a href="#3-IP验证" class="headerlink" title="3.IP验证"></a>3.IP验证</h3>
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------THE END-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>SWQ
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/" title="Xilinx_HLS开发——FPGA学习笔记＜＞">http://example.com/2023/10/01/学习笔记/FPGA学习笔记(20)——Xilinx_HLS开发/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/29/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%EF%BC%9C1%EF%BC%9E/" rel="prev" title="边缘检测——Matlab实现计算机视觉＜1＞">
+      <i class="fa fa-chevron-left"></i> 边缘检测——Matlab实现计算机视觉＜1＞
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(30)%E2%80%94%E2%80%94%E5%B5%8C%E5%85%A5%E5%BC%8FLinux_Petalinux%E4%B8%80/" rel="next" title="嵌入式Linux_Petalinux一——FPGA学习笔记＜？＞">
+      嵌入式Linux_Petalinux一——FPGA学习笔记＜？＞ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-HLS-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">一.HLS 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%AB%98%E5%B1%82%E7%BB%BC%E5%90%88%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.高层综合简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HLS-%E8%AE%BE%E8%AE%A1%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">2.HLS 设计流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8E%A5%E5%8F%A3%E7%BB%BC%E5%90%88"><span class="nav-number">1.3.</span> <span class="nav-text">3.接口综合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%AE%97%E6%B3%95%E7%BB%BC%E5%90%88"><span class="nav-number">1.4.</span> <span class="nav-text">4.算法综合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-HLS-%E5%BA%93"><span class="nav-number">1.5.</span> <span class="nav-text">5.HLS 库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%8A%A5%E9%94%99%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.6.</span> <span class="nav-text">6.报错及解决方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-LED%E9%97%AA%E7%83%81%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.</span> <span class="nav-text">二.LED闪烁实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-HLS%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.1.</span> <span class="nav-text">1.HLS设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAHLS%E5%B7%A5%E7%A8%8B"><span class="nav-number">2.1.1.</span> <span class="nav-text">&lt;1&gt;创建HLS工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.2.</span> <span class="nav-text">&lt;2&gt;综合代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90-IP-%E6%A0%B8"><span class="nav-number">2.1.3.</span> <span class="nav-text">&lt;3&gt;生成 IP 核</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-IP-%E9%AA%8C%E8%AF%81"><span class="nav-number">2.2.</span> <span class="nav-text">2.IP 验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IP-%E6%A0%B8%E6%B7%BB%E5%8A%A0"><span class="nav-number">2.2.1.</span> <span class="nav-text">&lt;1&gt; IP 核添加</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-%E6%8C%89%E9%94%AE%E6%8E%A7%E5%88%B6-LED-%E7%81%AF%E5%AE%9E%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">三.按键控制 LED 灯实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-HLS%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">3.1.</span> <span class="nav-text">1.HLS设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E5%91%BC%E5%90%B8%E7%81%AF%E5%AE%9E%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text">四.呼吸灯实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="nav-number">4.1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HLS%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.2.</span> <span class="nav-text">2.HLS设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vitis-HLS%E7%9B%B8%E5%AF%B9vivado-hls%E5%8F%98%E5%8C%96"><span class="nav-number">4.2.1.</span> <span class="nav-text">Vitis HLS相对vivado hls变化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-C-RTL%E8%81%94%E5%90%88%E4%BB%BF%E7%9C%9F"><span class="nav-number">4.3.</span> <span class="nav-text">3.C&#x2F;RTL联合仿真</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-IP%E9%AA%8C%E8%AF%81"><span class="nav-number">4.4.</span> <span class="nav-text">4.IP验证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94-%E5%BD%A9%E6%9D%A1%E6%98%BE%E7%A4%BA%E5%AE%9E%E9%AA%8C"><span class="nav-number">5.</span> <span class="nav-text">五.彩条显示实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B-1"><span class="nav-number">5.1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HLS%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">5.2.</span> <span class="nav-text">2.HLS设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-IP%E9%AA%8C%E8%AF%81"><span class="nav-number">5.2.1.</span> <span class="nav-text">3.IP验证</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SWQ"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SWQ</p>
+  <div class="site-description" itemprop="description">舟遥遥以轻飏，风飘飘而吹衣</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:18</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'H2FYHQwVGaUkawg5DkrA6d6M-gzGzoHsz',
+      appKey     : 'zndS0u9Qj7qj8CqnJINs2MGT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : 'https://h2fyhqwv.lc-cn-n1-shared.com'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="源码下载：下载资源包(bookln.cn) 常用函数库： **         英文：**OpenCV: OpenCV modules **         中文：**Welcome to opencv documentation! — OpenCV 2.3.2documentation jetson nano上的OpenCV使用：图像识别小车（jetsonnano部分）——第五章 学习OpenC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV学习笔记——《基于OpenCV的数字图像处理》">
+<meta property="og:url" content="http://example.com/2023/07/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(6)%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/index.html">
+<meta property="og:site_name" content="Switch">
+<meta property="og:description" content="源码下载：下载资源包(bookln.cn) 常用函数库： **         英文：**OpenCV: OpenCV modules **         中文：**Welcome to opencv documentation! — OpenCV 2.3.2documentation jetson nano上的OpenCV使用：图像识别小车（jetsonnano部分）——第五章 学习OpenC">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bb52f259aeff1a793a7899f7f1678e8e.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/be8b3f267f375a33f3365797cbf719bd.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7637aa7bab9d022a85a835b6b07b0818.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e1811f91ca180329611fd9be36e5e02b.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c2fcbc408c51032f372737fcdbc6a410.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4891ab8394f175c44875a74ca770271d.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/10f1536c594c088a66be8508027e04c3.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/42061b3c66f846c840087275d00ada91.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4e731b3257fee71a5ec24342e7b18efb.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/51f19fbe807f911ee210017b64ea64ea.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/699cf9a73e9c5db8f5837d0018fe3604.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4fa8e85338396b037d05b85d40503c9d.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a35992394ee154df3670b102dfe9543c.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bd37be7931389615cbb559ae52a7a7ff.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/70661001c310f47939567a8a92d0512d.jpeg">
+<meta property="article:published_time" content="2023-07-08T15:25:36.000Z">
+<meta property="article:modified_time" content="2025-02-09T07:36:12.561Z">
+<meta property="article:author" content="SWQ">
+<meta property="article:tag" content="opencv">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/bb52f259aeff1a793a7899f7f1678e8e.jpeg">
+
+<link rel="canonical" href="http://example.com/2023/07/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(6)%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>OpenCV学习笔记——《基于OpenCV的数字图像处理》 | Switch</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Switch</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to My Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">135</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(6)%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻飏，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenCV学习笔记——《基于OpenCV的数字图像处理》
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-07-08 23:25:36" itemprop="dateCreated datePublished" datetime="2023-07-08T23:25:36+08:00">2023-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-09 15:36:12" itemprop="dateModified" datetime="2025-02-09T15:36:12+08:00">2025-02-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2023/07/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(6)%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/" class="post-meta-item leancloud_visitors" data-flag-title="OpenCV学习笔记——《基于OpenCV的数字图像处理》" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/07/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(6)%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/07/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(6)%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>42k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>38 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>源码下载：<a target="_blank" rel="noopener" href="https://29.s.bookln.cn/q?c=120EL4LP111&sh=sh&vt_=1688811733923#1688811735786" title="下载资源包 (bookln.cn)">下载资源包<br>(bookln.cn)</a></strong></p>
+<p><strong>常用函数库：</strong></p>
+<p>**         英文：**<a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/" title="OpenCV:
+OpenCV modules">OpenCV: OpenCV modules</a></p>
+<p>**         中文：**<a target="_blank" rel="noopener" href="https://www.opencv.org.cn/opencvdoc/2.3.2/html/index.html" title="Welcome to opencv documentation! — OpenCV 2.3.2 documentation">Welcome to opencv documentation! — OpenCV 2.3.2<br>documentation</a></p>
+<p><strong>jetson nano上的OpenCV使用：</strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/131511658?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22131511658%22,%22source%22:%22qq_32971095%22%7D" title="图像识别小车（jetson nano部分）">图像识别小车（jetson<br>nano部分）</a>——第五章</p>
+<p><strong>学习OpenCV的推荐网站和文章：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://learnopencv.com/getting-started-with-opencv/" title="Getting Started with OpenCV | LearnOpenCV">Getting Started with OpenCV | LearnOpenCV</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/spmallick/learnopencv" title="spmallick&#x2F;learnopencv:
+Learn OpenCV : C++ and Python Examples (github.com)">spmallick&#x2F;learnopencv: Learn OpenCV : C++ and Python Examples<br>(github.com)</a></p>
+<p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%B8%80.%E5%9B%BE%E5%83%8F%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86">一.图像相关知识</a></p>
+<p><a href="about:blank#%E4%BA%8C.opencv%E7%AE%80%E4%BB%8B">二.opencv简介</a></p>
+<p><a href="about:blank#%3C1%3E%EF%BC%88%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97%E3%80%81%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%EF%BC%88VS2019%EF%BC%89%E3%80%81%E6%BA%90%E7%A0%81%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91%EF%BC%88CMake%EF%BC%89%E3%80%81%E8%B0%83%E7%94%A8%E5%8A%A8%2F%E9%9D%99%E6%80%81%E5%BA%93%E3%80%81cv%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E3%80%81OpenCV%20API%E7%89%B9%E7%82%B9%E3%80%81%E6%95%B0%E6%8D%AE%E5%86%85%E9%83%A8%E6%8E%A5%E5%8F%A3InputArray%2FOutputArray%E3%80%81%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E3%80%81OpenCV%E5%A4%B4%E6%96%87%E4%BB%B6%E3%80%81HighGui%E6%A8%A1%E5%9D%97%EF%BC%89">&lt;1&gt;（主体模块、环境变量配置（VS2019）、源码手动编译（CMake）、调用动&#x2F;静态库、cv命名空间、OpenCV<br>API特点、数据内部接口InputArray&#x2F;OutputArray、错误处理、OpenCV头文件、HighGui模块）</a></p>
+<p><a href="about:blank#%3C2%3E%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9A">&lt;2&gt;示例代码：</a></p>
+<p><a href="about:blank#1.%E5%B1%95%E7%A4%BA%E5%9B%BE%E7%89%87%EF%BC%9A">1.展示图片：</a></p>
+<p><a href="about:blank#2.%E6%92%AD%E6%94%BE%E8%A7%86%E9%A2%91">2.播放视频</a></p>
+<p><a href="about:blank#3.%E6%BB%91%E5%8A%A8%E6%9D%A1%E4%BD%BF%E7%94%A8%EF%BC%9A">3.滑动条使用：</a></p>
+<p><a href="about:blank#4.%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6%E5%93%8D%E5%BA%94%EF%BC%9A">4.鼠标事件响应：</a></p>
+<p><a href="about:blank#%3C3%3E%E7%BB%83%E6%89%8B%EF%BC%9A">&lt;3&gt;练手：</a></p>
+<p><a href="about:blank#1.%E6%89%93%E5%BC%80%E6%91%84%E5%83%8F%E5%A4%B4">1.打开摄像头</a></p>
+<p><a href="about:blank#2.%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8%EF%BC%8C%E6%BB%91%E5%8A%A8%E6%9D%A1%E6%8E%A7%E5%88%B6%E8%BF%9B%E5%BA%A6%EF%BC%8C%E5%8F%8C%E5%87%BB%E6%9A%82%E5%81%9C%2F%E6%92%AD%E6%94%BE">2.视频播放器，滑动条控制进度，双击暂停&#x2F;播放</a></p>
+<p><a href="about:blank#%3C4%3Elinux%E4%B8%8A%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%EF%BC%9A%E5%8F%82%E8%80%83%EF%BC%9ALinux%E4%B8%8B%E7%BC%96%E8%AF%91%E3%80%81%E9%93%BE%E6%8E%A5%E3%80%81%E5%8A%A0%E8%BD%BD%E8%BF%90%E8%A1%8CC%2B%2B%20OpenCV%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3_linux%E4%B8%8B%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%A5%BDopencv%E5%90%8E%E6%80%8E%E4%B9%88%E5%8A%A0%E8%BD%BD_Adenialzz%E7%9A%84%E5%8D%9A%E5%AE%A2-CSDN%E5%8D%9A%E5%AE%A2">&lt;4&gt;linux上编译运行：参考：Linux下编译、链接、加载运行C++<br>OpenCV的两种方式及常见问题的解决_linux下安装配置好opencv后怎么加载_Adenialzz的博客-<br>CSDN博客</a></p>
+<p><a href="about:blank#%E4%B8%89.OpenCV%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6">三.OpenCV基本数据结构和基本组件</a></p>
+<p><a href="about:blank#%3C1%3E%EF%BC%88%E5%9F%BA%E7%A1%80%E5%9B%BE%E5%83%8F%E5%AE%B9%E5%99%A8Mat%E7%B1%BB%EF%BC%9B%E7%82%B9Point%E7%B1%BB%EF%BC%9B%E9%A2%9C%E8%89%B2Scalar%E7%B1%BB%EF%BC%9B%E5%B0%BA%E5%AF%B8Size%E7%B1%BB%EF%BC%9B%E7%9F%A9%E5%BD%A2Rect%E7%B1%BB%EF%BC%9B%E6%97%8B%E8%BD%AC%E7%9F%A9%E5%BD%A2RotatedRect%E7%B1%BB%EF%BC%9B%E5%9B%BA%E5%AE%9A%E5%90%91%E9%87%8FVec%E7%B1%BB%EF%BC%9B%E5%A4%8D%E6%95%B0%E7%B1%BBcomplexf%EF%BC%89">&lt;1&gt;（基础图像容器Mat类；点Point类；颜色Scalar类；尺寸Size类；矩形Rect类；旋转矩形RotatedRect类；固定向量Vec类；复数类complexf）</a></p>
+<p><a href="about:blank#%C2%A0%3C2%3E%E7%BB%83%E6%89%8B%E4%BB%A3%E7%A0%81"> &lt;2&gt;练手代码</a></p>
+<p><a href="about:blank#1.Mat%E7%B1%BB%E6%93%8D%E4%BD%9C">1.Mat类操作</a></p>
+<p><a href="about:blank#2.%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F%E6%B5%81%E6%9E%81%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2">2.摄像头图像流极坐标变换</a></p>
+<p><a href="about:blank#3.%E8%AF%BB%E5%8F%96%E5%9B%BE%E5%83%8F%E5%83%8F%E7%B4%A0RGB%E5%80%BC%EF%BC%88%E5%B7%A6%E9%94%AE%E6%98%BE%E7%A4%BA%EF%BC%8C%E5%8F%B3%E9%94%AE%E6%B8%85%E7%A9%BA%EF%BC%89">3.读取图像像素RGB值（左键显示，右键清空）</a></p>
+<p><a href="about:blank#4.%E5%88%9B%E5%BB%BA%E4%B8%80%E5%AE%9A%E5%B0%BA%E5%AF%B83%E9%80%9A%E9%81%93RGB%E5%9B%BE%E5%83%8F%EF%BC%8C%E5%B9%B6%E9%80%90%E4%B8%AA%E8%AE%BF%E9%97%AE%E5%85%B6%E5%83%8F%E7%B4%A0%E5%80%BC%EF%BC%8C%E5%B9%B6%E7%BB%98%E5%88%B6%E4%B8%80%E7%BB%BF%E8%89%B2%E5%B9%B3%E9%9D%A2">4.创建一定尺寸3通道RGB图像，并逐个访问其像素值，并绘制一绿色平面</a></p>
+<p><a href="about:blank#%E5%9B%9B.%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%E4%B8%8E%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2">四.数字图像灰度变换与空间滤波</a></p>
+<p><a href="about:blank#%3C1%3E%EF%BC%88%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%EF%BC%9A%E7%BA%BF%E6%80%A7%E3%80%81%E9%9D%9E%E7%BA%BF%E6%80%A7%EF%BC%9B%E7%9B%B4%E6%96%B9%E5%9B%BE%EF%BC%9A%E6%A6%82%E7%8E%87%E3%80%81%E7%B4%AF%E8%AE%A1%EF%BC%89">&lt;1&gt;（灰度变换：线性、非线性；直方图：概率、累计）</a></p>
+<p><a href="about:blank#%3C2%3E%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">&lt;2&gt;示例代码</a></p>
+<p><a href="about:blank#1.%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%E5%87%BD%E6%95%B0">1.灰度变换函数</a></p>
+<p><a href="about:blank#2.%E7%9B%B4%E6%96%B9%E5%9B%BE%EF%BC%88%E6%A6%82%E7%8E%87%E7%9B%B4%E6%96%B9%E5%9B%BE%EF%BC%89%E7%BB%98%E5%88%B6%E5%87%BD%E6%95%B0">2.直方图（概率直方图）绘制函数</a></p>
+<p><a href="about:blank#%E4%B8%83.%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2">七.图像分割</a></p>
+<p><a href="about:blank#%3C1%3E%EF%BC%88%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%9A%E7%AE%97%E5%AD%90%EF%BC%9A%E4%B8%80%E9%98%B6%E5%AF%BC%E6%95%B0%EF%BC%88Sobel%2FPrewitt%2FRoberts%EF%BC%89%E3%80%81%E4%BA%8C%E9%98%B6%EF%BC%88%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%2FLOG%2FCanny%EF%BC%89%E3%80%81%E6%B7%B7%E5%90%88%EF%BC%9B%E5%87%A0%E4%BD%95%E5%BD%A2%E7%8A%B6%E6%A3%80%E6%B5%8B%EF%BC%88%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2%EF%BC%89%EF%BC%9A%E7%9B%B4%E7%BA%BF%EF%BC%89">&lt;1&gt;（边缘检测：算子：一阶导数【Sobel&#x2F;Prewitt&#x2F;Roberts】、二阶【拉普拉斯&#x2F;LOG&#x2F;Canny】）</a></p>
+<p><a href="about:blank#%EF%BC%88%E5%87%A0%E4%BD%95%E5%BD%A2%E7%8A%B6%E6%A3%80%E6%B5%8B%E3%80%90%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2%E3%80%91%EF%BC%9A%E7%9B%B4%E7%BA%BF%E3%80%81%E5%9C%86%EF%BC%89">（几何形状检测【霍夫变换】：直线、圆）</a></p>
+<p><a href="about:blank#%EF%BC%88%E9%98%88%E5%80%BC%E5%88%86%E5%89%B2%E3%80%90%E4%BA%8C%E5%80%BC%E5%8C%96%E3%80%91%EF%BC%9A%E5%85%A8%E5%B1%80%E9%98%88%E5%80%BC%E3%80%90OTSU%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%95%E3%80%91%E3%80%81%E8%87%AA%E9%80%82%E5%BA%94%E9%98%88%E5%80%BC%EF%BC%89">（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）</a></p>
+<p><a href="about:blank#%E2%80%8B%E7%BC%96%E8%BE%91%C2%A0%3C2%3E%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">​编辑<br>&lt;2&gt;示例代码</a></p>
+<p><a href="about:blank#1.%E9%9C%8D%E5%A4%AB%E7%9B%B4%E7%BA%BF%E5%8F%98%E6%8D%A2%E5%92%8C%E9%9C%8D%E5%A4%AB%E5%9C%86%E6%A3%80%E6%B5%8B">1.霍夫直线变换和霍夫圆检测</a></p>
+<p><a href="about:blank#2.OTSU%E6%96%B9%E6%B3%95%E5%92%8C%E4%B8%89%E8%A7%92%E6%B3%95%E6%B1%82%E5%85%A8%E5%B1%80%E9%98%88%E5%80%BC">2.OTSU方法和三角法求全局阈值</a></p>
+<p><a href="about:blank#%3C3%3E%E7%BB%83%E6%89%8B">&lt;3&gt;练手</a></p>
+<p><a href="about:blank#1.%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E4%BA%8C%E9%98%B6%E5%AF%BC%E6%95%B0%E7%AE%97%E5%AD%90%E4%BD%BF%E7%94%A8">1.边缘检测二阶导数算子使用</a></p>
+<p><a href="about:blank#2.%E9%9C%8D%E5%A4%AB%E7%9B%B4%E7%BA%BF%E5%8F%98%E6%8D%A2%E5%8F%8A%E9%9C%8D%E5%A4%AB%E5%9C%86%E7%9A%84%E6%A3%80%E6%B5%8B">2.霍夫直线变换及霍夫圆的检测</a></p>
+<p><a href="about:blank#3.linux%EF%BC%88ubuntu18%EF%BC%89%E4%B8%8A%E5%AE%9E%E7%8E%B0%E9%9C%8D%E5%A4%AB%E5%9C%86%E6%A3%80%E6%B5%8B%EF%BC%88%E5%8F%AF%E8%B0%83%E5%90%84%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%89">3.linux（ubuntu18）上实现霍夫圆检测（可调各个参数）</a></p>
+<p><a href="about:blank#4.%E9%98%88%E5%80%BC%E5%88%86%E5%89%B2%EF%BC%88OTSU%2F%E4%B8%89%E8%A7%92%E6%B3%95%2F%E8%87%AA%E9%80%82%E5%BA%94%E9%98%88%E5%80%BC%EF%BC%89">4.阈值分割（OTSU&#x2F;三角法&#x2F;自适应阈值）</a></p>
+<p><a href="about:blank#5.%E8%AF%86%E5%88%AB%E8%BD%A6%E9%81%93%EF%BC%88%E4%BA%8C%E5%80%BC%E5%8C%96%E3%80%81%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E3%80%81%E9%9C%8D%E5%A4%AB%E7%9B%B4%E7%BA%BF%E5%8F%98%E6%8D%A2%EF%BC%89">5.识别车道（二值化、边缘检测、霍夫直线变换）</a></p>
+<p><a href="about:blank#%E4%B9%9D.%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E5%92%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B">九.特征提取和目标检测</a></p>
+<p>[&lt;1&gt;（特征：HOG&#x2F;LBP&#x2F;HAAR-<br>LIKE）（分类：SVM&#x2F;级联分类器）](about:blank#%3C1%3E%EF%BC%88%E7%89%B9%E5%BE%81%EF%BC%9AHOG%2FLBP%2FHAAR-<br>LIKE%EF%BC%89%EF%BC%88%E5%88%86%E7%B1%BB%EF%BC%9ASVM%2F%E7%BA%A7%E8%81%94%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%89)</p>
+<p><a href="about:blank#%3C2%3E%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">&lt;2&gt;示例代码</a></p>
+<p><a href="about:blank#1.HOG%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%2BSVM">1.HOG特征提取+SVM</a></p>
+<p>[2.获取LBP&#x2F;MB-LBP特征函数](about:blank#2.%E8%8E%B7%E5%8F%96LBP%2FMB-<br>LBP%E7%89%B9%E5%BE%81%E5%87%BD%E6%95%B0)</p>
+<p><a href="about:blank#3.cascade%E7%BA%A7%E8%81%94%E5%88%86%E7%B1%BB%E5%99%A8%E4%BD%BF%E7%94%A8">3.cascade级联分类器使用</a></p>
+<hr>
+<h2 id="一-图像相关知识"><a href="#一-图像相关知识" class="headerlink" title="一.图像相关知识"></a>一.图像相关知识</h2><p><img src="https://i-blog.csdnimg.cn/blog_migrate/bb52f259aeff1a793a7899f7f1678e8e.jpeg"></p>
+<h2 id="二-opencv简介"><a href="#二-opencv简介" class="headerlink" title="二.opencv简介"></a>二.opencv简介</h2><h5 id="（主体模块、环境变量配置（VS2019）、源码手动编译（CMake）、调用动-静态库、cv命名空间、OpenCV"><a href="#（主体模块、环境变量配置（VS2019）、源码手动编译（CMake）、调用动-静态库、cv命名空间、OpenCV" class="headerlink" title="&lt;1&gt;（主体模块、环境变量配置（VS2019）、源码手动编译（CMake）、调用动&#x2F;静态库、cv命名空间、OpenCV"></a>&lt;1&gt;（主体模块、环境变量配置（VS2019）、源码手动编译（CMake）、调用动&#x2F;静态库、cv命名空间、OpenCV</h5><p>API特点、数据内部接口InputArray&#x2F;OutputArray、错误处理、OpenCV头文件、HighGui模块）</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/be8b3f267f375a33f3365797cbf719bd.jpeg"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7637aa7bab9d022a85a835b6b07b0818.jpeg"></p>
+<h5 id="示例代码："><a href="#示例代码：" class="headerlink" title="&lt;2&gt;示例代码："></a>&lt;2&gt;示例代码：</h5><h6 id="1-展示图片："><a href="#1-展示图片：" class="headerlink" title="1.展示图片："></a>1.展示图片：</h6><p>​<br>​    int main()<br>​    {<br>​    	namedWindow(“lena”, WINDOW_NORMAL);<br>​    	&#x2F;&#x2F;setWindowProperty(“lena”, WND_PROP_FULLSCREEN, WINDOW_FULLSCREEN);<br>​    	setWindowTitle(“lena”, “Lena经典图像窗口”);<br>​    	&#x2F;&#x2F;resizeWindow(“lena”, 400, 300);<br>​    	&#x2F;&#x2F;moveWindow(“lena”, 0, 0);<br>​    	createTrackbar(“t1”, “lena”, NULL, 10, NULL, NULL);<br>​    	Mat img &#x3D; imread(“lena512color.tiff”); &#x2F;&#x2F;读取图像<br>​    	if (img.empty()) {<br>​    		return -1; &#x2F;&#x2F;如果读取图像失败，则返回<br>​    	}<br>​    	imshow(“lena”, img); &#x2F;&#x2F;显示图像<br>​    	waitKey(0); &#x2F;&#x2F;等待用户输入<br>​        std::cout &lt;&lt; “Hello World!\n”;<br>​    }</p>
+<h6 id="2-播放视频"><a href="#2-播放视频" class="headerlink" title="2.播放视频"></a>2.播放视频</h6><p>​<br>​    void PlayVideo()<br>​    {<br>​    	cv::VideoCapture capture(“D:&#x2F;files&#x2F;picture and video&#x2F;C0056.MP4”);<br>​    	int nWidth &#x3D; capture.get(CAP_PROP_FRAME_WIDTH); &#x2F;&#x2F;视频图像宽度<br>​    	int nHeight &#x3D; capture.get(CAP_PROP_FRAME_HEIGHT); &#x2F;&#x2F;视频图像高度<br>​    	double dblFrameRate &#x3D; capture.get(CAP_PROP_FPS); &#x2F;&#x2F;视频帧率<br>​    	double dblFrameCnt &#x3D; capture.get(CAP_PROP_FRAME_COUNT); &#x2F;&#x2F;视频总帧数<br>​    	double dblStartFrames &#x3D; dblFrameCnt &#x2F; 2; &#x2F;&#x2F;播放起始帧数<br>​    	capture.set(CAP_PROP_POS_FRAMES, dblStartFrames); &#x2F;&#x2F;从视频中间开始播放<br>​<br>​    	cv::namedWindow(“video”,0 );<br>​    	resizeWindow(“video”, 800, 600);<br>​<br>​    	while (capture.isOpened()) {<br>​    		Mat frame;<br>​    		capture &gt;&gt; frame;<br>​    		if (frame.empty()) {<br>​    			break;<br>​    		}<br>​    		imshow(“video”, frame);<br>​    		waitKey(10);<br>​    	}<br>​    }</p>
+<h6 id="3-滑动条使用："><a href="#3-滑动条使用：" class="headerlink" title="3.滑动条使用："></a>3.滑动条使用：</h6><p>​<br>​    滑动条的使用实例<br>​    const int g_nMaxAlphaValue &#x3D; 100; &#x2F;&#x2F;Alpha值的最大值<br>​    int g_nCurAlphaValue;   &#x2F;&#x2F;当前滑动条对应的值<br>​    Mat g_srcImg1; &#x2F;&#x2F;第1张图像<br>​    Mat g_srcImg2; &#x2F;&#x2F;第2张图像<br>​    Mat g_mixImg;  &#x2F;&#x2F;混合图像<br>​    const char cszWindowName[] &#x3D; “mix”;<br>​    &#x2F;&#x2F;拖动滑动条的响应函数<br>​    void on_Trackbar(int, void *)<br>​    {<br>​    	&#x2F;&#x2F;求出当前alpha值相对于最大值的比例<br>​    	double dblAlphaValue &#x3D; double(g_nCurAlphaValue)&#x2F;double(g_nMaxAlphaValue);<br>​    	&#x2F;&#x2F;则beta值为1减去alpha值<br>​    	double dblBetaValue &#x3D; 1.0 - dblAlphaValue;<br>​    	&#x2F;&#x2F;根据alpha和beta的值，对两张图像进行线性混合<br>​    	addWeighted(g_srcImg1, dblAlphaValue, g_srcImg2, dblBetaValue, 0.0, g_mixImg);<br>​    	&#x2F;&#x2F;显示混合图像的效果<br>​    	imshow(cszWindowName, g_mixImg);<br>​    	if (0 &#x3D;&#x3D; g_nCurAlphaValue) {<br>​    		imwrite(“mix0.jpg”, g_mixImg);<br>​    	}<br>​    	if (50 &#x3D;&#x3D; g_nCurAlphaValue) {<br>​    		imwrite(“mix50.jpg”, g_mixImg);<br>​    	}<br>​    	if (100 &#x3D;&#x3D; g_nCurAlphaValue) {<br>​    		imwrite(“mix100.jpg”, g_mixImg);<br>​    	}<br>​    }<br>​<br>​    int main(int argc, char ** argv)<br>​    {<br>​    	&#x2F;&#x2F;加载图像 (两图像的尺寸需相同)<br>​    	g_srcImg1 &#x3D; imread(“lenna.bmp”, IMREAD_COLOR);<br>​    	if (g_srcImg1.empty()) {<br>​    		std::cout &lt;&lt; “读取第1张图像失败” &lt;&lt; std::endl;<br>​    		return -1;<br>​    	}<br>​    	g_srcImg2 &#x3D; imread(“tiffany.bmp”, IMREAD_COLOR);<br>​    	if (g_srcImg2.empty()){<br>​    		std::cout &lt;&lt; “读取第2张图像失败” &lt;&lt; std::endl;<br>​    		return -1;<br>​    	}<br>​    	&#x2F;&#x2F; 设置滑动条的初值为70<br>​    	g_nCurAlphaValue &#x3D; 0;<br>​<br>​    	&#x2F;&#x2F;创建窗口，自动调整大小<br>​    	namedWindow(“mix”, WINDOW_AUTOSIZE);<br>​    	&#x2F;&#x2F;在创建的窗体中创建一个滑动条控件<br>​    	char TrackbarName[50];<br>​    	sprintf_s(TrackbarName, “透明度 %d”, g_nMaxAlphaValue);<br>​    	createTrackbar(TrackbarName, cszWindowName, &amp;g_nCurAlphaValue, g_nMaxAlphaValue, on_Trackbar);<br>​    	&#x2F;&#x2F;调用一次回调函数，以显示图像<br>​    	on_Trackbar(g_nCurAlphaValue, 0);<br>​    	waitKey(0);<br>​    	return 0;<br>​    }</p>
+<h6 id="4-鼠标事件响应："><a href="#4-鼠标事件响应：" class="headerlink" title="4.鼠标事件响应："></a>4.鼠标事件响应：</h6><p>​<br>​    Rect g_rectangle; &#x2F;&#x2F;记录要绘制的矩形位置<br>​    bool g_bDrawingBox &#x3D; false;&#x2F;&#x2F;是否进行绘制<br>​    RNG g_rng(12345);  &#x2F;&#x2F;随机数对象<br>​    const String strWndName &#x3D; “MouseWnd”;<br>​    void DrawRactangle(Mat &amp; img, Rect rect)<br>​    {<br>​    	&#x2F;&#x2F;每次绘制矩形的颜色都是随机产生的<br>​    	rectangle(img, rect, Scalar(g_rng.uniform(0, 255), <br>​    		g_rng.uniform(0, 255), g_rng.uniform(0, 255)), 4);<br>​    }<br>​    void onMouseCallback(int event, int x, int y, int flags, void * param)<br>​    {<br>​    	&#x2F;&#x2F;将画矩形的图像作为参数传入回调函数<br>​    	Mat &amp;image &#x3D; <em>(Mat</em>)param;<br>​    	switch (event)<br>​    	{<br>​    		&#x2F;&#x2F;鼠标移动时改变窗口的大小<br>​    	case EVENT_MOUSEMOVE:<br>​    		&#x2F;&#x2F;如果g_bDrawingBox为真，则记录矩形信息到g_rectangle中<br>​    		if (g_bDrawingBox) {<br>​    			g_rectangle.width &#x3D; x - g_rectangle.x;<br>​    			g_rectangle.height &#x3D; y - g_rectangle.y;<br>​    		}<br>​    		break;<br>​    		&#x2F;&#x2F;左键按下时记录窗口的起始位置<br>​    	case EVENT_LBUTTONDOWN:<br>​    		g_bDrawingBox &#x3D; true;<br>​    		&#x2F;&#x2F;记录g_rectangle的起点<br>​    		g_rectangle &#x3D; Rect(x, y, 0, 0);<br>​    		break;<br>​    		&#x2F;&#x2F;左键抬起时将当前绘制的矩形信息写入到图像中<br>​    	case EVENT_LBUTTONUP:<br>​    		&#x2F;&#x2F; 标识符为false<br>​    		g_bDrawingBox &#x3D; false;<br>​    		&#x2F;&#x2F;向起点左边绘制<br>​    		if (g_rectangle.width &lt; 0) {<br>​    			g_rectangle.x +&#x3D; g_rectangle.width;<br>​    			g_rectangle.width *&#x3D; -1;<br>​    		}<br>​    		&#x2F;&#x2F;向起点上边绘制<br>​    		if (g_rectangle.height &lt; 0) {<br>​    			g_rectangle.y +&#x3D; g_rectangle.height;<br>​    			g_rectangle.height *&#x3D; -1;<br>​    		}<br>​    		&#x2F;&#x2F;调用函数进行绘制<br>​    		DrawRactangle(image, g_rectangle);<br>​    		break;<br>​    	}<br>​    }<br>​    int main(int argc, char ** argv)<br>​    {<br>​    	&#x2F;&#x2F;准备参数<br>​    	g_rectangle &#x3D; Rect(-1, -1, 0, 0);<br>​    	Mat srcImage(600, 800, CV_8UC3, Scalar(255,255,255)), tempImage;<br>​    	srcImage.copyTo(tempImage);<br>​    	g_rectangle &#x3D; Rect(-1, -1, 0, 0);<br>​    	&#x2F;&#x2F; 设置鼠标操作回调函数<br>​    	namedWindow(strWndName);<br>​    	setMouseCallback(strWndName, onMouseCallback, (void *)&amp;srcImage);<br>​    	&#x2F;&#x2F; 程序主循环，当进行绘制的标识符为真的时候进行绘制<br>​    	while (true)<br>​    	{<br>​    		&#x2F;&#x2F;复制原图到临时变量，这样可以清除上一次的鼠标拖动结果<br>​    		srcImage.copyTo(tempImage);<br>​    		if (g_bDrawingBox){<br>​    			&#x2F;&#x2F;在鼠标拖动时，每次都对图像进行临时绘制<br>​    			Rect rectCur &#x3D; g_rectangle;<br>​    			&#x2F;&#x2F;鼠标向上或向左移动时，需要对坐标进行处理<br>​    			if (rectCur.width &lt; 0) {<br>​    				rectCur.x +&#x3D; rectCur.width;<br>​    				rectCur.width *&#x3D; -1;<br>​    			}<br>​    			if (rectCur.height &lt; 0) {<br>​    				rectCur.y +&#x3D; rectCur.height;<br>​    				rectCur.height *&#x3D; -1;<br>​    			}<br>​    			DrawRactangle(tempImage, rectCur);<br>​    		}<br>​    		imshow(strWndName, tempImage);<br>​    		if (waitKey(10) &#x3D;&#x3D; 27) &#x2F;&#x2F; 按下ESC键，程序退出<br>​    			break;<br>​    	}<br>​<br>​    	return 0;<br>​    }</p>
+<h5 id="练手："><a href="#练手：" class="headerlink" title="&lt;3&gt;练手："></a>&lt;3&gt;练手：</h5><h6 id="1-打开摄像头"><a href="#1-打开摄像头" class="headerlink" title="1.打开摄像头"></a>1.打开摄像头</h6><p>​<br>​    #include “pch.h”                &#x2F;&#x2F;viscalC++预编译头文件<br>​    #include <iostream>             &#x2F;&#x2F;C++标准输入、输出流<br>​    #include &lt;opencv.hpp&gt;           &#x2F;&#x2F;OpenCV头文件<br>​    #include &lt;highgui.hpp&gt;          &#x2F;&#x2F;GUI界面头文件<br>​    using namespace cv;             &#x2F;&#x2F;打开cv的名词空间<br>​<br>​    #pragma comment(lib, “opencv_world480d.lib”)&#x2F;&#x2F;打开动态库<br>​<br>​    int main()<br>​    {<br>​    	cv::namedWindow(“camera”, 0);    &#x2F;&#x2F;新建名为“camera”的窗口<br>​    	VideoCapture capture(0);         &#x2F;&#x2F;打开ID为0的摄像头<br>​    	Mat frame;                       &#x2F;&#x2F;新建Mat变量（矩阵）<br>​    	while (capture.isOpened())<br>​    	{<br>​    		capture &gt;&gt; frame;            &#x2F;&#x2F;用重载运算符方式获取视频帧<br>​    		if (frame.empty())break;<br>​    		imshow(“camera”, frame);     &#x2F;&#x2F;在名为“camera”的窗口显示捕获帧<br>​    		waitKey(10);                 &#x2F;&#x2F;刷新图像，否则无法正常显示<br>​    	}<br>​    }</iostream></p>
+<h6 id="2-视频播放器，滑动条控制进度，双击暂停-播放"><a href="#2-视频播放器，滑动条控制进度，双击暂停-播放" class="headerlink" title="2.视频播放器，滑动条控制进度，双击暂停&#x2F;播放"></a>2.视频播放器，滑动条控制进度，双击暂停&#x2F;播放</h6><p>​<br>​    #include “pch.h”<br>​    #include <iostream><br>​    #include &lt;opencv.hpp&gt;<br>​    #include &lt;highgui.hpp&gt;<br>​    using namespace cv;<br>​    #pragma comment(lib,”opencv_world480d.lib”)<br>​<br>​    const char* trackname &#x3D; “progress”;<br>​    const char* windowname &#x3D; “videoplayer”;<br>​    const char* filepath &#x3D; “D:&#x2F;files&#x2F;picture and video&#x2F;C0056.MP4”;<br>​    cv::VideoCapture capture(filepath, CAP_ANY);<br>​    int nWidth &#x3D; capture.get(CAP_PROP_FRAME_WIDTH); &#x2F;&#x2F;视频图像宽度<br>​    int nHeight &#x3D; capture.get(CAP_PROP_FRAME_HEIGHT); &#x2F;&#x2F;视频图像高度<br>​    double dblFrameRate &#x3D; capture.get(CAP_PROP_FPS); &#x2F;&#x2F;视频帧率<br>​    double dblFrameCnt &#x3D; capture.get(CAP_PROP_FRAME_COUNT); &#x2F;&#x2F;视频总帧数<br>​<br>​    const int g_nMaxProgressValue &#x3D; 100;			&#x2F;&#x2F;Alpha值的最大值<br>​    int g_nCurProgressValue;						&#x2F;&#x2F;当前滑动条对应的值<br>​    int Cur_Frame;								&#x2F;&#x2F;记录暂停时的帧数<br>​<br>​    Mat frame;<br>​    int sign &#x3D; 0;<br>​<br>​    int main()<br>​    {<br>​    	void on_Trackbar(int, void*);<br>​    	void onMouseCallback(int event, int x, int y, int flags, void* param);<br>​    	cv::namedWindow(windowname,0);<br>​    	setWindowProperty(windowname, WND_PROP_ASPECT_RATIO , WINDOW_FREERATIO);<br>​    	resizeWindow(windowname, 400, 300);<br>​    	moveWindow(windowname, 0, 0);<br>​<br>    	createTrackbar(trackname, windowname, &amp;g_nCurProgressValue, g_nMaxProgressValue, on_Trackbar);<br>    	setMouseCallback(windowname, onMouseCallback, (void*)NULL);</iostream></p>
+<pre><code>	while(capture.isOpened())&#123;
+		Cur_Frame = capture.get(CAP_PROP_POS_FRAMES);	//获取当前播放帧数
+		//判断是否双击，双击则暂停播放
+		if (sign)
+		&#123;
+			capture.set(CAP_PROP_POS_FRAMES, Cur_Frame-1);
+		&#125;
+
+		capture &gt;&gt; frame;
+
+		//如果播放完毕，等待按键，直接退出
+		if (Cur_Frame == dblFrameCnt)
+		&#123;
+			waitKey(0);
+			break;
+		&#125;
+
+		imshow(windowname, frame);
+
+		//中途按		ESC可以直接退出
+		if (waitKey(1) == 27)break;
+	&#125;
+
+&#125;
+
+//滑动条回调函数
+void on_Trackbar(int, void*)
+&#123;
+	capture.set(CAP_PROP_POS_FRAMES, g_nCurProgressValue * dblFrameCnt / g_nMaxProgressValue); //从视频中间开始播放
+	capture &gt;&gt; frame;
+&#125;
+
+//鼠标回调函数
+void onMouseCallback(int event, int x, int y, int flags, void* param)
+&#123;
+	if(event==EVENT_LBUTTONDBLCLK)sign = (sign + 1) % 2;
+&#125;
+</code></pre>
+<p>注意控制输出暂停的方法：</p>
+<p>1.waitKey等待：键盘控制，可参考其他博主</p>
+<p>2.一直输出上一帧：即本人使用方法</p>
+<p>​<br>​    capture.set(CAP_PROP_POS_FRAMES, Cur_Frame-1);</p>
+<p>3.直接用system（“pause”）  </p>
+<h5 id="4-linux上编译运行：参考：-Linux下编译、链接、加载运行C"><a href="#4-linux上编译运行：参考：-Linux下编译、链接、加载运行C" class="headerlink" title="**&lt; 4&gt;linux上编译运行：参考：[Linux下编译、链接、加载运行C++"></a>**&lt; 4&gt;linux上编译运行：参考：[Linux下编译、链接、加载运行C++</h5><p>OpenCV的两种方式及常见问题的解决_linux下安装配置好opencv后怎么加载_Adenialzz的博客-<br>CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44966641/article/details/120659285?spm=1001.2014.3001.5506">https://blog.csdn.net/weixin_44966641/article/details/120659285?spm=1001.2014.3001.5506</a><br>“Linux下编译、链接、加载运行C++ OpenCV的两种方式及常见问题的解决_linux下安装配置好opencv后怎么加载_Adenialzz的博客-<br>CSDN博客”)**</p>
+<p><strong>CMakeLists.txt编辑：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kuliuheng/p/9431275.html" title="[CMAKE]
+详解CMakeLists.txt文件 - VictoKu - 博客园 (cnblogs.com)">[CMAKE] 详解CMakeLists.txt文件 - VictoKu - 博客园<br>(cnblogs.com)</a></strong></p>
+<p><strong>或参考：jetson nano上的OpenCV使用：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/131511658?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22131511658%22,%22source%22:%22qq_32971095%22%7D" title="图像识别小车（jetson nano部分）">图像识别小车（jetson<br>nano部分）</a>——第五章</strong></p>
+<h2 id><a href="#" class="headerlink" title></a></h2><h2 id="三-OpenCV基本数据结构和基本组件"><a href="#三-OpenCV基本数据结构和基本组件" class="headerlink" title="三.OpenCV基本数据结构和基本组件"></a>三.OpenCV基本数据结构和基本组件</h2><h5 id="-1"><a href="#-1" class="headerlink" title></a></h5><p>&lt;1&gt;（基础图像容器Mat类；点Point类；颜色Scalar类；尺寸Size类；矩形Rect类；旋转矩形RotatedRect类；固定向量Vec类；复数类complexf）</p>
+<p>（辅助对象：迭代参数TermCriteria类；范围range类；指针Ptr类）</p>
+<p>（工具和系统函数：数学、内存管理、性能优化、异常处理函数）</p>
+<p>（图像绘制图形函数：线、矩形、圆、折线）</p>
+<p>（图像保存函数；图像几何操作函数：均匀调整（尺寸）、仿射变换、对数极坐标变换）</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e1811f91ca180329611fd9be36e5e02b.jpeg"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c2fcbc408c51032f372737fcdbc6a410.jpeg"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4891ab8394f175c44875a74ca770271d.jpeg"></p>
+<h5 id="练手代码"><a href="#练手代码" class="headerlink" title="&lt;2&gt;练手代码"></a>&lt;2&gt;练手代码</h5><h6 id="1-Mat类操作"><a href="#1-Mat类操作" class="headerlink" title="1.Mat类操作"></a>1.Mat类操作</h6><p>​<br>​    int main()<br>​    {<br>​    	namedWindow(“image”, WINDOW_NORMAL);<br>​    	setWindowTitle(“image”, “image:”);<br>​    	Mat img(Size(200, 100), CV_8UC3, Scalar(80, 160, 240));<br>​    	imshow(“image”, img);<br>​    	waitKey(0);<br>​    	return -1;<br>​    }</p>
+<h6 id="2-摄像头图像流极坐标变换"><a href="#2-摄像头图像流极坐标变换" class="headerlink" title="2.摄像头图像流极坐标变换"></a>2.摄像头图像流极坐标变换</h6><p>​<br>​    const int g_nMaxValue &#x3D; 100; &#x2F;&#x2F;滑条值的最大值<br>​    int g_nCurValue &#x3D; 0;   &#x2F;&#x2F;当前滑动条对应的值<br>​<br>​    int main()<br>​    {<br>​    	void on_Trackbar(int, void*);<br>​    	namedWindow(“Polor”, WINDOW_NORMAL);<br>​<br>​    	Mat frame;<br>​    	VideoCapture capture(0);<br>​    	int nWidth &#x3D; capture.get(CAP_PROP_FRAME_WIDTH); &#x2F;&#x2F;视频图像宽度<br>​    	int nHeight &#x3D; capture.get(CAP_PROP_FRAME_HEIGHT); &#x2F;&#x2F;视频图像高度<br>​    	createTrackbar(“zoom factor”, “Polor”, &amp;g_nCurValue, g_nMaxValue, on_Trackbar);<br>​    	while (capture.isOpened())<br>​    	{<br>​    		capture &gt;&gt; frame;<br>​    		if (frame.empty())break;<br>​    		logPolar(frame, frame, Point2i(nWidth &#x2F; 2, nHeight &#x2F; 2), g_nCurValue, WARP_FILL_OUTLIERS);<br>​    		imshow(“Polor”, frame);<br>​    		waitKey(1);<br>​    	}<br>​<br>​    }<br>​<br>​    void on_Trackbar(int, void*)<br>​    {<br>​    	;<br>​    }</p>
+<h5 id="3-读取图像像素RGB值（左键显示，右键清空）"><a href="#3-读取图像像素RGB值（左键显示，右键清空）" class="headerlink" title="3.读取图像像素RGB值（左键显示，右键清空）"></a>3.读取图像像素RGB值（左键显示，右键清空）</h5><p>​    #include “opencv.hpp”<br>​    #include “highgui.hpp”<br>​    #include <iostream><br>​    using namespace cv;<br>​    #pragma comment(lib,”opencv_world480d.lib”)<br>​<br>​    const char* filepath &#x3D; “&#x2F;test2.png”;<br>​    const char* windowname &#x3D; “window”;<br>​    const char* windowtitle &#x3D; “image”;<br>​    const char* trackname &#x3D; “fontscale”;	<br>​    int fontscale &#x3D; 1;·								&#x2F;&#x2F;字体大小及线条粗细<br>​    const int max_fontscale &#x3D; 100;<br>​    Mat img &#x3D; imread(filepath, IMREAD_COLOR);<br>​    Mat draw_board &#x3D; img.clone();					&#x2F;&#x2F;图片拷贝以实现清除<br>​    char string[5];<br>​    </iostream></p>
+<pre><code>int main()
+&#123;
+	void on_Trackbar(int, void*);
+	void onMouseCallback(int event, int x, int y, int flags, void* param);
+	namedWindow(windowname, WINDOW_NORMAL);
+	createTrackbar(trackname, windowname, &amp;fontscale, max_fontscale, on_Trackbar);
+	setMouseCallback(windowname, onMouseCallback, (void*)NULL);
+	if (draw_board.empty())return -1;
+	while (!draw_board.empty())
+	&#123;
+		imshow(windowname, draw_board);
+		if (waitKey(1) == 27)break;
+	&#125;
+	return 0;
+&#125;
+
+void on_Trackbar(int, void*)
+&#123;
+	;
+&#125;
+
+void onMouseCallback(int event, int x, int y, int flags, void* param)
+&#123;
+	if (event == EVENT_LBUTTONDOWN)
+	&#123;
+		//读取鼠标所指像素的值
+		int rgb[3] = &#123; img.at&lt;cv::Vec3b&gt;(x, y)[2],img.at&lt;cv::Vec3b&gt;(x, y)[1], img.at&lt;cv::Vec3b&gt;(x, y)[0] &#125;;
+		//putText不支持\n换行，只能手动计算间隔：y + fontscale * 10 * i
+		for (int i = 0; i &lt; 3; i++) &#123;
+			sprintf_s(string, &quot;%d&quot;, rgb[i]);
+			//文字写入图像
+			putText(draw_board, string, Point(x, y + fontscale * 10 * i), FONT_HERSHEY_PLAIN, fontscale, Scalar(rgb[2], rgb[1], rgb[0]), fontscale, 8, false);
+		&#125;
+	&#125;
+	if (event == EVENT_RBUTTONDOWN)
+	&#123;
+		//使显示图像为原始图像，即清零
+		draw_board = img.clone();
+	&#125;
+&#125;
+</code></pre>
+<p>注：</p>
+<p>①.at()函数访问多通道Mat数据元素时为只能用at()函数，且注意at&lt;&gt;内为 Vec3b</p>
+<p>​<br>​    at&lt;cv::Vec3b&gt;(x, y)[i]</p>
+<p>②.putText()函数无法实现换行，需手动计算</p>
+<h6 id="4-创建一定尺寸3通道RGB图像，并逐个访问其像素值，并绘制一绿色平面"><a href="#4-创建一定尺寸3通道RGB图像，并逐个访问其像素值，并绘制一绿色平面" class="headerlink" title="4.创建一定尺寸3通道RGB图像，并逐个访问其像素值，并绘制一绿色平面"></a>4.创建一定尺寸3通道RGB图像，并逐个访问其像素值，并绘制一绿色平面</h6><p>​<br>​    #include “opencv.hpp”<br>​    #include “highgui.hpp”<br>​    #include <iostream><br>​    using namespace cv;<br>​    #pragma comment(lib,”opencv_world480d.lib”)<br>​<br>​    const char* filepath &#x3D; “test2.png”;<br>​    const char* windowname &#x3D; “window”;<br>​    const char* windowtitle &#x3D; “image”;<br>​    const char* trackname &#x3D; “fontscale”;<br>​<br>​    #define WIDTH 800<br>​    #define HEIGHT 600<br>​<br>​    int main()<br>​    {<br>​    	namedWindow(windowname, WINDOW_NORMAL);<br>​    	Mat img(WIDTH, HEIGHT, CV_8UC3, Scalar(0, 0, 0));<br>​    	for (int i &#x3D; 0; i &lt; WIDTH; i++) {<br>​    		for (int j &#x3D; 0; j &lt; HEIGHT; j++) {<br>​    			for (int k &#x3D; 0; k &lt; 3; k++) {<br>​    				img.at<Vec3b>(i, j)[k] &#x3D; (i * j * k) % 256;<br>​    			}<br>​    		}<br>​    	}<br>​    	Point p1(200, 50), p2(400, 200);<br>​    	rectangle(img,p1,p2,Scalar(0,255,0),8,8,0);<br>​    	imshow(windowname, img);<br>​    	&#x2F;&#x2F;imwrite(“C:&#x2F;Users&#x2F;user&#x2F;Desktop&#x2F;1.png”, img);<br>​    	waitKey(0);<br>​    	<br>​    }</Vec3b></iostream></p>
+<h2 id="四-数字图像灰度变换与空间滤波"><a href="#四-数字图像灰度变换与空间滤波" class="headerlink" title="四.数字图像灰度变换与空间滤波"></a>四.数字图像灰度变换与空间滤波</h2><h5 id="（灰度变换：线性、非线性；直方图：概率、累计）"><a href="#（灰度变换：线性、非线性；直方图：概率、累计）" class="headerlink" title="&lt;1&gt;（灰度变换：线性、非线性；直方图：概率、累计）"></a>&lt;1&gt;（灰度变换：线性、非线性；直方图：概率、累计）</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/10f1536c594c088a66be8508027e04c3.jpeg"></p>
+<h5 id="示例代码"><a href="#示例代码" class="headerlink" title="&lt;2&gt;示例代码"></a>&lt;2&gt;示例代码</h5><h6 id="1-灰度变换函数"><a href="#1-灰度变换函数" class="headerlink" title="1.灰度变换函数"></a>1.灰度变换函数</h6><p>①对数变换</p>
+<p>​<br>​    &#x2F;&#x2F;对数变换<br>​    void LogTransform(Mat srcImg, Mat &amp;dstImg, const float c&#x3D;1.0f)<br>​    {<br>​    	if (srcImg.empty()){<br>​    		cout &lt;&lt; “No data” &lt;&lt; endl;<br>​    		return;<br>​    	}<br>​    	&#x2F;&#x2F;Mat dstMat &#x3D; Mat::zeros(srcImg.size(), srcImg.type());<br>​    	add(srcImg, Scalar(1.0), srcImg);  &#x2F;&#x2F;计算 s+1<br>​    	srcImg.convertTo(srcImg, CV_32F);  &#x2F;&#x2F;转化为32位浮点型<br>​    	cv::log(srcImg, dstImg); &#x2F;&#x2F;计算log(1+s)<br>​    	dstImg &#x3D; c*dstImg;<br>​    	&#x2F;&#x2F;归一化处理<br>​    	normalize(dstImg, dstImg, 0, 255, NORM_MINMAX);<br>​    	&#x2F;&#x2F;cout &lt;&lt; dstImg &lt;&lt; endl;<br>​    	cout &lt;&lt; dstImg.elemSize() &lt;&lt; endl;<br>​    	&#x2F;&#x2F;将dstImg转换到CV_8U类型<br>​    	convertScaleAbs(dstImg, dstImg);<br>​    	return;<br>​    }</p>
+<p><strong>②*伽马变换</strong></p>
+<p>​<br>​    &#x2F;&#x2F;伽马校正<br>​    void MyGammaCorrection(const Mat&amp; src, Mat&amp; dst, float fGamma)<br>​    {<br>​    	&#x2F;&#x2F;CV_Assert(src.data);<br>​    	if (src.empty()){<br>​    		return;<br>​    	}<br>​    	&#x2F;&#x2F;只处理位深度为8位的图像<br>​    	CV_Assert(src.depth() !&#x3D; sizeof(uchar));<br>​    	&#x2F;&#x2F;创建查找表<br>​    	unsigned char lut[256];<br>​    	for (int i &#x3D; 0; i &lt; 256; i++){<br>​    		lut[i] &#x3D; saturate_cast<uchar>(pow((float)(i &#x2F; 255.0),<br>​    			fGamma) * 255.0f);<br>​    	}<br>​<br>​    	dst &#x3D; src.clone();<br>​    	const int channels &#x3D; dst.channels();<br>​    	switch (channels){<br>​    	case 1:<br>​    	{<br>​    		&#x2F;&#x2F;MatIterator_<uchar> it;<br>​    		&#x2F;&#x2F;for (it &#x3D; dst.begin<uchar>(); it !&#x3D; dst.end<uchar>(); it++)<br>​    		&#x2F;&#x2F;	*it &#x3D; lut[(*it)];<br>​    		for (int j &#x3D; 0; j &lt; dst.rows; j++){<br>​    			for (int i &#x3D; 0; i &lt; dst.cols; i++){<br>​    				unsigned char val &#x3D; dst.at<uchar>(j, i);<br>​    				dst.at<uchar>(j, i) &#x3D; lut[val];<br>​    			}<br>​    		}<br>​    		break;<br>​    	}<br>​    	case 3:<br>​    	{<br>​    		MatIterator_<Vec3b> it;<br>​    		for (it &#x3D; dst.begin<Vec3b>(); it !&#x3D; dst.end<Vec3b>(); it++){<br>​    			(*it)[0] &#x3D; lut[((*it)[0])];<br>​    			(*it)[1] &#x3D; lut[((*it)[1])];<br>​    			(*it)[2] &#x3D; lut[((*it)[2])];<br>​    		}<br>​    		break;<br>​    	}<br>​    	}<br>​    }</Vec3b></Vec3b></Vec3b></uchar></uchar></uchar></uchar></uchar></uchar></p>
+<p>注：saturate_cast&lt;&gt;的使用（防止颜色溢出）参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_15698613/article/details/84557588?spm=1001.2014.3001.5506" title="【OpenCV】中saturate_cast&lt;uchar&gt;的含义和用法是什么？_人工智能博士的博客-CSDN博客">【OpenCV】中saturate_cast<uchar>的含义和用法是什么？_人工智能博士的博客-<br>CSDN博客</uchar></a></p>
+<h6 id="2-直方图（概率直方图）绘制函数"><a href="#2-直方图（概率直方图）绘制函数" class="headerlink" title="2.直方图（概率直方图）绘制函数"></a>2.直方图（概率直方图）绘制函数</h6><p>①灰度直方图</p>
+<p>​<br>​    &#x2F;&#x2F;灰度直方图<br>​    void DrawGrayImgHist(const Mat &amp;srcImg)<br>​    {<br>​    	if (1 !&#x3D; srcImg.channels()){<br>​    		return;<br>​    	}<br>​    	int channels &#x3D; 0;<br>​    	Mat dstHist;<br>​    	int histSize[] &#x3D; { 256 };<br>​    	float midRanges[] &#x3D; { 0, 256 };<br>​    	const float *ranges[] &#x3D; { midRanges };<br>​    	calcHist(&amp;srcImg, 1, &amp;channels, Mat(), dstHist, <br>​    		1, histSize, ranges, true, true);<br>​    	&#x2F;&#x2F;最终绘制的直方图图像，大小是256×256<br>​    	Mat histImage &#x3D; Mat::zeros(Size(256, 256), CV_8UC1);<br>​    	double dblHistMaxValue;<br>​    	&#x2F;&#x2F;求得直方图的最大值<br>​    	minMaxLoc(dstHist, 0, &amp;dblHistMaxValue, 0, 0);<br>​    	&#x2F;&#x2F;将像素的个数整合到图像的最大范围内<br>​    	for (int i &#x3D; 0; i &lt;&#x3D; 255; i++){<br>​    		int value &#x3D; cvRound(dstHist.at<float>(i)<br>​    			* 255 &#x2F; dblHistMaxValue);<br>​    		line(histImage, Point(i, histImage.rows - 1), <br>​    			Point(i, histImage.rows - 1 - value), Scalar(255));<br>​    	}<br>​    	imshow(“直方图”, histImage);<br>​    	imwrite(“desert_hist_规定化之后.bmp”, histImage);<br>​    }</float></p>
+<p>注：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bjxqmy/p/12386274.html" title="minMaxLoc 寻找图像全局最大最小值">minMaxLoc 寻找图像全局最大最小值</a></p>
+<p>②RGB彩色直方图</p>
+<p>​<br>​    &#x2F;&#x2F;RGB彩色直方图<br>​    void DrawRGBImgHist(const Mat &amp;srcImg)<br>​    {<br>​    	if (srcImg.empty() || srcImg.channels() !&#x3D; 3){<br>​    		return;<br>​    	}<br>​    	&#x2F;&#x2F;分割成3个单通道图像 ( R, G 和 B )<br>​    	vector<Mat> rgb_planes;<br>​    	split(srcImg, rgb_planes);<br>​    	&#x2F;&#x2F; 设定bin数目<br>​    	int histSize &#x3D; 256;<br>​    	&#x2F;&#x2F; 设定取值范围 ( R,G,B) )<br>​    	float range[] &#x3D; { 0, 256 };<br>​    	const float* histRange &#x3D; { range };<br>​<br>​    	bool uniform &#x3D; true;<br>​    	bool accumulate &#x3D; true;<br>​<br>​    	Mat r_hist, g_hist, b_hist;<br>​<br>​    	&#x2F;&#x2F;计算直方图:<br>​    	calcHist(&amp;rgb_planes[0], 1, 0, Mat(), r_hist, 1, <br>​    		&amp;histSize, &amp;histRange, uniform, accumulate);<br>​    	calcHist(&amp;rgb_planes[1], 1, 0, Mat(), g_hist, 1, <br>​    		&amp;histSize, &amp;histRange, uniform, accumulate);<br>​    	calcHist(&amp;rgb_planes[2], 1, 0, Mat(), b_hist, 1,<br>​    		&amp;histSize, &amp;histRange, uniform, accumulate);<br>​<br>​    	&#x2F;&#x2F; 创建直方图画布<br>​    	int hist_w &#x3D; 256; int hist_h &#x3D; 200;<br>​    	int bin_w &#x3D; cvRound((double)hist_w &#x2F; histSize);<br>​<br>    	Mat histImage(hist_h, hist_w, CV_8UC3, Scalar(0, 0, 0));</Mat></p>
+<pre><code>	// 将直方图归一化到范围 [ 0, histImage.rows ]
+	normalize(r_hist, r_hist, 0, histImage.rows, NORM_MINMAX);
+	normalize(g_hist, g_hist, 0, histImage.rows, NORM_MINMAX);
+	normalize(b_hist, b_hist, 0, histImage.rows, NORM_MINMAX);
+
+	// 在直方图画布上画出直方图，3个直方图叠加在一起，用不同的颜色表示
+	for (int i = 1; i &lt; histSize; i++)
+	&#123;
+		line(histImage, Point(bin_w*(i - 1), hist_h - cvRound(r_hist.at&lt;float&gt;(i - 1))),
+			Point(bin_w*(i), hist_h - cvRound(r_hist.at&lt;float&gt;(i))),
+			Scalar(0, 0, 255), 2, 8, 0);
+		line(histImage, Point(bin_w*(i - 1), hist_h - cvRound(g_hist.at&lt;float&gt;(i - 1))),
+			Point(bin_w*(i), hist_h - cvRound(g_hist.at&lt;float&gt;(i))),
+			Scalar(0, 255, 0), 2, 8, 0);
+		line(histImage, Point(bin_w*(i - 1), hist_h - cvRound(b_hist.at&lt;float&gt;(i - 1))),
+			Point(bin_w*(i), hist_h - cvRound(b_hist.at&lt;float&gt;(i))),
+			Scalar(255, 0, 0), 2, 8, 0);
+	&#125;
+
+	// 显示直方图
+	imshow(&quot;RGB彩色图像直方图&quot;, histImage);
+	imwrite(&quot;./colorhist_for_beatuty_after_qualization.bmp&quot;, histImage);
+	waitKey(0);
+&#125;
+</code></pre>
+<p>③累计直方图</p>
+<p>​<br>​    &#x2F;&#x2F;画累积直方图<br>​    void DrawAccumulateImgHist(const Mat &amp;srcImg)<br>​    {<br>​    	if (1 !&#x3D; srcImg.channels()){<br>​    		return;<br>​    	}<br>​    	int channels &#x3D; 0;<br>​    	Mat dstHist;<br>​    	int histSize[] &#x3D; { 256 };<br>​    	float midRanges[] &#x3D; { 0, 256 };<br>​    	const float *ranges[] &#x3D; { midRanges };<br>​    	calcHist(&amp;srcImg, 1, &amp;channels, Mat(), dstHist, <br>​    		1, histSize, ranges, true, true);<br>​    	&#x2F;&#x2F;对直方图进行累积<br>​    	for (int i &#x3D; 1; i &lt; dstHist.rows; i++){<br>​    		dstHist.at<float>(i) +&#x3D; dstHist.at<float>(i-1);<br>​    	}<br>​    	&#x2F;&#x2F;最终绘制的直方图图像，大小是256×256<br>​    	Mat histImage &#x3D; Mat::zeros(Size(256, 256), CV_8UC1);<br>​    	double dblHistMaxValue;<br>​    	&#x2F;&#x2F;求得直方图的最大值<br>​    	minMaxLoc(dstHist, 0, &amp;dblHistMaxValue, 0, 0);<br>​    	&#x2F;&#x2F;将像素的个数整合到图像的最大范围内<br>​    	for (int i &#x3D; 0; i &lt; 256; i++){<br>​    		int value &#x3D; cvRound(dstHist.at<float>(i)<br>​    			* 255 &#x2F; dblHistMaxValue);<br>​    		line(histImage, Point(i, histImage.rows - 1), <br>​    			Point(i, histImage.rows - 1 - value), Scalar(255));<br>​    	}<br>​    	imshow(“累积直方图”, histImage);<br>​    	imwrite(“.&#x2F;accumlate.bmp”, histImage);<br>​    }</float></float></float></p>
+<h2 id="七-图像分割"><a href="#七-图像分割" class="headerlink" title="七.图像分割"></a>七.图像分割</h2><h5 id="（边缘检测：算子：一阶导数【Sobel-Prewitt-Roberts】、二阶【拉普拉斯-LOG-Canny】）"><a href="#（边缘检测：算子：一阶导数【Sobel-Prewitt-Roberts】、二阶【拉普拉斯-LOG-Canny】）" class="headerlink" title="&lt;1&gt;（边缘检测：算子：一阶导数【Sobel&#x2F;Prewitt&#x2F;Roberts】、二阶【拉普拉斯&#x2F;LOG&#x2F;Canny】）"></a>&lt;1&gt;（边缘检测：算子：一阶导数【Sobel&#x2F;Prewitt&#x2F;Roberts】、二阶【拉普拉斯&#x2F;LOG&#x2F;Canny】）</h5><h5 id="（几何形状检测【霍夫变换】：直线、圆）"><a href="#（几何形状检测【霍夫变换】：直线、圆）" class="headerlink" title="（几何形状检测【霍夫变换】：直线、圆）"></a>（几何形状检测【霍夫变换】：直线、圆）</h5><h5 id="（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）"><a href="#（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）" class="headerlink" title="（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）"></a>（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/42061b3c66f846c840087275d00ada91.jpeg"></p>
+<h5 id="-2"><a href="#-2" class="headerlink" title></a></h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/4e731b3257fee71a5ec24342e7b18efb.jpeg"><br>&lt;2&gt;示例代码</p>
+<h6 id="1-霍夫直线变换和霍夫圆检测"><a href="#1-霍夫直线变换和霍夫圆检测" class="headerlink" title="1.霍夫直线变换和霍夫圆检测"></a>1.霍夫直线变换和霍夫圆检测</h6><p>​<br>​    void DetectLines()<br>​    {<br>​    	Mat matSrc &#x3D; imread(“Hough_src_clr.png”, IMREAD_GRAYSCALE);<br>​    	Mat matEdge;<br>​    	&#x2F;&#x2F;Canny算子计算图像边缘<br>​    	Canny(matSrc, matEdge, 250, 200, 3, false);<br>​    	imshow(“原图像”, matSrc);<br>​    	imshow(“Canny边缘”, matEdge);<br>​    	imwrite(“hough_src_gray.bmp”, matSrc);<br>​    	imwrite(“hough_src_canny.bmp”, matEdge);<br>​    	std::vector<Vec2f> linesSHT;<br>​    	&#x2F;&#x2F;标准霍夫变换检测直线,距离精度为1像素，角度精度为1度，阈值为300<br>​    	HoughLines(matEdge, linesSHT, 1, CV_PI &#x2F; 180, 280);<br>​    	Mat matSHT &#x3D; matSrc.clone();<br>​    	for (size_t i &#x3D; 0; i &lt; linesSHT.size(); i++) {<br>​    		&#x2F;&#x2F;直线的rho和theta值<br>​    		float rho &#x3D; linesSHT[i][0], theta &#x3D; linesSHT[i][1];<br>​    		&#x2F;&#x2F;pt1和pt2是直线的两个端点<br>​    		Point pt1, pt2;<br>​    		double a &#x3D; cos(theta), b &#x3D; sin(theta);<br>​    		double x0 &#x3D; a * rho, y0 &#x3D; b * rho;<br>​    		pt1.x &#x3D; cvRound(x0 + 2000 * (-b)); &#x2F;&#x2F;把浮点数转化成整数<br>​    		pt1.y &#x3D; cvRound(y0 + 2000 * (a));<br>​    		pt2.x &#x3D; cvRound(x0 - 2000 * (-b));<br>​    		pt2.y &#x3D; cvRound(y0 - 2000 * (a));<br>​    		line(matSHT, pt1, pt2, Scalar(255), 4);<br>​    	}<br>​    	imshow(“SHT直线检测结果”, matSHT);<br>​    	imwrite(“hough_Lines_SHT.bmp”, matSHT);<br>​    	Mat matPPHT &#x3D; matSrc.clone();<br>​    	std::vector<Vec4i> linesPPHT;<br>​    	&#x2F;&#x2F;累计概率霍夫变换检测直线，得到的是直线的起止端点<br>​    	HoughLinesP(matEdge, linesPPHT, 1, CV_PI &#x2F; 180, 280, 100, 50);<br>​    	for (size_t i &#x3D; 0; i &lt; linesPPHT.size(); i++) {<br>​    		&#x2F;&#x2F;直接绘制直线<br>​    		line(matPPHT, Point(linesPPHT[i][0], linesPPHT[i][1]),<br>​    			Point(linesPPHT[i][2], linesPPHT[i][3]), Scalar(255), 4, 8);<br>​    	}<br>​    	imshow(“PPHT直线检测结果”, matPPHT);<br>​    	imwrite(“Hough_lines_PPHT.bmp”, matPPHT);<br>​    	waitKey(0);<br>​    }</Vec4i></Vec2f></p>
+<p>​<br>​    void DetectCircles()<br>​    {<br>​    	Mat src;<br>​    	src &#x3D; imread(“HoughCircles_src_clr.jpg”, IMREAD_GRAYSCALE);<br>​    	&#x2F;&#x2F;imwrite(“HoughCircles_src_gray.bmp”, src);<br>​    	vector<Vec3f> circles;<br>​    	HoughCircles(src, circles, HOUGH_GRADIENT, 1, 10, 60, 40, 20, 40);<br>​    	&#x2F;&#x2F;在原图中画出圆心和圆<br>​    	for (size_t i &#x3D; 0; i &lt; circles.size(); i++){<br>​    		&#x2F;&#x2F;提取出圆心坐标<br>​    		Point center(round(circles[i][0]), round(circles[i][1]));<br>​    		&#x2F;&#x2F;提取出圆半径<br>​    		int radius &#x3D; round(circles[i][2]);<br>​    		&#x2F;&#x2F;圆心<br>​    		circle(src, center, 3, Scalar(255), -1, 4, 0);<br>​    		&#x2F;&#x2F;圆<br>​    		circle(src, center, radius, Scalar(255), 3, 4, 0);<br>​    	}<br>​    	&#x2F;&#x2F;imwrite(“HoughCircles_circles.bmp”, src);<br>​    	imshow(“Circle”, src);<br>​    	waitKey(0);<br>​    }</Vec3f></p>
+<h6 id="2-OTSU方法和三角法求全局阈值"><a href="#2-OTSU方法和三角法求全局阈值" class="headerlink" title="2.OTSU方法和三角法求全局阈值"></a>2.OTSU方法和三角法求全局阈值</h6><p>​<br>​    &#x2F;&#x2F;OTSU方法求阈值<br>​    int OtsuBinary(Mat src)<br>​    {<br>​    	long lPixCnt &#x3D; src.rows * src.cols;<br>​    	long histogram[256] &#x3D; { 0 }; &#x2F;&#x2F;histogram是灰度直方图<br>​    	for (int i &#x3D; 0; i &lt; src.rows; i++) {<br>​    		for (int j &#x3D; 0; j &lt; src.cols; j++) {<br>​    			unsigned char nCurVal &#x3D; src.at<uchar>(i, j);<br>​    			histogram[nCurVal]++;<br>​    		}<br>​    	}<br>​    	int nThreshold &#x3D; 0;<br>​    	long sum0 &#x3D; 0, sum1 &#x3D; 0; &#x2F;&#x2F;存储前景的灰度总和和背景灰度总和<br>​    	long cnt0 &#x3D; 0, cnt1 &#x3D; 0; &#x2F;&#x2F;前景像素总个数和背景像素总个数<br>​    	double w0 &#x3D; 0, w1 &#x3D; 0; &#x2F;&#x2F;前景和背景所占整幅图像的比例<br>​    	double u0 &#x3D; 0, u1 &#x3D; 0;  &#x2F;&#x2F;前景和背景的平均灰度<br>​    	double variance &#x3D; 0; &#x2F;&#x2F;类间方差<br>​    	double maxVariance &#x3D; 0; &#x2F;&#x2F;用来存储最大类间方差<br>​    	for (int i &#x3D; 1; i &lt; 256; i++) &#x2F;&#x2F;遍历所有灰度级别<br>​    	{<br>​    		sum0 &#x3D; 0;    cnt0 &#x3D; 0;  w0 &#x3D; 0;<br>​    		sum1 &#x3D; 0;    cnt1 &#x3D; 0;  w1 &#x3D; 0;<br>​    		for (int j &#x3D; 0; j &lt; i; j++) {<br>​    			cnt0 +&#x3D; histogram[j]; &#x2F;&#x2F;前景像素总和<br>​    			sum0 +&#x3D; j * histogram[j]; &#x2F;&#x2F;前景灰度值总和<br>​    		}<br>​    		&#x2F;&#x2F;前景部分灰度均值<br>​    		u0 &#x3D; cnt0 &gt; 0 ? double(sum0) &#x2F; cnt0 : 0;<br>​    		w0 &#x3D; (double)cnt0 &#x2F; lPixCnt; &#x2F;&#x2F;前景部分所占的比例<br>​    		for (int j &#x3D; i; j &lt;&#x3D; 255; j++) {<br>​    			cnt1 +&#x3D; histogram[j]; &#x2F;&#x2F;背景像素个数<br>​    			sum1 +&#x3D; j * histogram[j]; &#x2F;&#x2F;背景部分灰度值总和<br>​    		}<br>​    		&#x2F;&#x2F;背景部分灰度均值<br>​    		u1 &#x3D; cnt1 &gt; 0 ? double(sum1) &#x2F; cnt1 : 0;<br>​    		w1 &#x3D; 1 - w0;  &#x2F;&#x2F;背景部分所占的比例<br>​    		&#x2F;&#x2F;分割阈值为i时的类间方差<br>​    		variance &#x3D; w0 * w1 * (u0 - u1) * (u0 - u1);<br>​    		if (variance &gt; maxVariance) {<br>​    			maxVariance &#x3D; variance;<br>​    			nThreshold &#x3D; i;<br>​    		}<br>​    	}<br>​<br>​    	return nThreshold;<br>​    }<br>​<br>​    &#x2F;&#x2F;三角法求阈值<br>​    int TriangleBinary(Mat src)<br>​    {<br>​    	long lPixCnt &#x3D; src.rows * src.cols;<br>​    	long histogram[256] &#x3D; { 0 }; &#x2F;&#x2F;histogram是灰度直方图<br>​    	for (int i &#x3D; 0; i &lt; src.rows; i++) {<br>​    		for (int j &#x3D; 0; j &lt; src.cols; j++) {<br>​    			unsigned char nCurVal &#x3D; src.at<uchar>(i, j);<br>​    			histogram[nCurVal]++;<br>​    		}<br>​    	}<br>​<br>​    	&#x2F;&#x2F;左右边界<br>​    	int left_bound &#x3D; 0, right_bound &#x3D; 0;<br>​    	&#x2F;&#x2F;直方图最高峰和相应的灰度值<br>​    	int max_ind &#x3D; 0, maxPeak &#x3D; 0;<br>​    	int temp;<br>​    	bool isflipped &#x3D; false;<br>​<br>​    	&#x2F;&#x2F; 找到最左边零的位置<br>​    	for (int i &#x3D; 0; i &lt; 256; i++) {<br>​    		if (histogram[i] &gt; 0) {<br>​    			left_bound &#x3D; i;<br>​    			break;<br>​    		}<br>​    	}<br>​    	&#x2F;&#x2F;位置再移动一个步长，即为最左侧零位置<br>​    	if (left_bound &gt; 0)<br>​    		left_bound–;<br>​<br>    	&#x2F;&#x2F; 找到最右边零点位置<br>    	for (int i &#x3D; 255; i &gt; 0; i–) {<br>    		if (histogram[i] &gt; 0) {<br>    			right_bound &#x3D; i;<br>    			break;<br>    		}<br>    	}<br>    	&#x2F;&#x2F; 位置再移动一个步长，即为最右侧零位置<br>    	if (right_bound &lt; 255)<br>    		right_bound++;</uchar></uchar></p>
+<pre><code>	// 在直方图上寻找最亮的点Hmax
+	for (int i = 0; i &lt; 256; i++) &#123;
+		if (histogram[i] &gt; maxPeak) &#123;
+			maxPeak = histogram[i];
+			max_ind = i;
+		&#125;
+	&#125;
+
+	// 如果最大值落在靠左侧这样就无法满足三角法求阈值，
+	 //所以要检测是否最大值是否靠近左侧
+	// 如果靠近左侧则通过翻转到右侧位置。
+	if (max_ind - left_bound &lt; right_bound - max_ind) &#123;
+		isflipped = true;
+		int i = 0;
+		int j = 255;
+		// 左右交换
+		while (i &lt; j) &#123;
+			temp = histogram[i]; histogram[i] = histogram[j]; histogram[j] = temp;
+			i++; j--;
+		&#125;
+		left_bound = 255 - right_bound;
+		max_ind = 255 - max_ind;
+	&#125;
+
+	// 计算求得阈值
+	double thresh = left_bound;
+	double maxDist = 0, tempDist;
+	double peakIdxBound = left_bound - max_ind;
+	for (int i = left_bound + 1; i &lt;= max_ind; i++)
+	&#123;
+		// 计算距离
+		tempDist = maxPeak * i + peakIdxBound * histogram[i];
+		if (tempDist &gt; maxDist) &#123;
+			maxDist = tempDist;
+			thresh = i;
+		&#125;
+	&#125;
+	thresh--;
+	if (isflipped) &#123;
+		thresh = 255 - thresh;
+	&#125;
+
+	return thresh;
+&#125;
+
+//手动二值化处理
+Mat Binbary(Mat src, int nThreshold)
+&#123;
+	//遍历每个像素，对图像进行二值化
+	Mat dst = Mat::zeros(src.rows, src.cols, CV_8UC1);
+	for (int i = 0; i &lt; src.rows; i++) &#123;
+		for (int j = 0; j &lt; src.cols; j++) &#123;
+			if (src.at&lt;uchar&gt;(i, j) &gt; nThreshold)
+				dst.at&lt;uchar&gt;(i, j) = 255;
+		&#125;
+	&#125;
+	return dst;
+&#125;
+</code></pre>
+<p>*<strong>注：</strong></p>
+<p><strong>①二值化的原图都是灰度图，产生灰度图方法见后</strong></p>
+<p><strong>②对于固定场景摄像头读取图像可以先调用以上函数求出全局阈值，之后使用cv::threshold()函数时直接调用该阈值，减少每帧计算阈值时间</strong></p>
+<h5 id="练手"><a href="#练手" class="headerlink" title="&lt;3&gt;练手"></a>&lt;3&gt;练手</h5><h6 id="1-边缘检测二阶导数算子使用"><a href="#1-边缘检测二阶导数算子使用" class="headerlink" title="1.边缘检测二阶导数算子使用"></a>1.边缘检测二阶导数算子使用</h6><p>​<br>​    #include “opencv.hpp”<br>​    #include “highgui.hpp”<br>​    #include <iostream><br>​    using namespace cv;<br>​    #pragma comment(lib,”opencv_world480d.lib”)<br>​<br>​    #define IMAGE_TEST<br>​<br>​    #ifdef IMAGE_TEST<br>​    const char* filepath &#x3D; “.&#x2F;Test.jpg”;<br>​    Mat img &#x3D; imread(filepath, IMREAD_COLOR);<br>​    Mat draw_board &#x3D; img.clone();					&#x2F;&#x2F;图片拷贝以实现清除<br>​    #endif<br>​    #ifdef CAMERA_TEST<br>​    VideoCapture capture(0);<br>​    Mat image;<br>​    #endif &#x2F;&#x2F; CAMERA_TEST</iostream></p>
+<p>​<br>​    int main()<br>​    {<br>​    	void changing(void);<br>​    	changing();<br>​    }<br>​<br>​    &#x2F;&#x2F;拉普拉斯高通滤波<br>​    void changing(void)<br>​    {<br>​    	Mat LoG_Image(const Mat &amp; image, int kervalue &#x3D; 3, double sigma &#x3D; 1.0f);<br>​<br>​    #ifdef IMAGE_TEST<br>​    	Mat image &#x3D; imread(filepath, IMREAD_COLOR);<br>​    	if (image.empty()) {<br>​    		std::cout &lt;&lt; “打开图片失败,请检查” &lt;&lt; std::endl;<br>​    		return;<br>​    	}<br>​    	imshow(“原图像”, image);<br>​    	Mat matDst;<br>​    &#x2F;&#x2F;	Laplacian(image, matDst, image.depth(), 5);     &#x2F;&#x2F;拉普拉斯算子<br>​    &#x2F;&#x2F;	matDst &#x3D; LoG_Image(image, 3, 1.0f);				&#x2F;&#x2F;LOG算子<br>​    	Canny(image, matDst, 80, 150, 3, false);		&#x2F;&#x2F;canny算子<br>​    	imwrite(“changing.bmp”, matDst);<br>​    	imshow(“变换效果”, matDst);<br>​    	waitKey(0);<br>​    #endif<br>​    #ifdef CAMERA_TEST<br>​    	while (capture.isOpened())<br>​    	{<br>​    		capture &gt;&gt; image;<br>​    		if (image.empty())break;<br>​    		Mat matDst;<br>​    &#x2F;&#x2F;		Laplacian(image, matDst, image.depth(), 5);		&#x2F;&#x2F;拉普拉斯算子<br>​    &#x2F;&#x2F;		matDst &#x3D; LoG_Image(image, 3, 1.0f);				&#x2F;&#x2F;LOG算子<br>​    		Canny(image, matDst, 100, 500, 3, false);		&#x2F;&#x2F;canny算子<br>​    		imshow(“变换效果”, matDst);<br>​    		if (waitKey(1) &#x3D;&#x3D; 27)break;<br>​    	}<br>​    #endif<br>​    }<br>​<br>​    &#x2F;&#x2F;图像LoG算子运算<br>​    Mat LoG_Image(const Mat&amp; image, int kervalue &#x3D; 3, double sigma &#x3D; 1.0f)<br>​    {<br>​    	&#x2F;&#x2F;首先对图像做高斯平滑<br>​    	Mat matTemp;<br>​    	GaussianBlur(image, matTemp, Size(kervalue, kervalue), sigma, sigma, BORDER_DEFAULT);<br>​    	&#x2F;&#x2F;通过拉普拉斯算子做边缘检测<br>​    	Mat laplacian &#x3D; Mat::zeros(image.rows, image.cols, CV_32FC1);<br>​    	Laplacian(matTemp, laplacian, CV_32FC1, 3);<br>​    	&#x2F;&#x2F;求得最大边缘值<br>​    	double dblMaxVal &#x3D; 0;<br>​    	minMaxLoc(laplacian, NULL, &amp;dblMaxVal);<br>​    	Mat dstImg;<br>​    	convertScaleAbs(laplacian, dstImg);<br>​    	imwrite(“edge.bmp”, dstImg);<br>​    	Mat result &#x3D; Mat::zeros(image.rows, image.cols, CV_8UC1);<br>​    	&#x2F;&#x2F;过零点交叉，寻找边缘像素<br>​    	for (int i &#x3D; 1; i &lt; result.rows - 1; i++) {<br>​    		for (int j &#x3D; 1; j &lt; result.cols - 1; j++) {<br>​    			if (laplacian.at<float>(i, j) &lt; 0.1 * dblMaxVal) {<br>​    				continue;<br>​    			}<br>​    			&#x2F;&#x2F;水平、垂直、45度方向，135度4个方向过零点判定<br>​    			if (laplacian.at<float>(i - 1, j) <br>​    				* laplacian.at<float>(i + 1, j) &lt; 0)<br>​    				result.at<uchar>(i, j) &#x3D; 255;<br>​    			if (laplacian.at<float>(i, j + 1) <br>​    				* laplacian.at<float>(i, j - 1) &lt; 0)<br>​    				result.at<uchar>(i, j) &#x3D; 255;<br>​    			if (laplacian.at<float>(i + 1, j + 1) <br>​    				* laplacian.at<float>(i - 1, j - 1) &lt; 0)<br>​    				result.at<uchar>(i, j) &#x3D; 255;<br>​    			if (laplacian.at<float>(i - 1, j + 1) <br>​    				* laplacian.at<float>(i + 1, j - 1) &lt; 0)<br>​    				result.at<uchar>(i, j) &#x3D; 255;<br>​    		}<br>​    	}<br>​    	return result;<br>​    }<br>​<br>​    &#x2F;&#x2F;Canny算子计算图像的梯度和方向<br>​    void CannyEdgeAndDirection(const Mat&amp; src)<br>​    {<br>​    	Mat magX &#x3D; Mat(src.rows, src.cols, CV_32FC1);<br>​    	Mat magY &#x3D; Mat(src.rows, src.cols, CV_32FC1);<br>​    	Mat slopes &#x3D; Mat(src.rows, src.cols, CV_32FC1);<br>​    	Sobel(src, magX, CV_32FC1, 1, 0, 3);&#x2F;&#x2F;水平梯度<br>​    	Sobel(src, magY, CV_32FC1, 1, 0, 3);&#x2F;&#x2F;垂直梯度<br>​    	&#x2F;&#x2F;梯度方向<br>​    	divide(magY, magX, slopes);<br>​    	&#x2F;&#x2F;梯度幅值<br>​    	Mat magnitude;<br>​    	sqrt(magX * magX + magY * magY, magnitude);<br>​    }</uchar></float></float></uchar></float></float></uchar></float></float></uchar></float></float></float></p>
+<h6 id="2-霍夫直线变换及霍夫圆的检测"><a href="#2-霍夫直线变换及霍夫圆的检测" class="headerlink" title="2.霍夫直线变换及霍夫圆的检测"></a>2.霍夫直线变换及霍夫圆的检测</h6><p>​<br>​    #include “opencv.hpp”<br>​    #include “highgui.hpp”<br>​    #include <iostream><br>​    using namespace cv;<br>​    #pragma comment(lib,”opencv_world480d.lib”)<br>​<br>​    VideoCapture capture(0);<br>​    Mat image;<br>​<br>​    &#x2F;&#x2F;#define SHT	&#x2F;&#x2F;SHT检测直线<br>​    &#x2F;&#x2F;#define PPHT	&#x2F;&#x2F;PPHT检测直线<br>​    #define HCD		&#x2F;&#x2F;霍夫圆检测<br>​<br>​    int main()<br>​    {<br>​    	while (capture.isOpened())<br>​    	{<br>​    		capture &gt;&gt; image;<br>​    		if (image.empty())break;<br>​    		Mat matCanny;<br>​    		Mat matDst;<br>​    		Canny(image, matCanny, 100, 300, 3, false);		&#x2F;&#x2F;canny算子<br>​<br>​    #ifdef SHT<br>​    		std::vector<Vec2f> linesSHT;<br>​    		&#x2F;&#x2F;标准霍夫变换检测直线,距离精度为1像素，角度精度为1度，阈值为300<br>​    		HoughLines(matCanny, linesSHT, 1, CV_PI &#x2F; 180, 280);<br>​    		&#x2F;&#x2F;直线在原图上绘制<br>​    		matDst &#x3D; image.clone();<br>​    		for (size_t i &#x3D; 0; i &lt; linesSHT.size(); i++) {<br>​    			&#x2F;&#x2F;直线的rho和theta值<br>​    			float rho &#x3D; linesSHT[i][0], theta &#x3D; linesSHT[i][1];<br>​    			&#x2F;&#x2F;pt1和pt2是直线的两个端点，2000是经验值（满足覆盖所有前景点像素）<br>​    			Point pt1, pt2;<br>​    			double a &#x3D; cos(theta), b &#x3D; sin(theta);<br>​    			double x0 &#x3D; a * rho, y0 &#x3D; b * rho;<br>​    			pt1.x &#x3D; cvRound(x0 + 2000 * (-b)); &#x2F;&#x2F;把浮点数转化成整数<br>​    			pt1.y &#x3D; cvRound(y0 + 2000 * (a));<br>​    			pt2.x &#x3D; cvRound(x0 - 2000 * (-b));<br>​    			pt2.y &#x3D; cvRound(y0 - 2000 * (a));<br>​    			line(matDst, pt1, pt2, Scalar(255), 4);<br>​    		}<br>​    #endif &#x2F;&#x2F; SHT标准霍夫变换<br>​<br>    #ifdef PPHT<br>    		matDst &#x3D; image.clone();<br>    		std::vector<Vec4i> linesPPHT;<br>    		&#x2F;&#x2F;累计概率霍夫变换检测直线，得到的是直线的起止端点<br>    		HoughLinesP(matCanny, linesPPHT, 1, CV_PI &#x2F; 180, 220, 100, 50);<br>    		for (size_t i &#x3D; 0; i &lt; linesPPHT.size(); i++) {<br>    			&#x2F;&#x2F;直接绘制直线<br>    			line(matDst, Point(linesPPHT[i][0], linesPPHT[i][1]),<br>    				Point(linesPPHT[i][2], linesPPHT[i][3]), Scalar(255), 4, 8);<br>    		}<br>    #endif &#x2F;&#x2F; PPHT累计概率霍夫变换</Vec4i></Vec2f></iostream></p>
+<pre><code>#ifdef HCD
+		cvtColor(image, matDst, COLOR_BGR2GRAY);
+		std::vector&lt;Vec3f&gt; circles;
+		HoughCircles(matDst, circles, HOUGH_GRADIENT, 1, 10, 60, 40, 20, 40);
+		//在原图中画出圆心和圆  
+		for (size_t i = 0; i &lt; circles.size(); i++) &#123;
+			//提取出圆心坐标  
+			Point center(round(circles[i][0]), round(circles[i][1]));
+			//提取出圆半径  
+			int radius = round(circles[i][2]);
+			//圆心  
+			circle(matDst, center, 3, Scalar(255), -1, 4, 0);
+			//圆  
+			circle(matDst, center, radius, Scalar(255), 3, 4, 0);
+		&#125;
+#endif // HCD霍夫圆检测
+</code></pre>
+<p>​<br>​    		imshow(“检测结果”, matDst);<br>​    		if (waitKey(1) &#x3D;&#x3D; 27)break;<br>​    	}<br>​    }</p>
+<h6 id="3-linux（ubuntu18）上实现霍夫圆检测（可调各个参数）"><a href="#3-linux（ubuntu18）上实现霍夫圆检测（可调各个参数）" class="headerlink" title="3.linux（ubuntu18）上实现霍夫圆检测（可调各个参数）"></a>3.linux（ubuntu18）上实现霍夫圆检测（可调各个参数）</h6><p>参数见：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bjxqmy/p/12333022.html" title="opencv ——
+HoughCircles 霍夫圆变换原理及圆检测">opencv —— HoughCircles<br>霍夫圆变换原理及圆检测</a></p>
+<p>二值化函数threshold参数：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012566751/article/details/77046445" title="OpenCV基础——threshold函数的使用">OpenCV基础——threshold函数的使用</a></p>
+<p>​<br>​    #include “opencv2&#x2F;opencv.hpp”<br>​    #include “opencv2&#x2F;highgui.hpp”<br>​    #include <iostream><br>​    using namespace cv;<br>​<br>​    VideoCapture capture(0);<br>​    Mat image;<br>​<br>​    const char* windowname&#x3D;”win”;<br>​    int max_r&#x3D;100;<br>​    int min_r&#x3D;60;<br>​    int min_d&#x3D;80;<br>​    int t_hold&#x3D;45;<br>​    int param1&#x3D;100;<br>​    int param2&#x3D;10;<br>​    const int t_max&#x3D;255;<br>​    const int r_max&#x3D;1000;<br>​    const int d_max&#x3D;100;<br>​    const int p1_max&#x3D;200;<br>​    const int p2_max&#x3D;200;<br>​<br>​    int main()<br>​    {<br>​<br>​        void on_Trackbar_1(int, void*);<br>​        void on_Trackbar_2(int, void*);<br>​        void on_Trackbar_3(int, void*);<br>​        void on_Trackbar_4(int, void*);<br>​        void on_Trackbar_5(int, void*);<br>​        void on_Trackbar_6(int, void*);<br>​        namedWindow(windowname,0);<br>​        setWindowProperty(windowname, WND_PROP_ASPECT_RATIO , WINDOW_FREERATIO);<br>​        resizeWindow(windowname, 400, 300);<br>​        moveWindow(windowname, 0, 0);<br>​        createTrackbar(“t_hold”,windowname, &amp;t_hold, t_max, on_Trackbar_3);<br>​        createTrackbar(“max_r”,windowname, &amp;max_r, r_max, on_Trackbar_1);<br>​        createTrackbar(“min_r”,windowname, &amp;min_r, r_max, on_Trackbar_2);<br>​        createTrackbar(“min_d”,windowname, &amp;min_d, d_max, on_Trackbar_6);<br>​        createTrackbar(“p_1”,windowname, &amp;param1, p1_max, on_Trackbar_4);<br>​        createTrackbar(“p_2”,windowname, &amp;param2, p2_max, on_Trackbar_5);<br>​<br>    	while (capture.isOpened())<br>    	{<br>    		capture &gt;&gt; image;<br>    		if (image.empty())break;<br>    		Mat matCanny;<br>            Mat BinImg;<br>            Mat matDst;<br>            cvtColor(image, matDst, COLOR_BGR2GRAY);<br>    		threshold(matDst, BinImg, t_hold, 255, THRESH_BINARY_INV);<br>            Canny(BinImg, matCanny, 100, 300, 3, false);		&#x2F;&#x2F;canny算子</iostream></p>
+<pre><code>		std::vector&lt;Vec3f&gt; circles;
+		HoughCircles(matCanny, circles, HOUGH_GRADIENT, 1, min_d, param1, param2, min_r, max_r);
+		//在原图中画出圆心和圆  
+		for (size_t i = 0; i &lt; circles.size(); i++) &#123;
+			//提取出圆心坐标  
+			Point center(round(circles[i][0]), round(circles[i][1]));
+			//提取出圆半径  
+			int radius = round(circles[i][2]);
+			//圆心  
+			circle(image, center, 3, Scalar(255,0,0), -1, 4, 0);
+			//圆  
+			circle(image, center, radius, Scalar(255,0,0), 3, 4, 0);
+		&#125;
+
+        imshow(&quot;matCanny&quot;, matCanny);
+        imshow(&quot;BinImg&quot;, BinImg);
+		imshow(windowname, image);
+		if (waitKey(1) == 27)break;
+	&#125;
+&#125;
+</code></pre>
+<p>​<br>​    void on_Trackbar_1(int, void*)<br>​    {<br>​        ;<br>​    }</p>
+<p>​<br>​    void on_Trackbar_2(int, void*)<br>​    {<br>​        ;<br>​    }<br>​<br>​    void on_Trackbar_3(int, void*)<br>​    {<br>​        ;<br>​    }<br>​<br>​    void on_Trackbar_4(int, void*)<br>​    {<br>​        ;<br>​    }<br>​<br>​    void on_Trackbar_5(int, void*)<br>​    {<br>​        ;<br>​    }<br>​<br>​    void on_Trackbar_6(int, void*)<br>​    {<br>​        ;<br>​    }</p>
+<p>注：OpenCV提供的SHT输出极坐标下直线的rho和theta值，需根据经验值推算该直线上的两点以绘图；而PPHT直接返回线段两端两点坐标</p>
+<p>*注：图像灰度化的方法：可参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36853469/article/details/106416128" title="OpenCV图像灰度化的六种方法_opencv灰度化_郑德帅的博客-CSDN博客">OpenCV图像灰度化的六种方法_opencv灰度化_郑德帅的博客-CSDN博客</a></p>
+<h6 id="4-阈值分割（OTSU-三角法-自适应阈值）"><a href="#4-阈值分割（OTSU-三角法-自适应阈值）" class="headerlink" title="4.阈值分割（OTSU&#x2F;三角法&#x2F;自适应阈值）"></a>4.阈值分割（OTSU&#x2F;三角法&#x2F;自适应阈值）</h6><p>​<br>​    #include <iostream><br>​    using namespace cv;<br>​    #pragma comment(lib,”opencv_world480d.lib”)<br>​<br>​    VideoCapture capture(0);<br>​    Mat image;<br>​<br>​    int main()<br>​    {<br>​    	int OtsuBinary(Mat src);<br>​    	int TriangleBinary(Mat src);<br>​    	Mat gray, dst;<br>​<br>​    	capture &gt;&gt; image;<br>​    	cvtColor(image, gray, COLOR_BGR2GRAY);<br>​    	int nThreshold &#x3D; OtsuBinary(gray);<br>​    &#x2F;&#x2F;	int nThreshold &#x3D; TriangleBinary(gray);<br>​    	<br>​    	while(capture.isOpened())<br>​    	{<br>​    		capture &gt;&gt; image;<br>​    		if (image.empty())break;<br>​    		cvtColor(image, gray, COLOR_BGR2GRAY);<br>​<br>    		&#x2F;&#x2F;用OTSU方法<br>    &#x2F;&#x2F;		threshold(gray, dst, nThreshold, 255, THRESH_BINARY);<br>    &#x2F;&#x2F;		threshold(gray, dst, 0, 255, THRESH_BINARY | THRESH_OTSU);<br>    		&#x2F;&#x2F;用三角法<br>    &#x2F;&#x2F;		threshold(gray, dst, nThreshold, 255, THRESH_BINARY);<br>    &#x2F;&#x2F;		threshold(gray, dst, 0, 255, THRESH_BINARY|THRESH_TRIANGLE);<br>    		&#x2F;&#x2F;自适应阈值<br>    		adaptiveThreshold(gray, dst, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 7, 5);</iostream></p>
+<pre><code>		imshow(&quot;BinbaryImage&quot;, dst);
+		if (waitKey(1) == 27)break;
+	&#125;
+&#125;
+</code></pre>
+<p>*<strong>注：自适应阈值保留信息更多，注意使用场合</strong></p>
+<h6 id="5-识别车道（二值化、边缘检测、霍夫直线变换）"><a href="#5-识别车道（二值化、边缘检测、霍夫直线变换）" class="headerlink" title="5.识别车道（二值化、边缘检测、霍夫直线变换）"></a><strong>5.识别车道（二值化、边缘检测、霍夫直线变换）</strong></h6><p>​<br>​    #include “opencv.hpp”<br>​    #include “highgui.hpp”<br>​    #include <iostream><br>​    using namespace cv;<br>​    #pragma comment(lib,”opencv_world480d.lib”)<br>​<br>​    int main() {<br>​    	Mat image &#x3D; imread(“car_track.jpg”, IMREAD_GRAYSCALE);<br>​    	Mat BinImg;<br>​    	threshold(image, BinImg, 150, 255, THRESH_BINARY);<br>​    	imwrite(“BinImg.jpg”, BinImg);<br>​    	Mat matCanny;<br>​    	Canny(BinImg, matCanny, 100, 300, 3, false);		&#x2F;&#x2F;canny算子<br>​    	imwrite(“CannyImg.jpg”, matCanny);<br>​    	Mat matDst &#x3D; image.clone();<br>​<br>​    	std::vector<Vec2f> linesSHT;<br>​    	&#x2F;&#x2F;标准霍夫变换检测直线,距离精度为1像素，角度精度为1度，阈值为100<br>​    	HoughLines(matCanny, linesSHT, 1, CV_PI &#x2F; 180, 100);<br>​    	&#x2F;&#x2F;直线在原图上绘制<br>​    	matDst &#x3D; image.clone();<br>​    	for (size_t i &#x3D; 0; i &lt; linesSHT.size(); i++) {<br>​    		&#x2F;&#x2F;直线的rho和theta值<br>​    		float rho &#x3D; linesSHT[i][0], theta &#x3D; linesSHT[i][1];<br>​    		&#x2F;&#x2F;pt1和pt2是直线的两个端点，2000是经验值（满足覆盖所有前景点像素）<br>​    		Point pt1, pt2;<br>​    		double a &#x3D; cos(theta), b &#x3D; sin(theta);<br>​    		double x0 &#x3D; a * rho, y0 &#x3D; b * rho;<br>​    		pt1.x &#x3D; cvRound(x0 + 2000 * (-b)); &#x2F;&#x2F;把浮点数转化成整数<br>​    		pt1.y &#x3D; cvRound(y0 + 2000 * (a));<br>​    		pt2.x &#x3D; cvRound(x0 - 2000 * (-b));<br>​    		pt2.y &#x3D; cvRound(y0 - 2000 * (a));<br>​    		line(matDst, pt1, pt2, Scalar(255), 8);<br>​    	}<br>​<br>​    	imshow(“car_track”, matDst);<br>​    	waitKey(0);<br>​    	imwrite(“car_track_show.jpg”, matDst);<br>​    }</Vec2f></iostream></p>
+<p>处理结果：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/51f19fbe807f911ee210017b64ea64ea.jpeg"><img src="https://i-blog.csdnimg.cn/blog_migrate/699cf9a73e9c5db8f5837d0018fe3604.jpeg"><img src="https://i-blog.csdnimg.cn/blog_migrate/4fa8e85338396b037d05b85d40503c9d.jpeg"><img src="https://i-blog.csdnimg.cn/blog_migrate/a35992394ee154df3670b102dfe9543c.jpeg"></p>
+<h2 id="九-特征提取和目标检测"><a href="#九-特征提取和目标检测" class="headerlink" title="九.特征提取和目标检测"></a>九.特征提取和目标检测</h2><h5 id="（特征：HOG-LBP-HAAR-LIKE）（分类：SVM-级联分类器）"><a href="#（特征：HOG-LBP-HAAR-LIKE）（分类：SVM-级联分类器）" class="headerlink" title="&lt;1&gt;（特征：HOG&#x2F;LBP&#x2F;HAAR-LIKE）（分类：SVM&#x2F;级联分类器）"></a>&lt;1&gt;（特征：HOG&#x2F;LBP&#x2F;HAAR-LIKE）（分类：SVM&#x2F;级联分类器）</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/bd37be7931389615cbb559ae52a7a7ff.jpeg"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/70661001c310f47939567a8a92d0512d.jpeg"></p>
+<h5 id="示例代码-1"><a href="#示例代码-1" class="headerlink" title="&lt;2&gt;示例代码"></a>&lt;2&gt;示例代码</h5><h6 id="1-HOG特征提取-SVM"><a href="#1-HOG特征提取-SVM" class="headerlink" title="1.HOG特征提取+SVM"></a>1.HOG特征提取+SVM</h6><p>​<br>​    &#x2F;&#x2F;SVM参考代码<br>​<br>​    #include “pch.h”<br>​    #include <iostream>	<br>​    #include <fstream><br>​    #include &lt;windows.h&gt;<br>​    &#x2F;&#x2F;#include &lt;afxwin.h&gt;<br>​<br>​    #include <stack><br>​    #include “opencv.hpp”<br>​    using namespace cv;<br>​    using namespace std;<br>​    using namespace cv::ml;<br>​<br>​    #ifdef _DEBUG<br>​    #pragma comment(lib, “opencv_world480d.lib”)<br>​    #else<br>​    #pragma comment(lib, “opencv_world480.lib”)<br>​    #endif<br>​<br>​    &#x2F;&#x2F;************************************<br>​    const char* file_path &#x3D; “E:&#x2F;测试视频数据&#x2F;Video_2016_8_26__10_10_48.mp4”;<br>​    &#x2F;&#x2F;************************************<br>​<br>    vector&lt; float &gt; get_svm_detector(const Ptr&lt; SVM &gt;&amp; svm)<br>    {<br>    	&#x2F;&#x2F;得到支持向量<br>    	Mat sv &#x3D; svm-&gt;getSupportVectors();<br>    	const int sv_total &#x3D; sv.rows;<br>    	&#x2F;&#x2F;得到支持向量对应的系数值<br>    	Mat alpha, svidx;<br>    	double rho &#x3D; svm-&gt;getDecisionFunction(0, alpha, svidx);</stack></fstream></iostream></p>
+<pre><code>	CV_Assert(alpha.total() == 1 &amp;&amp; svidx.total() == 1 &amp;&amp; sv_total == 1);
+	CV_Assert((alpha.type() == CV_64F &amp;&amp; alpha.at&lt;double&gt;(0) == 1.) ||
+		(alpha.type() == CV_32F &amp;&amp; alpha.at&lt;float&gt;(0) == 1.f));
+	CV_Assert(sv.type() == CV_32F);
+	//将支持向量的值写入一个vector返回
+	vector&lt; float &gt; hog_detector(sv.cols + 1);
+	memcpy(&amp;hog_detector[0], sv.ptr(), sv.cols * sizeof(hog_detector[0]));
+	hog_detector[sv.cols] = (float)-rho;
+	return hog_detector;
+&#125;
+
+//sampleMat是采样矩阵,labelMat是类别矩阵,nCurRows当前是矩阵的行数
+//提取正样本HOG特征
+void PosData(HOGDescriptor&amp; hog, Mat&amp; sampleMat, vector&lt;int&gt;&amp; Labels, int&amp; nRowIdx)
+&#123;
+	vector&lt;String&gt; files; //文件名列表
+	//************************************
+	glob(&quot;pos_src/*.*&quot;, files); //搜索positive目录下所有文件
+	//************************************
+	for (size_t i = 0; i &lt; files.size(); ++i) &#123;
+		Mat imgSrc = imread(files[i], IMREAD_GRAYSCALE); //加载图像
+		if (imgSrc.empty()) &#123;
+			cout &lt;&lt; files[i] &lt;&lt; &quot; is invalid!&quot; &lt;&lt; endl;
+			continue;
+		&#125;
+		Mat imgDst;
+		resize(imgSrc, imgDst, hog.winSize); //将正例缩放到检测窗口大小
+		vector&lt;float&gt; featureVec;
+		hog.compute(imgDst, featureVec, Size(8, 8), Size(0, 0));
+		//将特征向量加入采样矩阵
+		for (int i = 0; i &lt; featureVec.size(); i++) &#123;
+			sampleMat.at&lt;float&gt;(nRowIdx, i) = featureVec[i];
+		&#125;
+		nRowIdx++;
+		Labels.push_back(+1); //正样本类别为+1 
+		cout &lt;&lt; nRowIdx &lt;&lt; files[i] &lt;&lt; endl;
+	&#125;
+&#125;
+
+//提取负样本HOG特征
+void NegData(HOGDescriptor&amp; hog, Mat&amp; sampleMat, vector&lt;int&gt;&amp; Labels, int&amp; nRowIdx)
+&#123;
+	vector&lt;String&gt; files; //文件名列表
+	//************************************
+	glob(&quot;neg_src/*.*&quot;, files); //搜索positive目录下所有文件
+	//************************************
+	Rect box;
+	box.width = hog.winSize.width;
+	box.height = hog.winSize.height;
+	for (size_t i = 0; i &lt; files.size(); ++i) &#123;
+		Mat img = imread(files[i], IMREAD_GRAYSCALE);
+		if (img.empty()) &#123;
+			continue;
+		&#125;
+		Mat matDst;
+		if (img.cols &lt;= hog.winSize.width + 1 || img.rows &lt;= hog.winSize.height + 1) &#123;
+			//cout &lt;&lt; &quot;image too small&quot; &lt;&lt; endl;
+			resize(img, matDst, hog.winSize);
+		&#125;
+		else &#123;
+			//随机选择窗口位置
+			box.x = rand() % (img.cols - box.width);
+			box.y = rand() % (img.rows - box.height);
+			matDst = img(box);
+		&#125;
+
+		vector&lt;float&gt; featureVec;
+		hog.compute(matDst, featureVec, Size(8, 8), Size(0, 0));
+		//将特征向量加入采样矩阵
+		for (int i = 0; i &lt; featureVec.size(); i++) &#123;
+			sampleMat.at&lt;float&gt;(nRowIdx, i) = featureVec[i];
+		&#125;
+		nRowIdx++;
+		Labels.push_back(-1);//负样本类别为-1 
+		cout &lt;&lt; nRowIdx &lt;&lt; files[i] &lt;&lt; endl;
+	&#125;
+&#125;
+
+void TrainSVMModel()
+&#123;
+	//车牌检测window大小为128X48,block大小为16X16,cell大小为8X8，滑动窗口大小为8X8
+	HOGDescriptor hog(cv::Size(128, 48), cv::Size(16, 16), cv::Size(8, 8), cv::Size(8, 8), 9);
+	int nVecLen = hog.getDescriptorSize();
+	//样本的特征向量，行数等于正负样本个数，列数等于HOG特征向量长度
+	Mat sampleFeatureMat = Mat::zeros(9689, nVecLen, CV_32FC1);
+	//样本的类别向量，行数等于所有样本的个数，列数等于1；1表示正样本，-1表示负样本
+	vector&lt;int&gt; Labels;
+	int nRowIdx = 0;
+	PosData(hog, sampleFeatureMat, Labels, nRowIdx);
+	NegData(hog, sampleFeatureMat, Labels, nRowIdx);
+</code></pre>
+<p>​<br>​    	Ptr<SVM> svm &#x3D; SVM::create(); &#x2F;&#x2F;创建一个SVM分类器<br>​    	svm-&gt;setCoef0(0.0);<br>​    	svm-&gt;setDegree(3);<br>​    	svm-&gt;setGamma(0);<br>​    	svm-&gt;setKernel(SVM::LINEAR);<br>​    	svm-&gt;setNu(0.5);<br>​    	svm-&gt;setP(0.1);<br>​    	svm-&gt;setC(0.01);<br>​    	svm-&gt;setType(SVM::EPS_SVR); &#x2F;&#x2F;分类器类型为EPS_SVR<br>​    	&#x2F;&#x2F;************************************<br>​    	&#x2F;&#x2F;训练结束条件：要么达到1000次，要么两次误差小于1e-3<br>​    	svm-&gt;setTermCriteria(TermCriteria(TermCriteria::MAX_ITER + TermCriteria::EPS, 1000, 1e-3));<br>​    	&#x2F;&#x2F;************************************<br>​    	svm-&gt;train(sampleFeatureMat, ROW_SAMPLE, Labels);<br>​<br>​    	&#x2F;&#x2F;svm-&gt;trainAuto();<br>​    	&#x2F;&#x2F;直接将支持向量系数写入文本文件，以方便在检测器的头文件中导入<br>​    	vector<float> vecHogCof &#x3D; get_svm_detector(svm);<br>​    	&#x2F;&#x2F;************************************<br>​    	&#x2F;&#x2F;支持向量结果保存<br>​    	ofstream file(“dector.txt”);	<br>​    	&#x2F;&#x2F;************************************<br>​    	for (int i &#x3D; 0; i &lt; vecHogCof.size(); i++) {<br>​    		file &lt;&lt; vecHogCof[i] &lt;&lt; “,”;<br>​    	}<br>​    	file.close();<br>​    }</float></SVM></p>
+<p>​<br>​    void TestSVMModel()<br>​    {<br>​    	&#x2F;&#x2F;************************************<br>​    	&#x2F;&#x2F;SVM检测器系数向量都放在hogCof数组中(detect.txt中内容，模型建立好后可直接调用)<br>​    	float hogCof[] &#x3D; {……};<br>​    	&#x2F;&#x2F;************************************<br>​    	<br>​    	&#x2F;&#x2F;创建HOG检测器，参数与训练时的参数相同<br>​    	&#x2F;&#x2F;在这里特别注意将nLevels参数从默认64修改为4，可以加快检测速度<br>​    	HOGDescriptor hog(cv::Size(128, 48), cv::Size(16, 16), cv::Size(8, 8), <br>​    		cv::Size(8, 8), 9, 1, -1.0, HOGDescriptor::L2Hys, 0.2, false, 4);<br>​    	const int vecLen &#x3D; sizeof(hogCof) &#x2F; sizeof(float);<br>​    	vector<float> vecHogCof(hogCof, hogCof + vecLen);<br>​    	hog.setSVMDetector(vecHogCof); &#x2F;&#x2F;设置HOG检测器的系数<br>​<br>​    	&#x2F;&#x2F;打开一个视频文件<br>​    	VideoCapture cap;<br>​    	cap.open(file_path);<br>​    	if (!cap.isOpened()) {<br>​    		return;<br>​    	}<br>​    	Mat frame;<br>​    	int nFrmIdx &#x3D; 0;<br>​    	while (true) {<br>​    		cap &gt;&gt; frame;<br>​    		if (frame.empty()) {<br>​    			break;<br>​    		}<br>​    		vector<Rect> detections; &#x2F;&#x2F;检测到目标矩形位置<br>​    		vector<double> foundWeights; &#x2F;&#x2F;检测到的权重<br>​    		hog.detectMultiScale(frame, detections, foundWeights, 0.5, Size(8, 8), Size(0, 0), 1.1, 3.0, false);<br>​    		for (int i &#x3D; 0; i &lt; detections.size(); i++) {<br>​    			if (frame.rows - detections[i].y &lt; 200)<br>​    				continue;<br>​    			rectangle(frame, detections[i], Scalar(0, 0, 255), 4);<br>​    		}<br>​    		imshow(“LP HOG Detection”, frame);<br>​    		if (detections.size() &gt; 0) {<br>​    			char szFileName[100] &#x3D; { 0 };<br>​    			sprintf_s(szFileName, “%03d.jpg”, nFrmIdx++);<br>​    			imwrite(szFileName, frame);<br>​    		}<br>​<br>​    		waitKey(40);<br>​    	}<br>​    }<br>​<br>​    int mian()<br>​    {<br>​    	TestSVMModel();<br>​    }</double></Rect></float></p>
+<p>注：</p>
+<p>①.&#x2F;&#x2F;*…*之间的是copy代码时要修改的地方</p>
+<p>②.void TrainSVMModel()求出支持向量系数，保存在文件中，之后可以直接复制其中数值以调用</p>
+<h6 id="2-获取LBP-MB-LBP特征函数"><a href="#2-获取LBP-MB-LBP特征函数" class="headerlink" title="2.获取LBP&#x2F;MB-LBP特征函数"></a>2.获取LBP&#x2F;MB-LBP特征函数</h6><p>​<br>​    &#x2F;&#x2F;使用函数模板，保证函数对所有类型图像都适用<br>​    &#x2F;&#x2F;_tp参数可以是uchar,float等<br>​    template <typename _tp><br>​    &#x2F;&#x2F;原始LBP特征<br>​    void getOriginLBPFeature(InputArray _src, OutputArray _dst)<br>​    {<br>​    	Mat src &#x3D; _src.getMat();<br>​    	Mat srcExtented;<br>​    	&#x2F;&#x2F;对图像边界进行扩充，边界像素采用复制的形式<br>​    	copyMakeBorder(src, srcExtented, 1, 1, 1, 1, BORDER_REPLICATE);<br>​    	&#x2F;&#x2F;输出图像与原图像大小相同<br>​    	_dst.create(src.rows, src.cols, CV_8UC1);<br>​    	Mat dst &#x3D; _dst.getMat();<br>​    	dst.setTo(0);<br>​    	for (int i &#x3D; 0; i &lt; src.rows; i++) {<br>​    		for (int j &#x3D; 0; j &lt; src.cols; j++) {<br>​    			&#x2F;&#x2F;中心像素的值<br>​    			_tp center &#x3D; srcExtented.at&lt;_tp&gt;(i + 1, j + 1);<br>​    			unsigned char lbpCode &#x3D; 0; &#x2F;&#x2F;LBP编码值<br>​    			lbpCode |&#x3D; (srcExtented.at&lt;_tp&gt;(i, j) &gt; center) &lt;&lt; 7; &#x2F;&#x2F;左上角<br>​    			lbpCode |&#x3D; (srcExtented.at&lt;_tp&gt;(i, j + 1) &gt; center) &lt;&lt; 6; &#x2F;&#x2F;上边<br>​    			lbpCode |&#x3D; (srcExtented.at&lt;_tp&gt;(i, j + 2) &gt; center) &lt;&lt; 5; &#x2F;&#x2F;右上角<br>​    			lbpCode |&#x3D; (srcExtented.at&lt;_tp&gt;(i + 1, j + 2) &gt; center) &lt;&lt; 4; &#x2F;&#x2F;右边<br>​    			lbpCode |&#x3D; (srcExtented.at&lt;_tp&gt;(i + 2, j + 2) &gt; center) &lt;&lt; 3; &#x2F;&#x2F;右下角<br>​    			lbpCode |&#x3D; (srcExtented.at&lt;_tp&gt;(i + 2, j + 1) &gt; center) &lt;&lt; 2; &#x2F;&#x2F;下边<br>​    			lbpCode |&#x3D; (srcExtented.at&lt;_tp&gt;(i + 2, j) &gt; center) &lt;&lt; 1; &#x2F;&#x2F;左下角<br>​    			lbpCode |&#x3D; (srcExtented.at&lt;_tp&gt;(i + 1, j) &gt; center) &lt;&lt; 0; &#x2F;&#x2F;左边<br>​    			dst.at<uchar>(i, j) &#x3D; lbpCode;<br>​    		}<br>​    	}<br>​    }<br>​<br>​    &#x2F;&#x2F;MB-LBP特征<br>​    void getMultiScaleBlockLBPFeature(InputArray _src, OutputArray _dst, int scale)<br>​    {<br>​    	Mat src &#x3D; _src.getMat();<br>​    	int cellSize &#x3D; scale &#x2F; 3;<br>​    	int offset &#x3D; cellSize &#x2F; 2;<br>​    	Mat srcExtented;<br>​    	&#x2F;&#x2F;图像扩大一圈<br>​    	copyMakeBorder(src, srcExtented, offset, offset, offset, offset, BORDER_REFLECT);<br>​    	&#x2F;&#x2F;以当前点为中心，计算每个cell的像素均值<br>​    	Mat cellImage(src.rows, src.cols, CV_8UC1);<br>​    	for (int i &#x3D; 0; i &lt; src.rows; i++) {<br>​    		for (int j &#x3D; 0; j &lt; src.cols; j++) {<br>​    			int temp &#x3D; 0;<br>​    			for (int m &#x3D; -offset; m &lt; offset + 1; m++) {<br>​    				for (int n &#x3D; -offset; n &lt; offset + 1; n++) {<br>​    					temp +&#x3D; srcExtented.at<uchar>(i + n + offset, j + m + offset);<br>​    				}<br>​    			}<br>​    			temp &#x2F;&#x3D; (cellSize * cellSize);<br>​    			cellImage.at<uchar>(i, j) &#x3D; uchar(temp);<br>​    		}<br>​    	}<br>​    	getOriginLBPFeature<uchar>(cellImage, _dst);<br>​    }</uchar></uchar></uchar></uchar></typename></p>
+<h6 id="3-cascade级联分类器使用"><a href="#3-cascade级联分类器使用" class="headerlink" title="3.cascade级联分类器使用"></a>3.cascade级联分类器使用</h6><p>​<br>​    &#x2F;&#x2F;级联分类器实现人脸检测<br>​    void DetectFaces()<br>​    {<br>​    	&#x2F;&#x2F;创建一个级联分类器对象，并加载分类器文件<br>​    	&#x2F;&#x2F;CascadeClassifier faceDetector(“haarcascade_frontalface_alt2.xml”);<br>​    	CascadeClassifier faceDetector(“cascade.xml”);<br>​    	if (faceDetector.empty()) {<br>​    		return;<br>​    	}<br>​    	VideoCapture cap(0); &#x2F;&#x2F;打开USB摄像头<br>​    	if (!cap.isOpened()) {<br>​    		return;<br>​    	}<br>​    	Mat frame;<br>​    	while (true) {<br>​    		cap &gt;&gt; frame; &#x2F;&#x2F;从摄像头获取一帧图像<br>​    		if (frame.empty())<br>​    			break;<br>​    		std::vector&lt;cv::Rect&gt; objects;<br>​    		&#x2F;&#x2F;使用级联分类器检测人脸<br>​    		faceDetector.detectMultiScale(frame, objects);<br>​    		&#x2F;&#x2F;对人脸图像进行标记<br>​    		for (int i &#x3D; 0; i &lt; objects.size(); i++) {<br>​    			static int nIdx &#x3D; 0;<br>​    			char szFileName[100] &#x3D; { 0 };<br>​    			sprintf_s(szFileName, “detectedHeadShoulder&#x2F;%03d.jpg”, nIdx++);<br>​    			&#x2F;&#x2F;sprintf_s(szFileName, “DetetecdFaces&#x2F;%03d.jpg”, nIdx++);<br>​    			cv::rectangle(frame, objects[i], Scalar(0, 0, 255), 4);<br>​    			imwrite(szFileName, frame);<br>​    		}<br>​    		imshow(“人脸检测结果”, frame); &#x2F;&#x2F;显示人脸检测结果<br>​<br>​    		if (waitKey(25) &#x3D;&#x3D; 27) &#x2F;&#x2F;暂停25ms，如果按ESC键则退出<br>​    			break;<br>​    	}<br>​    	cap.release(); &#x2F;&#x2F;释放摄像头对象<br>​    	return;<br>​    }</p>
+<p>注：分类器文件生成使用opencv_traincacade.exe；创建正样本.vec文件使用opencv_creatsamples.exe；可视化过程使用opencv_visualisation.exe</p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/131609797">https://blog.csdn.net/qq_32971095/article/details/131609797</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------THE END-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>SWQ
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/07/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(6)%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/" title="OpenCV学习笔记——《基于OpenCV的数字图像处理》">http://example.com/2023/07/08/学习笔记/电赛学习笔记(6)——《基于OpenCV的数字图像处理》/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/opencv/" rel="tag"># opencv</a>
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/04/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89/" rel="prev" title="图像识别小车（电机部分）——电赛学习笔记（2）">
+      <i class="fa fa-chevron-left"></i> 图像识别小车（电机部分）——电赛学习笔记（2）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/18/%E9%9A%8F%E7%AC%94/%E6%80%9D%E4%B9%A1/" rel="next" title="思乡">
+      思乡 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E5%9B%BE%E5%83%8F%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">一.图像相关知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-opencv%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">二.opencv简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%88%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97%E3%80%81%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%EF%BC%88VS2019%EF%BC%89%E3%80%81%E6%BA%90%E7%A0%81%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91%EF%BC%88CMake%EF%BC%89%E3%80%81%E8%B0%83%E7%94%A8%E5%8A%A8-%E9%9D%99%E6%80%81%E5%BA%93%E3%80%81cv%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E3%80%81OpenCV"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">&lt;1&gt;（主体模块、环境变量配置（VS2019）、源码手动编译（CMake）、调用动&#x2F;静态库、cv命名空间、OpenCV</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">&lt;2&gt;示例代码：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E5%B1%95%E7%A4%BA%E5%9B%BE%E7%89%87%EF%BC%9A"><span class="nav-number">2.0.0.2.1.</span> <span class="nav-text">1.展示图片：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E6%92%AD%E6%94%BE%E8%A7%86%E9%A2%91"><span class="nav-number">2.0.0.2.2.</span> <span class="nav-text">2.播放视频</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-%E6%BB%91%E5%8A%A8%E6%9D%A1%E4%BD%BF%E7%94%A8%EF%BC%9A"><span class="nav-number">2.0.0.2.3.</span> <span class="nav-text">3.滑动条使用：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6%E5%93%8D%E5%BA%94%EF%BC%9A"><span class="nav-number">2.0.0.2.4.</span> <span class="nav-text">4.鼠标事件响应：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%83%E6%89%8B%EF%BC%9A"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">&lt;3&gt;练手：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E6%89%93%E5%BC%80%E6%91%84%E5%83%8F%E5%A4%B4"><span class="nav-number">2.0.0.3.1.</span> <span class="nav-text">1.打开摄像头</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8%EF%BC%8C%E6%BB%91%E5%8A%A8%E6%9D%A1%E6%8E%A7%E5%88%B6%E8%BF%9B%E5%BA%A6%EF%BC%8C%E5%8F%8C%E5%87%BB%E6%9A%82%E5%81%9C-%E6%92%AD%E6%94%BE"><span class="nav-number">2.0.0.3.2.</span> <span class="nav-text">2.视频播放器，滑动条控制进度，双击暂停&#x2F;播放</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-linux%E4%B8%8A%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%EF%BC%9A%E5%8F%82%E8%80%83%EF%BC%9A-Linux%E4%B8%8B%E7%BC%96%E8%AF%91%E3%80%81%E9%93%BE%E6%8E%A5%E3%80%81%E5%8A%A0%E8%BD%BD%E8%BF%90%E8%A1%8CC"><span class="nav-number">2.0.0.4.</span> <span class="nav-text">**&lt; 4&gt;linux上编译运行：参考：[Linux下编译、链接、加载运行C++</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-OpenCV%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">三.OpenCV基本数据结构和基本组件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#-1"><span class="nav-number">4.0.0.1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%83%E6%89%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">&lt;2&gt;练手代码</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-Mat%E7%B1%BB%E6%93%8D%E4%BD%9C"><span class="nav-number">4.0.0.2.1.</span> <span class="nav-text">1.Mat类操作</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F%E6%B5%81%E6%9E%81%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2"><span class="nav-number">4.0.0.2.2.</span> <span class="nav-text">2.摄像头图像流极坐标变换</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E8%AF%BB%E5%8F%96%E5%9B%BE%E5%83%8F%E5%83%8F%E7%B4%A0RGB%E5%80%BC%EF%BC%88%E5%B7%A6%E9%94%AE%E6%98%BE%E7%A4%BA%EF%BC%8C%E5%8F%B3%E9%94%AE%E6%B8%85%E7%A9%BA%EF%BC%89"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">3.读取图像像素RGB值（左键显示，右键清空）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-%E5%88%9B%E5%BB%BA%E4%B8%80%E5%AE%9A%E5%B0%BA%E5%AF%B83%E9%80%9A%E9%81%93RGB%E5%9B%BE%E5%83%8F%EF%BC%8C%E5%B9%B6%E9%80%90%E4%B8%AA%E8%AE%BF%E9%97%AE%E5%85%B6%E5%83%8F%E7%B4%A0%E5%80%BC%EF%BC%8C%E5%B9%B6%E7%BB%98%E5%88%B6%E4%B8%80%E7%BB%BF%E8%89%B2%E5%B9%B3%E9%9D%A2"><span class="nav-number">4.0.0.3.1.</span> <span class="nav-text">4.创建一定尺寸3通道RGB图像，并逐个访问其像素值，并绘制一绿色平面</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%E4%B8%8E%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2"><span class="nav-number">5.</span> <span class="nav-text">四.数字图像灰度变换与空间滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%88%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%EF%BC%9A%E7%BA%BF%E6%80%A7%E3%80%81%E9%9D%9E%E7%BA%BF%E6%80%A7%EF%BC%9B%E7%9B%B4%E6%96%B9%E5%9B%BE%EF%BC%9A%E6%A6%82%E7%8E%87%E3%80%81%E7%B4%AF%E8%AE%A1%EF%BC%89"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">&lt;1&gt;（灰度变换：线性、非线性；直方图：概率、累计）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">5.0.0.2.</span> <span class="nav-text">&lt;2&gt;示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">5.0.0.2.1.</span> <span class="nav-text">1.灰度变换函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E7%9B%B4%E6%96%B9%E5%9B%BE%EF%BC%88%E6%A6%82%E7%8E%87%E7%9B%B4%E6%96%B9%E5%9B%BE%EF%BC%89%E7%BB%98%E5%88%B6%E5%87%BD%E6%95%B0"><span class="nav-number">5.0.0.2.2.</span> <span class="nav-text">2.直方图（概率直方图）绘制函数</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83-%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2"><span class="nav-number">6.</span> <span class="nav-text">七.图像分割</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%88%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%9A%E7%AE%97%E5%AD%90%EF%BC%9A%E4%B8%80%E9%98%B6%E5%AF%BC%E6%95%B0%E3%80%90Sobel-Prewitt-Roberts%E3%80%91%E3%80%81%E4%BA%8C%E9%98%B6%E3%80%90%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF-LOG-Canny%E3%80%91%EF%BC%89"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">&lt;1&gt;（边缘检测：算子：一阶导数【Sobel&#x2F;Prewitt&#x2F;Roberts】、二阶【拉普拉斯&#x2F;LOG&#x2F;Canny】）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%88%E5%87%A0%E4%BD%95%E5%BD%A2%E7%8A%B6%E6%A3%80%E6%B5%8B%E3%80%90%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2%E3%80%91%EF%BC%9A%E7%9B%B4%E7%BA%BF%E3%80%81%E5%9C%86%EF%BC%89"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">（几何形状检测【霍夫变换】：直线、圆）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%88%E9%98%88%E5%80%BC%E5%88%86%E5%89%B2%E3%80%90%E4%BA%8C%E5%80%BC%E5%8C%96%E3%80%91%EF%BC%9A%E5%85%A8%E5%B1%80%E9%98%88%E5%80%BC%E3%80%90OTSU%E3%80%81%E4%B8%89%E8%A7%92%E6%B3%95%E3%80%91%E3%80%81%E8%87%AA%E9%80%82%E5%BA%94%E9%98%88%E5%80%BC%EF%BC%89"><span class="nav-number">6.0.0.3.</span> <span class="nav-text">（阈值分割【二值化】：全局阈值【OTSU、三角法】、自适应阈值）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#-2"><span class="nav-number">6.0.0.4.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E9%9C%8D%E5%A4%AB%E7%9B%B4%E7%BA%BF%E5%8F%98%E6%8D%A2%E5%92%8C%E9%9C%8D%E5%A4%AB%E5%9C%86%E6%A3%80%E6%B5%8B"><span class="nav-number">6.0.0.4.1.</span> <span class="nav-text">1.霍夫直线变换和霍夫圆检测</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-OTSU%E6%96%B9%E6%B3%95%E5%92%8C%E4%B8%89%E8%A7%92%E6%B3%95%E6%B1%82%E5%85%A8%E5%B1%80%E9%98%88%E5%80%BC"><span class="nav-number">6.0.0.4.2.</span> <span class="nav-text">2.OTSU方法和三角法求全局阈值</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%83%E6%89%8B"><span class="nav-number">6.0.0.5.</span> <span class="nav-text">&lt;3&gt;练手</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E4%BA%8C%E9%98%B6%E5%AF%BC%E6%95%B0%E7%AE%97%E5%AD%90%E4%BD%BF%E7%94%A8"><span class="nav-number">6.0.0.5.1.</span> <span class="nav-text">1.边缘检测二阶导数算子使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E9%9C%8D%E5%A4%AB%E7%9B%B4%E7%BA%BF%E5%8F%98%E6%8D%A2%E5%8F%8A%E9%9C%8D%E5%A4%AB%E5%9C%86%E7%9A%84%E6%A3%80%E6%B5%8B"><span class="nav-number">6.0.0.5.2.</span> <span class="nav-text">2.霍夫直线变换及霍夫圆的检测</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-linux%EF%BC%88ubuntu18%EF%BC%89%E4%B8%8A%E5%AE%9E%E7%8E%B0%E9%9C%8D%E5%A4%AB%E5%9C%86%E6%A3%80%E6%B5%8B%EF%BC%88%E5%8F%AF%E8%B0%83%E5%90%84%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%89"><span class="nav-number">6.0.0.5.3.</span> <span class="nav-text">3.linux（ubuntu18）上实现霍夫圆检测（可调各个参数）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-%E9%98%88%E5%80%BC%E5%88%86%E5%89%B2%EF%BC%88OTSU-%E4%B8%89%E8%A7%92%E6%B3%95-%E8%87%AA%E9%80%82%E5%BA%94%E9%98%88%E5%80%BC%EF%BC%89"><span class="nav-number">6.0.0.5.4.</span> <span class="nav-text">4.阈值分割（OTSU&#x2F;三角法&#x2F;自适应阈值）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-%E8%AF%86%E5%88%AB%E8%BD%A6%E9%81%93%EF%BC%88%E4%BA%8C%E5%80%BC%E5%8C%96%E3%80%81%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E3%80%81%E9%9C%8D%E5%A4%AB%E7%9B%B4%E7%BA%BF%E5%8F%98%E6%8D%A2%EF%BC%89"><span class="nav-number">6.0.0.5.5.</span> <span class="nav-text">5.识别车道（二值化、边缘检测、霍夫直线变换）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D-%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E5%92%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B"><span class="nav-number">7.</span> <span class="nav-text">九.特征提取和目标检测</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%88%E7%89%B9%E5%BE%81%EF%BC%9AHOG-LBP-HAAR-LIKE%EF%BC%89%EF%BC%88%E5%88%86%E7%B1%BB%EF%BC%9ASVM-%E7%BA%A7%E8%81%94%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%89"><span class="nav-number">7.0.0.1.</span> <span class="nav-text">&lt;1&gt;（特征：HOG&#x2F;LBP&#x2F;HAAR-LIKE）（分类：SVM&#x2F;级联分类器）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81-1"><span class="nav-number">7.0.0.2.</span> <span class="nav-text">&lt;2&gt;示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-HOG%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96-SVM"><span class="nav-number">7.0.0.2.1.</span> <span class="nav-text">1.HOG特征提取+SVM</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E8%8E%B7%E5%8F%96LBP-MB-LBP%E7%89%B9%E5%BE%81%E5%87%BD%E6%95%B0"><span class="nav-number">7.0.0.2.2.</span> <span class="nav-text">2.获取LBP&#x2F;MB-LBP特征函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-cascade%E7%BA%A7%E8%81%94%E5%88%86%E7%B1%BB%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">7.0.0.2.3.</span> <span class="nav-text">3.cascade级联分类器使用</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SWQ"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SWQ</p>
+  <div class="site-description" itemprop="description">舟遥遥以轻飏，风飘飘而吹衣</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:18</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'H2FYHQwVGaUkawg5DkrA6d6M-gzGzoHsz',
+      appKey     : 'zndS0u9Qj7qj8CqnJINs2MGT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : 'https://h2fyhqwv.lc-cn-n1-shared.com'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

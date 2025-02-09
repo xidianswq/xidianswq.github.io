@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="目录 一.Hello World 实验  1.硬件设计 step1：创建 Vivado工程 step2：使用 IP Integrator 创建 ProcessingSystem &lt;1&gt;配置 PS 的UART &lt;2&gt;配置 PS 的 DDR4控制器 &lt;3&gt;配置 PS的时钟 step3：生成顶层 HDL模块 step4：生成 Bitstream 文件并导出Hardwa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vitis开发一——FPGA学习笔记＜8＞">
+<meta property="og:url" content="http://example.com/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/index.html">
+<meta property="og:site_name" content="Switch">
+<meta property="og:description" content="目录 一.Hello World 实验  1.硬件设计 step1：创建 Vivado工程 step2：使用 IP Integrator 创建 ProcessingSystem &lt;1&gt;配置 PS 的UART &lt;2&gt;配置 PS 的 DDR4控制器 &lt;3&gt;配置 PS的时钟 step3：生成顶层 HDL模块 step4：生成 Bitstream 文件并导出Hardwa">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/66ab6afbb3d420e1b7089143e4466727.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d830912c59cd7970e89dc798be2e099d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ff638c73b44ed84dd4f13a3e9db79fab.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ac3239cf0f859b989c7d926f407b66f5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/00b2930a9fea37d61d892e33ef7cfc19.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/9253bb0e6120f4d7752df56866af224e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/86cb4773d4bce9fa668f8588f3fc7151.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/dde78d189b9ec8cdb96dfb848af3aee2.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/010b22291cae6354b595278fd575ac76.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bcbef3d3c3dcc0ebeb8c1b682b5ff426.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/df81e05298566f091c3790ff47385a18.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/77b0703425768c83045ffcca779129a2.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/073a28eee47c2b6b618081420d2e35e3.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4d2b3b14a1a9f8a64a8dfe31c7a52bdf.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/9460672d014aabbdfd341cc584c1458e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/096595aeafc1562dc64f78ee57d7a9d6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/04b4162c472bae880b5b708ef1df3bff.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/84d183341bcdf40ec8db6c00d6a74a7d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/552ed376805a0dbd4f0ec780a3273a85.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4b2274963b330c10cb807b4ed637907e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3a4c3976d15c6c83da2f8fb04b618df2.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d79b59e6a49e77327e778f9e71f0ab45.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f33bd6da382274b4e043b9c2b8bd96fb.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0198478b7f07905b054d257837434c1a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7ca8dc52ec3036fad0de51d0e881659c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/288d2ba5ef4342f13cc8d63a597b4e5b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fbca540ff2514ca9d5a8846fed7eee51.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/117f8abd36ad2af8f6b1d02788b749e6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/27b2222431094b40193d6127c4c5b66c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bfb4630e5ba6a99f44351730d5dd7bde.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/170e4143f360ea63e740c76d3b806da9.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3f622888054796bdd0a2450834d5f07b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fee5583261c8e02c05908b44d905ac77.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7378853644c71f828f51c56cf93f0dbc.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2ac2948aee4eca8357489df5e2904f51.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/1069bf74b114b8f0a8ecf6565c000d3c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/32042201490b2369989d7e8ca0fac313.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/caa5d520533e9acf50023b1178d6daab.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/287affef4a19c843b014f61d1d6bdd42.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c6a0f8cbf358581c776ffb063389cf74.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/15845bb43a515dafb87742974f7da7e1.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a300da9bfaa27e3b089ee32f0c5ce58e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/22d22a4f6b00a858b25620f9107a6e89.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/06d6440e02418eff773e87c0e910e21a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/789eafaaea99b49efbeba278724a37c7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ff2d68a7c22fa4b09d43e81130318de6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4f3d3d587cd53c95f702a694e8f53a48.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/50988f6dd1c1fbc068ae09865a09fcab.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/8f685cd0fd33c4130ea055d933944d57.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/8162740976bf76b39eb8589e7b500a26.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/072ba1557df31687c6828beaba8efd56.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b9b755efab66ebd848ace23a8d60d223.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e37cf706e4506426aa0b2ecddfaba1b7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/96a7b91131fcef0da025feaca171ac69.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/9e8f14d55907d0b645cf585020c1c212.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4acd636a64b21b3d624d428a56fa75bb.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fc2a33922f6e87d7a4af525f2d2b3bed.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b00b29d17bda34dc8e2021d19b3da5c7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f91ebcf53451f5c237c47a5fee50e1a7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/6db0239064ee56374c85381472489777.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/87308bc75d7d72d6921777208d4fd904.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ed28803feaff06157fb29b7ac79959b0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ae0e2d2e82480a55119adb7ff3b0fcb2.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/36d3b2fa130b81b99840523163257bd8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/6a05a2ccf9124d96bc86553e3879682d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/afde86e7494ef3caa5c1ecc3c4445dc8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/796c758bb3becf08035866a7a7deb2c8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bc3fc6a7da9253c672f49890520b37d4.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/9fa3a98c687d4b1476298098bdd3e11d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/232e30f977e6357aeb48fc33afd0f8a4.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/be784b536668403f3377da54da3b1333.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/adf3469ae6c2d955307f37538bd069af.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0d39702d5ebb5e0669f52c86ede2c349.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a45e282be5173c86ff34d81074f56dba.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fcfd77f0e7a867a66966b28080460fab.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c51cad0adcbc38820dac88214135fe29.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a6dafe34ae5d0e1778d7f04193aecdad.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fe48d12f2f77f094e6b3719c06695d57.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/39009b1c2ebe277967b7791935f49940.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0ae3c0baeb2513a1632d8da9312b1247.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f44edc425ad3ffe47efb17b246ba2931.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b35bda5f46246c70ce0f5d793b90b9d0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a865cb250e683464ce34579721b2fe85.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fd461f7dc04e37cc5487f425c7087cd8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3d9347dbf7aa03eedbecec9d3a0b63a8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a54df03d0cedfd028171a2669e7ce9ea.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d026edbf7c4ce40cb984637584191f12.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/10d614749b63a945e72f6d57f7e76e21.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0073c6eb2211efe47db4fdc9665158ad.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5981c4c11abe191bf657a9eaeb5c5fb6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/052ea371c37f250ed9ee30b7a3920bba.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0e56a76baae5943bc6ec5fd907725da9.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7a019922da4e97554d75c88ffb2c3443.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/010b0f0d542bdc1c62b77a0dbec31a48.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/db6aa664b84592fa37a46fe03ff62b69.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/55ac29cbbb0817418efc8baab3e18d99.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/63fb614cb09abdfa5dffa67bee11f4b5.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/33f967286bcd5984c9f582d9fd3a340d.png">
+<meta property="article:published_time" content="2023-09-25T13:52:25.000Z">
+<meta property="article:modified_time" content="2025-02-09T06:30:12.777Z">
+<meta property="article:author" content="SWQ">
+<meta property="article:tag" content="fpga开发">
+<meta property="article:tag" content="嵌入式硬件">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/66ab6afbb3d420e1b7089143e4466727.png">
+
+<link rel="canonical" href="http://example.com/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vitis开发一——FPGA学习笔记＜8＞ | Switch</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Switch</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to My Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">135</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻飏，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vitis开发一——FPGA学习笔记＜8＞
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-25 21:52:25" itemprop="dateCreated datePublished" datetime="2023-09-25T21:52:25+08:00">2023-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-09 14:30:12" itemprop="dateModified" datetime="2025-02-09T14:30:12+08:00">2025-02-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/" class="post-meta-item leancloud_visitors" data-flag-title="Vitis开发一——FPGA学习笔记＜8＞" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>34k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>30 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%B8%80.Hello%20World%20%E5%AE%9E%E9%AA%8C%C2%A0%20%C2%A0%20%C2%A0%20%C2%A0%C2%A0">一.Hello World 实验
+</a></p>
+<p><a href="about:blank#1.%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1">1.硬件设计</a></p>
+<p><a href="about:blank#step1%EF%BC%9A%E5%88%9B%E5%BB%BA%20Vivado%20%E5%B7%A5%E7%A8%8B">step1：创建 Vivado<br>工程</a></p>
+<p><a href="about:blank#step2%EF%BC%9A%E4%BD%BF%E7%94%A8%20IP%20Integrator%20%E5%88%9B%E5%BB%BA%20Processing%20System">step2：使用 IP Integrator 创建 Processing<br>System</a></p>
+<p><a href="about:blank#%3C1%3E%E9%85%8D%E7%BD%AE%20PS%20%E7%9A%84%20UART">&lt;1&gt;配置 PS 的<br>UART</a></p>
+<p><a href="about:blank#%3C2%3E%E9%85%8D%E7%BD%AE%20PS%20%E7%9A%84%20DDR4%20%E6%8E%A7%E5%88%B6%E5%99%A8">&lt;2&gt;配置 PS 的 DDR4<br>控制器</a></p>
+<p><a href="about:blank#%3C3%3E%E9%85%8D%E7%BD%AE%20PS%20%E7%9A%84%E6%97%B6%E9%92%9F">&lt;3&gt;配置 PS<br>的时钟</a></p>
+<p><a href="about:blank#step3%EF%BC%9A%E7%94%9F%E6%88%90%E9%A1%B6%E5%B1%82%20HDL%20%E6%A8%A1%E5%9D%97">step3：生成顶层 HDL<br>模块</a></p>
+<p><a href="about:blank#step4%EF%BC%9A%E7%94%9F%E6%88%90%20Bitstream%20%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA%20Hardware">step4：生成 Bitstream 文件并导出<br>Hardware</a></p>
+<p><a href="about:blank#2.%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1">2.软件设计</a></p>
+<p><a href="about:blank#step5%EF%BC%9A%E5%9C%A8%20Vitis%20%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8%E5%B7%A5%E7%A8%8B">step5：在 Vitis<br>中创建应用工程</a></p>
+<p><a href="about:blank#3.%E4%B8%8B%E8%BD%BD%E9%AA%8C%E8%AF%81">3.下载验证</a></p>
+<p><a href="about:blank#step6%EF%BC%9A%E6%9D%BF%E7%BA%A7%E9%AA%8C%E8%AF%81">step6：板级验证</a></p>
+<p><a href="about:blank#%E4%BA%8C.GPIO%20%E4%B9%8B%20MIO%20%E6%8E%A7%E5%88%B6%20LED%20%E5%AE%9E%E9%AA%8C">二.GPIO 之 MIO 控制 LED<br>实验</a></p>
+<p><a href="about:blank#1.%E7%AE%80%E4%BB%8B">1.简介</a></p>
+<p><a href="about:blank#2.%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4">2.实验步骤</a></p>
+<p><a href="about:blank#3.%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1">3.硬件设计</a></p>
+<p><a href="about:blank#step1%EF%BC%9A%E5%88%9B%E5%BB%BA%20Vivado%20%E5%B7%A5%E7%A8%8B">step1：创建 Vivado<br>工程</a></p>
+<p><a href="about:blank#step2%EF%BC%9A%E4%BD%BF%E7%94%A8%20IP%20Integrator%20%E5%88%9B%E5%BB%BA%20Processing%20System">step2：使用 IP Integrator 创建 Processing<br>System</a></p>
+<p><a href="about:blank#step3%EF%BC%9A%E7%94%9F%E6%88%90%E9%A1%B6%E5%B1%82%20HDL">step3：生成顶层<br>HDL</a></p>
+<p><a href="about:blank#step4%EF%BC%9A%E7%94%9F%E6%88%90%20Bitstream%20%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA%20Hardware">step4：生成 Bitstream 文件并导出<br>Hardware</a></p>
+<p><a href="about:blank#4.%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1">4.软件设计</a></p>
+<p><a href="about:blank#step5%EF%BC%9A%E5%9C%A8%20Vitis%20%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8%E5%B7%A5%E7%A8%8B">step5：在 Vitis<br>中创建应用工程</a></p>
+<p><a href="about:blank#5.%E4%B8%8B%E8%BD%BD%E9%AA%8C%E8%AF%81">5.下载验证</a></p>
+<p><a href="about:blank#%E4%B8%89.GPIO%20%E4%B9%8B%20EMIO%20%E6%8C%89%E9%94%AE%E6%8E%A7%E5%88%B6%20LED%20%E5%AE%9E%E9%AA%8C">三.GPIO 之 EMIO 按键控制 LED<br>实验</a></p>
+<p><a href="about:blank#1.%E7%AE%80%E4%BB%8B">1.简介</a></p>
+<p><a href="about:blank#2.%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1">2.硬件设计</a></p>
+<p><a href="about:blank#step4%EF%BC%9A%E7%94%9F%E6%88%90%20Bitstream%20%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA%20Hardware">step4：生成 Bitstream 文件并导出<br>Hardware</a></p>
+<p><a href="about:blank#3.%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1">3.软件设计</a></p>
+<p><a href="about:blank#%E5%9B%9B.GPIO%E4%B9%8BMIO%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD%E5%AE%9E%E9%AA%8C">四.GPIO之MIO按键中断实验</a></p>
+<p><a href="about:blank#%C2%A01.%E7%AE%80%E4%BB%8B"> 1.简介</a></p>
+<p><a href="about:blank#%3C1%3E.%E5%A4%84%E7%90%86%E5%99%A8%E4%B8%AD%E6%96%AD%E7%B1%BB%E5%9E%8B">&lt;1&gt;.处理器中断类型</a></p>
+<p><a href="about:blank#%3C2%3E%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6%E5%99%A8GIC">&lt;2&gt;中断控制器GIC</a></p>
+<p><a href="about:blank#%3C3%3EGPIO%20%E7%9A%84%20MIO%20%E7%9A%84%E4%B8%AD%E6%96%AD">&lt;3&gt;GPIO 的 MIO<br>的中断</a></p>
+<p><a href="about:blank#2.%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1">2.硬件设计</a></p>
+<p><a href="about:blank#3.%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1">3.软件设计</a></p>
+<p><a href="about:blank#%E4%BA%94.AXI%20GPIO%20%E6%8C%89%E9%94%AE%E6%8E%A7%E5%88%B6%20LED%20%E5%AE%9E%E9%AA%8C">五.AXI GPIO 按键控制 LED<br>实验</a></p>
+<p><a href="about:blank#1.%E7%AE%80%E4%BB%8B">1.简介</a></p>
+<p><a href="about:blank#2.%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1">2.硬件设计</a></p>
+<p><a href="about:blank#step2%3Avivado%E7%A1%AC%E4%BB%B6%E5%B9%B3%E5%8F%B0">step2:vivado硬件平台</a></p>
+<p><a href="about:blank#3.%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1">3.软件设计</a></p>
+<p><a href="about:blank#4.%E8%A1%A5%E5%85%85">4.补充</a></p>
+<hr>
+<h2 id="一-Hello-World-实验"><a href="#一-Hello-World-实验" class="headerlink" title="一.Hello World 实验"></a>一.Hello World 实验</h2><pre><code>    在MPSOC开发板上搭建MPSOC嵌入式最小系统，并使用串口打印“Hello World” 信息。通过本次实验我们将了解 **MPSOC 嵌入式系统的开发流程** ，熟悉 **MPSOC 嵌入式最小系统的搭建**。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/66ab6afbb3d420e1b7089143e4466727.png"></p>
+<pre><code>    如上图所示，开发流程大体可以分为 6 步。其中 step1 至 step4 为硬件设计部分，在 Vivado 软件中实现； step5 为软件设计部分，在 Vitis 软件中实现；step6 为功能的验证。复杂的程序还涉及 Debug，这个也是在 Vitis 软件中实施。
+
+    嵌入式最小系统的概念包括以下两个方面：一、它是使系统正常工作的最小条件；二、它是其他系统建立的基础。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d830912c59cd7970e89dc798be2e099d.png"></p>
+<pre><code>    以 ARM Cortex 为核心、DDR 为内存，加上传输信息使用的 UART 串口就构成了 MPSOC 嵌入式最小系统。可以看到，这个最小系统只包括了 MPSOC 中的 PS 部分。
+</code></pre>
+<h3 id="1-硬件设计"><a href="#1-硬件设计" class="headerlink" title="1.硬件设计"></a>1.硬件设计</h3><h4 id="step1：创建-Vivado-工程"><a href="#step1：创建-Vivado-工程" class="headerlink" title="step1：创建 Vivado 工程"></a><strong>step1：创建 Vivado 工程</strong></h4><pre><code>    注意project type界面选择rtl project并且“Do not specify sources at this time”；器件型号选择“xczu2eg-sfvc784-2-i”；
+</code></pre>
+<h4 id="step2：使用-IP-Integrator-创建-Processing-System"><a href="#step2：使用-IP-Integrator-创建-Processing-System" class="headerlink" title="step2：使用 IP Integrator 创建 Processing System"></a><strong>step2：使用 IP Integrator 创建 Processing System</strong></h4><pre><code>    在左侧导航栏（**Flow Navigator）** 中，单击 **IP Integrator** 下的 **Create Block Design** ；接下来在 Diagram 窗口中给设计添加 IP。点击上图中箭头所指示的加号(两个任选一个)“+”，会 打开 IP 目录（IP Catalog）。也可以通过快捷键 Ctrl + I，或者右键点击 Diagram 工作区中的空白位置，然后选择“ADD IP”；打开 IP 目录后，在搜索栏中键入“ZYNQ”，找到并双击**“Zynq UltraScale+MPSOC”** ，将 Zynq UltraScale+MPSOC IP 添加到设计中。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ff638c73b44ed84dd4f13a3e9db79fab.png"></p>
+<pre><code>    双击所添加的 Zynq UltraScale+MPSOC 模块，进入处理系统的配置界面。界面左侧为页面导航面板， 右侧为配置信息面板。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ac3239cf0f859b989c7d926f407b66f5.png"></p>
+<p>下面我们简要地介绍一下页面导航面板中各个页面的作用：</p>
+<p><strong>PS UltraScale+ Block Design</strong> 页面显示了 zynq 硬核的整体架构图，其中绿色部分是可配置模块，可以点<br>击进入相应的编辑界面进行配置，当然也可以在左侧导航栏选择相应的编辑界面。</p>
+<p><strong>I&#x2F;O Configuration</strong> 页面可以选择不同的 I&#x2F;O 外设并进行相应的配置。</p>
+<p><strong>Clock Configuration</strong> 页面分为 Input Clocks 和 Output Clocks 两个标签页，用来配置 PS<br>输入时钟、外设 时钟，以及 DDR 和 CPU 时钟等。</p>
+<p><strong>DDR Configuration</strong> 页面用于设置 DDR 控制器配置信息。</p>
+<p><strong>PS-PL Configuration</strong> 用于 PS 和 PL 交互的相关配置，包括常用的中断、复位信号和数据接口。</p>
+<h5 id="配置-PS-的-UART"><a href="#配置-PS-的-UART" class="headerlink" title="&lt;1&gt;配置 PS 的 UART"></a>&lt;1&gt;配置 PS 的 UART</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/00b2930a9fea37d61d892e33ef7cfc19.png"></p>
+<pre><code>    点击导航面板中 I/O Configuration，PS 和外部设备之间的连接主要是通过复用的输入/输出**（Multiplexed Input/Output，MIO）** 来实现的。**BANK501 中的 MIO42 和 MIO43 被用作 UART 串口通信的引脚，并最终与开发板上的 USB 转串口芯片 CH340 连接** 。因此，为了实现串口 通信的功能，我们需要在 PS 中将 MIO42 和 MIO43 配置成 UART0 模块的接口引脚。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9253bb0e6120f4d7752df56866af224e.png"></p>
+<h5 id="配置-PS-的-DDR4-控制器"><a href="#配置-PS-的-DDR4-控制器" class="headerlink" title="&lt;2&gt;配置 PS 的 DDR4 控制器"></a>&lt;2&gt;配置 PS 的 DDR4 控制器</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/86cb4773d4bce9fa668f8588f3fc7151.png"></p>
+<h5 id="配置-PS-的时钟"><a href="#配置-PS-的时钟" class="headerlink" title="&lt;3&gt;配置 PS 的时钟"></a>&lt;3&gt;配置 PS 的时钟</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/dde78d189b9ec8cdb96dfb848af3aee2.png"></p>
+<pre><code>    点击左侧 Clock Configuration 打开时钟配置页面，该界面主要是配置 MPSOC PS 中的时钟频率。比如 输入时钟默认是 33.33333Mhz，这与我们开发板上的 PS 端输入时钟频率相同。对于 CPU 的时钟、DDR 的 时钟以及其它外设的时钟，我们直接保持默认设置即可。
+
+    因为本实验是**搭建 MPSOC 的嵌入式最小系统，只需要使用 MPSOC 中的 PS 端。因此我们将 PS 中与 PL 端交互的接口信号移除。**
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/010b22291cae6354b595278fd575ac76.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/bcbef3d3c3dcc0ebeb8c1b682b5ff426.png"></p>
+<pre><code>    返回到 Vivado 界面后，在 Diagram 中可以看到 ZYNQ UltraScale+ MPSOC IP 模块变化，该模块少了四组接口，这正是因为我们在配置该 IP 核的过程中**移除了与 PL 相关的接口信号** 。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/df81e05298566f091c3790ff47385a18.png"></p>
+<p>点击下图中箭头所指示的按钮“validate design”，对我们配置的 IP 核进行验证</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/77b0703425768c83045ffcca779129a2.png"></p>
+<h4 id="step3：生成顶层-HDL-模块"><a href="#step3：生成顶层-HDL-模块" class="headerlink" title="step3：生成顶层 HDL 模块"></a><strong>step3：生成顶层 HDL 模块</strong></h4><p><img src="https://i-blog.csdnimg.cn/blog_migrate/073a28eee47c2b6b618081420d2e35e3.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4d2b3b14a1a9f8a64a8dfe31c7a52bdf.png"></p>
+<pre><code>    在对话框中，Synthesis Options 选择 Out of context per IP，这里我们保持默认；Run Setings 用于设置生 成过程中要使用的处理器的线程数，进行多线程处理，保持默认或设置为个人电脑处理器最大可使用线程 数都可以，一般选择最大可使用线程数。然后点击“Generate”来生成设计的综合、实现和仿真文件。
+
+    在“Generate”过程中会为设计生成所有需要的输出结果。比如 Vivado 工具会自动生成处理系统的 XDC 约束文件，因此我们不需要手动对 MPSOC PS 引出的接口（DDR 和 FIXED_IO）进行管脚分配。
+
+    Generate 完成后，在弹出的对话框中点击“OK”。
+
+    在 Sources 窗口中，点击“IP Source”标签页，可以看到 Generate 过程生成的输出结果。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9460672d014aabbdfd341cc584c1458e.png"></p>
+<p>在“Hierarchy”标签页再次右键点击 system.bd，然后选择“Create HDL Wrapper”。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/096595aeafc1562dc64f78ee57d7a9d6.png"></p>
+<p>在弹出的对话框中确认勾选“Let Vivado manage wrapper and auto-update”，然后点击“OK”。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/04b4162c472bae880b5b708ef1df3bff.png"></p>
+<pre><code>    design_1_wrapper.v 为创建的 Verilog 文件，箭头所指的“品”字形图标指示当前模块为顶层模块。该模 块使用 Verilog HDL 对设计进行封装，主要完成了对 block design 的例化，大家也可以双击打开该文件查看 其中的内容。
+
+    另外我们勾选了“Let Vivado manage wrapper and auto-update”，这样我们在修改了 Block Design 之后就不需要再重新生成顶层模块，**Vivado 工具会自动更新该文件** 。
+</code></pre>
+<h4 id="step4：生成-Bitstream-文件并导出-Hardware"><a href="#step4：生成-Bitstream-文件并导出-Hardware" class="headerlink" title="step4：生成 Bitstream 文件并导出 Hardware"></a>step4：生成 Bitstream 文件并导出 Hardware</h4><pre><code>    **如果设计中使用了 PL 的资源，则需要添加引脚约束并对该设计进行综合、实现并生成 Bitstream 文件。** 本次实验未用到 PL 部分，所以无需生成 Bitstream 文件，只需将硬件导出。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/84d183341bcdf40ec8db6c00d6a74a7d.png"></p>
+<pre><code>    在弹出的对话框中，因为没有生成 bitstream 文件，所以无需勾选“Include bitstream”，直接点击“OK” 按钮。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/552ed376805a0dbd4f0ec780a3273a85.png"></p>
+<pre><code>    上图中，XSA file name 一栏是产生的硬件信息文件的文件名，这里我们保持默认。Export to 后面的路 径是生成的包含硬件信息文件的路径，生成的文件如下所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4b2274963b330c10cb807b4ed637907e.png"></p>
+<p>新建 vitis 文件夹，将xsa文件移入备用，后续作为 vitis 软件开发存储路径。</p>
+<p>在菜单栏中选择 T<strong>ools &gt; Launch Vitis，启动 Vitis 开发环境</strong>。如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3a4c3976d15c6c83da2f8fb04b618df2.png"></p>
+<p>在弹出的对话框中，<strong>我们将工程路径指定到新建的 vitis 文件夹下</strong> ，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d79b59e6a49e77327e778f9e71f0ab45.png"></p>
+<pre><code>    到这里，我们已经完成了 MPSOC 嵌入式系统的硬件设计部分。接下来需要到 Vitis 软件中进行应用程 序开发，也就是软件设计部分。
+</code></pre>
+<h3 id="2-软件设计"><a href="#2-软件设计" class="headerlink" title="2.软件设计"></a>2.软件设计</h3><h4 id="step5：在-Vitis-中创建应用工程"><a href="#step5：在-Vitis-中创建应用工程" class="headerlink" title="step5：在 Vitis 中创建应用工程"></a>step5：在 Vitis 中创建应用工程</h4><p>在菜单栏选择 File &gt; New &gt; Application Project, 新建一个 vitis 应用工程</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f33bd6da382274b4e043b9c2b8bd96fb.png"></p>
+<p>在弹出的对话框中，输入工程名“hello_world”，其它选项保持默认，点击“Next”，如下图 所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/0198478b7f07905b054d257837434c1a.png"></p>
+<p>打开 Create a new platform from hardware(XSA)标签页，<strong>点击“+”添加 xsa 文件</strong> ，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7ca8dc52ec3036fad0de51d0e881659c.png"></p>
+<p>添加之前生成的xca文件，添加 xsa 文件后后点击 next。</p>
+<p>在弹出的页面中有一个 Generate boot components 选项，如果勾选，软件会自动生成 fsbl 工程，这 里我们选择默认勾选，然后点击<br>next，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/288d2ba5ef4342f13cc8d63a597b4e5b.png"></p>
+<p>在弹出的工程模板选择页面里，我们选择已有的 Hello World 模板，然后点击 Finish</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/fbca540ff2514ca9d5a8846fed7eee51.png"></p>
+<pre><code>    工程建立完成后的页面如下图所示，我看可以看到生成了两个工程，一个是硬件平台工程，即 **platform 工程** ，一个是**应用工程** 。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/117f8abd36ad2af8f6b1d02788b749e6.png"></p>
+<pre><code>    双击打开 hello_world/src 工程目录下 helloworld.c 文件，可以看到源代码。
+
+    可以看到程序中主函数调用了 3 个函数，分别是 **init_platform()、cleanup_platform()和 print()** 函数。我们将鼠标停留在各个函数名上，vitis 就会显示该函数的声明。如果想查看函数的定义，可以**按住 Ctrl 键不放， 用鼠标点击相应的函数，就会跳转到其定义的地方** 。
+
+    可以看到 init_platform 函数的作用是使能 caches 和初始化 uart；cleanup_platform 函数的作用是取消使 能 caches。实际上这两个函数在该工程中并没有启动任何作用，因为这两个函数是针对于特定平台如 Microblaze 的，对于我们使用的 MPSOC 平台而言是不起作用的，所以 main 函数中只需包含第 9 行的 print 语句就可以了，出于平台的通用性和可移植性，此处我们保留这两个函数。
+
+    另外需要注意程序中打印字符串“Hello World”使用的是 **print()** 函数，而不是 C 语言里的 **printf()** 函数。 print()函数是 Xilinx 定义的一个用于打印字符串的函数，调用该函数需要包含头文件**“xil_printf.h”。**
+</code></pre>
+<p>选中应用工程，右键 Build Project 对工程进行编译。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/27b2222431094b40193d6127c4c5b66c.png"></p>
+<pre><code>    编译进度可以在工具下方的控制台面板（Console）中进行查看，编译完成后显示“Finished building： hello_world.elf”，如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/bfb4630e5ba6a99f44351730d5dd7bde.png"></p>
+<h3 id="3-下载验证"><a href="#3-下载验证" class="headerlink" title="3.下载验证"></a>3.下载验证</h3><pre><code>    首先我们将下载器与 MPSOC 开发板上的 **JTAG 接口连接** ，下载器另外一端与电脑连接。使用 USB 连接线将开发板 **USB_UART ( PS_PORT)**接口与电脑连接，用于串口通信。接下来将开发板上四个启动模式开关均置为 ON，即**设置为 JTAG 模式** 。最后连接开发板电源给开发板上电。
+
+    注意第一次连接开发板 USB_UART 接口时，需要安装 CH340 驱动(USB 串口驱动)。
+</code></pre>
+<h4 id="step6：板级验证"><a href="#step6：板级验证" class="headerlink" title="step6：板级验证"></a>step6：板级验证</h4><pre><code>    在 Vitis 软件的下方，找到 Terminal 窗口。如果界面中没有找到该窗口，或者操作过程中把该窗口 给关闭了，则可以通过在菜单栏中选择 Window &gt; Show View &gt; Other，在 Show View窗口中搜索添加 Terminal。
+</code></pre>
+<p>添加 Terminal 后如下图所示，点击箭头处的图标对串口进行设置。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/170e4143f360ea63e740c76d3b806da9.png"></p>
+<p>在弹出的窗口中，Choose terminal 一栏中，下拉选择 Serial Terminal<br>串口终端，选择串口终端后，接下来需要对串口设置。这里设置波特率为 “115200”，数据位为 8 位，停止位为 1 位，然后点击 OK，如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3f622888054796bdd0a2450834d5f07b.png"></p>
+<p>配置完成，连接成功后如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/fee5583261c8e02c05908b44d905ac77.png"></p>
+<p>右键 hello_world 工程，选择**“Run As”** ，选择**“Run Confagurations…”** ， 下载程序：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7378853644c71f828f51c56cf93f0dbc.png"></p>
+<pre><code>    在打开的下载页面中，没有出现下载选项，这时需要双击左侧列表中 Single Application Debug 一项，双击后，该项下面出现新的项 Debugger_hello_world-default，同时在右侧出现的页面中选择 Target Setup 标签 页，**勾选复位** ，然后点击 run 下载程序，如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2ac2948aee4eca8357489df5e2904f51.png"></p>
+<pre><code>    下载完成后，应用程序会将字符串“Hello World”通过 MPSOC PS 端的串口模块发送出去。在 Terminal 窗口可以看到上位机接收到的字符串，如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/1069bf74b114b8f0a8ecf6565c000d3c.png"></p>
+<h2 id="二-GPIO-之-MIO-控制-LED-实验"><a href="#二-GPIO-之-MIO-控制-LED-实验" class="headerlink" title="二.GPIO 之 MIO 控制 LED 实验"></a>二.GPIO 之 MIO 控制 LED 实验</h2><pre><code>    GPIO 可以通过 **MIO** 连接到 **PS** 端的引脚，也可以通过 **EMIO** 连接到 **PL** 。本章将介绍如何使用 GPIO 外设通过 MIO 控制 PS 端的 LED。
+</code></pre>
+<h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><pre><code>    MPSOC 分为 PS 和 PL 两部分，那么器件的引脚（Pin）资源同样也分成了两部分。MPSOC PS 中的外设可以通过 MIO（Multiuse I/O，多用输入/输出）模块连接到 PS 端的引脚上，也可以通过 EMIO 连接到 PL 端的引脚。MPSOC 系列芯片一般有 78 个 MIO。
+
+    图是 GPIO 的框图，从中我们可以看到 GPIO 分为 6 个 Bank，其中 **Bank0、Bank1 和 Bank2 连接到 MIO；而 Bank3、Bank4 和 Bank5 连接到 EMIO** 。Bank0、Bank1 和 Bank2 分别有 26bit，总共 78bit，也就是说有 78 个 MIO。Bank3、Bank4 和 Bank5 分 别有 32bit，也就是说 PS 端可以使用 96 个 EMIO。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/32042201490b2369989d7e8ca0fac313.png"></p>
+<pre><code>    PS 所有的外设都可以通过 MIO 访问，这些外设也是与 MIO 进行连接，每个 MIO 虽然可以独立控制， 以及独立驱动单个引脚的外设，但对于 QSPI、USB、以太网等这些外设，对于 MIO 的连接有着特殊的要求， 如图 2.1.2 所示，对于以太网而言，要与 MIO26~37、MIO38~49、MIO52~63 和 MIO64~75 引脚连接，而且 以太网与 MIO26 连接的引脚只能作为以太网的 tx_clk 使用，可见当其作为以太网的接口引脚时，相应的 MIO 的功能就已经确定下来了。从图中 MIO 一览表中我们可以看到 **MIO 一但选定，引脚位置就已经确定下来了，不需要添加引脚约束** 。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/caa5d520533e9acf50023b1178d6daab.png"></p>
+<pre><code>    MIO 与 PS 是如何连接的？ 图展示 PS 的 IO 外设。PS 外设的大多数 I/O 信号可以通过 MIO 路由到 PS 引脚，或通过 EMIO 路由到 PL 引脚。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/287affef4a19c843b014f61d1d6bdd42.png"></p>
+<pre><code>    这里我们重点介绍外设系统图中箭头所指的部分。**PS 通过 APB 总线对 控制、状态寄存器的读写实现对 GPIO 的驱动**，具体可以参见下图。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c6a0f8cbf358581c776ffb063389cf74.png"></p>
+<pre><code>    左边的一列是寄存器，上半部分是关于中断的，这部分我们在涉及到中断的时候会讲解，这里 我们重点介绍下红色框圈出的下半部分。
+
+    **DATA_RO** 是数据只读寄存器，通过该寄存器能够观察器件引脚上的值。如果 GPIO 信号配置为**输出** ， 则通常会反映输出上驱动的值，**写入此寄存器将被忽略** 。
+
+    **DATA** 是**数据寄存器** ，该寄存器控制 GPIO 信号**配置为输出时要输出的值** 。该寄存器的所有 **32 位** 都是一次写入的。读取该寄存器返回写入 **DATA 或 MASK_DATA_ &#123;LSW，MSW&#125;** 的先前值，它不会返回器件引脚上的当前值。
+
+    MASK_DATA_LSW 和 MASK_DATA_MSW 是**数据掩码寄存器** ，该寄存器使软件能够有选择地一次更改所需的输出值。可以写入最多 16 位的任意组合，MASK_DATA_LSW 控制 Bank 的低 16 位， MASK_DATA_MSW 控制高 16 位。未写入的那些位保持不变并保持其先前的值。读取该寄存器返回写入 DATA 或 MASK_DATA_ &#123;LSW，MSW&#125;的先前值;它不会返回器件引脚上的当前值。该寄存器避免了对未更改位的读-修改-写序列的需要。 **DIRM** 是**方向模式寄存器** ，用于控制 I/O 引脚是用作**输入还是输出** 。当 **DIRM [x] == 0** 时，**输出驱动器被禁用** ，该引脚作为**输入引脚** 使用。 **OEN** 是使能**输出寄存器** 。将 I/O 配置为输出时，该寄存器控制是否启用输出。**禁用输出时，引脚为 3 态** 。当 **OEN [x] == 0** 时，**输出被禁用** 。
+
+    从这些寄存器中我们可以看到，如果配置引脚为输出，不仅需要**设置方向，还要使能输出** 。关于这些寄存器的具体介绍，可参考 ug1085 手册。需要说明的是我们在程序中操作 MIO 时直接调用 **Xilinx 官方提供的函数** 即可，无需直接操作这些寄存器。
+
+    另外需要说明的是 MIO 信号对 PL 部分是不可用的，所以**对 MIO 的操作是纯 PS 的操作** ，且每个 GPIO 都可独立动态编程为输入、输出或中断检测。
+
+    **从上面看出，Zynq  的 PS 部分就像 stm32 一样，本质都是配置外设的寄存器，利用开发商或者其他提供的友好接口的库函数对寄存器进行配置开发。 stm32 使用 ARM公司提供的cortex-M3内核，通过下载器将机器码下载至存储器代码段。**
+</code></pre>
+<p>**         此时再回过头来看 stm32 的 SoC 架构和总线系统相比 Zynq 的也容易看了许多，之后再看stm32<br>的数据手册也多了一些理解。还有之后的 stm32 的学习，可以使用 keil5 的调试功能，检查各个寄存器的值和执行的汇编语言，从而更深层面了解微机原理和<br>CPU 的运作。**</p>
+<h3 id="2-实验步骤"><a href="#2-实验步骤" class="headerlink" title="2.实验步骤"></a>2.实验步骤</h3><pre><code>    本章的实验任务是使用 GPIO 通过 MIO 控制 PS 端 LED 的亮灭，实现 LED 闪烁的效果。
+
+    从实验任务我们可以画出如下的系统框图，DDR4 中**存放和运行程序** 、UART 打印信息、MIO 驱动 LED 外设。虽然本实验可以不需要 UART，不过为了方便打印一些信息，此处我们加上 UART。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/15845bb43a515dafb87742974f7da7e1.png"></p>
+<p><strong>注意养成绘制系统框图的习惯，帮助理解系统架构</strong></p>
+<h3 id="3-硬件设计"><a href="#3-硬件设计" class="headerlink" title="3.硬件设计"></a><strong>3.硬件设计</strong></h3><h4 id="step1：创建-Vivado-工程-1"><a href="#step1：创建-Vivado-工程-1" class="headerlink" title="step1：创建 Vivado 工程"></a>step1：创建 Vivado 工程</h4><pre><code>    此处介绍如何在**先前工程的基础上继续实验** 而不破坏先前的工程。
+
+    先打开《第一章 Hello World》实验的 Vivado 工程，打开后选择菜单栏的 File-&gt; Project-&gt;**Save As...。** 在弹出的另存为界面中可以输入新的工程名或更改保存位置，此处我们输入新的工程名“gpio_mio”， 工程位置保持默认即可，然后**取消勾选 Include run results** ，最后点击“OK”。（ _注意：文件所在路径不能过长，最多280个字符，如果保存失败修改存储路径；**另外之前的“Creat_Block_Design”之所以选择默认的“design_1”而不是特定的“hello_world”是因为这个名字设定之后便不可修改，另存之后仍是之前的名字**_ ）
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a300da9bfaa27e3b089ee32f0c5ce58e.png"></p>
+<h4 id="step2：使用-IP-Integrator-创建-Processing-System-1"><a href="#step2：使用-IP-Integrator-创建-Processing-System-1" class="headerlink" title="step2：使用 IP Integrator 创建 Processing System"></a>step2：使用 IP Integrator 创建 Processing System</h4><pre><code>    在 Flow Navigator 中，点击 IP INTEGRATOR 下的 Open Block Design，在打开的下图 Diagram 窗口，双击打开 Zynq UltraScale+ MPSOC 重定义窗口。
+
+    在下图所示的重定义窗口，点击左侧的 I/O Configuration，在右侧的界面中展开 Low Speed，展开 I/O Peripherals，展开 GPIO，然后**勾选 GPIO0 MIO 和 GPIO1 MIO** 。另外开发板上的 Bank0 即原理图中的 BANK500 为 1.8V，所以我们将 5 处的 **Bank0、6 处的 bank2 电压设置为 LVCOMS 1.8V** ，最后点击 OK。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/22d22a4f6b00a858b25620f9107a6e89.png"></p>
+<pre><code>    实际用到的 GPIO_MIO 与原理图相关。为了方便大家的查找和使用，MPSOC PS 端 IO 引脚分配我们都列在了资料盘开发板原理图文件夹下的 IO 引脚分配总表中，我们摘录部分如下图
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/06d6440e02418eff773e87c0e910e21a.png"></p>
+<p>按 Ctrl+S 快捷键保存 Diagram。</p>
+<h4 id="step3：生成顶层-HDL"><a href="#step3：生成顶层-HDL" class="headerlink" title="step3：生成顶层 HDL"></a>step3：生成顶层 HDL</h4><pre><code>    在弹出的下图中，Synthesis Options 选择 Global，Run Setings 保持默认选择，然后点击 Generate。
+</code></pre>
+<p>注意与实验一区别，实验一是“Out of context per IP”，这里是“Global”。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/789eafaaea99b49efbeba278724a37c7.png"></p>
+<pre><code>    创建顶层 HDL Wrapper 因为我们在创建 Hello World 实验时创建顶层 HDL Wrapper 使用的是下图所示的 Let Vivado manage wrapper and auto-update选项，所以此处无**需再创建顶层HDL Wrapper** ，Vivado会**自动更新** 顶层HDL Wrapper。 此时第三步完成。
+</code></pre>
+<h4 id="step4：生成-Bitstream-文件并导出-Hardware-1"><a href="#step4：生成-Bitstream-文件并导出-Hardware-1" class="headerlink" title="step4：生成 Bitstream 文件并导出 Hardware"></a>step4：生成 Bitstream 文件并导出 Hardware</h4><pre><code>    由于本实验未用到 PL 部分，所以无需生成 Bitstream 文件，只需导出 hardware 即可。步骤和实验一相同。
+</code></pre>
+<h3 id="4-软件设计"><a href="#4-软件设计" class="headerlink" title="4.软件设计"></a>4.软件设计</h3><h4 id="step5：在-Vitis-中创建应用工程-1"><a href="#step5：在-Vitis-中创建应用工程-1" class="headerlink" title="step5：在 Vitis 中创建应用工程"></a>step5：在 Vitis 中创建应用工程</h4><pre><code>    基本与实验一相同。工程名改为“gpio_mio”；选择工程模版“Empty Application”，本章将自行创建工程文件，故选择空模板，然后点击“Finish” 按钮，如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ff2d68a7c22fa4b09d43e81130318de6.png"></p>
+<pre><code>    双击硬件平台目录下 **platform.spr** 文件，找到点击板级支持包“Board_Support_Package”，点击展开 “Peripheral Drivers”，右侧有相关文档和示例。找到 GPIO，如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4f3d3d587cd53c95f702a694e8f53a48.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/50988f6dd1c1fbc068ae09865a09fcab.png"></p>
+<pre><code>    点击 **Documentation** 将在浏览器窗口打开 GPIO 的 API 文档，里面有关于 GPIO 的详细信息，想了解 GPIO 的，可以仔细浏览其中的信息。
+
+    导入示例。如果我们点击 I**mport Examples（Documentation 旁边的按钮）** ，会弹出下图所示的导入示例界面，关于 GPIO 有两个示 例，如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/8f685cd0fd33c4130ea055d933944d57.png"></p>
+<pre><code>    这两个示例的介绍可以在刚才打开的**API 文档** 中看到。在 API 文档中点击左侧的 **Examples** ，右侧出现 这两个示例的介绍信息，如图所示： xgpiops_intr_example.c 包含有关如何**直接使用 XGpiops** 驱动程序的示例。此示例显示了**中断模式下驱动程序** 的用法，并使用 GPIO 的中断功能检测按钮事件，根据输入控制 LED 输出。xgpiops_polled_example.c 同样包含有关如何直接使用 XGpiops 驱动程序的示例。此示例提供了用于**读取/写入各个引脚** 的 API 的用法。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/8162740976bf76b39eb8589e7b500a26.png"></p>
+<pre><code>    们因为本实验暂未使用到中断，所以应该选择 xgpiops_polled_example 示例。选择 好示例后，点击“OK”按钮。
+
+    在 **Explorer 中，新增了 xgpiops_polled_example_1 目录** ，我们打开其 src 目录下的 xgpiops_polled_example.c 文件。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/072ba1557df31687c6828beaba8efd56.png"></p>
+<pre><code>    显示行数。此处我们说一下如何显示代码的行数，在下图所示的 **1 处箭头** 所指的上或下方点击鼠标右键，在弹出的菜单中选择 2 处的 **Show Line Numbers** ，就会显示代码的行数。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/b9b755efab66ebd848ace23a8d60d223.png"></p>
+<pre><code>    xgpiops_polled_example.c 文件有四个函数，其中 **GpioInputExample** 函数由于我们本实验只用 MIO 输出所以未用到。该文件代码虽然是为特定开发板使用的，不过我们稍作修改也可以拿来使用。有两个 LED 分别接到 PS 的 MIO38 和 MIO39，这里我们使用 PS_LED1，即连接 MIO38。 我们修改该文件第 193 行的 Output_Pin 为 38，保存该文件，然后编译，编译完成后下载到开发板会看到板 上的 LED1 灯闪烁，闪烁时间约为 2 秒，随后 LED 灯熄灭。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e37cf706e4506426aa0b2ecddfaba1b7.png"></p>
+<pre><code>    现在我们自己动手写一个驱动 MIO 的代码。
+
+    新建源文件。首先我们在 **gpio_mio/src** 目录上右键，选择 **New- &gt; File**，如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/96a7b91131fcef0da025feaca171ac69.png"></p>
+<pre><code>    在添加源文件界面中，File name 一栏我们输入文件名“main.c”，然后点击“Finish”按钮。输入源代码。我们在新建的 main.c 文件中输入以下代码：
+</code></pre>
+<p>​<br>    #include “xparameters.h” &#x2F;&#x2F;器件参数信息<br>    #include “xstatus.h” &#x2F;&#x2F;包含 XST_FAILURE 和 XST_SUCCESS 的宏定义<br>    #include “xil_printf.h” &#x2F;&#x2F;包含 print()函数<br>    #include “xgpiops.h” &#x2F;&#x2F;包含 PS GPIO 的函数<br>    #include “sleep.h” &#x2F;&#x2F;包含 sleep()函数</p>
+<pre><code>//宏定义 GPIO_DEVICE_ID
+#define GPIO_DEVICE_ID XPAR_XGPIOPS_0_DEVICE_ID
+//连接到 MIO 的 LED
+#define MIOLED0 38 //连接到 MIO38
+#define MIOLED1 39 //连接到 MIO39
+
+ XGpioPs Gpio; // GPIO 设备的驱动程序实例
+
+ int main()
+ &#123;
+	int Status;
+	XGpioPs_Config *ConfigPtr;
+	
+	print(&quot;MIO Test! \n\r&quot;);
+	ConfigPtr = XGpioPs_LookupConfig(GPIO_DEVICE_ID);
+	Status = XGpioPs_CfgInitialize(&amp;Gpio, ConfigPtr,ConfigPtr-&gt;BaseAddr);
+	
+	if (Status != XST_SUCCESS)&#123;
+		return XST_FAILURE;
+	&#125;
+	//设置指定引脚的方向：0 输入，1 输出
+	XGpioPs_SetDirectionPin(&amp;Gpio, MIOLED0, 1);
+	XGpioPs_SetDirectionPin(&amp;Gpio, MIOLED1, 1);
+	//使能指定引脚输出：0 禁止输出使能，1 使能输出
+	XGpioPs_SetOutputEnablePin(&amp;Gpio, MIOLED0, 1);
+	XGpioPs_SetOutputEnablePin(&amp;Gpio, MIOLED1, 1);
+	
+	while (1) &#123;
+		XGpioPs_WritePin(&amp;Gpio, MIOLED0, 0x0); //向指定引脚写入数据：0 或 1
+		XGpioPs_WritePin(&amp;Gpio, MIOLED1, 0x0);
+		sleep(1); //延时 1 秒
+		XGpioPs_WritePin(&amp;Gpio, MIOLED0, 0x1);
+		XGpioPs_WritePin(&amp;Gpio, MIOLED1, 0x1);
+		sleep(1);
+	&#125;
+	return XST_SUCCESS;
+ &#125;
+
+
+    该代码实现了 LED 灯每隔 1 秒闪一次的功能。
+
+    代码第 8 行我们宏定义了 **GPIO_DEVICE_ID** ，使其为 **XPAR_XGPIOPS_0_DEVICE_ID** ，如果在 Vitis 软件中，按住 Ctrl 键不放，将鼠标移动到 XPAR_XGPIOPS_0_DEVICE_ID 上，当鼠标变成手指状时，单击 鼠标左键，会自动跳转到 **xparameters.h** 文件中，该文件定义了各个外设的基地址、器件 ID、中断等，我们 这里重新宏定义 XPAR_XGPIOPS_0_DEVICE_ID 是为了以后方便修改。
+
+    代码第 10 行宏定义了 **MIOLED0** ，其值为 38，因为其连接到 PS 的 MIO38 引脚。一般对于这种 MIO 的 使用，驱动某一引脚，在代码中使用该引脚对应的 MIO 数字标号即可。
+
+    代码第 21 行至 26 行是**获取 GPIO 的 ID 和基址信息并初始化其配置** ，以及判断是否初始化成功。代码第 28 行的 **XGpioPs_SetDirectionPin** 和 31 行 **XGpioPs_SetOutputEnablePin** 函数分别是设置 **GPIO 的方向（输 入还是输出）** 函数和**使能输出函数** ，代码第 35 行的 **XGpioPs_WritePin** 是向指定 **GPIO 引脚写入数据的函数** ， 关于这三个函数的具体使用可以查看其定义。查看其定义的简便方法是在 VITIS 软件中，按住 Ctrl 键不放， 将鼠标移动到想查看定义的函数名上，当鼠标变成手指状时，单击鼠标左键，即可跳转到定义或声明的地方。
+
+    代码第 37 和第 40 行的 sleep 函数为秒延时函数，延时 m 秒就使用 sleep(m)语句。还有一个微秒延时函数 usleep(m)，延时 m 微秒。
+
+    编译工程。保存 main.c 文件，右键点击应用工程 gpio_mio，在弹出的菜单中选择 **Build Project** ， 如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9e8f14d55907d0b645cf585020c1c212.png"></p>
+<p>编译完成后，生成 elf 文件，</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4acd636a64b21b3d624d428a56fa75bb.png"></p>
+<h3 id="5-下载验证"><a href="#5-下载验证" class="headerlink" title="5.下载验证"></a>5.下载验证</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/fc2a33922f6e87d7a4af525f2d2b3bed.png"></p>
+<h2 id="三-GPIO-之-EMIO-按键控制-LED-实验"><a href="#三-GPIO-之-EMIO-按键控制-LED-实验" class="headerlink" title="三.GPIO 之 EMIO 按键控制 LED 实验"></a>三.GPIO 之 EMIO 按键控制 LED 实验</h2><pre><code>    PS 和外部设备之间的通信主要是通过**复用的输入/输出（Multiplexed Input/Output，MIO）** 实现的。除此之外，PS 还可以通过扩展的**MIO（Extended MIO，EMIO）** 来实现与外部设备的连接。**EMIO 使用了 PL 的 I/O 资源** ，当 PS 需要扩展**超过 78 个引脚的时候可以用 EMIO** ，也可以用它来**连接 PL 中实现的 IP 模块** 。
+</code></pre>
+<h3 id="1-简介-1"><a href="#1-简介-1" class="headerlink" title="1.简介"></a>1.简介</h3><pre><code>    在大多数情况下，PS 端经由 EMIO 引出的接口会直接连接到 PL 端的器件引脚上，**通过 IO 管脚约束来指定所连接 PL 引脚的位置** 。通过这种方式，EMIO 可以为 PS 端实现**额外的 96 个输入引脚或 96 个带有输出使能的输出引脚** 。EMIO 还有一种使用方式，就是**用于连接 PL 内实现的功能模块（IP 核）** ，此时 PL 端 的 IP 作为 PS 端的一个外部设备。
+
+    本章的实验任务是使用 MPSOC 开发板上的两个 **PS 端按键控制 PL 端 LED 亮灭** ，**两个 PL 端按键去控 制 PS 端 LED 的亮灭** 。
+</code></pre>
+<h3 id="2-硬件设计"><a href="#2-硬件设计" class="headerlink" title="2.硬件设计"></a>2.硬件设计</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/b00b29d17bda34dc8e2021d19b3da5c7.png"></p>
+<pre><code>    在配置界面中，点击左侧的 I/O Configuration。然后在右侧展开 GPIO 一栏，勾选 GPIO EMIO，并设置**位宽为 4** 。该设置将通过 EMIO 扩展一个 4 位的 GPIO 接口信号，此信号将用于连接 PL 端的引脚。注意这里 GPIO0 和 GPIO1 已经勾选。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f91ebcf53451f5c237c47a5fee50e1a7.png"></p>
+<pre><code>    完成配置后，点击右下角的“OK”按钮。然后在 Diagram 窗口中可以看到 Zynq UltraScale+ MPSoC 多 了一个 GPIO_0 端口，如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/6db0239064ee56374c85381472489777.png"></p>
+<pre><code>    将光标移动到上图中箭头所指示的位置，会发现光标变成了铅笔的样式。点击选中该端口，然后点击 鼠标右键，在弹出的列表中选择“**Make External** ”。点击选中该接口，在左侧 External Interface Properties 一栏中将该接口的名称修改为 GPIO_EMIO。如下 图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/87308bc75d7d72d6921777208d4fd904.png"></p>
+<pre><code>    在 Sources 窗口中展开 Design Sources，然后右键点击 design_1_wrapper 下的 design_1.bd，在弹出 的菜单中选择 Generate Output Products（在之前的实验中，我们创建顶层模块时选择了“Let Vivado manage wrapper and auto-update”选项，所以 此处无需再创建顶层 HDL Wrapper，Vivado 会自动更新顶层 HDL Wrapper。）
+</code></pre>
+<h4 id="step4：生成-Bitstream-文件并导出-Hardware-2"><a href="#step4：生成-Bitstream-文件并导出-Hardware-2" class="headerlink" title="step4：生成 Bitstream 文件并导出 Hardware"></a>step4：生成 Bitstream 文件并导出 Hardware</h4><pre><code>    在左侧**Flow Navigator 导航栏** 中找到 **RTL ANALYSIS** ，点击该选项中的“**Open Elaborated Design** ”。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ed28803feaff06157fb29b7ac79959b0.png"></p>
+<p>注意：如果出现闪退<a target="_blank" rel="noopener" href="https://blog.csdn.net/RERERERDFDSDSDSD/article/details/104838513?spm=1001.2014.3001.5506" title="Vivado RTL 闪退问题的解决办法">Vivado RTL<br>闪退问题的解决办法</a></p>
+<pre><code>    在 ELABORATED DESIGN 界面下方找到 I/O Ports 窗口。如果没有找到 I/O Ports 一栏则通过在菜单栏 中点击 Layout，然后在下拉列表中选择 I/O Planning。我们将在 I/O Ports 窗口中对 PL 部分的接口进行管 脚分配。PS 端的管脚约束文件，在图 3.3.12 中选择“Generate Output Products”之后，Vivado 工具会自动创建。
+
+    在本次实验中，EMIO 扩展了四个 GPIO 的接口信号，即上图中的 GPIO_EMIO_tri_io[0]， GPIO_EMIO_tri_io[1]，GPIO_EMIO_tri_io[2]，GPIO_EMIO_tri_io[3]。这里，我们将 GPIO_EMIO_tri_io[0] 接到 PL_KEY1 引脚，GPIO_EMIO_tri_io[1]接到 PL_KEY2 引脚，GPIO_EMIO_tri_io[2]接到 PL_LED1 引脚， GPIO_EMIO_tri_io[3]接到 PL_LED2 引脚。 查看原理图可知，这四个引脚的管脚约束分别是，PL_KEY1 为 AD11，PL_KEY2 为 AD10，PL_LED1 为 AE10，PL_LED2 为 AF10，且都在 BANK44 上，该 BANK 电压为 3.3V。接下来在软件中进行管脚分配， I/O Std 一列对应的电平也需要修改。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ae0e2d2e82480a55119adb7ff3b0fcb2.png"></p>
+<pre><code>    设置完成后按快捷 Ctrl+S 保存管脚约束，在弹出的对话框输入文件名“pin”，最后点击“OK”。
+
+    在左侧Flow Navigator 导航栏中找到PROGRAM AND DEBUG，点击该选项中的“Generate Bitstream”， 然后在连续弹出的对话框中依次点击“YES”、“OK”。此时，Vivado 工具开始对设计进行综合、实现、并生 成 Bitstream 文件。生成 Bitstream 完成后，在弹出的对话框中选择“Open Implemented Design”。点击“OK”，如果弹出对话框提示关闭 Elaborated Design，则点击“YES”。 在 IMPLEMENTED DESIGN 界面我们可以查看设计对 PL 资源的使用情况。在左侧 Flow Navigator 导 航栏中找到 **IMPLEMENTATION** ，点击该选项中的“**Report Utilization** ”，然后在弹出的对话框中点击“OK”。
+
+    在界面下方的 Utilization 标签页中，选择左侧的 Summary，然后在右侧会以表格和柱状图两种方式显 示当前 PL 资源的使用情况。在我们本次实验中，只消耗了 PL 端 4 个 LUT 和 4 个 IO 资源，这个 IO 就是 PS 通过 EMIO 扩展 GPIO 接口信号时所使用的 PL 引脚。如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/36d3b2fa130b81b99840523163257bd8.png"></p>
+<pre><code>    在菜单栏中选择 File &gt; Export &gt; Export hardware。 在弹出的对话框中，**勾选“Include bitstream”** ，然后点击“OK”按钮。在此处需要注意，如果我们的设计使用了 PL 的资源，比如使用了 PL 的引脚，或者在 PL 内实现了部 分功能模块，那么我们就需要生成 Bitstream 文件，并在导出硬件的时候包含该文件。
+</code></pre>
+<h3 id="3-软件设计"><a href="#3-软件设计" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><p>​<br>    #include “stdio.h”<br>    #include “xparameters.h”<br>    #include “xgpiops.h”<br>    #define GPIOPS_ID XPAR_XGPIOPS_0_DEVICE_ID &#x2F;&#x2F;PS 端 GPIO 器件 ID</p>
+<pre><code>#define MIO_LED1 38 //PS_LED1 连接到 MIO38
+#define MIO_LED2 39 //PS_LED2 连接到 MIO39
+#define MIO_KEY1 40 //PS_KEY1 连接到 MIO40
+#define MIO_KEY2 41 //PS_LEY2 连接到 MIO41
+#define EMIO_KEY1 78 //PL_KEY1 连接到 EMIO0
+#define EMIO_KEY2 79 //PL_KEY2 连接到 EMIO1
+#define EMIO_LED1 80 //PL_LED1 连接到 EMIO2
+#define EMIO_LED2 81 //PL_LED2 连接到 EMIO3
+
+int main()
+&#123;
+	printf(&quot;EMIO TEST!\n&quot;);
+	
+	XGpioPs gpiops_inst; //PS 端 GPIO 驱动实例
+	XGpioPs_Config *gpiops_cfg_ptr; //PS 端 GPIO 配置信息
+	
+	//根据器件 ID 查找配置信息
+	gpiops_cfg_ptr = XGpioPs_LookupConfig(GPIOPS_ID);
+	//初始化器件驱动
+	XGpioPs_CfgInitialize(&amp;gpiops_inst,gpiops_cfg_ptr,gpiops_cfg_ptr-&gt;BaseAddr);
+	
+	//设置 LED 为输出
+	XGpioPs_SetDirectionPin(&amp;gpiops_inst, MIO_LED1, 1);
+	XGpioPs_SetDirectionPin(&amp;gpiops_inst, MIO_LED2, 1);
+	XGpioPs_SetDirectionPin(&amp;gpiops_inst, EMIO_LED1, 1);
+	XGpioPs_SetDirectionPin(&amp;gpiops_inst, EMIO_LED2, 1);
+	//使能 LED 输出
+	XGpioPs_SetOutputEnablePin(&amp;gpiops_inst, MIO_LED1, 1);
+	XGpioPs_SetOutputEnablePin(&amp;gpiops_inst, MIO_LED2, 1);
+	XGpioPs_SetOutputEnablePin(&amp;gpiops_inst, EMIO_LED1, 1);
+	XGpioPs_SetOutputEnablePin(&amp;gpiops_inst, EMIO_LED2, 1);
+	
+	//设置 KEY 为输入
+	XGpioPs_SetDirectionPin(&amp;gpiops_inst, MIO_KEY1, 0);
+	XGpioPs_SetDirectionPin(&amp;gpiops_inst, MIO_KEY2, 0);
+	XGpioPs_SetDirectionPin(&amp;gpiops_inst, EMIO_KEY1, 0);
+	XGpioPs_SetDirectionPin(&amp;gpiops_inst, EMIO_KEY2, 0);
+	
+	//读取按键状态，控制 LED 亮灭
+	while(1)&#123;
+		XGpioPs_WritePin(&amp;gpiops_inst, MIO_LED1,
+		~XGpioPs_ReadPin(&amp;gpiops_inst, EMIO_KEY1));
+		
+		XGpioPs_WritePin(&amp;gpiops_inst, MIO_LED2,
+		~XGpioPs_ReadPin(&amp;gpiops_inst, EMIO_KEY2));
+		
+		XGpioPs_WritePin(&amp;gpiops_inst, EMIO_LED1,
+		~XGpioPs_ReadPin(&amp;gpiops_inst, MIO_KEY1));
+		
+		XGpioPs_WritePin(&amp;gpiops_inst, EMIO_LED2,
+		~XGpioPs_ReadPin(&amp;gpiops_inst, MIO_KEY2));
+	
+	&#125;
+	
+	return 0;
+&#125;
+
+
+    在代码的第 7 至 10 行，我们指定了 PS 端输出 LED 和输入 KEY 的 MIO 编号，这些编号可以从 MPSOC 开 发板的原理图中查到。在代码的 11 至 14 行指定了 PL 端 LED 和按键 KEY 的 EMIO 编号。
+
+    在本章的简介部分我们提到过，MPSOC 的 GPIO 被分成了 6 组，其中通过 EMIO 扩展的 GPIO 接口位于 BANK3 至 BANK5 中。在本次实验中我们通过 EMIO 扩展了 4 个 GPIO 信号，即 BANK3 的 EMIO0，EMIO1，EMIO2，EMIO3，由于 GPIO 的 BANK0，BANK1，BANK2 分别有 26 个信号，即 MIO 共有 78 个信号，**所以 BANK3 的 EMIO0 是第 79 个信号，编号为 78（从 0 开始编号）。**
+
+    我们按住 Ctrl 键，然后点击代码开头处所引用的头文件“xgpiops.h”以打开该文件。在 xgpiops.h 文件第 162 行给出了 MPSOC 器件 GPIO 最大的引脚数目，共 174 个，分别位于 6 个 Bank 中。在下面的注释中则分别列出了各 Bank 的引脚编号范围，同样可以看到 Bank3 的第一个引脚编号为 78。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/6a05a2ccf9124d96bc86553e3879682d.png"></p>
+<h2 id="四-GPIO之MIO按键中断实验"><a href="#四-GPIO之MIO按键中断实验" class="headerlink" title="四.GPIO之MIO按键中断实验"></a>四.GPIO之MIO按键中断实验</h2><h3 id="1-简介-2"><a href="#1-简介-2" class="headerlink" title="1.简介"></a>1.简介</h3><h4 id="处理器中断类型"><a href="#处理器中断类型" class="headerlink" title="&lt;1&gt;.处理器中断类型"></a>&lt;1&gt;.处理器中断类型</h4><p>• 可屏蔽中断（Maskable Interrupts，IRQ)</p>
+<p>• 不可屏蔽中断（Non-Maskable Interrupts，NMI)</p>
+<p>• <strong>处理器间中断（Inter-Processor Interrupts，IPI)</strong><br>：—在多处理器系统中，一个处理器可能需要中断另一个处理器的操作。在这种情况下，就会产生一个 IPI，以便于处理器间通信或同步。</p>
+<h4 id="中断控制器GIC"><a href="#中断控制器GIC" class="headerlink" title="&lt;2&gt;中断控制器GIC"></a>&lt;2&gt;中断控制器GIC</h4><pre><code>    ARM SOC 系统中 CPU 的中断信号仲裁器件：**GIC** （**general interrupt controller** ， 通用中断控制器） _**【功能和结构上类似于《微机原理》中的可编程中断控制器8259】**_
+</code></pre>
+<p>​<br>        当对应的中断源有效时，GIC 根据该中断源的配置，决定是否将该中断信号，发送给 CPU。如果有多 个中断源有效，那么 GIC 还会进行仲裁，选择最高优先级中断，发送给 CPU。 当 CPU 接受到 GIC 发送的中断，通过读取 GIC 的寄存器，就可以知道中断的来源来自于哪里，从而可以做相应的处理。 当 CPU 处理完中断之后访问 GIC 的寄存器，该中断处理完毕。GIC 接受到该信息后，将该中断源取消，避免又重新发送该中断给 CPU 以及允许中断抢占。</p>
+<pre><code>    Zynq Ultrascale+ MPSOC 包含两个中断控制器(GIC)，分别是符合 GICv2 架构规范的 Arm GIC-400 通用中断控制器 APU GIC 和符合 GICv1 架构规范的 Arm PL-390 通用中断控制器(PL390)。中断控制器框图如下图所示：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/afde86e7494ef3caa5c1ecc3c4445dc8.png"></p>
+<p>上图中 GIC-400 是 APU 中断控制器，其功能划分如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/796c758bb3becf08035866a7a7deb2c8.png"></p>
+<p>详细功能：  </p>
+<pre><code>    APU 中断控制器被分为两部分，第一部分是分发器(Distributor)，用来登记传送进来的中断并对它们进行排序，然后将中断送到正确的目标 CPU。distributor 对中断提供以下的功能：
+
+–全局中断使能 –每个中断的使能 –中断的优先级 –中断的分组 –中断的目的 core –中断触发方式 –对于 SGI 中断，传输中断到指定的 core –每个中断的状态管理 –提供软件，可以修改中断的 pending 状态
+
+    中断控制器第二部分(CPU Interface)和每个 CPU 的中断线连接，用来触发相关 Cortex-A53 的中断。 cpu interface 提供了一下的功能：
+
+–将中断请求发送给 cpu –对中断进行认可（acknowledging an interrupt） –中断完成识别(indicating completion of an interrupt) –设置中断优先级屏蔽 –定义中断抢占策略 –决定当前处于 pending 状态最高优先级中断
+
+     每个 Cortex-A53 有**四个中断线** 作为输入，分别是**普通优先级中断 nIRQ，高优先级（或快速）中断 nFIQ， 普通优先级虚拟中断 nVIRQ，高优先级（或快速）虚拟中断 nFIQ**
+
+    APU 中断控制器处理三种类型中断：1**6 个软件产生的中断(SGI)，7 个私有外设中断(PPI)，92 个共享外设中断(SPI)**
+
+    每个 CPU 都可以使用软件生成的中断来中断自身、另一个 CPU 或同时中断两个 CPU。有 16 个软件生成中断，具体见表。向软件产生的中断寄存器（GICD_SGIR）写入 SGI 中断编号并指定目标 CPU（或 两个 CPU），就产生了一个 SGI。该写操作通过 CPU 自己的专用（私有）总线进行。**每个 CPU 都有自己 的一组 SGI 寄存器** ，用于生成 16 个软件生成的中断中的一个或多个。所有的 SGI 都是边沿触发的，且其敏感性类型是固定的，不能修改。  
+    每个 CPU 核连接到了一个有七个外设中断的私有组上，这七个外设中断见表。需要注意的是：**来自 PL 的快速中断（FIQ）信号和中断（IRQ）信号** 在发送给中断控制器之前，会在传输给 PS 的时候被**反转** 。因此，这些信号因此**在 PL 内低电平有效，在 PS-PL 接口处高电平有效** 。 
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/bc3fc6a7da9253c672f49890520b37d4.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9fa3a98c687d4b1476298098bdd3e11d.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/232e30f977e6357aeb48fc33afd0f8a4.png"></p>
+<pre><code>    共享外设中断(SPI)是一种可以被分配器路由到任意指定处理器的外设中断。这些送到 GIC 的线性中断源来自各种中断源。
+
+    所有的中断请求，**无论是 PPI、SGI 还是 SPI，都分配了一个唯一的 ID 编号，以用于中断控制器的仲裁。**
+
+    中断分配器具有中断、处理器和活跃信息的中央列表，并负责触发 CPU 的软件中断。为了给每个处理器提供单独的副本，SGI 和 PPI 分派器寄存器是分组的。硬件确保针对**多个 CPU 的中断同一时间只能被一个 CPU 获取** 。
+</code></pre>
+<p>RPU 中断控制器框图如下图所示：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/be784b536668403f3377da54da3b1333.png"></p>
+<h4 id="GPIO-的-MIO-的中断"><a href="#GPIO-的-MIO-的中断" class="headerlink" title="&lt;3&gt;GPIO 的 MIO 的中断"></a>&lt;3&gt;GPIO 的 MIO 的中断</h4><p><img src="https://i-blog.csdnimg.cn/blog_migrate/adf3469ae6c2d955307f37538bd069af.png"></p>
+<p>寄存器说明：</p>
+<p>​<br>    INT_MASK：这个寄存器是只读的，显示哪些位当前被屏蔽，哪些位未被屏蔽&#x2F;启用。<br>    INT_EN：向该寄存器的任何位写入 1，可以启用&#x2F;解除中断信号的掩码。从该寄存器读取将返回一个不<br>    可预测的值。<br>    INT_DIS：向该寄存器的任何位写入 1 都会屏蔽该中断信号。从该寄存器读取会返回不可预测的值。<br>    INT_STAT：该寄存器显示是否发生了中断事件。将 1 写入该寄存器中的某个位可清除该位的中断状态。<br>    将 0 写入该寄存器中的某个位将被忽略。<br>    INT_TYPE：该寄存器控制中断是边沿敏感还是电平敏感。<br>    INT_POLARITY：该寄存器控制中断是低电平有效还是高电平有效（或下降沿敏感或上升沿敏感）。<br>    INT _ANY：如果 INT_TYPE 设置为边沿敏感，则该寄存器在上升沿和下降沿都会启用中断事件。如果<br>    INT_TYPE 设置为电平敏感，则忽略该寄存器。</p>
+<pre><code>    如果检测到中断，中断检测逻辑将 GPIO 的 **INT_STAT** 状态设置为真。如果中断未屏蔽，则 中断传输到一个或电路（图中未画出）。该或电路将**四个 BANK 中所有 GPIO 的所有中断组合成一个输出 （IRQ ID＃48）**到中断控制器。如果中断被禁止（屏蔽），则 INT_STAT 状态将保持直到被清除，但它**不会传输到中断控制器** ，除非稍后写入**INT_EN** 以禁用屏蔽。
+
+    如果 GPIO 中断是边沿触发的，则 INT 状态由检测逻辑锁存。通过**向 INT_STAT 寄存器写入 1 来清除 INT 锁存器** 。对于电平触发的中断，必须**清零 GPIO 中断输入源** ，以清除中断信号。或者，软件可以使用 **INT_DIS 寄存器屏蔽该输入** 。
+
+    **如果 INT_STAT = 1 且 INT_MASK = 0，则该中断信号有效。**
+</code></pre>
+<h3 id="2-硬件设计-1"><a href="#2-硬件设计-1" class="headerlink" title="2.硬件设计"></a>2.硬件设计</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/0d39702d5ebb5e0669f52c86ede2c349.png"></p>
+<p>沿用二中使用的硬件平台</p>
+<h3 id="3-软件设计-1"><a href="#3-软件设计-1" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><p>导入硬件平台后在选择模版时选择**“Empty Application”**<strong>自行创建工程文件</strong></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a45e282be5173c86ff34d81074f56dba.png"></p>
+<p> 添加main.c文件后输入代码：</p>
+<p>​<br>    &#x2F;***************************** Include Files *********************************&#x2F;</p>
+<pre><code>#include &quot;xparameters.h&quot;
+#include &quot;xgpiops.h&quot;
+#include &quot;xscugic.h&quot;
+#include &quot;xil_exception.h&quot;
+#include &quot;xplatform_info.h&quot;
+#include &lt;xil_printf.h&gt;
+#include &quot;sleep.h&quot;
+
+/************************** Constant Definitions *****************************/
+
+//以下常量映射到xparameters.h文件
+#define GPIO_DEVICE_ID      XPAR_XGPIOPS_0_DEVICE_ID      //PS端GPIO器件ID
+#define INTC_DEVICE_ID      XPAR_SCUGIC_SINGLE_DEVICE_ID  //通用中断控制器ID
+#define GPIO_INTERRUPT_ID   XPAR_XGPIOPS_0_INTR           //PS端GPIO中断ID
+
+//定义使用到的MIO引脚号
+#define KEY  40         //PS_KEY1 连接到 MIO40
+#define LED  38         //PS_LED1 连接到 MIO38
+#define LED2 39         //PS_LED2 连接到 MIO39
+
+/************************** Function Prototypes ******************************/
+
+static void intr_handler(void *callback_ref);
+int setup_interrupt_system(XScuGic *gic_ins_ptr, XGpioPs *gpio, u16 GpioIntrId);
+
+/**************************Global Variable Definitions ***********************/
+
+XGpioPs gpio;   //PS端GPIO驱动实例
+XScuGic intc;   //通用中断控制器驱动实例
+u32 key_press;  //KEY按键按下的标志
+u32 key_val;    //用于控制LED的键值
+</code></pre>
+<p>​<br>​<br>​<br>    &#x2F;************************** Function Definitions *****************************&#x2F;</p>
+<pre><code>int main(void)
+&#123;
+    int status;
+    XGpioPs_Config *ConfigPtr;     //PS 端GPIO配置信息
+
+    xil_printf(&quot;Gpio interrupt test \r\n&quot;);
+
+    //根据器件ID查找配置信息
+    ConfigPtr = XGpioPs_LookupConfig(GPIO_DEVICE_ID);
+    if (ConfigPtr == NULL) &#123;
+        return XST_FAILURE;
+    &#125;
+    //初始化Gpio driver
+    XGpioPs_CfgInitialize(&amp;gpio, ConfigPtr, ConfigPtr-&gt;BaseAddr);
+</code></pre>
+<p>​<br>        &#x2F;&#x2F;设置KEY所连接的MIO引脚的方向为输入<br>        XGpioPs_SetDirectionPin(&amp;gpio, KEY, 0);<br>        &#x2F;&#x2F;设置LED所连接的MIO引脚的方向为输出并使能输出<br>        XGpioPs_SetDirectionPin(&amp;gpio, LED, 1);<br>        XGpioPs_SetOutputEnablePin(&amp;gpio, LED, 1);<br>        XGpioPs_WritePin(&amp;gpio, LED, 0x0);<br>        &#x2F;&#x2F;设置LED2连接的MIO引脚方向为输出并使能输出<br>        XGpioPs_SetDirectionPin(&amp;gpio, LED2, 1);<br>        XGpioPs_SetOutputEnablePin(&amp;gpio, LED2, 1);<br>        XGpioPs_WritePin(&amp;gpio, LED2, 0x0);             &#x2F;&#x2F;PS_LED2默认关闭；</p>
+<p>​<br>        &#x2F;&#x2F;建立中断,出现错误则打印信息并退出<br>        status &#x3D; setup_interrupt_system(&amp;intc, &amp;gpio, GPIO_INTERRUPT_ID);<br>        if (status !&#x3D; XST_SUCCESS) {<br>            xil_printf(“Setup interrupt system failed\r\n”);<br>            return XST_FAILURE;<br>        }</p>
+<p>​<br>        &#x2F;&#x2F;中断触发时，key_press为TURE，延时一段时间后判断按键是否按下，是则反转LED<br>        while (1) {<br>            if (key_press) {<br>                usleep(20000);<br>                if (XGpioPs_ReadPin(&amp;gpio, KEY) &#x3D;&#x3D; 0) {<br>                    key_val &#x3D; ~key_val;<br>                    XGpioPs_WritePin(&amp;gpio, LED, key_val);<br>                }<br>                key_press &#x3D; FALSE;<br>                XGpioPs_IntrClearPin(&amp;gpio, KEY);      &#x2F;&#x2F;清除按键KEY中断<br>                XGpioPs_IntrEnablePin(&amp;gpio, KEY);     &#x2F;&#x2F;使能按键KEY中断<br>            }<br>        }<br>        return XST_SUCCESS;<br>    }</p>
+<p>​    </p>
+<p>中断服务程序：</p>
+<p>​<br>    &#x2F;&#x2F;中断处理函数<br>    &#x2F;&#x2F;  @param   CallBackRef是指向上层回调引用的指针<br>    static void intr_handler(void *callback_ref)<br>    {<br>        XGpioPs *gpio &#x3D; (XGpioPs *) callback_ref;</p>
+<pre><code>    //读取KEY按键引脚的中断状态，判断是否发生中断
+    if (XGpioPs_IntrGetStatusPin(gpio, KEY))&#123;
+        key_press = TRUE;
+        XGpioPs_IntrDisablePin(gpio, KEY);         //屏蔽按键KEY中断
+    &#125;
+&#125;
+</code></pre>
+<p>​    </p>
+<p>**         由于所有 GPIO 共享相同的中断，因此软件必须同时考虑 INT_MASK 和 INT_STAT 以确定哪个 GPIO<br>导致中断**。这与stm32单片机每个端口使用一个中断号是不同的，<strong>因此中断服务程序也有很大区别</strong> 。</p>
+<p>中断配置：</p>
+<p>​<br>    &#x2F;&#x2F;建立中断系统，使能KEY按键的下降沿中断<br>    &#x2F;&#x2F;  @param   GicInstancePtr是一个指向XScuGic驱动实例的指针<br>    &#x2F;&#x2F;  @param   gpio是一个指向连接到中断的GPIO组件实例的指针<br>    &#x2F;&#x2F;  @param   GpioIntrId是Gpio中断ID<br>    &#x2F;&#x2F;  @return  如果成功返回XST_SUCCESS, 否则返回XST_FAILURE<br>    int setup_interrupt_system(XScuGic *gic_ins_ptr, XGpioPs *gpio, u16 GpioIntrId)<br>    {<br>        int status;<br>        XScuGic_Config *IntcConfig;     &#x2F;&#x2F;中断控制器配置信息</p>
+<pre><code>    //查找中断控制器配置信息并初始化中断控制器驱动
+    IntcConfig = XScuGic_LookupConfig(INTC_DEVICE_ID);
+    if (NULL == IntcConfig) &#123;
+        return XST_FAILURE;
+    &#125;
+    status = XScuGic_CfgInitialize(gic_ins_ptr, IntcConfig,
+            IntcConfig-&gt;CpuBaseAddress);
+    if (status != XST_SUCCESS) &#123;
+        return XST_FAILURE;
+    &#125;
+</code></pre>
+<p>​<br>        &#x2F;&#x2F;设置并使能中断异常<br>        Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,<br>                (Xil_ExceptionHandler) XScuGic_InterruptHandler, gic_ins_ptr);<br>        Xil_ExceptionEnable();<br>        &#x2F;&#x2F;为中断设置中断处理函数<br>        status &#x3D; XScuGic_Connect(gic_ins_ptr, GpioIntrId,<br>                (Xil_ExceptionHandler) intr_handler, (void *) gpio);<br>        if (status !&#x3D; XST_SUCCESS) {<br>            return status;<br>        }<br>        &#x2F;&#x2F;使能来自于Gpio器件的中断<br>        XScuGic_Enable(gic_ins_ptr, GpioIntrId);<br>        &#x2F;&#x2F;设置KEY按键的中断类型为下降沿中断<br>        XGpioPs_SetIntrTypePin(gpio, KEY, XGPIOPS_IRQ_TYPE_EDGE_FALLING);<br>        &#x2F;&#x2F;使能按键KEY中断<br>        XGpioPs_IntrEnablePin(gpio, KEY);</p>
+<pre><code>    return XST_SUCCESS;
+&#125;
+</code></pre>
+<p> <strong>类比stm32的中断配置过程</strong> ：</p>
+<p>​<br>    	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource13);<br>    	<br>    	EXTI_InitTypeDef EXTI_InitStructure;<br>    	EXTI_InitStructure.EXTI_Line &#x3D; EXTI_Line13;<br>    	EXTI_InitStructure.EXTI_LineCmd &#x3D; ENABLE;<br>    	EXTI_InitStructure.EXTI_Mode &#x3D; EXTI_Mode_Interrupt;<br>    	EXTI_InitStructure.EXTI_Trigger &#x3D; EXTI_Trigger_Rising_Falling;<br>    	EXTI_Init(&amp;EXTI_InitStructure);<br>    	<br>    	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);<br>    	<br>    	NVIC_InitTypeDef NVIC_InitStructure;<br>    	NVIC_InitStructure.NVIC_IRQChannel &#x3D; EXTI15_10_IRQn;<br>    	NVIC_InitStructure.NVIC_IRQChannelCmd &#x3D; ENABLE;<br>    	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority &#x3D; 1;<br>    	NVIC_InitStructure.NVIC_IRQChannelSubPriority &#x3D; 2;<br>    	NVIC_Init(&amp;NVIC_InitStructure);</p>
+<h2 id="五-AXI-GPIO-按键控制-LED-实验"><a href="#五-AXI-GPIO-按键控制-LED-实验" class="headerlink" title="五.AXI GPIO 按键控制 LED 实验"></a>五.AXI GPIO 按键控制 LED 实验</h2><pre><code>    在 PL 端**调用 AXI GPIO IP 核** ，并通过 AXI4-Lite 接口实现 PS 与 **PL 中 AXI GPIO 模块**的通信。
+</code></pre>
+<h3 id="1-简介-3"><a href="#1-简介-3" class="headerlink" title="1.简介"></a>1.简介</h3><pre><code>    AXI GPIO IP 核为 AXI 接口提供了一个通用的输入/输出接口。与 PS 端的 GPIO 不同，AXI GPIO 是一个软核（Soft IP），即 MPSOC 芯片在出厂时并不存在这样的一个硬件电路，而是由用户通过配置 PL 端的逻辑资源来实现的一个功能模块。而 PS 端的 GPIO 是一个硬核（Hard IP），它是一个生产时在硅片中实现的功能电路。
+
+    AXI GPIO 可以配置成**单通道或者双通道** ，每个通道的**位宽** 可以单独设置。另外通过打开或者关闭三态缓冲器，AXI GPIO 的端口还可以被动态地配置成**输入或者输出接口** 。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/fcfd77f0e7a867a66966b28080460fab.png"></p>
+<pre><code>    从图中可以看到，模块的左侧实现了一个 _**32 位的 AXI4-Lite 从接口**_ ，用于主机访问 AXI GPIO 内部各通道的寄存器。当右侧接口输入的信号发生变化时，模块还能向主机产生中断信号。不过只有在配置 IP 核时选择“使能中断”，才会启用模块的中断控制功能。
+</code></pre>
+<h3 id="2-硬件设计-2"><a href="#2-硬件设计-2" class="headerlink" title="2.硬件设计"></a>2.硬件设计</h3><p>系统框图：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c51cad0adcbc38820dac88214135fe29.png"></p>
+<pre><code>    在图中，PS 端的 M_AXI_HPM 作为主端口，与 PL 端的 AXI GPIO IP 核以 AXI4-Lite 总线相连接。 其中，**AXI 互联 IP（AXI Interconnect）用于连接 AXI 存储器映射（memory-mapped）的主器件和从器件** 。 
+</code></pre>
+<h4 id="step2-vivado硬件平台"><a href="#step2-vivado硬件平台" class="headerlink" title="step2:vivado硬件平台"></a>step2:vivado硬件平台</h4><p>增加PS到PL的全局复位信号及axi接口：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a6dafe34ae5d0e1778d7f04193aecdad.png"></p>
+<p>增加PS到PL的时钟：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/fe48d12f2f77f094e6b3719c06695d57.png"></p>
+<p>在二的基础上增加PL端中断及PS段端口，如下：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/39009b1c2ebe277967b7791935f49940.png"></p>
+<pre><code>    另外我们还要用到 PS 端的 LED，因此需要在 I/O Configuration 界面勾选“GPIO1 MIO”，并设置 Bank0， Bank2 电压为 1.8V
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/0ae3c0baeb2513a1632d8da9312b1247.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f44edc425ad3ffe47efb17b246ba2931.png"></p>
+<pre><code>    **M_AXI_HPM0_LPD 是通用（General Purpose）AXI 接口** ，它包含了一组信号。首字母 M 表示 PS 作 为主机（Master），PL 中的外设作为从机（Slave）。而左侧的 **maxihpm0_lpd_aclk 是这个接口的全局时钟信号** ，它是一个输入信号，M_AXI_HPM0_LPD 接口的所有信号都是在这个全局时钟的上升沿采样的。
+
+    **pl_clk0 是 PS 输出的时钟信号** ，它将作为 PL 中外设模块的时钟源。在配置 MPSOC 的时候，该时钟默认为 100MHz。
+
+    **pl_resetn0 是由 PS 输出到 PL 的全局复位信号** ，低电平有效。
+
+   **  pl_ps_irq0[0:0]是由 PL 输出到 PS 的中断信号**。
+
+    接下来我们要在 Block Design 中**添加 PL 端的 AXI GPIO IP 核** ，在 Diagram 窗口空白位置右击，然后选 择“Add IP”。在弹出的 IP 目录中搜索“AXI GPIO”，最后双击搜索结果中的“AXI GPIO”将其添加到设计中。
+</code></pre>
+<p>并双击进行配置：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/b35bda5f46246c70ce0f5d793b90b9d0.png"></p>
+<pre><code>    GPIO **接口的位宽“GPIO Width”，最大可以支持 32 位** 。这里我们只需要连接一个按键，因此将其设置为 1。另外我们还需要使能其中断功能， 所以需要勾选“Enable Interrupt”。
+
+    我们也可以通过勾选图中的“All Inputs”或者“All Outputs”将 GPIO 指定为输入或者输出接口。这两个选项默认是没有勾选的，这样我们**可以在程序中将其动态地配置成输入或者输出接口** 。
+
+    箭头 1 所指示的参数“**Default Tri State Value** ”，它配置 GPIO **默认情况下的输入输出模式** ，当其为 0xFFFFFFFF 时，表明 GPIO 所有的位默认为输入模式。
+
+    另外勾选箭头 2 所指示的选项可以使能 GPIO 通道 2，GPIO 2 的配置与 GPIO 完全相同。该选项默认没有勾选，即该 IP 工作在单通道模式下。
+
+    按住左键将中断接口“ip2intc_irpt”与 Zynq UltraScale+ MPSOC 的中断接口“pl_ps_irq0[0:0]”连接起来。鼠标指针放到 GPIO 接口上，右击选择 Make External。修改 AXI GPIO IP 核引出的 GPIO 端口的名称。点击引出的 GPIO_0 端口，在左侧外部端口属性一栏中 将其名称修改为“AXI_GPIO_KEY”
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a865cb250e683464ce34579721b2fe85.png"></p>
+<pre><code>    接下来点击上图中箭头所指示的 _**Run Connection Automation**_ ，在弹出的对话框左侧确认勾选 All Automation，下面列出了会自动连接的模块及其接口，点击“OK”，工具会自动连接 AXI GPIO IP 核的 S_AXI 接口。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/fd461f7dc04e37cc5487f425c7087cd8.png"></p>
+<pre><code>    从上图中可以看到，在执行了自动连接之后，工具自动添加了两个 IP 核，分别是 **AXI 互联（AXI Interconnect）和处理器系统复位（Processor System Reseet）** 。AXI Interconnect IP 核用于将一个（或多个）AXI 存储器映射的主器件连接到一个（或多个）存储器映射的从器件。
+
+    Processor System Reseet IP 核为整个处理器系统提供复位信号。它会处理输入端的各种复位条件，并在输出端产生相应的复位信号。在本次实验中，Processor System Reseet 接收 Zynq UltraScale+ MPSOC 输出的异步复位信号 pl_resetn0，然后**产生一个同步到 PL 时钟源 pl_clk0 的复位信号 peripheral_aresetn** ，用于**复位 PL 端的各外设模块** 。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3d9347dbf7aa03eedbecec9d3a0b63a8.png"></p>
+<pre><code>    可以看到 PL端所有外设模块的时钟接口都连接到了 Zynq UltraScale+ MPSOC 输出的时钟信号 pl_clk0 上。需要注意的是，该时钟同样连接到了 PS 端 maxihpm0_pld_aclk 端口，作为M_AXI_HPM0_LPD 接口的全局时钟信号。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a54df03d0cedfd028171a2669e7ce9ea.png"></p>
+<pre><code>    在 Diagram 窗口空白处右击，然后选择**“Validate Design”** 验证设计。验证完成后弹出对话框提示“Validation Successful”表明设计无误，点击“OK”确认。最后按快捷键 “Ctrl + S”保存设计。
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d026edbf7c4ce40cb984637584191f12.png"></p>
+<pre><code>    接下来在**Source 窗口中右键点击 Design Source 设计文件“design_1.bd”** ，然后依次执行**“Generate Output Products”和“Create HDL Wrapper”** 。 
+
+    在左侧 Flow Navigator 导航栏中找到 **RTL ANALYSIS** ，点击该选项中的“Open Elaborated Design”。然 后在菜单栏中点击 Layout，在下拉列表中选择 **I/O Planning** 以打开 I/O Ports 窗口。我们将在 I/O Ports 窗口 中对 AXI GPIO 引出的接口 AXI_GPIO_KEY 进行管脚分配
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/10d614749b63a945e72f6d57f7e76e21.png"></p>
+<pre><code>    管脚分配完成后按快捷键 Ctrl+S 保存管脚约束，在弹出的窗口中输入引脚约束文件名，然后点击 “OK”
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/0073c6eb2211efe47db4fdc9665158ad.png"></p>
+<p>​       </p>
+<pre><code>     最后在左侧 Flow Navigator 导航栏中找到 PROGRAM AND DEBUG，点击该选项中的“Generate Bitstream”，在弹出的窗口中点击“OK”，对设计进行综合、实现、并生成 Bitstream 文件。Bitstream 文件生成后，会弹出 Bitstream Generation Completed 对话框，这里直接点击取消。 
+
+    在菜单栏中选择 File &gt; Export &gt; Export hardware 导出硬件，并在弹出的对话框中，勾选“Include bitstream”
+
+    新建 vitis 文件夹，将产生的 xsa 文件放入其中。 然后在菜单栏选择 Tools &gt; Launch Vitis，启动 Vitis 开发环境...
+</code></pre>
+<h3 id="3-软件设计-2"><a href="#3-软件设计-2" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><pre><code>    创建vitis工程“axi_gpio”，新建main.c文件内容如下：
+</code></pre>
+<p>​<br>    #include “stdio.h”<br>    #include “xparameters.h”<br>    #include “xgpiops.h”<br>    #include “xgpio.h”<br>    #include “xscugic.h”<br>    #include “xil_exception.h”<br>    #include “xil_printf.h”<br>    #include “sleep.h”</p>
+<pre><code>//宏定义
+#define SCUGIC_ID    XPAR_SCUGIC_0_DEVICE_ID      //中断控制器  ID
+#define GPIOPS_ID    XPAR_XGPIOPS_0_DEVICE_ID     //PS端  GPIO器件  ID
+#define AXI_GPIO_ID  XPAR_AXI_GPIO_0_DEVICE_ID    //PL端  AXI GPIO器件  ID
+#define GPIO_INT_ID  XPAR_FABRIC_GPIO_0_VEC_ID    //PL端  AXI GPIO中断  ID
+
+#define MIO_LED      38                           //PS_LED1 连接到  MIO38
+#define KEY_CHANNEL  1                            //PL按键使用 AXI GPIO通道1
+#define KEY_MASK     XGPIO_IR_CH1_MASK            //通道1的位定义
+
+//函数声明
+void instance_init();                             //初始化器件驱动
+void axi_gpio_handler(void *CallbackRef);         //中断服务函数
+
+//全局变量
+XScuGic            scugic_inst;                   //中断控制器    驱动实例
+XScuGic_Config  *  scugic_cfg_ptr;                //中断控制器    配置信息
+XGpioPs            gpiops_inst;                   //PS端  GPIO 驱动实例
+XGpioPs_Config  *  gpiops_cfg_ptr;                //PS端  GPIO 配置信息
+XGpio              axi_gpio_inst;                 //PL端  AXI GPIO 驱动实例
+
+int led_value = 1;                                //LED显示状态
+
+int main()
+&#123;
+	printf(&quot;AXI GPIO INTERRUPT TEST!\n&quot;);
+
+	//初始化各器件驱动
+	instance_init();
+
+	//配置PS GPIO
+	XGpioPs_SetDirectionPin(&amp;gpiops_inst, MIO_LED, 1);          //设置 PS GPIO 为输出
+	XGpioPs_SetOutputEnablePin(&amp;gpiops_inst, MIO_LED ,1);    //使能 PS GPIO 输出
+	XGpioPs_WritePin(&amp;gpiops_inst, MIO_LED, led_value);      //点亮LED
+
+	//配置PL AXI GPIO
+	XGpio_SetDataDirection(&amp;axi_gpio_inst, KEY_CHANNEL, 1);  //设置PL AXI GPIO 通道1为输入
+    XGpio_InterruptEnable(&amp;axi_gpio_inst, KEY_MASK);         //使能通道1中断
+    XGpio_InterruptGlobalEnable(&amp;axi_gpio_inst);             //使能AXI GPIO全局中断
+
+    //设置中断优先级和触发类型(高电平触发)
+    XScuGic_SetPriorityTriggerType(&amp;scugic_inst, GPIO_INT_ID, 0xA0, 0x1);
+    //关联中断ID和中断处理函数
+    XScuGic_Connect(&amp;scugic_inst, GPIO_INT_ID, axi_gpio_handler, &amp;axi_gpio_inst);
+    //使能AXI GPIO中断
+    XScuGic_Enable(&amp;scugic_inst, GPIO_INT_ID);
+
+    //设置并打开中断异常处理功能
+    Xil_ExceptionInit();
+    Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
+    		(Xil_ExceptionHandler)XScuGic_InterruptHandler, &amp;scugic_inst);
+    Xil_ExceptionEnable();
+
+    while(1);
+
+    return 0;
+&#125;
+
+//初始化各器件驱动
+void instance_init()
+&#123;
+	//初始化中断控制器驱动
+	scugic_cfg_ptr = XScuGic_LookupConfig(SCUGIC_ID);
+	XScuGic_CfgInitialize(&amp;scugic_inst, scugic_cfg_ptr, scugic_cfg_ptr-&gt;CpuBaseAddress);
+
+	//初始化PS端  GPIO驱动
+	gpiops_cfg_ptr = XGpioPs_LookupConfig(GPIOPS_ID);
+	XGpioPs_CfgInitialize(&amp;gpiops_inst, gpiops_cfg_ptr, gpiops_cfg_ptr-&gt;BaseAddr);
+
+	//初始化PL端  AXI GPIO驱动
+	XGpio_Initialize(&amp;axi_gpio_inst, AXI_GPIO_ID);
+&#125;
+
+//PL端  AXI GPIO 中断服务(处理)函数
+void axi_gpio_handler(void *CallbackRef)
+&#123;
+	int key_value = 1;
+	XGpio *GpioPtr = (XGpio *)CallbackRef;
+
+	print(&quot;Interrupt Detected!\n&quot;);
+	XGpio_InterruptDisable(GpioPtr, KEY_MASK);              //关闭 AXI GPIO 中断使能
+    key_value = XGpio_DiscreteRead(GpioPtr, KEY_CHANNEL);   //读取按键数据
+    if(key_value == 0)&#123;                                     //判断按键按下
+    	led_value = ~led_value;
+    	XGpioPs_WritePin(&amp;gpiops_inst, MIO_LED, led_value); //改变LED显示状态
+    &#125;
+    sleep(1);                                               //延时1s 按键消抖
+    XGpio_InterruptClear(GpioPtr, KEY_MASK);                //清除中断
+    XGpio_InterruptEnable(GpioPtr, KEY_MASK);               //使能AXI GPIO中断
+&#125;
+
+    在配置 PL 端 AXI GPIO 时，我们需要使能其中断功能，包括 AXI GPIO 通道 1 的中断和全局中断。
+
+    配置 GIC时，每一个中断源都有自己唯一的标识——中断号（ID），具体的数值可以在头文件 xparameters.h 中查看。其中由 PL 产生的**共享外设中断（SPI）共 16 个** ，中断 ID 分别为 121 到 128，以及 136 到 143。我们在程序第 14 行定义了一个宏 **GPIO_INT_ID，用于标识 AXI GPIO 的中 断 ID，它的值为 121** 。
+
+    配置 GIC 首先需要**设置中断 ID 所代表的中断源的优先级和触发类型** 。中断优先级共分为 **32 个等级** ，0 代表最高优先级，0xF8（10 进制数 248）代表最低优先级，各优先级之间的**步进值为 8** 。也就是说，支持的 优先级分别为 0、8、16、32...248。中断触发类型分为高**电平敏感类型** 和**上升沿敏感类型** 。AXI GPIO 在检测到输入接口的信号发生改变时，会产生一个电平类型的中断请求，高有效，因此将中断源 AXI GPIO 的触发类型设置为高电平敏感类型。
+
+    然后还需要将中断 ID 与其中断服务函数关联起来。中断服务函数 axi_gpio_handler()是需要我们自己编写的，用于响应和处理 AXI GPIO 中断的函数。除此之外，还要调用函数 XScuGic_Enable(&amp;scugic_inst, GPIO_INT_ID)来使能中断 ID 所对应的中断源。
+
+    最后我们需要初始化并设置 ARM 处理器的异常处理功能，如程序第 57 至 61 行所示。ARM 处理器支 持 7 种异常情况：复位、未定义指令、软件中断、指令预取中止、数据中止、中断请求（IRQ）和快速中断请求（FIQ）。每种异常也都有自己的 ID 标识，其中 XIL_EXCEPTION_ID_INT 用于标识中断请求（IRQ） 异常。我们通过调用函数 Xil_ExceptionRegisterHandler( XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler) XScuGic_InterruptHandler, &amp;scugic_inst )来给 IRQ 异常注册处理程序，它会将中断控制器 GIC 的中断处理程序与 ARM 处理器中的硬件中断处理逻辑连接起来。另外还要通过 Xil_ExceptionEnable( )函数使能 IRQ 异常。
+</code></pre>
+<h3 id="4-补充"><a href="#4-补充" class="headerlink" title="4.补充"></a>4.补充</h3><pre><code>    本章节需重点理解MPSOC的内部硬件结构，重点理解GIC的工作原理以及各类器件、中断ID的含义，进而才能看懂代码部分的配置过程。查阅官方支持文档《ug1085-zynq-ultrascale-trm.pdf》，补充以下内容：
+</code></pre>
+<p>除了APU GIC和RPU GIC，还有中断处理器件GIC proxy</p>
+<ul>
+<li><pre><code>  The **PMU** uses the **GIC proxy** interrupts when the RPU and APU cannot service an interrupt because the processor is powered down. The GIC proxy is a Xilinx architecture for the PMU external interrupt controller and is controlled by the PMU.
+</code></pre>
+</li>
+</ul>
+<p>（PMU作用：the platform measurement unit (PMU) processor for power, error<br>management, and execution of an optional software test library (STL) for<br>functional safety applications.）</p>
+<ul>
+<li><pre><code>   There are **148 system interrupts **that connect to **each GIC** , the GIC proxy interrupt structure, and the PL fabric. The system interrupts are normally handled by the RPU or APU MPCores. The user firmware in the PMU can process system interrupts in the absence of an RPU or APU. The CSU does not connect to the system interrupts.
+</code></pre>
+</li>
+<li><pre><code>   GIC功能：
+</code></pre>
+</li>
+</ul>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5981c4c11abe191bf657a9eaeb5c5fb6.png"></p>
+<p>另外APU和RPU的GIC分别有各自特殊功能</p>
+<ul>
+<li><pre><code>   系统中断：
+
+  The table lists the IRQ numbers for the RPU and APU interrupt controllers, as well as the GIC proxy bit assignments.（部分如下，总共148个：40~187）
+</code></pre>
+</li>
+</ul>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/052ea371c37f250ed9ee30b7a3920bba.png"></p>
+<p>包含中断号、位的分配信息等</p>
+<ul>
+<li><pre><code>   中断控制器框图解析（图见四—1.简介）
+
+  The **shared peripheral interrupts （SPI）** are generated from various subsystems that include the _**I/O peripherals in the PS and logic in the PL.（SPI来源）**_
+</code></pre>
+</li>
+</ul>
+<p><strong>——RPU GIC Interrupt Controller</strong></p>
+<pre><code>    There are **two interfaces** between the **RPU MPCore** and the **RPU GIC.**
+
+    • Distributor interface is used to **assign the interrupts** to each of the Cortex-R5F MPCore processors.
+
+    • CPU interface with a separate set of **4 KB memory-mapped registers** for each CPU. This provides protection **against unwanted accesses by one CPU to interrupts that are assigned to the other.**
+
+    The **APU MPCores** processors access the RPU_GIC interrupt controller (Figure 13-2) **through their peripheral interface.**
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/0e56a76baae5943bc6ec5fd907725da9.png"></p>
+<pre><code>     *        三种中断：
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7a019922da4e97554d75c88ffb2c3443.png"></p>
+<p>软件中断的触发为边沿且无法更改。触发方式为将SGI interrupt number写入寄存器PL390.enable_sgi_control<br>(ICDSGIR)中，通过读取interrupt acknowledge寄存器PL390.control_n_int_ack_n<br>(ICCIAR)或写入interrupt clear-pending寄存器PL390.enable_sqi_pending (ICDICPR)结束中断。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/010b0f0d542bdc1c62b77a0dbec31a48.png"></p>
+<pre><code>    *        优先次序 Interrupt Prioritization
+
+    All of the **SGI and SPI interrupt** requests are assigned a unique ID number. The controller uses the ID number to arbitrate. The interrupt distributor holds the list of pending interrupts for each CPU and then selects the highest priority interrupt before issuing it to the CPU interface. Interrupts of equal priority are resolved by selecting **the lowest ID**.
+</code></pre>
+<p><strong>——APU GIC Interrupt Controller</strong></p>
+<pre><code>    The APU uses an external GICv2 controller as a central resource to support and manage interrupts. There are **peripheral interrupts, software generated interrupts, and virtual interrupts.**
+</code></pre>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/db6aa664b84592fa37a46fe03ff62b69.png"></p>
+<pre><code>    *        Virtual Interrupt
+
+    A virtual interrupt targets a **virtual machine** running on a processor and is typically signaled to the processor by the connected virtual CPU interface.（和虚拟机相关，详见文档）
+</code></pre>
+<ul>
+<li><pre><code>   Interrupt Architecture
+
+  The interrupt architecture includes eleven sets of registers with six registers per set. Each set is divided between **sending an interrupt (TRIG and OBS) and receiving an interrupt (ISR, IMR, IER, and IDR).（中断过程通过读写寄存器操作）**
+</code></pre>
+</li>
+</ul>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/55ac29cbbb0817418efc8baab3e18d99.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/63fb614cb09abdfa5dffa67bee11f4b5.png"></p>
+<ul>
+<li><pre><code>   Determine the Source of Interrupt（确定中断源）
+
+  A processing unit reads its i**nterrupt status (ISR) and mask (IMR)** registers **to determine the source that caused the IRQ interrupt.** Once serviced, the ISR can be cleared by writing the data that was read from this register. The bits that were set are cleared while preserving any bits that got set after the read took place, which helps to eliminate missed interrupts
+</code></pre>
+</li>
+<li><pre><code>   示例代码：
+</code></pre>
+</li>
+</ul>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/33f967286bcd5984c9f582d9fd3a340d.png"></p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133275810">https://blog.csdn.net/qq_32971095/article/details/133275810</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------THE END-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>SWQ
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/" title="Vitis开发一——FPGA学习笔记＜8＞">http://example.com/2023/09/25/学习笔记/FPGA学习笔记(41)——Vitis开发一/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/24/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(10)%E2%80%94%E2%80%94Zynq%E7%AE%80%E4%BB%8B/" rel="prev" title="Zynq简介——FPGA学习笔记＜7＞">
+      <i class="fa fa-chevron-left"></i> Zynq简介——FPGA学习笔记＜7＞
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/26/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E7%8E%B0%E5%9C%A8%E7%9A%84%E6%83%85%E6%84%9F%E6%98%AF%E5%90%A6%E5%8F%AA%E6%98%AF%E4%B8%80%E7%A7%8D%E4%BB%8E%E4%BC%97%E5%BF%83%E7%90%86.../" rel="next" title="现在的情感是否只是一种从众心理...">
+      现在的情感是否只是一种从众心理... <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-Hello-World-%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.</span> <span class="nav-text">一.Hello World 实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1.硬件设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step1%EF%BC%9A%E5%88%9B%E5%BB%BA-Vivado-%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">step1：创建 Vivado 工程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step2%EF%BC%9A%E4%BD%BF%E7%94%A8-IP-Integrator-%E5%88%9B%E5%BB%BA-Processing-System"><span class="nav-number">1.1.2.</span> <span class="nav-text">step2：使用 IP Integrator 创建 Processing System</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-PS-%E7%9A%84-UART"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">&lt;1&gt;配置 PS 的 UART</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-PS-%E7%9A%84-DDR4-%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">&lt;2&gt;配置 PS 的 DDR4 控制器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-PS-%E7%9A%84%E6%97%B6%E9%92%9F"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">&lt;3&gt;配置 PS 的时钟</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step3%EF%BC%9A%E7%94%9F%E6%88%90%E9%A1%B6%E5%B1%82-HDL-%E6%A8%A1%E5%9D%97"><span class="nav-number">1.1.3.</span> <span class="nav-text">step3：生成顶层 HDL 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step4%EF%BC%9A%E7%94%9F%E6%88%90-Bitstream-%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA-Hardware"><span class="nav-number">1.1.4.</span> <span class="nav-text">step4：生成 Bitstream 文件并导出 Hardware</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.</span> <span class="nav-text">2.软件设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step5%EF%BC%9A%E5%9C%A8-Vitis-%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">step5：在 Vitis 中创建应用工程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%8B%E8%BD%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">1.3.</span> <span class="nav-text">3.下载验证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step6%EF%BC%9A%E6%9D%BF%E7%BA%A7%E9%AA%8C%E8%AF%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">step6：板级验证</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-GPIO-%E4%B9%8B-MIO-%E6%8E%A7%E5%88%B6-LED-%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.</span> <span class="nav-text">二.GPIO 之 MIO 控制 LED 实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.2.</span> <span class="nav-text">2.实验步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.3.</span> <span class="nav-text">3.硬件设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step1%EF%BC%9A%E5%88%9B%E5%BB%BA-Vivado-%E5%B7%A5%E7%A8%8B-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">step1：创建 Vivado 工程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step2%EF%BC%9A%E4%BD%BF%E7%94%A8-IP-Integrator-%E5%88%9B%E5%BB%BA-Processing-System-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">step2：使用 IP Integrator 创建 Processing System</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step3%EF%BC%9A%E7%94%9F%E6%88%90%E9%A1%B6%E5%B1%82-HDL"><span class="nav-number">2.3.3.</span> <span class="nav-text">step3：生成顶层 HDL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step4%EF%BC%9A%E7%94%9F%E6%88%90-Bitstream-%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA-Hardware-1"><span class="nav-number">2.3.4.</span> <span class="nav-text">step4：生成 Bitstream 文件并导出 Hardware</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.4.</span> <span class="nav-text">4.软件设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step5%EF%BC%9A%E5%9C%A8-Vitis-%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8%E5%B7%A5%E7%A8%8B-1"><span class="nav-number">2.4.1.</span> <span class="nav-text">step5：在 Vitis 中创建应用工程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E4%B8%8B%E8%BD%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">2.5.</span> <span class="nav-text">5.下载验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-GPIO-%E4%B9%8B-EMIO-%E6%8C%89%E9%94%AE%E6%8E%A7%E5%88%B6-LED-%E5%AE%9E%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">三.GPIO 之 EMIO 按键控制 LED 实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B-1"><span class="nav-number">3.1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.2.</span> <span class="nav-text">2.硬件设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step4%EF%BC%9A%E7%94%9F%E6%88%90-Bitstream-%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA-Hardware-2"><span class="nav-number">3.2.1.</span> <span class="nav-text">step4：生成 Bitstream 文件并导出 Hardware</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.3.</span> <span class="nav-text">3.软件设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-GPIO%E4%B9%8BMIO%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD%E5%AE%9E%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text">四.GPIO之MIO按键中断实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B-2"><span class="nav-number">4.1.</span> <span class="nav-text">1.简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E4%B8%AD%E6%96%AD%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.1.1.</span> <span class="nav-text">&lt;1&gt;.处理器中断类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6%E5%99%A8GIC"><span class="nav-number">4.1.2.</span> <span class="nav-text">&lt;2&gt;中断控制器GIC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GPIO-%E7%9A%84-MIO-%E7%9A%84%E4%B8%AD%E6%96%AD"><span class="nav-number">4.1.3.</span> <span class="nav-text">&lt;3&gt;GPIO 的 MIO 的中断</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">4.2.</span> <span class="nav-text">2.硬件设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">4.3.</span> <span class="nav-text">3.软件设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94-AXI-GPIO-%E6%8C%89%E9%94%AE%E6%8E%A7%E5%88%B6-LED-%E5%AE%9E%E9%AA%8C"><span class="nav-number">5.</span> <span class="nav-text">五.AXI GPIO 按键控制 LED 实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B-3"><span class="nav-number">5.1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1-2"><span class="nav-number">5.2.</span> <span class="nav-text">2.硬件设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step2-vivado%E7%A1%AC%E4%BB%B6%E5%B9%B3%E5%8F%B0"><span class="nav-number">5.2.1.</span> <span class="nav-text">step2:vivado硬件平台</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1-2"><span class="nav-number">5.3.</span> <span class="nav-text">3.软件设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%A1%A5%E5%85%85"><span class="nav-number">5.4.</span> <span class="nav-text">4.补充</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SWQ"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SWQ</p>
+  <div class="site-description" itemprop="description">舟遥遥以轻飏，风飘飘而吹衣</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:18</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'H2FYHQwVGaUkawg5DkrA6d6M-gzGzoHsz',
+      appKey     : 'zndS0u9Qj7qj8CqnJINs2MGT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : 'https://h2fyhqwv.lc-cn-n1-shared.com'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

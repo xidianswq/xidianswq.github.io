@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="目录 一.Verilog概述 二.Verilog具体语法 1.标识 2.逻辑值 3.常量 4.变量 5.参数 6.赋值语句 7.运算符 8.语句 9.系统函数  参考书目：《野火FPGA Verilog 开发实战指南》 一.Verilog概述1.IEEE定义标准Verilog语法参考文档 IEEE Standard for Verilog Hardware Description Language">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDL语法——FPGA学习笔记＜1＞">
+<meta property="og:url" content="http://example.com/2023/08/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E2%80%94%E2%80%94HDL%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:site_name" content="Switch">
+<meta property="og:description" content="目录 一.Verilog概述 二.Verilog具体语法 1.标识 2.逻辑值 3.常量 4.变量 5.参数 6.赋值语句 7.运算符 8.语句 9.系统函数  参考书目：《野火FPGA Verilog 开发实战指南》 一.Verilog概述1.IEEE定义标准Verilog语法参考文档 IEEE Standard for Verilog Hardware Description Language">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f28180bb6ad7d5e7cf2d0be08bed5b87.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/42b3b557654abe4183f82a59a0ba6d84.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/83f261e770d0298d5b3c99ef2a82a1af.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5faa8d75ee441d53d178a116fc8754d8.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/90dc5515dae6c757c524019fa8383c66.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bcf1e8adfc490d537036a7ab48c212e7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/019cf81e0945052440e899cf52edd6cb.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d078c9fd4a40ce4295d4b0744c878321.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/18d269aa4707511f0473895823444f06.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/cbb92bfc53bec3fd438009b3ae9a773f.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2d098bdb00c939fa2dcf3efe1100fb3b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bf3c357e7436845ff568400d9196dc4e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3be814a053d3080ca8ca49ad54ab5a65.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/39d62da1b54d44b352732de96396a766.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/edd387a12d3e04f5571e0679c848aebb.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3c0a5e86253afeb65e89f7f4e001e28c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/908f2d529d157eac38981769103cf85a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/efec5da318903ecd4b9ebe1870d3c8db.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/2fbf03e1dc5171c9a448486ed7563340.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b1b041ff1b50feb52ba7288198de8082.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/7ca2d1eaf85929c7ff512190c9a77271.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/fac806b50bdd1a8089f129b7e824e507.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e4be67eab72d8fffa966896974f67a64.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/eb492cf19fd7d3df4ad2a237caf4ee09.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/87b31817095385274983dbecfcaab5d1.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/71bdc0b1d1cd629da73bac8834b0c764.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d4b45c51ab3699a795f370bf588fd3e7.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/367dd47eb20337132f7bf1dd5641e3f1.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/e6e281793195ce7abdddbcbc97812adb.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/21be8673f8f0217c17967439be42ccdd.png">
+<meta property="article:published_time" content="2023-08-15T15:19:14.000Z">
+<meta property="article:modified_time" content="2025-02-09T06:27:17.140Z">
+<meta property="article:author" content="SWQ">
+<meta property="article:tag" content="fpga开发">
+<meta property="article:tag" content="嵌入式硬件">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png">
+
+<link rel="canonical" href="http://example.com/2023/08/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E2%80%94%E2%80%94HDL%E8%AF%AD%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HDL语法——FPGA学习笔记＜1＞ | Switch</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Switch</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to My Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">135</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E2%80%94%E2%80%94HDL%E8%AF%AD%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻飏，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HDL语法——FPGA学习笔记＜1＞
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-15 23:19:14" itemprop="dateCreated datePublished" datetime="2023-08-15T23:19:14+08:00">2023-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-09 14:27:17" itemprop="dateModified" datetime="2025-02-09T14:27:17+08:00">2025-02-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2023/08/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E2%80%94%E2%80%94HDL%E8%AF%AD%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="HDL语法——FPGA学习笔记＜1＞" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/08/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E2%80%94%E2%80%94HDL%E8%AF%AD%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/08/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E2%80%94%E2%80%94HDL%E8%AF%AD%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>542</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%B8%80.%E6%A6%82%E8%BF%B0">一.Verilog概述</a></p>
+<p><a href="about:blank#%E4%BA%8C.%E5%85%B7%E4%BD%93%E8%AF%AD%E6%B3%95">二.Verilog具体语法</a></p>
+<p><a href="about:blank#1.%E6%A0%87%E8%AF%86">1.标识</a></p>
+<p><a href="about:blank#2.%E9%80%BB%E8%BE%91%E5%80%BC">2.逻辑值</a></p>
+<p><a href="about:blank#3.%E5%B8%B8%E9%87%8F">3.常量</a></p>
+<p><a href="about:blank#4.%E5%8F%98%E9%87%8F">4.变量</a></p>
+<p><a href="about:blank#5.%E5%8F%82%E6%95%B0">5.参数</a></p>
+<p><a href="about:blank#6.%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5">6.赋值语句</a></p>
+<p><a href="about:blank#7.%E8%BF%90%E7%AE%97%E7%AC%A6">7.运算符</a></p>
+<p><a href="about:blank#8.%E8%AF%AD%E5%8F%A5">8.语句</a></p>
+<p><a href="about:blank#9.%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0">9.系统函数</a></p>
+<hr>
+<p>参考书目：《野火FPGA Verilog 开发实战指南》</p>
+<h2 id="一-Verilog概述"><a href="#一-Verilog概述" class="headerlink" title="一.Verilog概述"></a>一.Verilog概述</h2><p>1.IEEE定义标准Verilog语法参考文档</p>
+<p><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/1620780" title="IEEE Standard for Verilog Hardware Description
+Language">IEEE Standard for Verilog Hardware Description Language<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
+default.png?t&#x3D;N7T8">https://ieeexplore.ieee.org/document/1620780</a><img src="https://i-blog.csdnimg.cn/blog_migrate/f28180bb6ad7d5e7cf2d0be08bed5b87.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/42b3b557654abe4183f82a59a0ba6d84.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/83f261e770d0298d5b3c99ef2a82a1af.png"></p>
+<h2 id="二-Verilog具体语法"><a href="#二-Verilog具体语法" class="headerlink" title="二.Verilog具体语法"></a>二.Verilog具体语法</h2><p>**  KEY WORD：标识符、逻辑值、常量、变量、参数、赋值语句、注释、运算符、语句、系统函数**</p>
+<h3 id="1-标识"><a href="#1-标识" class="headerlink" title="1.标识"></a>1.标识</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/5faa8d75ee441d53d178a116fc8754d8.png"></p>
+<h3 id="2-逻辑值"><a href="#2-逻辑值" class="headerlink" title="2.逻辑值"></a>2.逻辑值</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/90dc5515dae6c757c524019fa8383c66.png"></p>
+<h3 id="3-常量"><a href="#3-常量" class="headerlink" title="3.常量"></a>3.常量</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/bcf1e8adfc490d537036a7ab48c212e7.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/019cf81e0945052440e899cf52edd6cb.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d078c9fd4a40ce4295d4b0744c878321.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/18d269aa4707511f0473895823444f06.png"><img src="https://i-blog.csdnimg.cn/blog_migrate/cbb92bfc53bec3fd438009b3ae9a773f.png"></p>
+<h3 id="4-变量"><a href="#4-变量" class="headerlink" title="4.变量"></a>4.变量</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/2d098bdb00c939fa2dcf3efe1100fb3b.png"></p>
+<h3 id="5-参数"><a href="#5-参数" class="headerlink" title="5.参数"></a>5.参数</h3><p>有parameter和localparam两种，前者可以通过实例化在model外部改变</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/bf3c357e7436845ff568400d9196dc4e.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3be814a053d3080ca8ca49ad54ab5a65.png"></p>
+<h3 id="6-赋值语句"><a href="#6-赋值语句" class="headerlink" title="6.赋值语句"></a>6.赋值语句</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/39d62da1b54d44b352732de96396a766.png"></p>
+<h3 id="7-运算符"><a href="#7-运算符" class="headerlink" title="7.运算符"></a>7.运算符</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/edd387a12d3e04f5571e0679c848aebb.png"></p>
+<p> 注:^异或运算</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3c0a5e86253afeb65e89f7f4e001e28c.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/908f2d529d157eac38981769103cf85a.png"></p>
+<h3 id="8-语句"><a href="#8-语句" class="headerlink" title="8.语句"></a>8.语句</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/efec5da318903ecd4b9ebe1870d3c8db.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/2fbf03e1dc5171c9a448486ed7563340.png"></p>
+<h3 id="9-系统函数"><a href="#9-系统函数" class="headerlink" title="9.系统函数"></a>9.系统函数</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/b1b041ff1b50feb52ba7288198de8082.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/7ca2d1eaf85929c7ff512190c9a77271.png"></p>
+<p> wirte与display区别：不自动换行</p>
+<p>strobe：最后执行<img src="https://i-blog.csdnimg.cn/blog_migrate/fac806b50bdd1a8089f129b7e824e507.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e4be67eab72d8fffa966896974f67a64.png"></p>
+<p>monitor：当变量变化时打印</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/eb492cf19fd7d3df4ad2a237caf4ee09.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/87b31817095385274983dbecfcaab5d1.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/71bdc0b1d1cd629da73bac8834b0c764.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/d4b45c51ab3699a795f370bf588fd3e7.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/367dd47eb20337132f7bf1dd5641e3f1.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/e6e281793195ce7abdddbcbc97812adb.png"></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/21be8673f8f0217c17967439be42ccdd.png"></p>
+<p>注：a是位宽为8bit，深度为20的存储器；reg [7:0]是一个变量类型</p>
+<p>三.VHDL概述</p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/132308209">https://blog.csdn.net/qq_32971095/article/details/132308209</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------THE END-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>SWQ
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/08/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E2%80%94%E2%80%94HDL%E8%AF%AD%E6%B3%95/" title="HDL语法——FPGA学习笔记＜1＞">http://example.com/2023/08/15/学习笔记/FPGA学习笔记(2)——HDL语法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/12/%E9%9A%8F%E7%AC%94/%E5%A5%BD%E4%B9%85%E6%B2%A1/" rel="prev" title="好久没">
+      <i class="fa fa-chevron-left"></i> 好久没
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/08/16/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(3)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%B8%80/" rel="next" title="基础设计一——FPGA学习笔记＜2＞">
+      基础设计一——FPGA学习笔记＜2＞ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-Verilog%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">一.Verilog概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-Verilog%E5%85%B7%E4%BD%93%E8%AF%AD%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">二.Verilog具体语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%87%E8%AF%86"><span class="nav-number">2.1.</span> <span class="nav-text">1.标识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%80%BB%E8%BE%91%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">2.逻辑值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B8%B8%E9%87%8F"><span class="nav-number">2.3.</span> <span class="nav-text">3.常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8F%98%E9%87%8F"><span class="nav-number">2.4.</span> <span class="nav-text">4.变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%8F%82%E6%95%B0"><span class="nav-number">2.5.</span> <span class="nav-text">5.参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.6.</span> <span class="nav-text">6.赋值语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">2.7.</span> <span class="nav-text">7.运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.8.</span> <span class="nav-text">8.语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0"><span class="nav-number">2.9.</span> <span class="nav-text">9.系统函数</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SWQ"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SWQ</p>
+  <div class="site-description" itemprop="description">舟遥遥以轻飏，风飘飘而吹衣</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:18</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'H2FYHQwVGaUkawg5DkrA6d6M-gzGzoHsz',
+      appKey     : 'zndS0u9Qj7qj8CqnJINs2MGT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : 'https://h2fyhqwv.lc-cn-n1-shared.com'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

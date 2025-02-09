@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="目录 一.基本信息 二.设计记录 1.任务分解 2.模块设计 三.设计实践 1.adc_stm32信号采集模块 2.proc_fpgaFPGA主体模块 &lt;1&gt;uart协议数据接收模块——uart_rx &lt;2&gt;串行数据解码模块——decoder &lt;3&gt; 顶层模块 3.signal_proc信号处理模块 四.注意事项  一.基本信息参赛厂商：AMD 参赛平台：基于A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023年FPGA创新大赛记录">
+<meta property="og:url" content="http://example.com/2023/11/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023%E5%B9%B4FPGA%E5%88%9B%E6%96%B0%E5%A4%A7%E8%B5%9B%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Switch">
+<meta property="og:description" content="目录 一.基本信息 二.设计记录 1.任务分解 2.模块设计 三.设计实践 1.adc_stm32信号采集模块 2.proc_fpgaFPGA主体模块 &lt;1&gt;uart协议数据接收模块——uart_rx &lt;2&gt;串行数据解码模块——decoder &lt;3&gt; 顶层模块 3.signal_proc信号处理模块 四.注意事项  一.基本信息参赛厂商：AMD 参赛平台：基于A">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f595c2dc3bd9102257bbf9596af891d6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/98f598971dff58761f4758e9f27128c6.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/46d0090f8addb62c8be3ca925881e31a.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/dc63d71546b24ba8b8aafcf1a9c565ee.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/50188b6c5223368c01c9481331d5b841.png">
+<meta property="article:published_time" content="2023-11-15T08:45:48.000Z">
+<meta property="article:modified_time" content="2025-02-09T06:11:29.930Z">
+<meta property="article:author" content="SWQ">
+<meta property="article:tag" content="fpga开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/f595c2dc3bd9102257bbf9596af891d6.png">
+
+<link rel="canonical" href="http://example.com/2023/11/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023%E5%B9%B4FPGA%E5%88%9B%E6%96%B0%E5%A4%A7%E8%B5%9B%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2023年FPGA创新大赛记录 | Switch</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Switch</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to My Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">135</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023%E5%B9%B4FPGA%E5%88%9B%E6%96%B0%E5%A4%A7%E8%B5%9B%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻飏，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2023年FPGA创新大赛记录
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-15 16:45:48" itemprop="dateCreated datePublished" datetime="2023-11-15T16:45:48+08:00">2023-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-09 14:11:29" itemprop="dateModified" datetime="2025-02-09T14:11:29+08:00">2025-02-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2023/11/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023%E5%B9%B4FPGA%E5%88%9B%E6%96%B0%E5%A4%A7%E8%B5%9B%E8%AE%B0%E5%BD%95/" class="post-meta-item leancloud_visitors" data-flag-title="2023年FPGA创新大赛记录" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/11/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023%E5%B9%B4FPGA%E5%88%9B%E6%96%B0%E5%A4%A7%E8%B5%9B%E8%AE%B0%E5%BD%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023%E5%B9%B4FPGA%E5%88%9B%E6%96%B0%E5%A4%A7%E8%B5%9B%E8%AE%B0%E5%BD%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>21k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>19 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>目录</strong></p>
+<p><a href="about:blank#%E4%B8%80.%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF">一.基本信息</a></p>
+<p><a href="about:blank#%E4%BA%8C.%E8%AE%BE%E8%AE%A1%E8%AE%B0%E5%BD%95">二.设计记录</a></p>
+<p><a href="about:blank#1.%E4%BB%BB%E5%8A%A1%E5%88%86%E8%A7%A3">1.任务分解</a></p>
+<p><a href="about:blank#2.%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1">2.模块设计</a></p>
+<p><a href="about:blank#%E4%B8%89.%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5">三.设计实践</a></p>
+<p><a href="about:blank#1.adc_stm32%C2%A0%E4%BF%A1%E5%8F%B7%E9%87%87%E9%9B%86%E6%A8%A1%E5%9D%97">1.adc_stm32<br>信号采集模块</a></p>
+<p><a href="about:blank#2.proc_fpga%20FPGA%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97">2.proc_fpga<br>FPGA主体模块</a></p>
+<p><a href="about:blank#%3C1%3Euart%E5%8D%8F%E8%AE%AE%E6%95%B0%E6%8D%AE%E6%8E%A5%E6%94%B6%E6%A8%A1%E5%9D%97%E2%80%94%E2%80%94uart_rx">&lt;1&gt;uart协议数据接收模块——uart_rx</a></p>
+<p><a href="about:blank#%3C2%3E%E4%B8%B2%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%A7%A3%E7%A0%81%E6%A8%A1%E5%9D%97%E2%80%94%E2%80%94decoder">&lt;2&gt;串行数据解码模块——decoder</a></p>
+<p><a href="about:blank#%3C3%3E%20%E9%A1%B6%E5%B1%82%E6%A8%A1%E5%9D%97">&lt;3&gt; 顶层模块</a></p>
+<p><a href="about:blank#3.signal_proc%20%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%A8%A1%E5%9D%97">3.signal_proc<br>信号处理模块</a></p>
+<p><a href="about:blank#%E5%9B%9B.%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%9A">四.注意事项</a></p>
+<hr>
+<h2 id="一-基本信息"><a href="#一-基本信息" class="headerlink" title="一.基本信息"></a>一.基本信息</h2><p>参赛厂商：AMD</p>
+<p>参赛平台：基于AMD的FPGA&#x2F;Zynq&#x2F;Versal器件（无资源限制）</p>
+<p>开发方向：基于AMD板卡的综合类赛道</p>
+<p>开发平台：正点原子 DFZU2EG MPSoc 开发板</p>
+<p>平台资源：</p>
+<table>
+<thead>
+<tr>
+<th>Application Processing Unit</th>
+<th>Quad-core Arm® Cortex®-A53 MPCore™ up to 1.5GHz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Real-Time Processing Unit</td>
+<td>Dual-core Arm Cortex-R5F MPCore™ up to 600MHz</td>
+</tr>
+<tr>
+<td>Graphics Processing Unit</td>
+<td>Arm Mali™-400 MP2 up to 667MHz</td>
+</tr>
+<tr>
+<td>Dynamic Memory Interface</td>
+<td>DDR4, LPDDR4, DDR3, DDR3L, LPDDR3</td>
+</tr>
+<tr>
+<td>High-Speed Peripherals</td>
+<td>PCIe® Gen2, USB3.0, SATA 3.1, DisplayPort, Gigabit</td>
+</tr>
+<tr>
+<td>Ethernet</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>103k System Logic Cells，6.5MB Total RAM，240 DSP Slices，252 Maximum I&#x2F;O Pins</p>
+<p>作品名称：基于FPGA的图神经网络传感器系统</p>
+<p>作品简介：</p>
+<pre><code>    对传感器系统进行建模，生成图模型并利用图神经网络对传感器系统运行状态进行评估。作品首先采集大量传感器数据，并根据事先对传感器群建模成图的模型，将传感器输出信号进行分析，主要分析图网络频域特性，进行初步判断然后用深度学习训练数据集，分析系统的状态。应用场景比如复杂环境因素影响下的农作物种植情况分析，工厂机械臂分析运行出错过热，太空站或基地的外壳完整性检测等。   
+</code></pre>
+<h2 id="二-设计记录"><a href="#二-设计记录" class="headerlink" title="二.设计记录"></a>二.设计记录</h2><h3 id="1-任务分解"><a href="#1-任务分解" class="headerlink" title="1.任务分解"></a>1.任务分解</h3><pre><code>    信号采集接口（多路信号采集、多种信号类型接口：通信协议接口、电压接口），数据打包模块，上层数据处理，结果显示模块。
+</code></pre>
+<h3 id="2-模块设计"><a href="#2-模块设计" class="headerlink" title="2.模块设计"></a>2.模块设计</h3><p>&lt;1&gt;ADC模块</p>
+<p>输入：多路电压采集</p>
+<p>输出：采用通信协议进行串行&#x2F;时分复用并行输出</p>
+<p>实现：利用stm32的ADC通道采集多路传感器信息，利用usart发送数据。</p>
+<p>&lt;2&gt;数据接收模块</p>
+<p>输入：下位机（stm32）usart串行输入数据</p>
+<p>输出：每字节数据及数据有效位</p>
+<p>实现：Verillog编写usart解码模块</p>
+<p>&lt;3&gt;数据解包模块</p>
+<p>输入：数据接收模块输出的每字节数据及数据有效位</p>
+<p>输出：10个传感器并行的120位数据</p>
+<p>实现：解析数据流识别数据包头（“FF”）和有效数据</p>
+<p>&lt;4&gt;数据处理模块</p>
+<p>输入：10个传感器并行的120位数据</p>
+<p>输出：10bit的10个传感器异常与否判断</p>
+<p>实现：利用HLS综合C语言算法实现输入到输出的转换函数（IP 核）</p>
+<h2 id="三-设计实践"><a href="#三-设计实践" class="headerlink" title="三.设计实践"></a>三.设计实践</h2><h3 id="1-adc-stm32-信号采集模块"><a href="#1-adc-stm32-信号采集模块" class="headerlink" title="1.adc_stm32 信号采集模块"></a>1.adc_stm32 信号采集模块</h3><pre><code>    利用 stm32 最小系统板上 ADC1 的 10 个通道资源，利用 DMA1 数据转运，通过1路 usart 串行发送出去。
+</code></pre>
+<p> stm32关键代码：</p>
+<p>（1）初始化stm32的多个ADC外设并启用DMA转运</p>
+<p>​<br>    void AD_Init(void)<br>    {<br>    	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);<br>    	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);<br>    	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);<br>    &#x2F;&#x2F;	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);<br>    	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);<br>    	<br>    	RCC_ADCCLKConfig(RCC_PCLK2_Div6);				&#x2F;&#x2F;72M&#x2F;6&#x3D;12,ADC最大时间不能超过14M<br>    	<br>    	GPIO_InitTypeDef GPIO_InitStructure;<br>    	GPIO_InitStructure.GPIO_Mode &#x3D; GPIO_Mode_AIN;	&#x2F;&#x2F;设置模拟输入模式<br>    	GPIO_InitStructure.GPIO_Pin &#x3D; GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;<br>    	GPIO_InitStructure.GPIO_Speed &#x3D; GPIO_Speed_50MHz;<br>    	GPIO_Init(GPIOA, &amp;GPIO_InitStructure);<br>    	GPIO_InitStructure.GPIO_Pin &#x3D; GPIO_Pin_0 | GPIO_Pin_1;<br>    	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);<br>    &#x2F;&#x2F;	GPIO_InitStructure.GPIO_Pin &#x3D; GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;<br>    &#x2F;&#x2F;	GPIO_Init(GPIOC, &amp;GPIO_InitStructure);<br>    	<br>    	&#x2F;&#x2F;ADC1,ADC通道x,规则采样顺序值为y,采样时间为55.5周期<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 2, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 4, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 5, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_5, 6, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 7, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 8, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 9, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_9, 10, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 11, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 12, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 13, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_13, 14, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 15, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_15, 16, ADC_SampleTime_55Cycles5);<br>    		<br>    	ADC_InitTypeDef ADC_InitStructure;<br>    	ADC_InitStructure.ADC_Mode &#x3D; ADC_Mode_Independent;					&#x2F;&#x2F;ADC工作在独立模式<br>    	ADC_InitStructure.ADC_DataAlign &#x3D; ADC_DataAlign_Right;				&#x2F;&#x2F;ADC数据右对齐<br>    	ADC_InitStructure.ADC_ExternalTrigConv &#x3D; ADC_ExternalTrigConv_None;	&#x2F;&#x2F;外部触发转换关闭<br>    	ADC_InitStructure.ADC_ContinuousConvMode &#x3D; ENABLE;					&#x2F;&#x2F;模数转换工作在连续转换模式<br>    	ADC_InitStructure.ADC_ScanConvMode &#x3D; ENABLE;						&#x2F;&#x2F;是否使用扫描模式<br>    	ADC_InitStructure.ADC_NbrOfChannel &#x3D; CHANNEL_NUM;					&#x2F;&#x2F;顺序进行规则转换的ADC通道的数目<br>    	ADC_Init(ADC1, &amp;ADC_InitStructure);<br>    	<br>    	&#x2F;&#x2F;DMA初始化<br>    	DMA_InitTypeDef DMA_InitStructure;<br>    	DMA_InitStructure.DMA_PeripheralBaseAddr &#x3D; (uint32_t)&amp;ADC1-&gt;DR;				&#x2F;&#x2F;DMA外设ADC基地址<br>    	DMA_InitStructure.DMA_PeripheralDataSize &#x3D; DMA_PeripheralDataSize_HalfWord;	&#x2F;&#x2F;数据宽度为16位<br>    	DMA_InitStructure.DMA_PeripheralInc &#x3D; DMA_PeripheralInc_Disable;			&#x2F;&#x2F;外设地址寄存器不变<br>    	DMA_InitStructure.DMA_MemoryBaseAddr &#x3D; (uint32_t)AD_Value;					&#x2F;&#x2F;DMA外设ADC基地址<br>    	DMA_InitStructure.DMA_MemoryDataSize &#x3D; DMA_MemoryDataSize_HalfWord;			&#x2F;&#x2F;数据宽度为16位<br>    	DMA_InitStructure.DMA_MemoryInc &#x3D; DMA_MemoryInc_Enable;						&#x2F;&#x2F;内存地址寄存器递增<br>    	DMA_InitStructure.DMA_DIR &#x3D; DMA_DIR_PeripheralSRC;							&#x2F;&#x2F;内存作为数据传输的目的地<br>    	DMA_InitStructure.DMA_BufferSize &#x3D; CHANNEL_NUM;								&#x2F;&#x2F;DMA通道的DMA缓存的大小<br>    	DMA_InitStructure.DMA_Mode &#x3D; DMA_Mode_Circular;								&#x2F;&#x2F;工作在循环缓存模式<br>    	&#x2F;&#x2F;M2M是否使用软件触发<br>    	DMA_InitStructure.DMA_M2M &#x3D; DMA_M2M_Disable;								&#x2F;&#x2F;DMA通道x没有设置为内存到内存传输<br>    	DMA_InitStructure.DMA_Priority &#x3D; DMA_Priority_Medium;						&#x2F;&#x2F;DMA通道 x拥有中优先级<br>    	DMA_Init(DMA1_Channel1, &amp;DMA_InitStructure);<br>    	<br>    	&#x2F;&#x2F;外设使能<br>    	DMA_Cmd(DMA1_Channel1, ENABLE);<br>    	ADC_DMACmd(ADC1, ENABLE);<br>    	ADC_Cmd(ADC1, ENABLE);<br>    	<br>    	&#x2F;&#x2F;复位校准寄存器<br>    	ADC_ResetCalibration(ADC1);<br>    	while (ADC_GetResetCalibrationStatus(ADC1) &#x3D;&#x3D; SET);<br>    	ADC_StartCalibration(ADC1);<br>    	while (ADC_GetCalibrationStatus(ADC1) &#x3D;&#x3D; SET);<br>    	<br>    	ADC_SoftwareStartConvCmd(ADC1, ENABLE);<br>    }</p>
+<p>（2）初始化stm32的多个ADC外设并启用DMA转运</p>
+<p>​<br>    void Get_Voltage()<br>    {<br>    	int i&#x3D;0;</p>
+<pre><code>	//数据包起始标志
+	Usart_TransmitByte(0xFF);
+	Usart_TransmitByte(0xFF); 
+	for(i=0;i&lt;CHANNEL_NUM;i++)
+	&#123;
+		Usart_TransmitByte(AD_Value[i]&gt;&gt;8);
+		Usart_TransmitByte(AD_Value[i]&amp;0x00FF);
+	&#125;
+	
+&#125;
+</code></pre>
+<h3 id="2-proc-fpga-FPGA主体模块"><a href="#2-proc-fpga-FPGA主体模块" class="headerlink" title="2.proc_fpga FPGA主体模块"></a>2.proc_fpga FPGA主体模块</h3><p>利用 xilinx zynq 接收 stm32 发送的数据并进行处理。</p>
+<p>系统框图：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f595c2dc3bd9102257bbf9596af891d6.png"></p>
+<p>实际本体是uart_rx——decoder——signal_proc三部分，rs232与电脑通信测试时使用。</p>
+<h4 id="uart协议数据接收模块——uart-rx"><a href="#uart协议数据接收模块——uart-rx" class="headerlink" title="&lt;1&gt;uart协议数据接收模块——uart_rx"></a>&lt;1&gt;uart协议数据接收模块——uart_rx</h4><p><img src="https://i-blog.csdnimg.cn/blog_migrate/98f598971dff58761f4758e9f27128c6.png"></p>
+<p> 这里uart_rx、uart_tx、rs232模块代码沿用之前学习代码。</p>
+<h4 id="串行数据解码模块——decoder"><a href="#串行数据解码模块——decoder" class="headerlink" title="&lt;2&gt;串行数据解码模块——decoder"></a>&lt;2&gt;串行数据解码模块——decoder</h4><p> 代码解析：</p>
+<p>​<br>    &#96;timescale 1ns &#x2F; 1ps</p>
+<pre><code>module decoder
+#(
+    parameter   CHANNEL_NUM =   4&#39;d10    //传感器通道数
+)
+(
+    input   wire            sys_rst_n       ,
+    input   wire    [7:0]   data_serial     ,
+    input   wire            in_flag         ,
+    output  reg     [119:0]  data_parallel ,
+    output  reg             out_flag    
+);
+
+reg [3:0]   channel_cnt ;
+reg         byte_cnt    ;
+reg         r_en        ;
+
+//r_en串行数据解码标志
+always@(posedge in_flag or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        r_en &lt;= 1&#39;b0;
+    else if(data_serial == 8&#39;hFF &amp;&amp; byte_cnt == 1&#39;b1)
+        r_en &lt;= 1&#39;b1;
+    else if(channel_cnt &gt; CHANNEL_NUM)
+        r_en &lt;= 1&#39;b0;
+    else
+        r_en &lt;= r_en;
+        
+//byte_cnt数据高低字节计数
+always@(posedge in_flag or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        byte_cnt &lt;= 1&#39;b0;
+    else if(r_en == 1&#39;b1)
+        byte_cnt &lt;= ~byte_cnt;
+    else if(r_en == 1&#39;b0&amp;&amp;data_serial == 8&#39;hFF)
+        byte_cnt &lt;= 1&#39;b1;
+    else
+        byte_cnt &lt;= 1&#39;b0;
+
+//channel_cnt处理通道数计数
+always@(negedge byte_cnt or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        channel_cnt &lt;= 1&#39;b0;
+    else if(channel_cnt &gt; CHANNEL_NUM)
+        channel_cnt &lt;= 1&#39;b0;
+    else if(r_en == 1&#39;b1&amp;&amp;channel_cnt &lt;= CHANNEL_NUM)
+        channel_cnt &lt;= channel_cnt+1;
+    else
+        channel_cnt &lt;= 1&#39;b0;
+        
+//串转并输出
+always@(negedge in_flag or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        data_parallel &lt;= 120&#39;b0;
+    else if(r_en == 1&#39;b1)
+        if(byte_cnt == 1&#39;b0)
+            case(channel_cnt)
+                4&#39;b0001:data_parallel[7 :0]         &lt;=  data_serial[7:0];
+                4&#39;b0010:data_parallel[19:12]        &lt;=  data_serial[7:0];
+                4&#39;b0011:data_parallel[31:24]        &lt;=  data_serial[7:0];
+                4&#39;b0100:data_parallel[43:36]        &lt;=  data_serial[7:0];
+                4&#39;b0101:data_parallel[55:48]        &lt;=  data_serial[7:0];
+                4&#39;b0110:data_parallel[67:60]        &lt;=  data_serial[7:0];
+                4&#39;b0111:data_parallel[79:72]        &lt;=  data_serial[7:0];
+                4&#39;b1000:data_parallel[91:84]        &lt;=  data_serial[7:0];
+                4&#39;b1001:data_parallel[103:96]       &lt;=  data_serial[7:0];
+                4&#39;b1010:data_parallel[115:108]      &lt;=  data_serial[7:0];
+                default:data_parallel &lt;= data_parallel;
+            endcase
+        else
+            case(channel_cnt)
+                4&#39;b0001:data_parallel[11:7  +1]  &lt;= data_serial[3:0];
+                4&#39;b0010:data_parallel[23:19 +1]  &lt;= data_serial[3:0];
+                4&#39;b0011:data_parallel[35:31 +1]  &lt;= data_serial[3:0];
+                4&#39;b0100:data_parallel[47:43 +1]  &lt;= data_serial[3:0];
+                4&#39;b0101:data_parallel[58:55 +1]  &lt;= data_serial[3:0];
+                4&#39;b0110:data_parallel[71:67 +1]  &lt;= data_serial[3:0];
+                4&#39;b0111:data_parallel[83:79 +1]  &lt;= data_serial[3:0];
+                4&#39;b1000:data_parallel[95:91 +1]  &lt;= data_serial[3:0];
+                4&#39;b1001:data_parallel[107:103+1]  &lt;= data_serial[3:0];
+                4&#39;b1010:data_parallel[119:115+1]  &lt;= data_serial[3:0];
+                default:data_parallel &lt;= data_parallel;
+            endcase
+    else
+        data_parallel &lt;= data_parallel;
+
+//out_flag转换成功标志位
+always@(posedge channel_cnt or negedge sys_rst_n)
+    if(sys_rst_n == 1&#39;b0)
+        out_flag &lt;= 1&#39;b0;
+    else if(channel_cnt ==  CHANNEL_NUM)
+        out_flag &lt;= 1&#39;b1;
+    else
+        out_flag &lt;= 1&#39;b0;
+
+endmodule
+</code></pre>
+<p> 波形图：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/46d0090f8addb62c8be3ca925881e31a.png"></p>
+<pre><code>     decode 模块检测到两个连续的 FF 后 r_en 使能开始记录数据，数据的高低字节用 byte_cnt 加以区分，每记录两个字节使 channel_cnt 加一，超出 CHANNEL_NUM 结束记录， data_parallel 输出120为并行数据。
+</code></pre>
+<p>仿真代码：</p>
+<p>​<br>    &#96;timescale 1us &#x2F; 1ns<br>    module  tb_decoder();</p>
+<pre><code>//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//wire  define
+wire     [119:0] data_parallel  ;
+wire             out_flag       ;
+// wire     [3:0]   channel_cnt    ;
+// wire             byte_cnt       ;
+// wire             r_en           ;
+
+reg     [7:0]   data_serial;
+reg             in_flag;
+reg             sys_rst_n;
+            
+//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//初始化系统时钟、全局复位和输入信号
+initial begin
+    in_flag = 1&#39;b0;
+    sys_rst_n = 1&#39;b0;
+    #100
+    sys_rst_n = 1&#39;b1;
+end
+ 
+//调用任务rx_byte
+initial begin
+    #200
+    rx_data();
+end
+ 
+//创建任务rx_byte，本次任务调用rx_bit任务，发送8次数据，分别为0~7
+task    rx_data();  //因为不需要外部传递参数，所以括号中没有输入
+    integer	j;
+    for(j=0; j&lt;255; j=j+1)    //调用8次rx_bit任务，每次发送的值从0变化255
+        rx_serial();
+endtask
+ 
+//创建任务rx_bit，每次发送的数据有10位，data的值分别为0到7由j的值传递进来
+task    rx_serial();
+    integer i;
+    for(i=0; i&lt;22; i=i+1)   begin
+        case(i)
+            0: data_serial &lt;= 8&#39;hFF ;
+            1: data_serial &lt;= 8&#39;hFF ;
+            2: data_serial &lt;= 8&#39;d1  ;
+            3: data_serial &lt;= 8&#39;d0  ;
+            4: data_serial &lt;= 8&#39;d2  ;
+            5: data_serial &lt;= 8&#39;d0  ;
+            6: data_serial &lt;= 8&#39;d3  ;
+            7: data_serial &lt;= 8&#39;d0  ;
+            8: data_serial &lt;= 8&#39;d4  ;
+            9: data_serial &lt;= 8&#39;d0  ;
+            10: data_serial &lt;= 8&#39;d5  ;
+            11: data_serial &lt;= 8&#39;d0  ;
+            12: data_serial &lt;= 8&#39;d6  ;
+            13: data_serial &lt;= 8&#39;d0  ;
+            14: data_serial &lt;= 8&#39;d7  ;
+            15: data_serial &lt;= 8&#39;d0  ;
+            16: data_serial &lt;= 8&#39;d8  ;
+            17: data_serial &lt;= 8&#39;b0  ;
+            18: data_serial &lt;= 8&#39;d9  ;
+            19: data_serial &lt;= 8&#39;d0  ;
+            20: data_serial &lt;= 8&#39;d10 ;
+            21: data_serial &lt;= 8&#39;d0  ;
+        endcase
+        in_flag &lt;= 1&#39;b1;
+        #0.001;
+        in_flag &lt;= 1&#39;b0;
+        #10;
+    end
+endtask
+ 
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------------------ rs232_inst ------------------------
+decoder 
+#(
+    .CHANNEL_NUM    (4&#39;d10)    //传感器通道数
+)
+decoder_inst
+(
+    .sys_rst_n      (sys_rst_n    ),
+    .data_serial    (data_serial  ),
+    .in_flag        (in_flag      ),
+    .data_parallel  (data_parallel),
+    .out_flag       (out_flag     )
+    
+    // .channel_cnt    (channel_cnt  ),
+    // .byte_cnt       (byte_cnt     ),
+    // .r_en           (r_en         )
+);
+ 
+endmodule
+</code></pre>
+<p>​     </p>
+<h4 id="顶层模块"><a href="#顶层模块" class="headerlink" title="&lt;3&gt; 顶层模块"></a>&lt;3&gt; 顶层模块</h4><p>代码解析：</p>
+<p>​<br>    &#96;timescale 1ns &#x2F; 1ps</p>
+<pre><code>module proc_fpga
+(
+    input   wire      clk_in1_p     ,
+    input   wire      clk_in1_n     ,
+    input   wire      sys_rst_n     ,
+    
+    //发送数据线
+    output  wire     pc_tx           ,      //数据发送线
+    // input   wire     [7:0]   tx_data ,      //发送的一字节数据
+    // input   wire             tx_flag ,      //发送数据就位标志
+    
+    //接收数据线
+    input   wire     pc_rx           ,     //数据接收线
+    // output  wire     [7:0]   rx_data ,      //接受的一字节数据
+    // output  wire             rx_flag ,      //一字节数据接收完成标志
+
+    input   wire     s1_rx           ,      
+    input   wire     s2_rx           ,  
+    
+    output  wire    [15:0]      result             
+    
+);
+
+wire clk_100M;
+wire locked;
+      
+wire     [7:0]   sensor1_data ;
+wire             sensor1_flag ;
+wire     s2_rx                ;    
+wire     [7:0]   sensor2_data ;
+wire             sensor2_flag ;
+//wire     s3_rx                ,    
+//wire     [7:0]   sensor3_data ,
+//wire             sensor3_flag 
+
+wire    [119:0] data1_parallel   ;
+wire    out1_flag        ;
+wire    [119:0] data2_parallel   ;
+wire    out2_flag        ;
+
+//回环测试线
+wire     [7:0]   pc_data ;
+wire             pc_flag ;
+wire     [7:0]   result_low;
+
+wire [11:0]  b1  ;   
+wire [11:0]  b2  ;
+wire [11:0]  b3  ;
+wire [11:0]  b4  ;
+wire [11:0]  b5  ;
+wire [11:0]  b6  ;
+wire [11:0]  b7  ;
+wire [11:0]  b8  ;
+wire [11:0]  b9  ;
+wire [11:0]  b10 ;
+wire [11:0]  b11 ;
+wire [11:0]  b12 ;
+wire [11:0]  b13 ;
+wire [11:0]  b14 ;
+wire [11:0]  b15 ;
+wire [11:0]  b16 ;
+
+assign data1_parallel[11:0]     = b1       ;
+assign data1_parallel[23:12]    = b2       ;
+assign data1_parallel[35:24]    = b3       ;
+assign data1_parallel[47:36]    = b4       ;
+assign data1_parallel[59:48]    = b5       ;
+assign data1_parallel[71:60]    = b6       ;
+assign data1_parallel[83:72]    = b7       ;
+assign data1_parallel[95:84]    = b8       ;
+assign data1_parallel[107:96]   = b9       ;
+assign data1_parallel[119:108]  = b10      ;
+assign data2_parallel[11:0]     = b11      ;
+assign data2_parallel[23:12]    = b12      ;
+assign data2_parallel[35:24]    = b13      ;
+assign data2_parallel[47:36]    = b14      ;
+assign data2_parallel[59:48]    = b15      ;
+assign data2_parallel[71:60]    = b16      ;
+
+//pll时钟产生模块
+clk_pll clk_pll_inst
+   (
+    // Clock out ports
+    .clk_100M(clk_100M),     // output clk_100M
+    // Status and control signals
+    .reset(~sys_rst_n), // input reset
+    .locked(locked),       // output locked
+   // Clock in ports
+    .clk_in1_p(clk_in1_p),    // input clk_in1_p
+    .clk_in1_n(clk_in1_n)    // input clk_in1_n
+);
+
+//usart通信模块
+rs232 rs232_pc_inst
+(
+    .sys_clk(clk_100M),
+    .sys_rst_n(sys_rst_n),
+    .rx_data    (pc_data    ),  //output    [7:0]   rx_data
+    .rx_flag    (pc_flag    ),  //output            rx_flag
+    .tx_data    (pc_data    ),
+    .tx_flag    (pc_flag    ),
+    .rx(pc_rx),
+    .tx(pc_tx)
+);
+
+//传感器数据接收
+uart_rx uart_rx_sensor1_inst
+(
+    .sys_clk(clk_100M),
+    .sys_rst_n(sys_rst_n),
+   .po_data    (sensor1_data    ),  //output    [7:0]   rx_data
+   .po_flag    (sensor1_flag    ),  //output            rx_flag
+    // .po_data    (pc_data    ),  //回环测试
+    // .po_flag    (pc_flag    ),  //回环测试    
+    .rx(s1_rx)
+);
+
+uart_rx uart_rx_sensor2_inst
+(
+    .sys_clk(clk_100M),
+    .sys_rst_n(sys_rst_n),
+    .po_data    (sensor2_data    ),  //output    [7:0]   rx_data
+    .po_flag    (sensor2_flag    ),  //output            rx_flag`
+    .rx(s2_rx)
+);
+
+// uart_rx uart_rx_sensor3_inst
+// (
+    // .sys_clk(clk_100M),
+    // .sys_rst_n(sys_rst_n),
+    // .po_data    (sensor3_data    ),  //output    [7:0]   rx_data
+    // .po_flag    (sensor3_flag    ),  //output            rx_flag
+    // .rx(s3_rx)
+// );
+
+decoder decoder1_inst
+(
+    .sys_rst_n     (sys_rst_n)      ,
+    .data_serial   (sensor1_data)   ,
+    .in_flag       (sensor1_flag)   ,
+    .data_parallel (data1_parallel) ,
+    .out_flag      (out1_flag)
+);
+
+decoder decoder2_inst
+(
+    .sys_rst_n     (sys_rst_n)      ,
+    .data_serial   (sensor2_data)   ,
+    .in_flag       (sensor2_flag)   ,
+    .data_parallel (data2_parallel) ,
+    .out_flag      (out2_flag)
+);
+
+signal_proc_inst signal_proc_inst_inst
+(
+    .ap_clk     (clk_100M)                  ,
+    .ap_rst     (sys_rst_n)                 ,
+    .a1         (b1 )    ,
+    .a2         (b2 )    ,
+    .a3         (b3 )    ,
+    .a4         (b4 )    ,
+    .a5         (b5 )    ,
+    .a6         (b6 )    ,
+    .a7         (b7 )    ,
+    .a8         (b8 )    ,
+    .a9         (b9 )    ,
+    .a10        (b10)    ,
+    .a11        (b11)    ,
+    .a12        (b12)    ,
+    .a13        (b13)    ,
+    .a14        (b14)    ,
+    .a15        (b15)    ,
+    .a16        (b16)    ,
+    .c1         (result[0])                 ,
+    .c2         (result[1])                 ,
+    .c3         (result[2])                 ,
+    .c4         (result[3])                 ,
+    .c5         (result[4])                 ,
+    .c6         (result[5])                 ,
+    .c7         (result[6])                 ,
+    .c8         (result[7])                 ,
+    .c9         (result[8])                 ,
+    .c10        (result[9])                 ,
+    .c11        (result[10])                ,
+    .c12        (result[11])                ,
+    .c13        (result[12])                ,
+    .c14        (result[13])                ,
+    .c15        (result[14])                ,
+    .c16        (result[15])    
+);
+
+endmodule
+</code></pre>
+<p>仿真代码：</p>
+<p>​<br>    &#96;timescale 1ns &#x2F; 1ps<br>    module  tb_proc_fpga();</p>
+<pre><code>//********************************************************************//
+//****************** Parameter and Internal Signal *******************//
+//********************************************************************//
+//wire  define
+wire    tx          ;
+reg     rx          ;
+wire     [7:0]   rx_data;
+wire             rx_flag;//reg   define
+wire     [7:0]   tx_data;
+wire             tx_flag;
+
+reg     clk_in1_p;
+reg     clk_in1_n;
+reg     sys_rst_n;
+
+always #5 clk_in1_p = ~clk_in1_p;
+always #5 clk_in1_n = ~clk_in1_n;
+
+assign tx_data=rx_data;
+assign tx_flag=rx_flag;
+</code></pre>
+<p>​<br>​<br>    parameter   UART_BPS    &#x3D;   20’d115200        ,   &#x2F;&#x2F;比特率<br>                CLK_FREQ    &#x3D;   28’d100_000_000  ;   &#x2F;&#x2F;时钟频率</p>
+<pre><code>//********************************************************************//
+//***************************** Main Code ****************************//
+//********************************************************************//
+//初始化系统时钟、全局复位和输入信号
+initial begin
+    clk_in1_p = 1&#39;b0;
+    clk_in1_n = 1&#39;b1;
+    rx        &lt;= 1&#39;b1;
+    sys_rst_n = 1&#39;b0;
+    #100
+    sys_rst_n = 1&#39;b1;
+end
+ 
+//调用任务rx_byte
+initial begin
+    #200
+    rx_byte();
+end
+ 
+//创建任务rx_byte，本次任务调用rx_bit任务，发送8次数据，分别为0~7
+task    rx_byte();  //因为不需要外部传递参数，所以括号中没有输入
+    integer	j;
+    for(j=0; j&lt;255; j=j+1)    //调用8次rx_bit任务，每次发送的值从0变化255
+        rx_bit(j);
+endtask
+ 
+//创建任务rx_bit，每次发送的数据有10位，data的值分别为0到7由j的值传递进来
+task    rx_bit(
+    input   [7:0]   data
+);
+    integer i;
+    for(i=0; i&lt;10; i=i+1)   begin
+        case(i)
+            0: rx &lt;= 1&#39;b0;
+            1: rx &lt;= data[0];
+            2: rx &lt;= data[1];
+            3: rx &lt;= data[2];
+            4: rx &lt;= data[3];
+            5: rx &lt;= data[4];
+            6: rx &lt;= data[5];
+            7: rx &lt;= data[6];
+            8: rx &lt;= data[7];
+            9: rx &lt;= 1&#39;b1;
+        endcase
+        #(1000000000/UART_BPS); //每发送1位数据延时
+    end
+endtask
+ 
+//********************************************************************//
+//*************************** Instantiation **************************//
+//********************************************************************//
+//------------------------ rs232_inst ------------------------
+proc_fpga   proc_fpga_inst
+(
+    .clk_in1_p        (clk_in1_p        ),
+    .clk_in1_n        (clk_in1_n        ),
+    .sys_rst_n        (sys_rst_n        ),
+    // .rx_data          (rx_data),  //output    [7:0]   rx_data
+    // .rx_flag          (rx_flag),  //output            rx_flag
+    // .tx_data          (tx_data),
+    // .tx_flag          (tx_flag),
+    .s1_rx               (rx               ),
+    .pc_tx               (tx               )
+);
+ 
+endmodule
+</code></pre>
+<p>​     </p>
+<h3 id="3-signal-proc-信号处理模块"><a href="#3-signal-proc-信号处理模块" class="headerlink" title="3.signal_proc 信号处理模块"></a>3.signal_proc 信号处理模块</h3><p>HLS工程代码解析：</p>
+<p>​<br>    #include &lt;ap_cint.h&gt;<br>    #include &lt;math.h&gt;<br>    void signal_proc(uint12 a1,uint12 a2,uint12 a3,uint12 a4,uint12 a5,uint12 a6,uint12 a7,uint12 a8,uint12 a9,uint12 a10,uint12 a11,uint12 a12,uint12 a13,uint12 a14,uint12 a15,uint12 a16,uint1 *c1,uint1 *c2,uint1 *c3,uint1 *c4,uint1 *c5,uint1 *c6,uint1 *c7,uint1 *c8,uint1 *c9,uint1 *c10,uint1 <em>c11,uint1 <em>c12,uint1 <em>c13,uint1 <em>c14,uint1 <em>c15,uint1 <em>c16)<br>    {<br>    #pragma HLS INTERFACE ap_none port&#x3D;a1<br>    #pragma HLS INTERFACE ap_none port&#x3D;a2<br>    #pragma HLS INTERFACE ap_none port&#x3D;a3<br>    #pragma HLS INTERFACE ap_none port&#x3D;a4<br>    #pragma HLS INTERFACE ap_none port&#x3D;a5<br>    #pragma HLS INTERFACE ap_none port&#x3D;a6<br>    #pragma HLS INTERFACE ap_none port&#x3D;a7<br>    #pragma HLS INTERFACE ap_none port&#x3D;a8<br>    #pragma HLS INTERFACE ap_none port&#x3D;a9<br>    #pragma HLS INTERFACE ap_none port&#x3D;a10<br>    #pragma HLS INTERFACE ap_none port&#x3D;a11<br>    #pragma HLS INTERFACE ap_none port&#x3D;a12<br>    #pragma HLS INTERFACE ap_none port&#x3D;a13<br>    #pragma HLS INTERFACE ap_none port&#x3D;a14<br>    #pragma HLS INTERFACE ap_none port&#x3D;a15<br>    #pragma HLS INTERFACE ap_none port&#x3D;a16<br>    #pragma HLS INTERFACE ap_none port&#x3D;c1<br>    #pragma HLS INTERFACE ap_none port&#x3D;c2<br>    #pragma HLS INTERFACE ap_none port&#x3D;c3<br>    #pragma HLS INTERFACE ap_none port&#x3D;c4<br>    #pragma HLS INTERFACE ap_none port&#x3D;c5<br>    #pragma HLS INTERFACE ap_none port&#x3D;c6<br>    #pragma HLS INTERFACE ap_none port&#x3D;c7<br>    #pragma HLS INTERFACE ap_none port&#x3D;c8<br>    #pragma HLS INTERFACE ap_none port&#x3D;c9<br>    #pragma HLS INTERFACE ap_none port&#x3D;c10<br>    #pragma HLS INTERFACE ap_none port&#x3D;c11<br>    #pragma HLS INTERFACE ap_none port&#x3D;c12<br>    #pragma HLS INTERFACE ap_none port&#x3D;c13<br>    #pragma HLS INTERFACE ap_none port&#x3D;c14<br>    #pragma HLS INTERFACE ap_none port&#x3D;c15<br>    #pragma HLS INTERFACE ap_none port&#x3D;c16<br>    #pragma HLS INTERFACE ap_ctrl_none port&#x3D;return<br>    	uint5 i;<br>    	uint12 b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16;<br>    	uint2 time&#x3D;0;<br>    	uint16 xzuo[16]&#x3D;{1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4};<br>    	uint16 yzuo[16]&#x3D;{1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4};<br>    	double A[256];<br>    	for(i&#x3D;0;i&lt;&#x3D;15;i++)<br>    	    for(int j&#x3D;0;j&lt;&#x3D;15;j++)<br>    	    {<br>    	    	A[i</em>16+j]&#x3D;sqrt((xzuo[i]-xzuo[j])</em>(xzuo[i]-xzuo[j])+(yzuo[i]-yzuo[j])</em>(yzuo[i]-yzuo[j]));<br>    	    	A[i</em>16+j]&#x3D;(1.0)&#x2F;(A[i</em>16+j]<em>A[i</em>16+j]<em>A[i</em>16+j]);<br>    		}<br>        for(i&#x3D;0;i&lt;&#x3D;15;i++)<br>        {<br>        	A[17</em>i]&#x3D;0;<br>    	}</p>
+<pre><code>	while(1)
+	&#123;
+		if(time==0)
+		&#123;
+			b1=a1;
+			b2=a2;
+			b3=a3;
+			b4=a4;
+			b5=a5;
+			b6=a6;
+			b7=a7;
+			b8=a8;
+			b9=a9;
+			b10=a10;
+			b11=a11;
+			b12=a12;
+			b13=a13;
+			b14=a14;
+			b15=a15;
+			b16=a16;
+			time++;
+		&#125;
+		else
+		&#123;
+			uint5 i,j;
+			double yuzhi=0.01;
+			uint12 graphsig[16];
+			uint12 graphsigq[16];
+			double Bian,jiubian,xinbian;
+			/* 此处假设该图信号的邻接矩阵不变，所以前面的只算一次 */
+			graphsig[0] = a1;
+			graphsig[1] = a2;
+			graphsig[2] = a3;
+			graphsig[3] = a4;
+			graphsig[4] = a5;
+			graphsig[5] = a6;
+			graphsig[6] = a7;
+			graphsig[7] = a8;
+			graphsig[8] = a9;
+			graphsig[9] = a10;
+			graphsig[10] = a11;
+			graphsig[11] = a12;
+			graphsig[12] = a13;
+			graphsig[13] = a14;
+			graphsig[14] = a15;
+			graphsig[15] = a16;
+			/* 现在时刻图信号 */
+			graphsigq[0] = b1;
+			graphsigq[1] = b2;
+			graphsigq[2] = b3;
+			graphsigq[3] = b4;
+			graphsigq[4] = b5;
+			graphsigq[5] = b6;
+			graphsigq[6] = b7;
+			graphsigq[7] = b8;
+			graphsigq[8] = b9;
+			graphsigq[9] = b10;
+			graphsigq[10] = b11;
+			graphsigq[11] = b12;
+			graphsigq[12] = b13;
+			graphsigq[13] = b14;
+			graphsigq[14] = b15;
+			graphsigq[15] = b16;
+
+			double dianbianhe[16];
+			for(i=0;i&lt;=15;i++)
+			&#123;
+				Bian=0;
+				for(j=0;j&lt;=15;j++)
+				&#123;
+					jiubian=((graphsigq[i]-graphsigq[j])*(graphsigq[i]-graphsigq[j]));
+					xinbian=((graphsig[i]-graphsig[j])*(graphsig[i]-graphsig[j]));
+					Bian=Bian+(xinbian-jiubian)*(xinbian-jiubian)*A[i*16+j];
+				&#125;
+				dianbianhe[i]=Bian;
+			&#125;
+			for(i=0;i&lt;=15;i++)
+			&#123;
+				if(dianbianhe[i]&gt;=yuzhi)
+				&#123;
+					if(i==0) *c1=1;
+					else if(i==1) *c2=1;
+					else if(i==2) *c3=1;
+					else if(i==3) *c4=1;
+					else if(i==4) *c5=1;
+					else if(i==5) *c6=1;
+					else if(i==6) *c7=1;
+					else if(i==7) *c8=1;
+					else if(i==8) *c9=1;
+					else if(i==9) *c10=1;
+					else if(i==10) *c11=1;
+					else if(i==11) *c12=1;
+					else if(i==12) *c13=1;
+					else if(i==13) *c14=1;
+					else if(i==14) *c15=1;
+					else if(i==15) *c16=1;
+				&#125;
+			&#125;
+			b1=a1;
+			b2=a2;
+			b3=a3;
+			b4=a4;
+			b5=a5;
+			b6=a6;
+			b7=a7;
+			b8=a8;
+			b9=a9;
+			b10=a10;
+			b11=a11;
+			b12=a12;
+			b13=a13;
+			b14=a14;
+			b15=a15;
+			b16=a16;
+		&#125;
+	&#125;
+&#125;
+</code></pre>
+<p>综合后 IP 核 ：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/dc63d71546b24ba8b8aafcf1a9c565ee.png"></p>
+<h2 id="四-注意事项"><a href="#四-注意事项" class="headerlink" title="四.注意事项"></a>四.注意事项</h2><p>&lt;1&gt;实例化时注意各个模块的时序，检查代码使用的时钟频率及各参数是否正确；实例化时连接线的运用，不能重复对一变量赋值！；注意实例调用时名称统一。</p>
+<p>&lt;2&gt;编写好仿真文件进行仿真后再下载。</p>
+<p>&lt;3&gt;报错：[DRC MDRV-1] Multiple Driver Nets</p>
+<p>[Vivado综合报multi-driven<br>nets的错误的解决方法](<a target="_blank" rel="noopener" href="https://blog.csdn.net/wordwarwordwar/article/details/80428358?ops_request_misc=&request_id=&biz_id=102&utm_term=multiple%20driver%20nets&utm_medium=distribute.pc_search_result.none-">https://blog.csdn.net/wordwarwordwar/article/details/80428358?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=multiple%20driver%20nets&amp;utm_medium=distribute.pc_search_result.none-</a><br>task-blog-2<del>all</del>sobaiduweb~default-0-80428358.nonecase&amp;spm&#x3D;1018.2226.3001.4187<br>“Vivado综合报multi-driven nets的错误的解决方法”)</p>
+<p>[Vivado编译过程中出现[DRC MDRV-1] Multiple Driver<br>Nets](<a target="_blank" rel="noopener" href="https://blog.csdn.net/jk_101/article/details/131824877?ops_request_misc=&request_id=&biz_id=102&utm_term=multiple%20driver%20nets&utm_medium=distribute.pc_search_result.none-">https://blog.csdn.net/jk_101/article/details/131824877?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=multiple%20driver%20nets&amp;utm_medium=distribute.pc_search_result.none-</a><br>task-<br>blog-2<del>all</del>sobaiduweb~default-1-131824877.nonecase&amp;spm&#x3D;1018.2226.3001.4187<br>“Vivado编译过程中出现[DRC MDRV-1] Multiple Driver Nets”)</p>
+<p>&lt;4&gt;未使用的输入输出不要定义，定义后生成比特流前必须绑定引脚</p>
+<p>&lt;5&gt;按照官方推荐的配套工具软件，比如Vivado 2023.1对应Vitis HLS<br>2023.1，如果使用不配套版本，HLS导出的IP核Vivado可能无法完全识别，报错“missing<br>Source”（全部展开IP核显示有缺少模块说明，如下图：）</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/50188b6c5223368c01c9481331d5b841.png"></p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133853116">https://blog.csdn.net/qq_32971095/article/details/133853116</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------THE END-------------</div>
+    
+</div>
+      </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>SWQ
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/11/15/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2023%E5%B9%B4FPGA%E5%88%9B%E6%96%B0%E5%A4%A7%E8%B5%9B%E8%AE%B0%E5%BD%95/" title="2023年FPGA创新大赛记录">http://example.com/2023/11/15/学习笔记/2023年FPGA创新大赛记录/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/06/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E6%B5%99%E6%B1%9F%E7%BB%8D%E5%85%B4%E6%9F%AF%E6%A1%A5%E8%B5%9B%E8%89%87%E6%8C%91%E6%88%98%E8%B5%9B/" rel="prev" title="浙江绍兴柯桥赛艇挑战赛">
+      <i class="fa fa-chevron-left"></i> 浙江绍兴柯桥赛艇挑战赛
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/11/26/%E9%9A%8F%E7%AC%94/%E8%BF%99%E6%AC%A1%E5%8F%AF%E8%83%BD%E6%98%AF%E6%88%91%E4%BB%AC%E8%BF%99%E6%9D%A1%E8%89%87%E4%B8%8A%E7%9A%84%E5%85%84%E5%BC%9F%E4%BB%AC%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E4%B8%80%E8%B5%B7%E6%AF%94%E8%B5%9B%E4%BA%86.../" rel="next" title="这次可能是我们这条艇上的兄弟们最后一次一起比赛了...">
+      这次可能是我们这条艇上的兄弟们最后一次一起比赛了... <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">一.基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E8%AE%BE%E8%AE%A1%E8%AE%B0%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">二.设计记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%BB%E5%8A%A1%E5%88%86%E8%A7%A3"><span class="nav-number">2.1.</span> <span class="nav-text">1.任务分解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.2.</span> <span class="nav-text">2.模块设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.</span> <span class="nav-text">三.设计实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-adc-stm32-%E4%BF%A1%E5%8F%B7%E9%87%87%E9%9B%86%E6%A8%A1%E5%9D%97"><span class="nav-number">3.1.</span> <span class="nav-text">1.adc_stm32 信号采集模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-proc-fpga-FPGA%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97"><span class="nav-number">3.2.</span> <span class="nav-text">2.proc_fpga FPGA主体模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#uart%E5%8D%8F%E8%AE%AE%E6%95%B0%E6%8D%AE%E6%8E%A5%E6%94%B6%E6%A8%A1%E5%9D%97%E2%80%94%E2%80%94uart-rx"><span class="nav-number">3.2.1.</span> <span class="nav-text">&lt;1&gt;uart协议数据接收模块——uart_rx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%B2%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%A7%A3%E7%A0%81%E6%A8%A1%E5%9D%97%E2%80%94%E2%80%94decoder"><span class="nav-number">3.2.2.</span> <span class="nav-text">&lt;2&gt;串行数据解码模块——decoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B6%E5%B1%82%E6%A8%A1%E5%9D%97"><span class="nav-number">3.2.3.</span> <span class="nav-text">&lt;3&gt; 顶层模块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-signal-proc-%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%A8%A1%E5%9D%97"><span class="nav-number">3.3.</span> <span class="nav-text">3.signal_proc 信号处理模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">4.</span> <span class="nav-text">四.注意事项</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SWQ"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SWQ</p>
+  <div class="site-description" itemprop="description">舟遥遥以轻飏，风飘飘而吹衣</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Feb 08 2025 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:18</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'H2FYHQwVGaUkawg5DkrA6d6M-gzGzoHsz',
+      appKey     : 'zndS0u9Qj7qj8CqnJINs2MGT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : 'https://h2fyhqwv.lc-cn-n1-shared.com'
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
