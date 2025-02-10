@@ -1274,6 +1274,13 @@
   </url>
   
   <url>
+    <loc>https://xidianswq.github.io/project/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://xidianswq.github.io/project/tags/fpga%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -1281,7 +1288,21 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/project/tags/stm32/</loc>
+    <loc>https://xidianswq.github.io/project/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xidianswq.github.io/project/tags/python/</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xidianswq.github.io/project/tags/c/</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1295,7 +1316,21 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/project/tags/c/</loc>
+    <loc>https://xidianswq.github.io/project/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xidianswq.github.io/project/tags/AI/</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xidianswq.github.io/project/tags/stm32/</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1323,42 +1358,7 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/project/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2025-02-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/project/tags/python/</loc>
-    <lastmod>2025-02-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/project/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</loc>
-    <lastmod>2025-02-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/project/tags/AI/</loc>
-    <lastmod>2025-02-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://xidianswq.github.io/project/tags/Hexo/</loc>
-    <lastmod>2025-02-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/project/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1400,6 +1400,13 @@
   </url>
   
   <url>
+    <loc>https://xidianswq.github.io/project/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://xidianswq.github.io/project/tags/matlab/</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -1435,7 +1442,14 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/project/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://xidianswq.github.io/project/tags/%E8%AF%97%E6%AD%8C/</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xidianswq.github.io/project/tags/%E5%B0%8F%E8%AE%B0/</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1450,20 +1464,6 @@
   
   <url>
     <loc>https://xidianswq.github.io/project/tags/cpu/</loc>
-    <lastmod>2025-02-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/project/tags/%E8%AF%97%E6%AD%8C/</loc>
-    <lastmod>2025-02-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/project/tags/%E5%B0%8F%E8%AE%B0/</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1493,14 +1493,14 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/project/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://xidianswq.github.io/project/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/project/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://xidianswq.github.io/project/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
