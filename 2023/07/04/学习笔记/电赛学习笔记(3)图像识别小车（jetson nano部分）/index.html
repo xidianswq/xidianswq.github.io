@@ -510,7 +510,7 @@ nano上电启动串口权限">永久修改jetson<br>nano上电启动串口权限
 <p>​<br>​    &#x2F;&#x2F; Define Constants<br>​    const char *uart_target &#x3D; “&#x2F;dev&#x2F;ttyTHS1”;<br>​    #define     NSERIAL_CHAR   256<br>​    #define     VMINX          1<br>​    #define     BAUDRATE       B115200</p>
 <p>​<br>​    class Uart {<br>​    private:<br>​      &#x2F;* data *&#x2F;<br>​      int fid;<br>​    public:<br>​      char serial_message[NSERIAL_CHAR];</p>
 <p>​<br>​      Uart ();<br>​      void sendUart(char *msg);<br>​      void readUart();<br>​      void closeUart();<br>​<br>    };<br>    #endif</p>
-<p>​<br>​<br>​    &#x2F;<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;<br>​    &#x2F;* @auteur Mathieu Bahin            <em>&#x2F;<br>​    &#x2F;</em> @date_création mars 2020         <em>&#x2F;<br>​    &#x2F;</em> @version 1.0                     <em>&#x2F;<br>​    &#x2F;</em> @email <a href="mailto:&#98;&#97;&#x68;&#x69;&#110;&#x2e;&#x6d;&#x61;&#116;&#x68;&#105;&#x65;&#117;&#64;&#103;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#109;">bahin.mathieu@gmail.com</a>   *&#x2F;<br>​    &#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>&#x2F;<br>​<br>    #include “uart.h”<br>    #include &lt;stdio.h&gt;<br>    #include &lt;unistd.h&gt;       &#x2F;&#x2F; Used for UART<br>    #include &lt;sys&#x2F;fcntl.h&gt;    &#x2F;&#x2F; Used for UART<br>    #include &lt;termios.h&gt;      &#x2F;&#x2F; Used for UART<br>    #include &lt;string.h&gt;</p>
+<p>​<br>​<br>​    &#x2F;<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;<br>​    &#x2F;* @auteur Mathieu Bahin            <em>&#x2F;<br>​    &#x2F;</em> @date_création mars 2020         <em>&#x2F;<br>​    &#x2F;</em> @version 1.0                     <em>&#x2F;<br>​    &#x2F;</em> @email <a href="mailto:&#98;&#x61;&#x68;&#x69;&#x6e;&#x2e;&#x6d;&#97;&#116;&#x68;&#x69;&#x65;&#117;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">bahin.mathieu@gmail.com</a>   *&#x2F;<br>​    &#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>&#x2F;<br>​<br>    #include “uart.h”<br>    #include &lt;stdio.h&gt;<br>    #include &lt;unistd.h&gt;       &#x2F;&#x2F; Used for UART<br>    #include &lt;sys&#x2F;fcntl.h&gt;    &#x2F;&#x2F; Used for UART<br>    #include &lt;termios.h&gt;      &#x2F;&#x2F; Used for UART<br>    #include &lt;string.h&gt;</p>
 <pre><code>using namespace std;
 
 Uart :: Uart ()&#123;
@@ -1144,10 +1144,28 @@ void on_Trackbar_6(int, void*)
         <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://qm.qq.com/q/fJkfzkochO" title="QQ → https:&#x2F;&#x2F;qm.qq.com&#x2F;q&#x2F;fJkfzkochO" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
         <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+        <a href="https://space.bilibili.com/348651384" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;348651384" rel="noopener" target="_blank"><i class="fa fa-tv fa-fw"></i>bilibili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://v.douyin.com/iPkLyDur/%209@8.com" title="douyin → https:&#x2F;&#x2F;v.douyin.com&#x2F;iPkLyDur&#x2F; 9@8.com" rel="noopener" target="_blank"><i class="fab fa-tiktok fa-fw"></i>douyin</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/profiles/76561199188319035/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561199188319035&#x2F;" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw"></i>Steam</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://c6.y.qq.com/base/fcgi-bin/u?__=sZVdegbNTeC3" title="Music → https:&#x2F;&#x2F;c6.y.qq.com&#x2F;base&#x2F;fcgi-bin&#x2F;u?__&#x3D;sZVdegbNTeC3" rel="noopener" target="_blank"><i class="fa fa-music fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/LoveU!" title="Thanks → LoveU!"><i class="far fa-kiss-wink-heart fa-fw"></i>Thanks</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
