@@ -1011,13 +1011,14 @@ pre .javascript .function {
 }
 .site-title {
   font-family: 'Noto Serif SC', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 1.375em;
-  font-weight: normal;
+  font-size: 1.75em;
+  font-weight: bold;
   margin: 0;
 }
 .site-subtitle {
   color: #f8f3d4;
   font-size: 0.8125em;
+  font-weight: bold;
   margin: 10px 0;
 }
 .use-motion .brand {
@@ -1224,7 +1225,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #05ffa4;
+  background: #1c88cc;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1316,6 +1317,8 @@ pre .javascript .function {
 .sidebar-nav .sidebar-nav-active {
   border-bottom-color: #00b8a9;
   color: #00b8a9;
+  font-weight: bold;
+  font-size: 1.05em;
 }
 .sidebar-nav .sidebar-nav-active:hover {
   color: #00b8a9;
@@ -1391,6 +1394,8 @@ pre .javascript .function {
 }
 .post-toc .nav .active-current > a {
   color: #00b8a9;
+  font-weight: bold;
+  font-size: 1.25em;
 }
 .post-toc .nav .active-current > a:hover {
   color: #00b8a9;
