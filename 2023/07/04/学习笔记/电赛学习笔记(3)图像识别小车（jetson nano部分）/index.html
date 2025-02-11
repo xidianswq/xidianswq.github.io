@@ -12,14 +12,16 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Zhi Mang Xing:300,300italic,400,400italic,700,700italic|Ma Shan Zheng:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200..900&family=Permanent+Marker&family=Satisfy&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xidianswq.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#e6c35c","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"xidianswq.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#e6c35c","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="目录">
@@ -206,7 +208,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="SWQ">
-      <meta itemprop="description" content="舟遥遥以轻飏，风飘飘而吹衣">
+      <meta itemprop="description" content="舟遥遥以轻扬，风飘飘而吹衣">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -244,13 +246,6 @@
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
-            </span>
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
             </span>
   
   <span class="post-meta-item">
@@ -517,7 +512,7 @@ nano上电启动串口权限">永久修改jetson<br>nano上电启动串口权限
 <p>​<br>​    &#x2F;&#x2F; Define Constants<br>​    const char *uart_target &#x3D; “&#x2F;dev&#x2F;ttyTHS1”;<br>​    #define     NSERIAL_CHAR   256<br>​    #define     VMINX          1<br>​    #define     BAUDRATE       B115200</p>
 <p>​<br>​    class Uart {<br>​    private:<br>​      &#x2F;* data *&#x2F;<br>​      int fid;<br>​    public:<br>​      char serial_message[NSERIAL_CHAR];</p>
 <p>​<br>​      Uart ();<br>​      void sendUart(char *msg);<br>​      void readUart();<br>​      void closeUart();<br>​<br>    };<br>    #endif</p>
-<p>​<br>​<br>​    &#x2F;<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;<br>​    &#x2F;* @auteur Mathieu Bahin            <em>&#x2F;<br>​    &#x2F;</em> @date_création mars 2020         <em>&#x2F;<br>​    &#x2F;</em> @version 1.0                     <em>&#x2F;<br>​    &#x2F;</em> @email <a href="mailto:&#98;&#x61;&#104;&#105;&#110;&#x2e;&#x6d;&#97;&#x74;&#104;&#x69;&#101;&#117;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#109;">bahin.mathieu@gmail.com</a>   *&#x2F;<br>​    &#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>&#x2F;<br>​<br>    #include “uart.h”<br>    #include &lt;stdio.h&gt;<br>    #include &lt;unistd.h&gt;       &#x2F;&#x2F; Used for UART<br>    #include &lt;sys&#x2F;fcntl.h&gt;    &#x2F;&#x2F; Used for UART<br>    #include &lt;termios.h&gt;      &#x2F;&#x2F; Used for UART<br>    #include &lt;string.h&gt;</p>
+<p>​<br>​<br>​    &#x2F;<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;<br>​    &#x2F;* @auteur Mathieu Bahin            <em>&#x2F;<br>​    &#x2F;</em> @date_création mars 2020         <em>&#x2F;<br>​    &#x2F;</em> @version 1.0                     <em>&#x2F;<br>​    &#x2F;</em> @email <a href="mailto:&#98;&#97;&#x68;&#x69;&#110;&#46;&#109;&#97;&#116;&#104;&#105;&#x65;&#x75;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;">bahin.mathieu@gmail.com</a>   *&#x2F;<br>​    &#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>&#x2F;<br>​<br>    #include “uart.h”<br>    #include &lt;stdio.h&gt;<br>    #include &lt;unistd.h&gt;       &#x2F;&#x2F; Used for UART<br>    #include &lt;sys&#x2F;fcntl.h&gt;    &#x2F;&#x2F; Used for UART<br>    #include &lt;termios.h&gt;      &#x2F;&#x2F; Used for UART<br>    #include &lt;string.h&gt;</p>
 <pre><code>using namespace std;
 
 Uart :: Uart ()&#123;
@@ -1075,7 +1070,7 @@ void on_Trackbar_6(int, void*)
     <img class="site-author-image" itemprop="image" alt="SWQ"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">SWQ</p>
-  <div class="site-description" itemprop="description">舟遥遥以轻飏，风飘飘而吹衣</div>
+  <div class="site-description" itemprop="description">舟遥遥以轻扬，风飘飘而吹衣</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
