@@ -183,7 +183,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">136</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">137</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -559,7 +559,7 @@
 
     通过键盘上的**“↑”和“↓”键来选择要配置的菜单** ，**按下“Enter”键进入子菜单** 。菜单中高亮的字母就是此菜单的**热键** ，在键盘上按下此高亮字母对应的键可以快速选中对应的菜单。选中子菜单以后**按下“Y”键就会将相应的配置选项写入配置文件中，菜单前面变为“ &lt; * &gt;”**。 **按下“N”键不编译相应的代码，按下“M”键就会将相应的代码编译为模块，菜单前面变为“ &lt; M &gt;”**。按两下“Esc”键退出，也就是返回到上一级，按下“?”键查看此菜单的帮助信 息，按下“/”键打开搜索框，可以在搜索框输入要搜索的内容。
 </code></pre>
-<p>在配置界面下方会有五个按钮，这五个按钮的功能如下：<br><Select>：选中按钮，和“Enter”键的功能相同，负责选中并进入某个菜单。<br><Exit>：退出按钮，和按两下“Esc”键功能相同，退出当前菜单，返回到上一级。<br><Help>：帮助按钮，查看选中菜单的帮助信息。<br><Save>：保存按钮，保存修改后的配置文件。<br><Load>：加载按钮，加载指定的配置文件。<br>        本实验我们无需更改该窗口的配置信息。不过由于该窗口菜单不多，我们就从上到下的简单地介绍下这些菜单。</Load></Save></Help></Exit></Select></p>
+<p>在配置界面下方会有五个按钮，这五个按钮的功能如下：<br><Select>：选中按钮，和“Enter”键的功能相同，负责选中并进入某个菜单。<br><Exit>：退出按钮，和按两下“Esc”键功能相同，退出当前菜单，返回到上一级。<br><Help>：帮助按钮，查看选中菜单的帮助信息。<br><Save>：保存按钮，保存修改后的配置文件。<br><Load>：加载按钮，加载指定的配置文件。<br>        本实验我们无需更改该窗口的配置信息。不过由于该窗口菜单不多，我们就从上到下的简单地介绍下这些菜单。</p>
 <pre><code>    首先按键盘上的下方向键移动到“Linux Components Selection”，然后按键盘上的“Enter” 进入子菜单，子菜单内容如下图所示：
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/b0f9a188e5df166fb919bd2fe2140b59.png"></p>
@@ -622,7 +622,7 @@
 <p>​<br>​    vi project-spec&#x2F;meta-user&#x2F;recipes-bsp&#x2F;device-tree&#x2F;files&#x2F;system-user.dtsi</p>
 <p>默认的文件内容如下，可见该文件需要我们自己手动配置。</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/5c470de2e4f70cee868c21189f201842.png"></p>
-<p>​<br>​    &#x2F;include&#x2F; “system-conf.dtsi”<br>​    #include &lt;dt-bindings&#x2F;gpio&#x2F;gpio.h&gt;<br>​    #include &lt;dt-bindings&#x2F;input&#x2F;input.h&gt;<br>​    &#x2F; {<br>​    	model &#x3D; “Alientek Zynq MpSoc Development Board”;<br>​    	<br>    	leds {<br>    		compatible &#x3D; “gpio-leds”;<br>    		gpio-led0 {<br>    			label &#x3D; “ps_led1”;<br>    			gpios &#x3D; &lt;&amp;gpio 38 GPIO_ACTIVE_HIGH&gt;;<br>    			linux,default-trigger &#x3D; “timer”;<br>    		};<br>    		gpio-led1 {<br>    			label &#x3D; “ps_led2”;<br>    			gpios &#x3D; &lt;&amp;gpio 39 GPIO_ACTIVE_HIGH&gt;;<br>    			default-state &#x3D; “on”;<br>    		};<br>    		gpio-led2 {<br>    			label &#x3D; “pl_led1”;<br>    			gpios &#x3D; &lt;&amp;axi_gpio_0 0 0 GPIO_ACTIVE_HIGH&gt;;<br>    			linux,default-trigger &#x3D; “timer”;<br>    		};<br>    		gpio-led3 {<br>    			label &#x3D; “pl_led2”;<br>    			gpios &#x3D; &lt;&amp;axi_gpio_0 1 0 GPIO_ACTIVE_HIGH&gt;;<br>    			default-state &#x3D; “on”;<br>    		};<br>    	};<br>    	<br>    	keys {<br>    		compatible &#x3D; “gpio-keys”;<br>    		autorepeat;<br>    		gpio-key,wakeup;<br>    		<br>    		gpio-key1 {<br>    			label &#x3D; “ps_key1”;<br>    			gpios &#x3D; &lt;&amp;gpio 40 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_UP>;<br>    		};<br>    			gpio-key2 {<br>    			label &#x3D; “ps_key2”;<br>    			gpios &#x3D; &lt;&amp;gpio 41 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_DOWN>;<br>    		};<br>    			gpio-key3 {<br>    			label &#x3D; “pl_key1”;<br>    			gpios &#x3D; &lt;&amp;gpio 78 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_LEFT>;<br>    		};<br>    			gpio-key4 {<br>    			label &#x3D; “pl_key2”;<br>    			gpios &#x3D; &lt;&amp;gpio 79 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_RIGHT>;<br>    		};<br>    	};<br>    };<br>    	<br>    &amp;gem3 {<br>    	phy-handle &#x3D; &lt;&amp;ethernet_phy&gt;;<br>    	local-mac-address &#x3D; [00 0a 35 00 1e 53];<br>    	ethernet_phy: ethernet-phy@7 {<br>    		reg &#x3D; &lt;0x7&gt;;<br>    	};<br>    };</KEY_RIGHT></KEY_LEFT></KEY_DOWN></KEY_UP></p>
+<p>​<br>​    &#x2F;include&#x2F; “system-conf.dtsi”<br>​    #include &lt;dt-bindings&#x2F;gpio&#x2F;gpio.h&gt;<br>​    #include &lt;dt-bindings&#x2F;input&#x2F;input.h&gt;<br>​    &#x2F; {<br>​    	model &#x3D; “Alientek Zynq MpSoc Development Board”;<br>​    	<br>    	leds {<br>    		compatible &#x3D; “gpio-leds”;<br>    		gpio-led0 {<br>    			label &#x3D; “ps_led1”;<br>    			gpios &#x3D; &lt;&amp;gpio 38 GPIO_ACTIVE_HIGH&gt;;<br>    			linux,default-trigger &#x3D; “timer”;<br>    		};<br>    		gpio-led1 {<br>    			label &#x3D; “ps_led2”;<br>    			gpios &#x3D; &lt;&amp;gpio 39 GPIO_ACTIVE_HIGH&gt;;<br>    			default-state &#x3D; “on”;<br>    		};<br>    		gpio-led2 {<br>    			label &#x3D; “pl_led1”;<br>    			gpios &#x3D; &lt;&amp;axi_gpio_0 0 0 GPIO_ACTIVE_HIGH&gt;;<br>    			linux,default-trigger &#x3D; “timer”;<br>    		};<br>    		gpio-led3 {<br>    			label &#x3D; “pl_led2”;<br>    			gpios &#x3D; &lt;&amp;axi_gpio_0 1 0 GPIO_ACTIVE_HIGH&gt;;<br>    			default-state &#x3D; “on”;<br>    		};<br>    	};<br>    	<br>    	keys {<br>    		compatible &#x3D; “gpio-keys”;<br>    		autorepeat;<br>    		gpio-key,wakeup;<br>    		<br>    		gpio-key1 {<br>    			label &#x3D; “ps_key1”;<br>    			gpios &#x3D; &lt;&amp;gpio 40 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_UP>;<br>    		};<br>    			gpio-key2 {<br>    			label &#x3D; “ps_key2”;<br>    			gpios &#x3D; &lt;&amp;gpio 41 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_DOWN>;<br>    		};<br>    			gpio-key3 {<br>    			label &#x3D; “pl_key1”;<br>    			gpios &#x3D; &lt;&amp;gpio 78 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_LEFT>;<br>    		};<br>    			gpio-key4 {<br>    			label &#x3D; “pl_key2”;<br>    			gpios &#x3D; &lt;&amp;gpio 79 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_RIGHT>;<br>    		};<br>    	};<br>    };<br>    	<br>    &amp;gem3 {<br>    	phy-handle &#x3D; &lt;&amp;ethernet_phy&gt;;<br>    	local-mac-address &#x3D; [00 0a 35 00 1e 53];<br>    	ethernet_phy: ethernet-phy@7 {<br>    		reg &#x3D; &lt;0x7&gt;;<br>    	};<br>    };</p>
 <pre><code>&amp;gem0 &#123;
 	psu_ethernet_0_mdio: mdio &#123;
 		#address-cells = &lt;1&gt;;
@@ -845,7 +845,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">136</span>
+          <span class="site-state-item-count">137</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -933,7 +933,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17:23</span>
+    <span title="站点阅读时长">17:24</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>

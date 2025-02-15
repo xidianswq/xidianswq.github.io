@@ -36,9 +36,9 @@
 <meta property="article:published_time" content="2023-08-07T15:56:59.000Z">
 <meta property="article:modified_time" content="2025-02-09T06:33:32.554Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="stm32">
-<meta property="article:tag" content="opencv">
 <meta property="article:tag" content="c++">
+<meta property="article:tag" content="opencv">
+<meta property="article:tag" content="stm32">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="ubuntu">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">136</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">137</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -585,7 +585,7 @@ int near(int Target_X,int Target_Y)
 <pre><code>    ——设计算法过滤筛选得到八个顶点P[8][2]（绝缘胶布内外边形成两个矩形）
 </code></pre>
 <p>​<br>​    #define MAX_DIS 20<br>​    int Is_Exit(int i, int j)<br>​    {<br>​        int k &#x3D; 0;<br>​        for (k &#x3D; 0; k &lt; Find; k++)<br>​        {<br>​            if (myabs(P[k][0]-i)+ myabs(P[k][1]-j)&lt;MAX_DIS)return 1;<br>​        }<br>​        return 0;<br>​    }</p>
-<p>​<br>​    int P[8][2] &#x3D; { 0 };<br>​    int Find &#x3D; 0;<br>​<br>    for (int j &#x3D; 0; j &lt; CornerImg.rows; j++) {<br>        for (int i &#x3D; 0; i &lt; CornerImg.cols; i++) {<br>            if (CornerImg.at<float>(j, i) &gt; 150.0f) {<br>                if (!Is_Exit(i, j))<br>                {<br>                    P[Find][0] &#x3D; i;<br>                    P[Find][1] &#x3D; j;<br>                    Find++;<br>                }<br>            }<br>        }<br>    }</float></p>
+<p>​<br>​    int P[8][2] &#x3D; { 0 };<br>​    int Find &#x3D; 0;<br>​<br>    for (int j &#x3D; 0; j &lt; CornerImg.rows; j++) {<br>        for (int i &#x3D; 0; i &lt; CornerImg.cols; i++) {<br>            if (CornerImg.at<float>(j, i) &gt; 150.0f) {<br>                if (!Is_Exit(i, j))<br>                {<br>                    P[Find][0] &#x3D; i;<br>                    P[Find][1] &#x3D; j;<br>                    Find++;<br>                }<br>            }<br>        }<br>    }</p>
 <p>Is_Exit()函数遍历已经视作有效的点，如果与当前坐标(i,j)接近则不存储；找到八个有效点退出</p>
 <p>——设计根据八个顶点P[8][2]求得巡线四边形的顶点Vertex[4][2]（同一个角的内外顶点的中点）</p>
 <p>​<br>​    int Vertex[4][2] &#x3D; { 0 };<br>​    int sign[8] &#x3D; { 0 };<br>​    int i,j,k,dis,min &#x3D; 1000;<br>​    int temp1, temp2;<br>​    for (k&#x3D;0,i &#x3D; 0; i &lt; 8; i++)<br>​    {<br>​        if (sign[i])continue;<br>​        min &#x3D; 2000;<br>​        for (j &#x3D; 0; j &lt; 8; j++)<br>​        {<br>​            if (i &#x3D;&#x3D; j||sign[j])continue;<br>​            dis &#x3D; myabs(P[i][0] - P[j][0]) + myabs(P[i][1] - P[j][1]);<br>​            if (dis&lt; min)<br>​            {<br>​                min &#x3D; dis;<br>​                temp1 &#x3D; i;<br>​                temp2 &#x3D; j;<br>​            }<br>​        }<br>​        sign[temp1] &#x3D; 1;<br>​        sign[temp2] &#x3D; 1;<br>​        Vertex[k][0] &#x3D; (P[temp1][0] + P[temp2][0])&#x2F;2;<br>​        Vertex[k][1] &#x3D; (P[temp1][1] + P[temp2][1])&#x2F;2;<br>​        k++;<br>​    }</p>
@@ -597,7 +597,7 @@ int near(int Target_X,int Target_Y)
 <p>即先整体按y值大小排序，y值中等的两点按x值排序-&gt;排序后按<strong>0<del>1</del>3~2的顺序</strong> 发送坐标</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/c04fe11082712c96042da8f7af526c17.png"></p>
 <h6 id="3-区分红绿激光"><a href="#3-区分红绿激光" class="headerlink" title="(3)区分红绿激光"></a>(3)区分红绿激光</h6><p><strong>过程如下：</strong></p>
-<p>​<br>​    Point color_recognite(Mat image, Scalar Low, Scalar High)<br>​    {<br>​<br>        vector&lt;vector<Point>&gt; g_vContours;<br>        vector<Vec4i> g_vHierarchy;<br>        vector<Mat> hsvSplit;<br>        double maxarea &#x3D; 0;<br>        int maxAreaIdx &#x3D; 0;<br>        Mat g_grayImage, hsv, g_cannyMat_output;</Mat></Vec4i></Point></p>
+<p>​<br>​    Point color_recognite(Mat image, Scalar Low, Scalar High)<br>​    {<br>​<br>        vector&lt;vector<Point>&gt; g_vContours;<br>        vector<Vec4i> g_vHierarchy;<br>        vector<Mat> hsvSplit;<br>        double maxarea &#x3D; 0;<br>        int maxAreaIdx &#x3D; 0;<br>        Mat g_grayImage, hsv, g_cannyMat_output;</p>
 <pre><code>    cvtColor(image, hsv, COLOR_BGR2HSV);
     split(hsv, hsvSplit);
     equalizeHist(hsvSplit[2], hsvSplit[2]);
@@ -1103,9 +1103,9 @@ int near(int Target_X,int Target_Y)
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/stm32/" rel="tag"># stm32</a>
-              <a href="/tags/opencv/" rel="tag"># opencv</a>
               <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/opencv/" rel="tag"># opencv</a>
+              <a href="/tags/stm32/" rel="tag"># stm32</a>
               <a href="/tags/linux/" rel="tag"># linux</a>
               <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
@@ -1199,7 +1199,7 @@ int near(int Target_X,int Target_Y)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">136</span>
+          <span class="site-state-item-count">137</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1287,7 +1287,7 @@ int near(int Target_X,int Target_Y)
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17:23</span>
+    <span title="站点阅读时长">17:24</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
