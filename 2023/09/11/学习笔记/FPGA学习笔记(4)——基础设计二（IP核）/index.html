@@ -26,7 +26,7 @@
 
   <meta name="description" content="目录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基础设计二（IP核）——FPGA学习笔记＜3＞">
+<meta property="og:title" content="FPGA学习笔记(4)——基础设计二（IP核）">
 <meta property="og:url" content="https://xidianswq.github.io/2023/09/11/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(4)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%BA%8C%EF%BC%88IP%E6%A0%B8%EF%BC%89/index.html">
 <meta property="og:site_name" content="Switch">
 <meta property="og:description" content="目录">
@@ -71,10 +71,10 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/023c8533627e2e6d569a0488456e668a.png">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/cea9670fb75213b148fa33d32c8fc165.png">
 <meta property="article:published_time" content="2023-09-11T13:42:56.000Z">
-<meta property="article:modified_time" content="2025-02-09T06:25:20.617Z">
+<meta property="article:modified_time" content="2025-02-15T04:28:12.233Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="fpga开发">
+<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/274a1b99ce88f7fabcba88e6ee3f1a26.png">
@@ -92,7 +92,7 @@
   };
 </script>
 
-  <title>基础设计二（IP核）——FPGA学习笔记＜3＞ | Switch</title>
+  <title>FPGA学习笔记(4)——基础设计二（IP核） | Switch</title>
   
 
 
@@ -253,7 +253,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          基础设计二（IP核）——FPGA学习笔记＜3＞
+          FPGA学习笔记(4)——基础设计二（IP核）
         </h1>
 
         <div class="post-meta">
@@ -277,7 +277,7 @@
             </span>
 
           
-            <span id="/2023/09/11/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(4)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%BA%8C%EF%BC%88IP%E6%A0%B8%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="基础设计二（IP核）——FPGA学习笔记＜3＞" title="阅读次数">
+            <span id="/2023/09/11/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(4)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%BA%8C%EF%BC%88IP%E6%A0%B8%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="FPGA学习笔记(4)——基础设计二（IP核）" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -303,7 +303,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>23k</span>
+              <span>24k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -406,12 +406,8 @@
 <p>再编写一个顶层设计文件来例化这个 PLL IP 核：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/1824668d82cca9e65be6ebe3bf79987d.png"></p>
 <p>仿真：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>    module tb_pll();</p>
-<pre><code>//********************************************************************//
-//****************** Parameter and Internal Signal *******************//
-//********************************************************************//
-
-//reg   define
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module tb_pll();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<pre><code>//reg   define
 reg     sys_clk     ;
 //wire  define
 wire    clk_mul_2   ;
@@ -427,13 +423,8 @@ wire    locked      ;
 //初始化系统时钟
 initial sys_clk = 1&#39;b1;
 </code></pre>
-<p>​<br>​    &#x2F;&#x2F;sys_clk:模拟系统时钟，每10ns电平翻转一次，周期为20ns，频率为50Mhz<br>​    always #10 sys_clk &#x3D; ~sys_clk;<br>​<br>    &#x2F;&#x2F;<em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;<br>    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em> Instantiation <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;<br>    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em>*&#x2F;&#x2F;</p>
-<pre><code>//------------------------pll_inst------------------------
-pll pll_inst
-(
-    .sys_clk        (sys_clk        ),  //input     sys_clk
-
-    .clk_mul_2      (clk_mul_2      ),  //output    clk_mul_2
+<p>​<br>​    &#x2F;&#x2F;sys_clk:模拟系统时钟，每10ns电平翻转一次，周期为20ns，频率为50Mhz<br>​    always #10 sys_clk &#x3D; ~sys_clk;<br>​<br>​    &#x2F;&#x2F;<em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;<br>​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em> Instantiation <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;<br>​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em>*&#x2F;&#x2F;<br>​<br>    &#x2F;&#x2F;————————pll_inst————————<br>    pll pll_inst<br>    (<br>        .sys_clk        (sys_clk        ),  &#x2F;&#x2F;input     sys_clk</p>
+<pre><code>    .clk_mul_2      (clk_mul_2      ),  //output    clk_mul_2
     .clk_div_2      (clk_div_2      ),  //output    clk_div_2
     .clk_phase_90   (clk_phase_90   ),  //output    clk_phase_90
     .clk_ducle_20   (clk_ducle_20   ),  //output    clk_ducle_20
@@ -473,10 +464,8 @@ endmodule
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/59a531959f333f68e956985587bcc348.png"></p>
 <p>剩余操作与单端口 ROM 相同</p>
-<h5 id="xilinx-vivado-IP核调用-1"><a href="#xilinx-vivado-IP核调用-1" class="headerlink" title="&lt;2&gt;xilinx vivado IP核调用"></a>&lt;2&gt;xilinx vivado IP核调用</h5><p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>    module  rom<br>    (<br>        input   wire            sys_clk ,   &#x2F;&#x2F;系统时钟，频率50MHz<br>        input   wire    [7:0]   addra   ,   &#x2F;&#x2F;输入rom地址</p>
-<pre><code>    output  wire    [7:0]   douta       //输出rom数据
-
-);
+<h5 id="xilinx-vivado-IP核调用-1"><a href="#xilinx-vivado-IP核调用-1" class="headerlink" title="&lt;2&gt;xilinx vivado IP核调用"></a>&lt;2&gt;xilinx vivado IP核调用</h5><p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  rom<br>​    (<br>​        input   wire            sys_clk ,   &#x2F;&#x2F;系统时钟，频率50MHz<br>​        input   wire    [7:0]   addra   ,   &#x2F;&#x2F;输入rom地址<br>​<br>        output  wire    [7:0]   douta       &#x2F;&#x2F;输出rom数据</p>
+<pre><code>);
 
 //********************************************************************//
 //*************************** Instantiation **************************//
@@ -493,12 +482,8 @@ rom_256x8 rom_256x8_inst
 endmodule
 </code></pre>
 <p>仿真：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>    module  tb_rom();</p>
-<pre><code>//********************************************************************//
-//****************** Parameter and Internal Signal *******************//
-//********************************************************************//
-
-//reg   define
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  tb_rom();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<pre><code>//reg   define
 reg         sys_clk     ;
 reg         sys_rst_n   ;
 reg [7:0]   addra       ;
@@ -571,10 +556,8 @@ endmodule
     RTL 顶层的输出信号有：从 RAM 中读取的数据 douta。
 </code></pre>
 <p>RTL 顶层代码如下所示：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>    module  ram<br>    (<br>        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz<br>        input   wire    [7:0]   addra       ,   &#x2F;&#x2F;输入ram读写地址<br>        input   wire    [7:0]   dina        ,   &#x2F;&#x2F;输入ram写入数据<br>        input   wire            wea         ,   &#x2F;&#x2F;输入ram写使能</p>
-<pre><code>    output  wire    [7:0]   douta           //输出读ram数据
-
-);
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  ram<br>​    (<br>​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz<br>​        input   wire    [7:0]   addra       ,   &#x2F;&#x2F;输入ram读写地址<br>​        input   wire    [7:0]   dina        ,   &#x2F;&#x2F;输入ram写入数据<br>​        input   wire            wea         ,   &#x2F;&#x2F;输入ram写使能<br>​<br>        output  wire    [7:0]   douta           &#x2F;&#x2F;输出读ram数据</p>
+<pre><code>);
 
 //********************************************************************//
 //****************** Parameter and Internal Signal *******************//
@@ -593,12 +576,8 @@ ram_256x8   ram_256x8_inst
 endmodule
 </code></pre>
 <p>仿真代码：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>    module  tb_ram();</p>
-<pre><code>//********************************************************************//
-//****************** Parameter and Internal Signal *******************//
-//********************************************************************//
-
-//reg   define
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  tb_ram();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<pre><code>//reg   define
 reg         sys_clk     ;
 reg         sys_rst_n   ;
 reg [7:0]   addra       ;
@@ -704,14 +683,8 @@ endmodule
 
     RTL 代码顶层的输出信号有：从 FIFO 中读取的数据 po_data、FIFO 空标志信号 empty、FIFO 满标志信号 full、指示 FIFO 中存在数据个数的信号 data_count。这些信号也是我们需要通过仿真 SCFIFO IP 核主要观察的信号，这些信号通过 Testbench 中给输入信号激励后产生输出。
 </code></pre>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>    module fifo<br>    (<br>        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟50Mhz<br>        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号<br>        input   wire    [7:0]   pi_data     ,   &#x2F;&#x2F;输入顶层模块的数据<br>                                                &#x2F;&#x2F;要写入到FIFO中的数据<br>        input   wire            pi_flag     ,   &#x2F;&#x2F;输入数据有效标志信号<br>                                                &#x2F;&#x2F;也作为FIFO的写请求信号<br>        input   wire            rd_en       ,   &#x2F;&#x2F;FIFO读请求信号</p>
-<pre><code>    output  wire    [7:0]   po_data     ,   //FIFO读出的数据
-    output  wire            empty       ,   //FIFO空标志信号，高有效
-    output  wire            full        ,   //FIFO满标志信号，高有效
-    output  wire    [7:0]   data_count      //FIFO中存在的数据个数
-);
-
-//********************************************************************//
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module fifo<br>​    (<br>​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟50Mhz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号<br>​        input   wire    [7:0]   pi_data     ,   &#x2F;&#x2F;输入顶层模块的数据<br>​                                                &#x2F;&#x2F;要写入到FIFO中的数据<br>​        input   wire            pi_flag     ,   &#x2F;&#x2F;输入数据有效标志信号<br>​                                                &#x2F;&#x2F;也作为FIFO的写请求信号<br>​        input   wire            rd_en       ,   &#x2F;&#x2F;FIFO读请求信号<br>​<br>        output  wire    [7:0]   po_data     ,   &#x2F;&#x2F;FIFO读出的数据<br>        output  wire            empty       ,   &#x2F;&#x2F;FIFO空标志信号，高有效<br>        output  wire            full        ,   &#x2F;&#x2F;FIFO满标志信号，高有效<br>        output  wire    [7:0]   data_count      &#x2F;&#x2F;FIFO中存在的数据个数<br>    );</p>
+<pre><code>//********************************************************************//
 //*************************** Instantiation **************************//
 //********************************************************************//
 
@@ -736,12 +709,8 @@ endmodule
 <p>仿真：</p>
 <pre><code>    下面是 Testbench 仿真测试文件，和 SCFIFO 的仿真一样，我们也需要给输入信号测试激励，pi_flag 每 4 个时钟周期且没有读请求时产生一个数据有效标志信号也作为 FIFO 的写请求信号，因为需要 pi_data 伴随着 pi_flag 一起产生，所以每当 pi_data 检测到 pi_flag 标 志信号有效时就自加 1，其值从 0~255 循环变化，这样我们就可以在 pi_flag 标志信号有效时将 pi_data 写入到 FIFO 中。而 FIFO 的读请求信号 rd_en 当 FIFO 的满标志信号 full 有效时拉高，当 FIFO 的空标志信号 empty 有效时拉低。
 </code></pre>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>    module tb_fifo();</p>
-<pre><code>//********************************************************************//
-//****************** Parameter and Internal Signal *******************//
-//********************************************************************//
-
-//reg   define
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module tb_fifo();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<pre><code>//reg   define
 reg         sys_clk     ;
 reg [7:0]   pi_data     ;
 reg         pi_flag     ;
@@ -850,17 +819,8 @@ endmodule
 
     RTL 代码顶层的输出信号有：FIFO 空标志信号 empty、FIFO 满标志信号 full、同步于 wr_clk 指示 FIFO 中存在数据个数的信号 wr_data_count、从 FIFO 中读取的数据 po_data、 同步于 rd_clk 指示 FIFO 中存在数据个数的信号 rd_data_count。这些信号也是我们需要通过仿真 DCFIFO IP 核主要观察的信号，这些信号通过 Testbench 中给输入信号激励后产生输出。
 </code></pre>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>    module fifo<br>    (<br>        input   wire         wr_clk    ,   &#x2F;&#x2F;同步于FIFO写数据的时钟50MHz<br>        input   wire  [7:0]  pi_data   ,   &#x2F;&#x2F;输入顶层模块的数据，要写入到FIFO中<br>                                           &#x2F;&#x2F;的数据同步于wrclk时钟<br>        input   wire         pi_flag   ,   &#x2F;&#x2F;输入数据有效标志信号，也作为FIFO的<br>                                           &#x2F;&#x2F;写请求信号，同步于wrclk时钟<br>        input   wire         rd_clk    ,   &#x2F;&#x2F;同步于FIFO读数据的时钟25MHz<br>        input   wire         rd_en     ,   &#x2F;&#x2F;FIFO读请求信号，同步于rdclk时钟</p>
-<pre><code>    output  wire  [15:0] po_data   ,   //FIFO读出的数据，同步于rdclk时钟
-    output  wire         empty     ,   //空标志信号，高有效，
-    output  wire         full      ,   //满标志信号，高有效，
-    output  wire  [6:0]  rd_data_count,//FIFO读端口中存在的数据个数，
-                                       //同步于rdclk时钟
-    output  wire  [7:0]  wr_data_count //FIFO写端口中存在的数据个数，
-                                       //同步于wrclk时钟
-);
-
-//----------------------dcfifo_256x8to128x16_inst-----------------------
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module fifo<br>​    (<br>​        input   wire         wr_clk    ,   &#x2F;&#x2F;同步于FIFO写数据的时钟50MHz<br>​        input   wire  [7:0]  pi_data   ,   &#x2F;&#x2F;输入顶层模块的数据，要写入到FIFO中<br>​                                           &#x2F;&#x2F;的数据同步于wrclk时钟<br>​        input   wire         pi_flag   ,   &#x2F;&#x2F;输入数据有效标志信号，也作为FIFO的<br>​                                           &#x2F;&#x2F;写请求信号，同步于wrclk时钟<br>​        input   wire         rd_clk    ,   &#x2F;&#x2F;同步于FIFO读数据的时钟25MHz<br>​        input   wire         rd_en     ,   &#x2F;&#x2F;FIFO读请求信号，同步于rdclk时钟<br>​<br>        output  wire  [15:0] po_data   ,   &#x2F;&#x2F;FIFO读出的数据，同步于rdclk时钟<br>        output  wire         empty     ,   &#x2F;&#x2F;空标志信号，高有效，<br>        output  wire         full      ,   &#x2F;&#x2F;满标志信号，高有效，<br>        output  wire  [6:0]  rd_data_count,&#x2F;&#x2F;FIFO读端口中存在的数据个数，<br>                                           &#x2F;&#x2F;同步于rdclk时钟<br>        output  wire  [7:0]  wr_data_count &#x2F;&#x2F;FIFO写端口中存在的数据个数，<br>                                           &#x2F;&#x2F;同步于wrclk时钟<br>    );</p>
+<pre><code>//----------------------dcfifo_256x8to128x16_inst-----------------------
 dcfifo_256x8to128x16    dcfifo_256x8to128x16_inst
 (
     .din            (pi_data),  //input   [7:0]   din
@@ -880,12 +840,8 @@ endmodule
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/58847d86d5164408b79f24c556aaf70e.png"></p>
 <p>仿真：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>    module tb_fifo();</p>
-<pre><code>//********************************************************************//
-//****************** Parameter and Internal Signal *******************//
-//********************************************************************//
-
-//reg   define
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module tb_fifo();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<pre><code>//reg   define
 reg          wr_clk         ;
 reg  [7:0]   pi_data        ;
 reg          pi_flag        ;
@@ -1033,8 +989,8 @@ endmodule
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
           </div>
 
@@ -1048,8 +1004,8 @@ endmodule
       <i class="fa fa-chevron-left"></i> 项目管理概述
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/09/11/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(5)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%B8%89%EF%BC%88RS232%E3%80%81I2C%EF%BC%89/" rel="next" title="基础设计三（RS232、I2C）——FPGA学习笔记＜4＞">
-      基础设计三（RS232、I2C）——FPGA学习笔记＜4＞ <i class="fa fa-chevron-right"></i>
+    <a href="/2023/09/11/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(5)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%B8%89%EF%BC%88RS232%E3%80%81I2C%EF%BC%89/" rel="next" title="FPGA学习笔记(5)——基础设计三（RS232、I2C）">
+      FPGA学习笔记(5)——基础设计三（RS232、I2C） <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -1208,13 +1164,13 @@ endmodule
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">825k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>

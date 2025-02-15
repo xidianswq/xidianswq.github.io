@@ -26,7 +26,7 @@
 
   <meta name="description" content="前置学习：嵌入式Linux_Petalinux一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="嵌入式Linux_Petalinux二——FPGA学习笔记＜？＞">
+<meta property="og:title" content="FPGA学习笔记(31)——嵌入式Linux_Petalinux二">
 <meta property="og:url" content="https://xidianswq.github.io/2023/10/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(31)%E2%80%94%E2%80%94%E5%B5%8C%E5%85%A5%E5%BC%8FLinux_Petalinux%E4%BA%8C/index.html">
 <meta property="og:site_name" content="Switch">
 <meta property="og:description" content="前置学习：嵌入式Linux_Petalinux一">
@@ -61,7 +61,7 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/234bec0c77ee3c952f7b2eda8eab4395.png">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ce229eb7c62cd552353c9d4dd0bb73c0.png">
 <meta property="article:published_time" content="2023-10-08T03:20:35.000Z">
-<meta property="article:modified_time" content="2025-02-09T06:25:51.833Z">
+<meta property="article:modified_time" content="2025-02-15T04:29:01.749Z">
 <meta property="article:author" content="SWQ">
 <meta property="article:tag" content="fpga开发">
 <meta property="article:tag" content="学习笔记">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>嵌入式Linux_Petalinux二——FPGA学习笔记＜？＞ | Switch</title>
+  <title>FPGA学习笔记(31)——嵌入式Linux_Petalinux二 | Switch</title>
   
 
 
@@ -242,7 +242,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          嵌入式Linux_Petalinux二——FPGA学习笔记＜？＞
+          FPGA学习笔记(31)——嵌入式Linux_Petalinux二
         </h1>
 
         <div class="post-meta">
@@ -266,7 +266,7 @@
             </span>
 
           
-            <span id="/2023/10/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(31)%E2%80%94%E2%80%94%E5%B5%8C%E5%85%A5%E5%BC%8FLinux_Petalinux%E4%BA%8C/" class="post-meta-item leancloud_visitors" data-flag-title="嵌入式Linux_Petalinux二——FPGA学习笔记＜？＞" title="阅读次数">
+            <span id="/2023/10/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(31)%E2%80%94%E2%80%94%E5%B5%8C%E5%85%A5%E5%BC%8FLinux_Petalinux%E4%BA%8C/" class="post-meta-item leancloud_visitors" data-flag-title="FPGA学习笔记(31)——嵌入式Linux_Petalinux二" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -340,7 +340,7 @@
 <pre><code>    可以看到触发方式非常多，**其中“[ ]”中的内容表示当前触发方式** 。可知当前触发方式为 none，也就是表示无任何触发反应。
 </code></pre>
 <p>想设置使用某种触发方式输入 echo 命令如上，如：</p>
-<p>​<br>​    echo heartbeat &gt; trigger<br>​<br>        需要提醒的是并不是所有的触发方式都能有反应，必须满足触发条件并且 brightness 值为 1 才行。</p>
+<p>​<br>​    echo heartbeat &gt; trigger<br>​<br>​        需要提醒的是并不是所有的触发方式都能有反应，必须满足触发条件并且 brightness 值为 1 才行。</p>
 <h3 id="2-GPIO-之按键的使用"><a href="#2-GPIO-之按键的使用" class="headerlink" title="2.GPIO 之按键的使用"></a>2.GPIO 之按键的使用</h3><pre><code>    GPIO 按键的使用非常简单，通过读取文件/dev/input/event0 可以获取由 GPIO 按键生成 的按键事件。在串口终端中输入命令：
 </code></pre>
 <p>​<br>​    cat &#x2F;dev&#x2F;input&#x2F;event0 | hexdump</p>
@@ -394,7 +394,7 @@
 </code></pre>
 <p>​<br>​    ifconfig eth0 down &#x2F;&#x2F;关闭 eth0（PL 网口）<br>​    ifconfig eth0 up &#x2F;&#x2F;打开 eth0（PL 网口）</p>
 <p>如果是用 ip 命令，则对应命令如下：</p>
-<p>​<br>​    ip link set eth1 down &#x2F;&#x2F;关闭 eth1（PS 网口）<br>​    ip link set eth1 up &#x2F;&#x2F;打开 eth1（PS 网口）<br>​<br>        下面我们在使用 PS 网口的时候，需要先把 PL 网口给关闭，只打开 PS 网口；同理使用 PL 网口的时候，需要把 PS 网口给关闭，只打开 PL 网口；在后面的使用当中，笔者以 PL 网 口为例进行介绍，PS 网口使用方式相同。</p>
+<p>​<br>​    ip link set eth1 down &#x2F;&#x2F;关闭 eth1（PS 网口）<br>​    ip link set eth1 up &#x2F;&#x2F;打开 eth1（PS 网口）<br>​<br>​        下面我们在使用 PS 网口的时候，需要先把 PL 网口给关闭，只打开 PS 网口；同理使用 PL 网口的时候，需要把 PS 网口给关闭，只打开 PL 网口；在后面的使用当中，笔者以 PL 网 口为例进行介绍，PS 网口使用方式相同。</p>
 <h4 id="2、外网连接测试（有路由器）"><a href="#2、外网连接测试（有路由器）" class="headerlink" title="2、外网连接测试（有路由器）"></a>2、外网连接测试（有路由器）</h4><p>执行下面的命令打开开发板的 PL 网口，并且关闭 PS 网口：</p>
 <p>​<br>​    ip link set eth1 down &#x2F;&#x2F;关闭 PS 网口<br>​    ip link set eth0 up &#x2F;&#x2F;打开 PL 网口<br>​    ip link show up</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/e5fc18910c9637d0ca383f9393ef6f18.png"></p>
@@ -406,7 +406,7 @@
 
     ping 命令是基于 **ICMP** （Internet Control Message Protocol）协议来工作的，执行 ping 命令 本地主机会向目标主机发送一份 ICMP 回显请求报文，并等待目标主机返回 ICMP 应答；因为 ICMP 协议会要求目标主机收到消息之后，必须返回 ICMP 应答消息给本地主机，如果本地主 机收到了目标主机的应答，则表示两台主机之间的网络运行、网络连接是正常的。
 </code></pre>
-<p>​<br>​    ping -c 10 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> &#x2F;&#x2F;测试开发板与百度服务器之间网络连接情<br>​<br>        从上图可以知道，我们通过开发板对百度服务器主机（IP 地址：14.215.177.39）发送了 10 次应答请求，并且每次都收到了它的应答消息（64 字节数据），并且没有数据丢失，说明 开发板与百度服务器主机之间的网络运行、网络连接是 OK 的，也就意味着我们的开发板与外 网是连通的。 PS 网口的外网连接测试同理。</p>
+<p>​<br>​    ping -c 10 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> &#x2F;&#x2F;测试开发板与百度服务器之间网络连接情<br>​<br>​        从上图可以知道，我们通过开发板对百度服务器主机（IP 地址：14.215.177.39）发送了 10 次应答请求，并且每次都收到了它的应答消息（64 字节数据），并且没有数据丢失，说明 开发板与百度服务器主机之间的网络运行、网络连接是 OK 的，也就意味着我们的开发板与外 网是连通的。 PS 网口的外网连接测试同理。</p>
 <h4 id="3、电脑直连测试（无路由器）"><a href="#3、电脑直连测试（无路由器）" class="headerlink" title="3、电脑直连测试（无路由器）"></a>3、电脑直连测试（无路由器）</h4><pre><code>    在开发过程中，电脑和开发板互相访问是经常需要的，这可以通过路由器来实现，连接到 同一路由器的设备是可以互相访问的，如果没有路由器，也可以使用网线将开发板 PS 网口或 者 PL 网口直接连接到电脑的以太网接口上，也就是电脑直连，不过这种方式不能访问外网。 笔者以 PL 网口为例，用网线将开发板的 PL 网口和电脑的以太网接口相连接。
 </code></pre>
 <p>连接好网线之后，需要设置电脑以太网的 IP 地址，可参考：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1QJ411v7xk/?spm_id_from=333.999.0.0&vd_source=01cde8042a76495bf513aa4407a56cd6" title="Linux开发板网络直连电脑的设置方法">Linux开发板网络直连电脑的设置方法<img src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-
@@ -415,7 +415,7 @@ default.png?t&#x3D;N7T8">https://www.bilibili.com/video/BV1QJ411v7xk/?spm_id_fro
 <p>配置完成后，在串口终端中执行下面这些命令打开开发板的 PL 网口，并且关闭 PS 网口：</p>
 <p>​<br>​    ip link set eth1 down &#x2F;&#x2F;关闭 PS 网口<br>​    ip link set eth0 up &#x2F;&#x2F;打开 PL 网口<br>​    ip link show up</p>
 <p>执行下面的命令设置开发板 eth0 网口的静态 IP 地址为 192.168.2.88：</p>
-<p>​<br>​    ip addr add 192.168.2.88&#x2F;24 dev eth0<br>​<br>        将开发板的静态 IP 地址设置为 192.168.2.88，这样开发板的 IP 地址和电脑的 IP 就在同一 网段。设置完开发板的静态 IP 地址后，进行 Ping 测试，看开发板和电脑能不能相互 Ping 通。 首先开发板 ping 电脑，命令如下：</p>
+<p>​<br>​    ip addr add 192.168.2.88&#x2F;24 dev eth0<br>​<br>​        将开发板的静态 IP 地址设置为 192.168.2.88，这样开发板的 IP 地址和电脑的 IP 就在同一 网段。设置完开发板的静态 IP 地址后，进行 Ping 测试，看开发板和电脑能不能相互 Ping 通。 首先开发板 ping 电脑，命令如下：</p>
 <p>​<br>​    ping -c4 192.168.2.89</p>
 <p>如果 Ping 不通电脑，请关闭电脑的防火墙后再尝试。</p>
 <p>电脑 ping 开发板。首先打开电脑的 cmd 命令提示符，然后输入如下命令：</p>
@@ -482,12 +482,12 @@ default.png?t&#x3D;N7T8">https://www.bilibili.com/video/BV1QJ411v7xk/?spm_id_fro
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/10/02/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/OS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1)%E2%80%94%E2%80%94Linux%E7%B3%BB%E7%BB%9F/" rel="prev" title="Linux系统——OS学习笔记＜1＞">
-      <i class="fa fa-chevron-left"></i> Linux系统——OS学习笔记＜1＞
+    <a href="/2023/10/02/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/OS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1)%E2%80%94%E2%80%94Linux%E7%B3%BB%E7%BB%9F/" rel="prev" title="OS学习笔记(1)——Linux系统">
+      <i class="fa fa-chevron-left"></i> OS学习笔记(1)——Linux系统
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/10/29/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(8)%E2%80%94%E2%80%94%E8%BF%9B%E9%98%B6%E8%AE%BE%E8%AE%A1%E4%B8%80%EF%BC%88DDR3%EF%BC%89/" rel="next" title="进阶设计一（DDR3）——FPGA学习笔记＜？＞">
-      进阶设计一（DDR3）——FPGA学习笔记＜？＞ <i class="fa fa-chevron-right"></i>
+    <a href="/2023/10/29/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(8)%E2%80%94%E2%80%94%E8%BF%9B%E9%98%B6%E8%AE%BE%E8%AE%A1%E4%B8%80%EF%BC%88DDR3%EF%BC%89/" rel="next" title="FPGA学习笔记(8)——进阶设计一（DDR3）">
+      FPGA学习笔记(8)——进阶设计一（DDR3） <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -646,13 +646,13 @@ default.png?t&#x3D;N7T8">https://www.bilibili.com/video/BV1QJ411v7xk/?spm_id_fro
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">825k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>

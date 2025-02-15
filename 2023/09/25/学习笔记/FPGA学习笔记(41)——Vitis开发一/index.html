@@ -26,7 +26,7 @@
 
   <meta name="description" content="目录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vitis开发一——FPGA学习笔记＜8＞">
+<meta property="og:title" content="FPGA学习笔记(41)——Vitis开发一">
 <meta property="og:url" content="https://xidianswq.github.io/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/index.html">
 <meta property="og:site_name" content="Switch">
 <meta property="og:description" content="目录">
@@ -130,10 +130,10 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/63fb614cb09abdfa5dffa67bee11f4b5.png">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/33f967286bcd5984c9f582d9fd3a340d.png">
 <meta property="article:published_time" content="2023-09-25T13:52:25.000Z">
-<meta property="article:modified_time" content="2025-02-09T06:30:12.777Z">
+<meta property="article:modified_time" content="2025-02-15T04:29:11.849Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="fpga开发">
+<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/66ab6afbb3d420e1b7089143e4466727.png">
@@ -151,7 +151,7 @@
   };
 </script>
 
-  <title>Vitis开发一——FPGA学习笔记＜8＞ | Switch</title>
+  <title>FPGA学习笔记(41)——Vitis开发一 | Switch</title>
   
 
 
@@ -312,7 +312,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Vitis开发一——FPGA学习笔记＜8＞
+          FPGA学习笔记(41)——Vitis开发一
         </h1>
 
         <div class="post-meta">
@@ -336,7 +336,7 @@
             </span>
 
           
-            <span id="/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/" class="post-meta-item leancloud_visitors" data-flag-title="Vitis开发一——FPGA学习笔记＜8＞" title="阅读次数">
+            <span id="/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/" class="post-meta-item leancloud_visitors" data-flag-title="FPGA学习笔记(41)——Vitis开发一" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -369,7 +369,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>30 分钟</span>
+              <span>31 分钟</span>
             </span>
 
         </div>
@@ -641,14 +641,8 @@
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/96a7b91131fcef0da025feaca171ac69.png"></p>
 <pre><code>    在添加源文件界面中，File name 一栏我们输入文件名“main.c”，然后点击“Finish”按钮。输入源代码。我们在新建的 main.c 文件中输入以下代码：
 </code></pre>
-<p>​<br>    #include “xparameters.h” &#x2F;&#x2F;器件参数信息<br>    #include “xstatus.h” &#x2F;&#x2F;包含 XST_FAILURE 和 XST_SUCCESS 的宏定义<br>    #include “xil_printf.h” &#x2F;&#x2F;包含 print()函数<br>    #include “xgpiops.h” &#x2F;&#x2F;包含 PS GPIO 的函数<br>    #include “sleep.h” &#x2F;&#x2F;包含 sleep()函数</p>
-<pre><code>//宏定义 GPIO_DEVICE_ID
-#define GPIO_DEVICE_ID XPAR_XGPIOPS_0_DEVICE_ID
-//连接到 MIO 的 LED
-#define MIOLED0 38 //连接到 MIO38
-#define MIOLED1 39 //连接到 MIO39
-
- XGpioPs Gpio; // GPIO 设备的驱动程序实例
+<p>​<br>​    #include “xparameters.h” &#x2F;&#x2F;器件参数信息<br>​    #include “xstatus.h” &#x2F;&#x2F;包含 XST_FAILURE 和 XST_SUCCESS 的宏定义<br>​    #include “xil_printf.h” &#x2F;&#x2F;包含 print()函数<br>​    #include “xgpiops.h” &#x2F;&#x2F;包含 PS GPIO 的函数<br>​    #include “sleep.h” &#x2F;&#x2F;包含 sleep()函数<br>​<br>    &#x2F;&#x2F;宏定义 GPIO_DEVICE_ID<br>    #define GPIO_DEVICE_ID XPAR_XGPIOPS_0_DEVICE_ID<br>    &#x2F;&#x2F;连接到 MIO 的 LED<br>    #define MIOLED0 38 &#x2F;&#x2F;连接到 MIO38<br>    #define MIOLED1 39 &#x2F;&#x2F;连接到 MIO39</p>
+<pre><code> XGpioPs Gpio; // GPIO 设备的驱动程序实例
 
  int main()
  &#123;
@@ -733,17 +727,8 @@
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/36d3b2fa130b81b99840523163257bd8.png"></p>
 <pre><code>    在菜单栏中选择 File &gt; Export &gt; Export hardware。 在弹出的对话框中，**勾选“Include bitstream”** ，然后点击“OK”按钮。在此处需要注意，如果我们的设计使用了 PL 的资源，比如使用了 PL 的引脚，或者在 PL 内实现了部 分功能模块，那么我们就需要生成 Bitstream 文件，并在导出硬件的时候包含该文件。
 </code></pre>
-<h3 id="3-软件设计"><a href="#3-软件设计" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><p>​<br>    #include “stdio.h”<br>    #include “xparameters.h”<br>    #include “xgpiops.h”<br>    #define GPIOPS_ID XPAR_XGPIOPS_0_DEVICE_ID &#x2F;&#x2F;PS 端 GPIO 器件 ID</p>
-<pre><code>#define MIO_LED1 38 //PS_LED1 连接到 MIO38
-#define MIO_LED2 39 //PS_LED2 连接到 MIO39
-#define MIO_KEY1 40 //PS_KEY1 连接到 MIO40
-#define MIO_KEY2 41 //PS_LEY2 连接到 MIO41
-#define EMIO_KEY1 78 //PL_KEY1 连接到 EMIO0
-#define EMIO_KEY2 79 //PL_KEY2 连接到 EMIO1
-#define EMIO_LED1 80 //PL_LED1 连接到 EMIO2
-#define EMIO_LED2 81 //PL_LED2 连接到 EMIO3
-
-int main()
+<h3 id="3-软件设计"><a href="#3-软件设计" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><p>​<br>​    #include “stdio.h”<br>​    #include “xparameters.h”<br>​    #include “xgpiops.h”<br>​    #define GPIOPS_ID XPAR_XGPIOPS_0_DEVICE_ID &#x2F;&#x2F;PS 端 GPIO 器件 ID<br>​<br>    #define MIO_LED1 38 &#x2F;&#x2F;PS_LED1 连接到 MIO38<br>    #define MIO_LED2 39 &#x2F;&#x2F;PS_LED2 连接到 MIO39<br>    #define MIO_KEY1 40 &#x2F;&#x2F;PS_KEY1 连接到 MIO40<br>    #define MIO_KEY2 41 &#x2F;&#x2F;PS_LEY2 连接到 MIO41<br>    #define EMIO_KEY1 78 &#x2F;&#x2F;PL_KEY1 连接到 EMIO0<br>    #define EMIO_KEY2 79 &#x2F;&#x2F;PL_KEY2 连接到 EMIO1<br>    #define EMIO_LED1 80 &#x2F;&#x2F;PL_LED1 连接到 EMIO2<br>    #define EMIO_LED2 81 &#x2F;&#x2F;PL_LED2 连接到 EMIO3</p>
+<pre><code>int main()
 &#123;
 	printf(&quot;EMIO TEST!\n&quot;);
 	
@@ -804,9 +789,7 @@ int main()
 <p>• <strong>处理器间中断（Inter-Processor Interrupts，IPI)</strong><br>：—在多处理器系统中，一个处理器可能需要中断另一个处理器的操作。在这种情况下，就会产生一个 IPI，以便于处理器间通信或同步。</p>
 <h4 id="中断控制器GIC"><a href="#中断控制器GIC" class="headerlink" title="&lt;2&gt;中断控制器GIC"></a>&lt;2&gt;中断控制器GIC</h4><pre><code>    ARM SOC 系统中 CPU 的中断信号仲裁器件：**GIC** （**general interrupt controller** ， 通用中断控制器） _**【功能和结构上类似于《微机原理》中的可编程中断控制器8259】**_
 </code></pre>
-<p>​<br>        当对应的中断源有效时，GIC 根据该中断源的配置，决定是否将该中断信号，发送给 CPU。如果有多 个中断源有效，那么 GIC 还会进行仲裁，选择最高优先级中断，发送给 CPU。 当 CPU 接受到 GIC 发送的中断，通过读取 GIC 的寄存器，就可以知道中断的来源来自于哪里，从而可以做相应的处理。 当 CPU 处理完中断之后访问 GIC 的寄存器，该中断处理完毕。GIC 接受到该信息后，将该中断源取消，避免又重新发送该中断给 CPU 以及允许中断抢占。</p>
-<pre><code>    Zynq Ultrascale+ MPSOC 包含两个中断控制器(GIC)，分别是符合 GICv2 架构规范的 Arm GIC-400 通用中断控制器 APU GIC 和符合 GICv1 架构规范的 Arm PL-390 通用中断控制器(PL390)。中断控制器框图如下图所示：
-</code></pre>
+<p>​<br>​        当对应的中断源有效时，GIC 根据该中断源的配置，决定是否将该中断信号，发送给 CPU。如果有多 个中断源有效，那么 GIC 还会进行仲裁，选择最高优先级中断，发送给 CPU。 当 CPU 接受到 GIC 发送的中断，通过读取 GIC 的寄存器，就可以知道中断的来源来自于哪里，从而可以做相应的处理。 当 CPU 处理完中断之后访问 GIC 的寄存器，该中断处理完毕。GIC 接受到该信息后，将该中断源取消，避免又重新发送该中断给 CPU 以及允许中断抢占。<br>​<br>        Zynq Ultrascale+ MPSOC 包含两个中断控制器(GIC)，分别是符合 GICv2 架构规范的 Arm GIC-400 通用中断控制器 APU GIC 和符合 GICv1 架构规范的 Arm PL-390 通用中断控制器(PL390)。中断控制器框图如下图所示：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/afde86e7494ef3caa5c1ecc3c4445dc8.png"></p>
 <p>上图中 GIC-400 是 APU 中断控制器，其功能划分如下图所示：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/796c758bb3becf08035866a7a7deb2c8.png"></p>
@@ -839,10 +822,8 @@ int main()
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/be784b536668403f3377da54da3b1333.png"></p>
 <h4 id="GPIO-的-MIO-的中断"><a href="#GPIO-的-MIO-的中断" class="headerlink" title="&lt;3&gt;GPIO 的 MIO 的中断"></a>&lt;3&gt;GPIO 的 MIO 的中断</h4><p><img src="https://i-blog.csdnimg.cn/blog_migrate/adf3469ae6c2d955307f37538bd069af.png"></p>
 <p>寄存器说明：</p>
-<p>​<br>    INT_MASK：这个寄存器是只读的，显示哪些位当前被屏蔽，哪些位未被屏蔽&#x2F;启用。<br>    INT_EN：向该寄存器的任何位写入 1，可以启用&#x2F;解除中断信号的掩码。从该寄存器读取将返回一个不<br>    可预测的值。<br>    INT_DIS：向该寄存器的任何位写入 1 都会屏蔽该中断信号。从该寄存器读取会返回不可预测的值。<br>    INT_STAT：该寄存器显示是否发生了中断事件。将 1 写入该寄存器中的某个位可清除该位的中断状态。<br>    将 0 写入该寄存器中的某个位将被忽略。<br>    INT_TYPE：该寄存器控制中断是边沿敏感还是电平敏感。<br>    INT_POLARITY：该寄存器控制中断是低电平有效还是高电平有效（或下降沿敏感或上升沿敏感）。<br>    INT _ANY：如果 INT_TYPE 设置为边沿敏感，则该寄存器在上升沿和下降沿都会启用中断事件。如果<br>    INT_TYPE 设置为电平敏感，则忽略该寄存器。</p>
-<pre><code>    如果检测到中断，中断检测逻辑将 GPIO 的 **INT_STAT** 状态设置为真。如果中断未屏蔽，则 中断传输到一个或电路（图中未画出）。该或电路将**四个 BANK 中所有 GPIO 的所有中断组合成一个输出 （IRQ ID＃48）**到中断控制器。如果中断被禁止（屏蔽），则 INT_STAT 状态将保持直到被清除，但它**不会传输到中断控制器** ，除非稍后写入**INT_EN** 以禁用屏蔽。
-
-    如果 GPIO 中断是边沿触发的，则 INT 状态由检测逻辑锁存。通过**向 INT_STAT 寄存器写入 1 来清除 INT 锁存器** 。对于电平触发的中断，必须**清零 GPIO 中断输入源** ，以清除中断信号。或者，软件可以使用 **INT_DIS 寄存器屏蔽该输入** 。
+<p>​<br>​    INT_MASK：这个寄存器是只读的，显示哪些位当前被屏蔽，哪些位未被屏蔽&#x2F;启用。<br>​    INT_EN：向该寄存器的任何位写入 1，可以启用&#x2F;解除中断信号的掩码。从该寄存器读取将返回一个不<br>​    可预测的值。<br>​    INT_DIS：向该寄存器的任何位写入 1 都会屏蔽该中断信号。从该寄存器读取会返回不可预测的值。<br>​    INT_STAT：该寄存器显示是否发生了中断事件。将 1 写入该寄存器中的某个位可清除该位的中断状态。<br>​    将 0 写入该寄存器中的某个位将被忽略。<br>​    INT_TYPE：该寄存器控制中断是边沿敏感还是电平敏感。<br>​    INT_POLARITY：该寄存器控制中断是低电平有效还是高电平有效（或下降沿敏感或上升沿敏感）。<br>​    INT _ANY：如果 INT_TYPE 设置为边沿敏感，则该寄存器在上升沿和下降沿都会启用中断事件。如果<br>​    INT_TYPE 设置为电平敏感，则忽略该寄存器。<br>​<br>        如果检测到中断，中断检测逻辑将 GPIO 的 <strong>INT_STAT</strong> 状态设置为真。如果中断未屏蔽，则 中断传输到一个或电路（图中未画出）。该或电路将<strong>四个 BANK 中所有 GPIO 的所有中断组合成一个输出 （IRQ ID＃48）<strong>到中断控制器。如果中断被禁止（屏蔽），则 INT_STAT 状态将保持直到被清除，但它</strong>不会传输到中断控制器</strong> ，除非稍后写入<strong>INT_EN</strong> 以禁用屏蔽。</p>
+<pre><code>    如果 GPIO 中断是边沿触发的，则 INT 状态由检测逻辑锁存。通过**向 INT_STAT 寄存器写入 1 来清除 INT 锁存器** 。对于电平触发的中断，必须**清零 GPIO 中断输入源** ，以清除中断信号。或者，软件可以使用 **INT_DIS 寄存器屏蔽该输入** 。
 
     **如果 INT_STAT = 1 且 INT_MASK = 0，则该中断信号有效。**
 </code></pre>
@@ -851,16 +832,8 @@ int main()
 <h3 id="3-软件设计-1"><a href="#3-软件设计-1" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><p>导入硬件平台后在选择模版时选择**“Empty Application”**<strong>自行创建工程文件</strong></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/a45e282be5173c86ff34d81074f56dba.png"></p>
 <p> 添加main.c文件后输入代码：</p>
-<p>​<br>    &#x2F;***************************** Include Files *********************************&#x2F;</p>
-<pre><code>#include &quot;xparameters.h&quot;
-#include &quot;xgpiops.h&quot;
-#include &quot;xscugic.h&quot;
-#include &quot;xil_exception.h&quot;
-#include &quot;xplatform_info.h&quot;
-#include &lt;xil_printf.h&gt;
-#include &quot;sleep.h&quot;
-
-/************************** Constant Definitions *****************************/
+<p>​<br>​    &#x2F;***************************** Include Files *********************************&#x2F;<br>​<br>    #include “xparameters.h”<br>    #include “xgpiops.h”<br>    #include “xscugic.h”<br>    #include “xil_exception.h”<br>    #include “xplatform_info.h”<br>    #include &lt;xil_printf.h&gt;<br>    #include “sleep.h”</p>
+<pre><code>/************************** Constant Definitions *****************************/
 
 //以下常量映射到xparameters.h文件
 #define GPIO_DEVICE_ID      XPAR_XGPIOPS_0_DEVICE_ID      //PS端GPIO器件ID
@@ -884,13 +857,8 @@ XScuGic intc;   //通用中断控制器驱动实例
 u32 key_press;  //KEY按键按下的标志
 u32 key_val;    //用于控制LED的键值
 </code></pre>
-<p>​<br>​<br>​<br>    &#x2F;************************** Function Definitions *****************************&#x2F;</p>
-<pre><code>int main(void)
-&#123;
-    int status;
-    XGpioPs_Config *ConfigPtr;     //PS 端GPIO配置信息
-
-    xil_printf(&quot;Gpio interrupt test \r\n&quot;);
+<p>​<br>​<br>​<br>​    &#x2F;************************** Function Definitions *****************************&#x2F;<br>​<br>    int main(void)<br>    {<br>        int status;<br>        XGpioPs_Config *ConfigPtr;     &#x2F;&#x2F;PS 端GPIO配置信息</p>
+<pre><code>    xil_printf(&quot;Gpio interrupt test \r\n&quot;);
 
     //根据器件ID查找配置信息
     ConfigPtr = XGpioPs_LookupConfig(GPIO_DEVICE_ID);
@@ -900,40 +868,19 @@ u32 key_val;    //用于控制LED的键值
     //初始化Gpio driver
     XGpioPs_CfgInitialize(&amp;gpio, ConfigPtr, ConfigPtr-&gt;BaseAddr);
 </code></pre>
-<p>​<br>        &#x2F;&#x2F;设置KEY所连接的MIO引脚的方向为输入<br>        XGpioPs_SetDirectionPin(&amp;gpio, KEY, 0);<br>        &#x2F;&#x2F;设置LED所连接的MIO引脚的方向为输出并使能输出<br>        XGpioPs_SetDirectionPin(&amp;gpio, LED, 1);<br>        XGpioPs_SetOutputEnablePin(&amp;gpio, LED, 1);<br>        XGpioPs_WritePin(&amp;gpio, LED, 0x0);<br>        &#x2F;&#x2F;设置LED2连接的MIO引脚方向为输出并使能输出<br>        XGpioPs_SetDirectionPin(&amp;gpio, LED2, 1);<br>        XGpioPs_SetOutputEnablePin(&amp;gpio, LED2, 1);<br>        XGpioPs_WritePin(&amp;gpio, LED2, 0x0);             &#x2F;&#x2F;PS_LED2默认关闭；</p>
-<p>​<br>        &#x2F;&#x2F;建立中断,出现错误则打印信息并退出<br>        status &#x3D; setup_interrupt_system(&amp;intc, &amp;gpio, GPIO_INTERRUPT_ID);<br>        if (status !&#x3D; XST_SUCCESS) {<br>            xil_printf(“Setup interrupt system failed\r\n”);<br>            return XST_FAILURE;<br>        }</p>
-<p>​<br>        &#x2F;&#x2F;中断触发时，key_press为TURE，延时一段时间后判断按键是否按下，是则反转LED<br>        while (1) {<br>            if (key_press) {<br>                usleep(20000);<br>                if (XGpioPs_ReadPin(&amp;gpio, KEY) &#x3D;&#x3D; 0) {<br>                    key_val &#x3D; ~key_val;<br>                    XGpioPs_WritePin(&amp;gpio, LED, key_val);<br>                }<br>                key_press &#x3D; FALSE;<br>                XGpioPs_IntrClearPin(&amp;gpio, KEY);      &#x2F;&#x2F;清除按键KEY中断<br>                XGpioPs_IntrEnablePin(&amp;gpio, KEY);     &#x2F;&#x2F;使能按键KEY中断<br>            }<br>        }<br>        return XST_SUCCESS;<br>    }</p>
+<p>​<br>​        &#x2F;&#x2F;设置KEY所连接的MIO引脚的方向为输入<br>​        XGpioPs_SetDirectionPin(&amp;gpio, KEY, 0);<br>​        &#x2F;&#x2F;设置LED所连接的MIO引脚的方向为输出并使能输出<br>​        XGpioPs_SetDirectionPin(&amp;gpio, LED, 1);<br>​        XGpioPs_SetOutputEnablePin(&amp;gpio, LED, 1);<br>​        XGpioPs_WritePin(&amp;gpio, LED, 0x0);<br>​        &#x2F;&#x2F;设置LED2连接的MIO引脚方向为输出并使能输出<br>​        XGpioPs_SetDirectionPin(&amp;gpio, LED2, 1);<br>​        XGpioPs_SetOutputEnablePin(&amp;gpio, LED2, 1);<br>​        XGpioPs_WritePin(&amp;gpio, LED2, 0x0);             &#x2F;&#x2F;PS_LED2默认关闭；</p>
+<p>​<br>​        &#x2F;&#x2F;建立中断,出现错误则打印信息并退出<br>​        status &#x3D; setup_interrupt_system(&amp;intc, &amp;gpio, GPIO_INTERRUPT_ID);<br>​        if (status !&#x3D; XST_SUCCESS) {<br>​            xil_printf(“Setup interrupt system failed\r\n”);<br>​            return XST_FAILURE;<br>​        }</p>
+<p>​<br>​        &#x2F;&#x2F;中断触发时，key_press为TURE，延时一段时间后判断按键是否按下，是则反转LED<br>​        while (1) {<br>​            if (key_press) {<br>​                usleep(20000);<br>​                if (XGpioPs_ReadPin(&amp;gpio, KEY) &#x3D;&#x3D; 0) {<br>​                    key_val &#x3D; ~key_val;<br>​                    XGpioPs_WritePin(&amp;gpio, LED, key_val);<br>​                }<br>​                key_press &#x3D; FALSE;<br>​                XGpioPs_IntrClearPin(&amp;gpio, KEY);      &#x2F;&#x2F;清除按键KEY中断<br>​                XGpioPs_IntrEnablePin(&amp;gpio, KEY);     &#x2F;&#x2F;使能按键KEY中断<br>​            }<br>​        }<br>​        return XST_SUCCESS;<br>​    }</p>
 <p>​    </p>
 <p>中断服务程序：</p>
-<p>​<br>    &#x2F;&#x2F;中断处理函数<br>    &#x2F;&#x2F;  @param   CallBackRef是指向上层回调引用的指针<br>    static void intr_handler(void *callback_ref)<br>    {<br>        XGpioPs *gpio &#x3D; (XGpioPs *) callback_ref;</p>
-<pre><code>    //读取KEY按键引脚的中断状态，判断是否发生中断
-    if (XGpioPs_IntrGetStatusPin(gpio, KEY))&#123;
-        key_press = TRUE;
-        XGpioPs_IntrDisablePin(gpio, KEY);         //屏蔽按键KEY中断
-    &#125;
-&#125;
-</code></pre>
+<p>​<br>​    &#x2F;&#x2F;中断处理函数<br>​    &#x2F;&#x2F;  @param   CallBackRef是指向上层回调引用的指针<br>​    static void intr_handler(void *callback_ref)<br>​    {<br>​        XGpioPs *gpio &#x3D; (XGpioPs *) callback_ref;<br>​<br>        &#x2F;&#x2F;读取KEY按键引脚的中断状态，判断是否发生中断<br>        if (XGpioPs_IntrGetStatusPin(gpio, KEY)){<br>            key_press &#x3D; TRUE;<br>            XGpioPs_IntrDisablePin(gpio, KEY);         &#x2F;&#x2F;屏蔽按键KEY中断<br>        }<br>    }</p>
 <p>​    </p>
 <p>**         由于所有 GPIO 共享相同的中断，因此软件必须同时考虑 INT_MASK 和 INT_STAT 以确定哪个 GPIO<br>导致中断**。这与stm32单片机每个端口使用一个中断号是不同的，<strong>因此中断服务程序也有很大区别</strong> 。</p>
 <p>中断配置：</p>
-<p>​<br>    &#x2F;&#x2F;建立中断系统，使能KEY按键的下降沿中断<br>    &#x2F;&#x2F;  @param   GicInstancePtr是一个指向XScuGic驱动实例的指针<br>    &#x2F;&#x2F;  @param   gpio是一个指向连接到中断的GPIO组件实例的指针<br>    &#x2F;&#x2F;  @param   GpioIntrId是Gpio中断ID<br>    &#x2F;&#x2F;  @return  如果成功返回XST_SUCCESS, 否则返回XST_FAILURE<br>    int setup_interrupt_system(XScuGic *gic_ins_ptr, XGpioPs *gpio, u16 GpioIntrId)<br>    {<br>        int status;<br>        XScuGic_Config *IntcConfig;     &#x2F;&#x2F;中断控制器配置信息</p>
-<pre><code>    //查找中断控制器配置信息并初始化中断控制器驱动
-    IntcConfig = XScuGic_LookupConfig(INTC_DEVICE_ID);
-    if (NULL == IntcConfig) &#123;
-        return XST_FAILURE;
-    &#125;
-    status = XScuGic_CfgInitialize(gic_ins_ptr, IntcConfig,
-            IntcConfig-&gt;CpuBaseAddress);
-    if (status != XST_SUCCESS) &#123;
-        return XST_FAILURE;
-    &#125;
-</code></pre>
-<p>​<br>        &#x2F;&#x2F;设置并使能中断异常<br>        Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,<br>                (Xil_ExceptionHandler) XScuGic_InterruptHandler, gic_ins_ptr);<br>        Xil_ExceptionEnable();<br>        &#x2F;&#x2F;为中断设置中断处理函数<br>        status &#x3D; XScuGic_Connect(gic_ins_ptr, GpioIntrId,<br>                (Xil_ExceptionHandler) intr_handler, (void *) gpio);<br>        if (status !&#x3D; XST_SUCCESS) {<br>            return status;<br>        }<br>        &#x2F;&#x2F;使能来自于Gpio器件的中断<br>        XScuGic_Enable(gic_ins_ptr, GpioIntrId);<br>        &#x2F;&#x2F;设置KEY按键的中断类型为下降沿中断<br>        XGpioPs_SetIntrTypePin(gpio, KEY, XGPIOPS_IRQ_TYPE_EDGE_FALLING);<br>        &#x2F;&#x2F;使能按键KEY中断<br>        XGpioPs_IntrEnablePin(gpio, KEY);</p>
-<pre><code>    return XST_SUCCESS;
-&#125;
-</code></pre>
+<p>​<br>​    &#x2F;&#x2F;建立中断系统，使能KEY按键的下降沿中断<br>​    &#x2F;&#x2F;  @param   GicInstancePtr是一个指向XScuGic驱动实例的指针<br>​    &#x2F;&#x2F;  @param   gpio是一个指向连接到中断的GPIO组件实例的指针<br>​    &#x2F;&#x2F;  @param   GpioIntrId是Gpio中断ID<br>​    &#x2F;&#x2F;  @return  如果成功返回XST_SUCCESS, 否则返回XST_FAILURE<br>​    int setup_interrupt_system(XScuGic *gic_ins_ptr, XGpioPs *gpio, u16 GpioIntrId)<br>​    {<br>​        int status;<br>​        XScuGic_Config *IntcConfig;     &#x2F;&#x2F;中断控制器配置信息<br>​<br>        &#x2F;&#x2F;查找中断控制器配置信息并初始化中断控制器驱动<br>        IntcConfig &#x3D; XScuGic_LookupConfig(INTC_DEVICE_ID);<br>        if (NULL &#x3D;&#x3D; IntcConfig) {<br>            return XST_FAILURE;<br>        }<br>        status &#x3D; XScuGic_CfgInitialize(gic_ins_ptr, IntcConfig,<br>                IntcConfig-&gt;CpuBaseAddress);<br>        if (status !&#x3D; XST_SUCCESS) {<br>            return XST_FAILURE;<br>        }</p>
+<p>​<br>​        &#x2F;&#x2F;设置并使能中断异常<br>​        Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,<br>​                (Xil_ExceptionHandler) XScuGic_InterruptHandler, gic_ins_ptr);<br>​        Xil_ExceptionEnable();<br>​        &#x2F;&#x2F;为中断设置中断处理函数<br>​        status &#x3D; XScuGic_Connect(gic_ins_ptr, GpioIntrId,<br>​                (Xil_ExceptionHandler) intr_handler, (void *) gpio);<br>​        if (status !&#x3D; XST_SUCCESS) {<br>​            return status;<br>​        }<br>​        &#x2F;&#x2F;使能来自于Gpio器件的中断<br>​        XScuGic_Enable(gic_ins_ptr, GpioIntrId);<br>​        &#x2F;&#x2F;设置KEY按键的中断类型为下降沿中断<br>​        XGpioPs_SetIntrTypePin(gpio, KEY, XGPIOPS_IRQ_TYPE_EDGE_FALLING);<br>​        &#x2F;&#x2F;使能按键KEY中断<br>​        XGpioPs_IntrEnablePin(gpio, KEY);<br>​<br>        return XST_SUCCESS;<br>    }</p>
 <p> <strong>类比stm32的中断配置过程</strong> ：</p>
-<p>​<br>    	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource13);<br>    	<br>    	EXTI_InitTypeDef EXTI_InitStructure;<br>    	EXTI_InitStructure.EXTI_Line &#x3D; EXTI_Line13;<br>    	EXTI_InitStructure.EXTI_LineCmd &#x3D; ENABLE;<br>    	EXTI_InitStructure.EXTI_Mode &#x3D; EXTI_Mode_Interrupt;<br>    	EXTI_InitStructure.EXTI_Trigger &#x3D; EXTI_Trigger_Rising_Falling;<br>    	EXTI_Init(&amp;EXTI_InitStructure);<br>    	<br>    	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);<br>    	<br>    	NVIC_InitTypeDef NVIC_InitStructure;<br>    	NVIC_InitStructure.NVIC_IRQChannel &#x3D; EXTI15_10_IRQn;<br>    	NVIC_InitStructure.NVIC_IRQChannelCmd &#x3D; ENABLE;<br>    	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority &#x3D; 1;<br>    	NVIC_InitStructure.NVIC_IRQChannelSubPriority &#x3D; 2;<br>    	NVIC_Init(&amp;NVIC_InitStructure);</p>
+<p>​<br>​    	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource13);<br>​    	<br>    	EXTI_InitTypeDef EXTI_InitStructure;<br>    	EXTI_InitStructure.EXTI_Line &#x3D; EXTI_Line13;<br>    	EXTI_InitStructure.EXTI_LineCmd &#x3D; ENABLE;<br>    	EXTI_InitStructure.EXTI_Mode &#x3D; EXTI_Mode_Interrupt;<br>    	EXTI_InitStructure.EXTI_Trigger &#x3D; EXTI_Trigger_Rising_Falling;<br>    	EXTI_Init(&amp;EXTI_InitStructure);<br>    	<br>    	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);<br>    	<br>    	NVIC_InitTypeDef NVIC_InitStructure;<br>    	NVIC_InitStructure.NVIC_IRQChannel &#x3D; EXTI15_10_IRQn;<br>    	NVIC_InitStructure.NVIC_IRQChannelCmd &#x3D; ENABLE;<br>    	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority &#x3D; 1;<br>    	NVIC_InitStructure.NVIC_IRQChannelSubPriority &#x3D; 2;<br>    	NVIC_Init(&amp;NVIC_InitStructure);</p>
 <h2 id="五-AXI-GPIO-按键控制-LED-实验"><a href="#五-AXI-GPIO-按键控制-LED-实验" class="headerlink" title="五.AXI GPIO 按键控制 LED 实验"></a>五.AXI GPIO 按键控制 LED 实验</h2><pre><code>    在 PL 端**调用 AXI GPIO IP 核** ，并通过 AXI4-Lite 接口实现 PS 与 **PL 中 AXI GPIO 模块**的通信。
 </code></pre>
 <h3 id="1-简介-3"><a href="#1-简介-3" class="headerlink" title="1.简介"></a>1.简介</h3><pre><code>    AXI GPIO IP 核为 AXI 接口提供了一个通用的输入/输出接口。与 PS 端的 GPIO 不同，AXI GPIO 是一个软核（Soft IP），即 MPSOC 芯片在出厂时并不存在这样的一个硬件电路，而是由用户通过配置 PL 端的逻辑资源来实现的一个功能模块。而 PS 端的 GPIO 是一个硬核（Hard IP），它是一个生产时在硅片中实现的功能电路。
@@ -1011,14 +958,8 @@ u32 key_val;    //用于控制LED的键值
 </code></pre>
 <h3 id="3-软件设计-2"><a href="#3-软件设计-2" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><pre><code>    创建vitis工程“axi_gpio”，新建main.c文件内容如下：
 </code></pre>
-<p>​<br>    #include “stdio.h”<br>    #include “xparameters.h”<br>    #include “xgpiops.h”<br>    #include “xgpio.h”<br>    #include “xscugic.h”<br>    #include “xil_exception.h”<br>    #include “xil_printf.h”<br>    #include “sleep.h”</p>
-<pre><code>//宏定义
-#define SCUGIC_ID    XPAR_SCUGIC_0_DEVICE_ID      //中断控制器  ID
-#define GPIOPS_ID    XPAR_XGPIOPS_0_DEVICE_ID     //PS端  GPIO器件  ID
-#define AXI_GPIO_ID  XPAR_AXI_GPIO_0_DEVICE_ID    //PL端  AXI GPIO器件  ID
-#define GPIO_INT_ID  XPAR_FABRIC_GPIO_0_VEC_ID    //PL端  AXI GPIO中断  ID
-
-#define MIO_LED      38                           //PS_LED1 连接到  MIO38
+<p>​<br>​    #include “stdio.h”<br>​    #include “xparameters.h”<br>​    #include “xgpiops.h”<br>​    #include “xgpio.h”<br>​    #include “xscugic.h”<br>​    #include “xil_exception.h”<br>​    #include “xil_printf.h”<br>​    #include “sleep.h”<br>​<br>    &#x2F;&#x2F;宏定义<br>    #define SCUGIC_ID    XPAR_SCUGIC_0_DEVICE_ID      &#x2F;&#x2F;中断控制器  ID<br>    #define GPIOPS_ID    XPAR_XGPIOPS_0_DEVICE_ID     &#x2F;&#x2F;PS端  GPIO器件  ID<br>    #define AXI_GPIO_ID  XPAR_AXI_GPIO_0_DEVICE_ID    &#x2F;&#x2F;PL端  AXI GPIO器件  ID<br>    #define GPIO_INT_ID  XPAR_FABRIC_GPIO_0_VEC_ID    &#x2F;&#x2F;PL端  AXI GPIO中断  ID</p>
+<pre><code>#define MIO_LED      38                           //PS_LED1 连接到  MIO38
 #define KEY_CHANNEL  1                            //PL按键使用 AXI GPIO通道1
 #define KEY_MASK     XGPIO_IR_CH1_MASK            //通道1的位定义
 
@@ -1215,8 +1156,8 @@ void axi_gpio_handler(void *CallbackRef)
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
           </div>
 
@@ -1226,8 +1167,8 @@ void axi_gpio_handler(void *CallbackRef)
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/24/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(10)%E2%80%94%E2%80%94Zynq%E7%AE%80%E4%BB%8B/" rel="prev" title="Zynq简介——FPGA学习笔记＜7＞">
-      <i class="fa fa-chevron-left"></i> Zynq简介——FPGA学习笔记＜7＞
+    <a href="/2023/09/24/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(10)%E2%80%94%E2%80%94Zynq%E7%AE%80%E4%BB%8B/" rel="prev" title="FPGA学习笔记(10)——Zynq简介">
+      <i class="fa fa-chevron-left"></i> FPGA学习笔记(10)——Zynq简介
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/09/29/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%EF%BC%9C1%EF%BC%9E/" rel="next" title="边缘检测——Matlab实现计算机视觉＜1＞">
@@ -1390,13 +1331,13 @@ void axi_gpio_handler(void *CallbackRef)
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">825k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>

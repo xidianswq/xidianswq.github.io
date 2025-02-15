@@ -26,7 +26,7 @@
 
   <meta name="description" content="目录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基础设计五（LCD液晶屏）——FPGA学习笔记＜6＞">
+<meta property="og:title" content="FPGA学习笔记(7)——基础设计五（LCD液晶屏）">
 <meta property="og:url" content="https://xidianswq.github.io/2023/09/22/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(7)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%BA%94%EF%BC%88LCD%E6%B6%B2%E6%99%B6%E5%B1%8F%EF%BC%89/index.html">
 <meta property="og:site_name" content="Switch">
 <meta property="og:description" content="目录">
@@ -57,10 +57,10 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d58f5808c61fc77af64e60a14708137c.png">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/1ff106cc7206516eb925a0af0c62929b.png">
 <meta property="article:published_time" content="2023-09-22T08:14:34.000Z">
-<meta property="article:modified_time" content="2025-02-09T06:25:33.684Z">
+<meta property="article:modified_time" content="2025-02-15T04:28:32.498Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="fpga开发">
+<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/04aad9b1d62ffc8693a9159fb2d578e2.png">
@@ -78,7 +78,7 @@
   };
 </script>
 
-  <title>基础设计五（LCD液晶屏）——FPGA学习笔记＜6＞ | Switch</title>
+  <title>FPGA学习笔记(7)——基础设计五（LCD液晶屏） | Switch</title>
   
 
 
@@ -239,7 +239,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          基础设计五（LCD液晶屏）——FPGA学习笔记＜6＞
+          FPGA学习笔记(7)——基础设计五（LCD液晶屏）
         </h1>
 
         <div class="post-meta">
@@ -263,7 +263,7 @@
             </span>
 
           
-            <span id="/2023/09/22/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(7)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%BA%94%EF%BC%88LCD%E6%B6%B2%E6%99%B6%E5%B1%8F%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="基础设计五（LCD液晶屏）——FPGA学习笔记＜6＞" title="阅读次数">
+            <span id="/2023/09/22/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(7)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%BA%94%EF%BC%88LCD%E6%B6%B2%E6%99%B6%E5%B1%8F%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="FPGA学习笔记(7)——基础设计五（LCD液晶屏）" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -289,7 +289,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>21k</span>
+              <span>22k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -404,12 +404,8 @@
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/c1e2fbf4f6bc0fd18607c3d53df7d87f.png"></p>
 <pre><code>    本设计思路只做参考，并非唯一方法，读者可利用所学知识，按照自己思路进行设计。 
 </code></pre>
-<h3 id="程序设计"><a href="#程序设计" class="headerlink" title="&lt;2&gt;程序设计"></a>&lt;2&gt;程序设计</h3><h4 id="（1）tft-ctrl-时序控制模块"><a href="#（1）tft-ctrl-时序控制模块" class="headerlink" title="（1）tft_ctrl 时序控制模块"></a>（1）tft_ctrl 时序控制模块</h4><p>​<br>​    module  tft_ctrl<br>​    (<br>​        input   wire            clk_in      ,   &#x2F;&#x2F;输入时钟<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;系统复位,低电平有效<br>​        input   wire    [15:0]  data_in     ,   &#x2F;&#x2F;待显示数据<br>​<br>        output  wire            data_req    ,   &#x2F;&#x2F;数据请求信号<br>        output  wire    [10:0]  pix_x       ,   &#x2F;&#x2F;输出TFT有效显示区域像素点X轴坐标<br>        output  wire    [10:0]  pix_y       ,   &#x2F;&#x2F;输出TFT有效显示区域像素点Y轴坐标<br>        output  wire    [15:0]  rgb_tft_16b ,   &#x2F;&#x2F;TFT显示数据<br>        output  wire    [23:0]  rgb_tft_24b ,   &#x2F;&#x2F;TFT显示数据<br>        output  wire            hsync       ,   &#x2F;&#x2F;TFT行同步信号<br>        output  wire            vsync       ,   &#x2F;&#x2F;TFT场同步信号<br>        output  wire            tft_clk     ,   &#x2F;&#x2F;TFT像素时钟<br>        output  wire            tft_de      ,   &#x2F;&#x2F;TFT数据使能<br>        output  wire            tft_bl          &#x2F;&#x2F;TFT背光信号<br>    );</p>
-<pre><code>//********************************************************************//
-//****************** Parameter and Internal Signal *******************//
-//********************************************************************//
-
-//parameter define  5寸、七寸屏
+<h3 id="程序设计"><a href="#程序设计" class="headerlink" title="&lt;2&gt;程序设计"></a>&lt;2&gt;程序设计</h3><h4 id="（1）tft-ctrl-时序控制模块"><a href="#（1）tft-ctrl-时序控制模块" class="headerlink" title="（1）tft_ctrl 时序控制模块"></a>（1）tft_ctrl 时序控制模块</h4><p>​<br>​    module  tft_ctrl<br>​    (<br>​        input   wire            clk_in      ,   &#x2F;&#x2F;输入时钟<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;系统复位,低电平有效<br>​        input   wire    [15:0]  data_in     ,   &#x2F;&#x2F;待显示数据<br>​<br>​        output  wire            data_req    ,   &#x2F;&#x2F;数据请求信号<br>​        output  wire    [10:0]  pix_x       ,   &#x2F;&#x2F;输出TFT有效显示区域像素点X轴坐标<br>​        output  wire    [10:0]  pix_y       ,   &#x2F;&#x2F;输出TFT有效显示区域像素点Y轴坐标<br>​        output  wire    [15:0]  rgb_tft_16b ,   &#x2F;&#x2F;TFT显示数据<br>​        output  wire    [23:0]  rgb_tft_24b ,   &#x2F;&#x2F;TFT显示数据<br>​        output  wire            hsync       ,   &#x2F;&#x2F;TFT行同步信号<br>​        output  wire            vsync       ,   &#x2F;&#x2F;TFT场同步信号<br>​        output  wire            tft_clk     ,   &#x2F;&#x2F;TFT像素时钟<br>​        output  wire            tft_de      ,   &#x2F;&#x2F;TFT数据使能<br>​        output  wire            tft_bl          &#x2F;&#x2F;TFT背光信号<br>​    );<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<pre><code>//parameter define  5寸、七寸屏
 // parameter   H_SYNC      =   11&#39;d34  ,   //行同步
             // H_BACK      =   11&#39;d46  ,   //行时序后沿
             // H_LEFT      =   11&#39;d0   ,   //行时序左边框
@@ -530,10 +526,8 @@ endmodule
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/6e497f9c789be6e30f8f2d095897aeef.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/d168edbc88ab3e3d9e0d0242a1119154.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/0997f4cd9124ba9a8c00f4b586e9d227.png"></p>
-<p>​<br>​    module  tft_pic<br>​    (<br>​        input   wire            tft_clk_9m  ,   &#x2F;&#x2F;输入工作时钟,频率9MHz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;输入复位信号,低电平有效<br>​        input   wire    [9:0]   pix_x       ,   &#x2F;&#x2F;输入TFT有效显示区域像素点X轴坐标<br>​        input   wire    [9:0]   pix_y       ,   &#x2F;&#x2F;输入TFT有效显示区域像素点Y轴坐标<br>​<br>        output  reg     [15:0]  pix_data        &#x2F;&#x2F;输出像素点色彩信息</p>
-<pre><code>);
-
-//********************************************************************//
+<p>​<br>​    module  tft_pic<br>​    (<br>​        input   wire            tft_clk_9m  ,   &#x2F;&#x2F;输入工作时钟,频率9MHz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;输入复位信号,低电平有效<br>​        input   wire    [9:0]   pix_x       ,   &#x2F;&#x2F;输入TFT有效显示区域像素点X轴坐标<br>​        input   wire    [9:0]   pix_y       ,   &#x2F;&#x2F;输入TFT有效显示区域像素点Y轴坐标<br>​<br>​        output  reg     [15:0]  pix_data        &#x2F;&#x2F;输出像素点色彩信息<br>​<br>    );</p>
+<pre><code>//********************************************************************//
 //****************** Parameter and Internal Signal *******************//
 //********************************************************************//
 
@@ -587,12 +581,8 @@ endmodule
 
     每个时钟周期 tft_clk_9m 对 pix_data 赋值即可；由于 pix_data 由 pix_x、pix_y 的值确定，易知 **pix_data 滞后 pix_x、pix_y 信号一个时钟周期** 。
 </code></pre>
-<h4 id="（3）顶层模块"><a href="#（3）顶层模块" class="headerlink" title="（3）顶层模块"></a>（3）顶层模块</h4><p>​<br>​    module  tft_colorbar<br>​    (<br>​        input   wire            sys_clk     ,   &#x2F;&#x2F;输入工作时钟,频率50MHz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;输入复位信号,低电平有效<br>​<br>        output  wire    [15:0]  rgb_tft     ,   &#x2F;&#x2F;输出像素信息<br>        output  wire            hsync       ,   &#x2F;&#x2F;输出行同步信号<br>        output  wire            vsync       ,   &#x2F;&#x2F;输出场同步信号<br>        output  wire            tft_clk     ,   &#x2F;&#x2F;输出TFT时钟信号<br>        output  wire            tft_de      ,   &#x2F;&#x2F;输出TFT使能信号<br>        output  wire            tft_bl          &#x2F;&#x2F;输出背光信号<br>    );</p>
-<pre><code>//********************************************************************//
-//****************** Parameter and Internal Signal *******************//
-//********************************************************************//
-
-//wire  define
+<h4 id="（3）顶层模块"><a href="#（3）顶层模块" class="headerlink" title="（3）顶层模块"></a>（3）顶层模块</h4><p>​<br>​    module  tft_colorbar<br>​    (<br>​        input   wire            sys_clk     ,   &#x2F;&#x2F;输入工作时钟,频率50MHz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;输入复位信号,低电平有效<br>​<br>​        output  wire    [15:0]  rgb_tft     ,   &#x2F;&#x2F;输出像素信息<br>​        output  wire            hsync       ,   &#x2F;&#x2F;输出行同步信号<br>​        output  wire            vsync       ,   &#x2F;&#x2F;输出场同步信号<br>​        output  wire            tft_clk     ,   &#x2F;&#x2F;输出TFT时钟信号<br>​        output  wire            tft_de      ,   &#x2F;&#x2F;输出TFT使能信号<br>​        output  wire            tft_bl          &#x2F;&#x2F;输出背光信号<br>​    );<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<pre><code>//wire  define
 wire            tft_clk_9m  ;   //TFT工作时钟,频率9MHz
 wire            locked      ;   //PLL locked信号
 wire            rst_n       ;   //TFT模块复位信号
@@ -653,10 +643,8 @@ endmodule
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/d58f5808c61fc77af64e60a14708137c.png"></p>
 <p>**         第一部分**：字符点阵显示区域坐标信号的设计与实现在上面小节中，我们利用<strong>取模软件</strong> 生成了要显示字符的字模，字模点阵的大小为<br><strong>256<em>64（64</em>4*64）</strong> ，那么如何利用字模点阵进行字符显示呢？ 首先确定字符<strong>有效显示区域</strong><br>，区域大小与字符点阵大小相同，显示区域的像素点与字模点阵中数据项一一对应，<strong>当字模点阵中的数据项数值为“1”时，赋值字符颜色给对应像素点；当字模点阵中的数据项数值为“0”时，赋值点阵背景颜色给对应像素点</strong><br>。 所以为了确定字符点阵显示区域，我们声明两个变量 char_x、char_y，两变量组成字 符点阵显示区域坐标，在字符点阵有效显示区域内，<strong>char_x<br>信号 0-255 循环计数，char_y 信号 0-63 循环计数</strong><br>，根据坐标(char_x,char_y)寻找字符点阵对应的数据项，根据数据项的数值，赋予对应坐标像素点颜色信息。char_x、char_y<br>信号波形具体见图。</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/1ff106cc7206516eb925a0af0c62929b.png"></p>
-<p>​<br>​    module  tft_pic<br>​    (<br>​        input   wire            tft_clk_9m  ,   &#x2F;&#x2F;输入工作时钟,频率9MHz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;输入复位信号,低电平有效<br>​        input   wire    [9:0]   pix_x       ,   &#x2F;&#x2F;输入TFT有效显示区域像素点X轴坐标<br>​        input   wire    [9:0]   pix_y       ,   &#x2F;&#x2F;输入TFT有效显示区域像素点Y轴坐标<br>​<br>        output  reg     [15:0]  pix_data        &#x2F;&#x2F;输出像素点色彩信息</p>
-<pre><code>);
-
-//********************************************************************//
+<p>​<br>​    module  tft_pic<br>​    (<br>​        input   wire            tft_clk_9m  ,   &#x2F;&#x2F;输入工作时钟,频率9MHz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;输入复位信号,低电平有效<br>​        input   wire    [9:0]   pix_x       ,   &#x2F;&#x2F;输入TFT有效显示区域像素点X轴坐标<br>​        input   wire    [9:0]   pix_y       ,   &#x2F;&#x2F;输入TFT有效显示区域像素点Y轴坐标<br>​<br>​        output  reg     [15:0]  pix_data        &#x2F;&#x2F;输出像素点色彩信息<br>​<br>    );</p>
+<pre><code>//********************************************************************//
 //****************** Parameter and Internal Signal *******************//
 //********************************************************************//
 
@@ -798,8 +786,8 @@ endmodule
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
           </div>
 
@@ -813,8 +801,8 @@ endmodule
       <i class="fa fa-chevron-left"></i> 嵌入式学习路线
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/09/24/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(10)%E2%80%94%E2%80%94Zynq%E7%AE%80%E4%BB%8B/" rel="next" title="Zynq简介——FPGA学习笔记＜7＞">
-      Zynq简介——FPGA学习笔记＜7＞ <i class="fa fa-chevron-right"></i>
+    <a href="/2023/09/24/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(10)%E2%80%94%E2%80%94Zynq%E7%AE%80%E4%BB%8B/" rel="next" title="FPGA学习笔记(10)——Zynq简介">
+      FPGA学习笔记(10)——Zynq简介 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -973,13 +961,13 @@ endmodule
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">825k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>

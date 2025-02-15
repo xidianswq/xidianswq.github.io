@@ -26,7 +26,7 @@
 
   <meta name="description" content="目录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="嵌入式Linux_Petalinux一——FPGA学习笔记＜？＞">
+<meta property="og:title" content="FPGA学习笔记(30)——嵌入式Linux_Petalinux一">
 <meta property="og:url" content="https://xidianswq.github.io/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(30)%E2%80%94%E2%80%94%E5%B5%8C%E5%85%A5%E5%BC%8FLinux_Petalinux%E4%B8%80/index.html">
 <meta property="og:site_name" content="Switch">
 <meta property="og:description" content="目录">
@@ -71,7 +71,7 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/74a3e0bd0b3903e51125cc56adb311cd.png">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f1213533746cf2f88aa42270ade1e6f7.png">
 <meta property="article:published_time" content="2023-10-01T11:39:59.000Z">
-<meta property="article:modified_time" content="2025-02-09T06:25:56.407Z">
+<meta property="article:modified_time" content="2025-02-15T04:28:55.629Z">
 <meta property="article:author" content="SWQ">
 <meta property="article:tag" content="fpga开发">
 <meta property="article:tag" content="学习笔记">
@@ -91,7 +91,7 @@
   };
 </script>
 
-  <title>嵌入式Linux_Petalinux一——FPGA学习笔记＜？＞ | Switch</title>
+  <title>FPGA学习笔记(30)——嵌入式Linux_Petalinux一 | Switch</title>
   
 
 
@@ -252,7 +252,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          嵌入式Linux_Petalinux一——FPGA学习笔记＜？＞
+          FPGA学习笔记(30)——嵌入式Linux_Petalinux一
         </h1>
 
         <div class="post-meta">
@@ -276,7 +276,7 @@
             </span>
 
           
-            <span id="/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(30)%E2%80%94%E2%80%94%E5%B5%8C%E5%85%A5%E5%BC%8FLinux_Petalinux%E4%B8%80/" class="post-meta-item leancloud_visitors" data-flag-title="嵌入式Linux_Petalinux一——FPGA学习笔记＜？＞" title="阅读次数">
+            <span id="/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(30)%E2%80%94%E2%80%94%E5%B5%8C%E5%85%A5%E5%BC%8FLinux_Petalinux%E4%B8%80/" class="post-meta-item leancloud_visitors" data-flag-title="FPGA学习笔记(30)——嵌入式Linux_Petalinux一" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -309,7 +309,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>20 分钟</span>
+              <span>21 分钟</span>
             </span>
 
         </div>
@@ -393,9 +393,9 @@
 <p>可以看到该文件夹为空。如果需要从 Ubuntu 系统向 Windows 传递文件，可 以用 cp 命令或 mv 命令文件到该目录。</p>
 <h3 id="3-Ubuntu-系统搭建-tftp-服务器"><a href="#3-Ubuntu-系统搭建-tftp-服务器" class="headerlink" title="3.Ubuntu 系统搭建 tftp 服务器"></a>3.Ubuntu 系统搭建 tftp 服务器</h3><pre><code>    TFTP 作为一种**简单的文件传输协议** ，在嵌入式开发中会经常使用到，而且后面我们在**安装 Petalinux 工具时也会提示需要 tftp 服务** ，所以我们需要**在 Ubuntu 上搭建 TFTP 服务器** 。需要**安装 tftp-hpa（客户端软件包，如果不用可不装）和 tftpd-hpa 软件包** ，命令如下：
 </code></pre>
-<p>​<br>​    sudo apt install tftp-hpa tftpd-hpa<br>​<br>        TFTP 需要一个文件夹来存放文件，我们在根目录下新建一个&#x2F;tftpboot 目录做为 TFTP 文 件存储目录，之所以使用该目录是因为后面使用的 Petalinux 工具默认使用该目录，省得我们 每次建 Petalinux 工程的时候手动修改。创建&#x2F;tftpboot 目录命令如下：</p>
-<p>​<br>​    sudo mkdir -p &#x2F;tftpboot<br>​    sudo chmod 777 &#x2F;tftpboot<br>​<br>        这样笔者就在电脑上创建了一个名为 tftpboot 的目录(文件夹)，路径为&#x2F;tftpboot。需要注意 的是我们要<strong>给 tftpboot 文件夹权限，否则的话后面在使用过程中会遇到问题，所以使用了 chmod 777 命令</strong> 。 最后配置 tftp。打开&#x2F;etc&#x2F;default&#x2F;tftpd-hpa 文件，将其内容修改如下：</p>
-<p>​<br>​    # &#x2F;etc&#x2F;default&#x2F;tftpd-hp<br>​<br>    TFTP_USERNAME&#x3D;”tftp”<br>    TFTP_DIRECTORY&#x3D;”&#x2F;tftpbo<br>    TFTP_ADDRESS&#x3D;”:69”<br>    TFTP_OPTIONS&#x3D;”-l -c -s”</p>
+<p>​<br>​    sudo apt install tftp-hpa tftpd-hpa<br>​<br>​        TFTP 需要一个文件夹来存放文件，我们在根目录下新建一个&#x2F;tftpboot 目录做为 TFTP 文 件存储目录，之所以使用该目录是因为后面使用的 Petalinux 工具默认使用该目录，省得我们 每次建 Petalinux 工程的时候手动修改。创建&#x2F;tftpboot 目录命令如下：</p>
+<p>​<br>​    sudo mkdir -p &#x2F;tftpboot<br>​    sudo chmod 777 &#x2F;tftpboot<br>​<br>​        这样笔者就在电脑上创建了一个名为 tftpboot 的目录(文件夹)，路径为&#x2F;tftpboot。需要注意 的是我们要<strong>给 tftpboot 文件夹权限，否则的话后面在使用过程中会遇到问题，所以使用了 chmod 777 命令</strong> 。 最后配置 tftp。打开&#x2F;etc&#x2F;default&#x2F;tftpd-hpa 文件，将其内容修改如下：</p>
+<p>​<br>​    # &#x2F;etc&#x2F;default&#x2F;tftpd-hp<br>​<br>​    TFTP_USERNAME&#x3D;”tftp”<br>​    TFTP_DIRECTORY&#x3D;”&#x2F;tftpbo<br>​    TFTP_ADDRESS&#x3D;”:69”<br>​    TFTP_OPTIONS&#x3D;”-l -c -s”</p>
 <p>最后输入如下命令，重启 tftp 服务器：</p>
 <p>​<br>​    sudo service tftpd-hpa restart</p>
 <h3 id="4-Ubuntu-下-NFS-和-SSH-服务开启"><a href="#4-Ubuntu-下-NFS-和-SSH-服务开启" class="headerlink" title="4.Ubuntu 下 NFS 和 SSH 服务开启"></a>4.Ubuntu 下 NFS 和 SSH 服务开启</h3><pre><code>    后面进行 **Linux 驱动开发** 的时候**需要 NFS 启动** ，因此要先安装并开启 Ubuntu 中的 NFS 服务，使用如下命令安装 NFS 服务：
@@ -416,7 +416,7 @@
 <p>此时可以运行以下命令来显示共享的目录：</p>
 <p>​<br>​    showmount -e</p>
 <p>在 nfs 运行的过程中，修改了&#x2F;etc&#x2F;exports 配置文件，可以使用 exportfs 命令使改动生效， 具体命令：</p>
-<p>​<br>​    sudo exportfs -rv<br>​<br>        开启 Ubuntu 的 SSH 服务以后我们就可以在 Windwos 下使用终端软件登陆到 Ubuntu，比 如使用 SecureCRT，<strong>Ubuntu 下使用如下命令开启 SSH 服务</strong> ：</p>
+<p>​<br>​    sudo exportfs -rv<br>​<br>​        开启 Ubuntu 的 SSH 服务以后我们就可以在 Windwos 下使用终端软件登陆到 Ubuntu，比 如使用 SecureCRT，<strong>Ubuntu 下使用如下命令开启 SSH 服务</strong> ：</p>
 <p>​<br>​    sudo apt install openssh-server</p>
 <p>上述命令安装 ssh 服务，ssh 的配置文件为&#x2F;etc&#x2F;ssh&#x2F;sshd_config，使用默认配置即可。</p>
 <h3 id="5-Source-Insight-软件安装和使用"><a href="#5-Source-Insight-软件安装和使用" class="headerlink" title="5.Source Insight 软件安装和使用"></a>5.Source Insight 软件安装和使用</h3><pre><code>    Source Insight 是一款功能强大的代码编辑、阅读工具，工作在 Windows 下，我们可以用 Source Insight 来进行代码编写和阅读，编写完成以后将代码拷贝到 Ubuntu 中去编译即可。
@@ -479,14 +479,14 @@
 <p>**选择“No”按下回车即可。  **</p>
 <h4 id="3、安装-Petalinux"><a href="#3、安装-Petalinux" class="headerlink" title="3、安装 Petalinux"></a>3、安装 Petalinux</h4><pre><code>    安装 Petalinux 就要考虑安装位置了，对于 Petalinux 这种体积庞大的工具，我们将其放在 /opt 目录下。在/opt 目录下新建专门存放 Petalinux 的文件夹，如/opt/pkg/petalinux/2019.2，在 终端输入以下命令即可：
 </code></pre>
-<p>​<br>​    sudo chown -R $USER:$USER &#x2F;opt<br>​    mkdir -p &#x2F;opt&#x2F;pkg&#x2F;petalinux&#x2F;2023.1<br>​<br>        <strong>chown命令将&#x2F;opt 目录的属主和属组更改为当前的用户名</strong> ，如笔者的 Ubuntu 用户名为 cx， 执行的 chown 命令就相当于“sudo chown -R cx:cx &#x2F;opt”，然后通过 mkdir 创建安装目录。现在我们将 petalinux 安装在&#x2F;opt&#x2F;pkg&#x2F;petalinux&#x2F;2023.1 目录下，在终端中输入如下命令：</p>
+<p>​<br>​    sudo chown -R $USER:$USER &#x2F;opt<br>​    mkdir -p &#x2F;opt&#x2F;pkg&#x2F;petalinux&#x2F;2023.1<br>​<br>​        <strong>chown命令将&#x2F;opt 目录的属主和属组更改为当前的用户名</strong> ，如笔者的 Ubuntu 用户名为 cx， 执行的 chown 命令就相当于“sudo chown -R cx:cx &#x2F;opt”，然后通过 mkdir 创建安装目录。现在我们将 petalinux 安装在&#x2F;opt&#x2F;pkg&#x2F;petalinux&#x2F;2023.1 目录下，在终端中输入如下命令：</p>
 <p>​<br>​    .&#x2F;petalinux-v2023.1-05012318-installer.run -d &#x2F;opt&#x2F;pkg&#x2F;petalinux&#x2F;2023.1</p>
 <p>运行上述命令后，需要等待一段时间，当出现“Press Enter to display the license agreements”<br>字样的时候，从显示的意思可以知道，让我们按下回车键显示软件许可协议，按下键盘上的回车键<br>Enter，这些内容如果你感兴趣可以看看，此处我们就不详细看了，直接按下键盘上的 Q 键退出， 回到之前的界面之后会出现一个选择项，询问我们是否接受<br>xilinx 最终用户协议。这个显然是没得选，必须接受，否则无法进行下面的安装；输入 y 按回车接受。除了 xilinx<br>最终用户协议之外，还有两个协议也需要大家接受，会依次显示在终端上，同理也是输入 Y 按下回车接受。接受所有协议之后 Petalinux<br>安装工具便会继续安装，直到安装完成。</p>
 <h4 id="4、设置-Petalinux-环境变量"><a href="#4、设置-Petalinux-环境变量" class="headerlink" title="4、设置 Petalinux 环境变量"></a>4、设置 Petalinux 环境变量</h4><pre><code>    在正式使用 petalinux 工具之前，需要先运行 petalinux 安装目录下的 settings.sh 脚本文件 设置 petalinux 工作环境，settings.sh 脚本用于 bash，还有一个 settings.csh 用于 C shell。
 
     一般默认情况下，我们使用 bash作为登录 shell，所以 source 脚本文件 settings.sh对 petalinux 所需的运行环境进行配置，命令如下：
 </code></pre>
-<p>​<br>​    source settings.sh<br>​<br>        需要注意的是该命令<strong>只对当前终端有效</strong> ，重新打开终端后需要重新执行这一步。执行结果 如下图所示：</p>
+<p>​<br>​    source settings.sh<br>​<br>​        需要注意的是该命令<strong>只对当前终端有效</strong> ，重新打开终端后需要重新执行这一步。执行结果 如下图所示：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/00f3abd28725993d07f8ef21603c139b.png"></p>
 <p> 我们来验证下工作环境是否已设置，在终端输入如下命令：</p>
 <p>​<br>​    echo $PETALINUX</p>
@@ -502,10 +502,8 @@
 
     在 Ubuntu 系统中，打开终端，以普通用户运行即可。进入到 petalinux 安装目录。可以看到有一个名为“tools”的目录，jtag 驱动程序在该目录下，我们输入以下命令进入 到 jtag 驱动程序所在位置：
 </code></pre>
-<p>​<br>​    cd tools&#x2F;xsct&#x2F;data&#x2F;xicom&#x2F;cable_drivers&#x2F;lin64&#x2F;install_script&#x2F;install_drivers<br>​<br>        可以看到该目录下有一个名为“install_drivers”的文件，输入如下命令，以 root 权限执行该文件，安装 jtag 驱动程序：</p>
-<p>​<br>​    sudo .&#x2F;install_drivers<br>​<br>        可以看到 jtag 驱动安装成功。对于最下面一行的警告，如果已经拔掉 jtag 下载器与电脑的 连接就可以不用看。至此 jtag 驱动程序就安装完成了。</p>
-<pre><code>    下面说下在遇到 jtag 驱动问题时，**如何删除 jtag 驱动。注意如无特需情况，请不要执行下 面的命令：**
-</code></pre>
+<p>​<br>​    cd tools&#x2F;xsct&#x2F;data&#x2F;xicom&#x2F;cable_drivers&#x2F;lin64&#x2F;install_script&#x2F;install_drivers<br>​<br>​        可以看到该目录下有一个名为“install_drivers”的文件，输入如下命令，以 root 权限执行该文件，安装 jtag 驱动程序：</p>
+<p>​<br>​    sudo .&#x2F;install_drivers<br>​<br>​        可以看到 jtag 驱动安装成功。对于最下面一行的警告，如果已经拔掉 jtag 下载器与电脑的 连接就可以不用看。至此 jtag 驱动程序就安装完成了。<br>​<br>        下面说下在遇到 jtag 驱动问题时，<strong>如何删除 jtag 驱动。注意如无特需情况，请不要执行下 面的命令：</strong></p>
 <p>​<br>​    sudo rm -f &#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;52-xilinx-digilent-usb.rules<br>​    sudo rm -f &#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;52-xilinx-ftdi-usb.rules<br>​    sudo rm -f &#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;52-xilinx-pcusb.rules</p>
 <h2 id="三-Petalinux-设计流程实战"><a href="#三-Petalinux-设计流程实战" class="headerlink" title="三.Petalinux 设计流程实战"></a>三.Petalinux 设计流程实战</h2><pre><code>    PetaLinux 工具提供了**在 Xilinx 处理系统上自定义、构建和部署嵌入式 Linux 解决方案** 所需的一切。该解决方案旨在提高设计生产力，可**与 Xilinx 硬件设计工具一起使用** ，以**简化针对 Zynq SoC 的 Linux 系统的开发** 。本章我们以使用 Petalinux 定制 Linux 系统为例，实战 Petalinux 的设计流程，看下 Petalinux 如何简化 Linux 系统的开发。
 </code></pre>
@@ -549,7 +547,7 @@
 </code></pre>
 <p>​<br>​    cd<br>​    mkdir -p workspace&#x2F;petalinux&#x2F;<br>​    cd workspace&#x2F;petalinux&#x2F;</p>
 <p>现在我们创建一个名为“ALIENTEK-ZYNQ”的 Petalinux 工程，在终端中输入如下命令：</p>
-<p>​<br>​    petalinux-create -t project –template zynqMP -n ALIENTEK-ZYNQ<br>​<br>        template 参数表明创建的 petalinux 工程使用的平台模板，此处的 zynqMP 表明使用的是 zynqMP Soc 平台模板的 petalinux 工程，用于 Zynq UltraScale+ MPSoC 系列的芯片。name 参数 （此处简写为“-n”）后接的是 petalinux 工程名，如此处的“ALIENTEK-ZYNQ”</p>
+<p>​<br>​    petalinux-create -t project –template zynqMP -n ALIENTEK-ZYNQ<br>​<br>​        template 参数表明创建的 petalinux 工程使用的平台模板，此处的 zynqMP 表明使用的是 zynqMP Soc 平台模板的 petalinux 工程，用于 Zynq UltraScale+ MPSoC 系列的芯片。name 参数 （此处简写为“-n”）后接的是 petalinux 工程名，如此处的“ALIENTEK-ZYNQ”</p>
 <h4 id="4、配置-petalinux-工程"><a href="#4、配置-petalinux-工程" class="headerlink" title="4、配置 petalinux 工程"></a>4、配置 petalinux 工程</h4><pre><code>    首次配置 Petalinux 工程是将 xsa 文件导入到 Petalinux 工程中，Petalinux 工具会解析 xsa 文件并弹出配置窗口。在终端中输入如下命令配置 Petalinux 工程：
 </code></pre>
 <p>​<br>​    cd ALIENTEK-ZYNQ<br>​    petalinux-config –get-hw-description &#x2F;mnt&#x2F;hgfs&#x2F;shared_folder&#x2F;xsa&#x2F;</p>
@@ -600,7 +598,7 @@
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/cf586be08fbacafa3baab0d324db1191.png"></p>
 <h4 id="5、配置-Linux-内核"><a href="#5、配置-Linux-内核" class="headerlink" title="5、配置 Linux 内核"></a>5、配置 Linux 内核</h4><p>现在我们开始定制 Linux 内核，在终端输入如下命令：</p>
-<p>​<br>​    petalinux-config -c kernel<br>​<br>        等一段时间后会在终端中创建一个名为“linux-xlnx Configuration”的标签页，也就是 Linux 内核的配置界面，如下图所示：</p>
+<p>​<br>​    petalinux-config -c kernel<br>​<br>​        等一段时间后会在终端中创建一个名为“linux-xlnx Configuration”的标签页，也就是 Linux 内核的配置界面，如下图所示：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/dd81a7ed1a3fb7ed7810ece777525c84.png"></p>
 <pre><code>    可以看到 Petalinux 默认使用的**内核版本为 4.19.0** ，当然也可以换成其它版本的内核,不过 修改起来比较麻烦，Petalinux 对内核版本有要求，读者如需使用其他的内核版本可以在网上查 找关于 Petalinux 使用非默认内核版本的方法。一般使用默认内核版本就可以了。
 
@@ -622,7 +620,7 @@
 <p>​<br>​    vi project-spec&#x2F;meta-user&#x2F;recipes-bsp&#x2F;device-tree&#x2F;files&#x2F;system-user.dtsi</p>
 <p>默认的文件内容如下，可见该文件需要我们自己手动配置。</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/5c470de2e4f70cee868c21189f201842.png"></p>
-<p>​<br>​    &#x2F;include&#x2F; “system-conf.dtsi”<br>​    #include &lt;dt-bindings&#x2F;gpio&#x2F;gpio.h&gt;<br>​    #include &lt;dt-bindings&#x2F;input&#x2F;input.h&gt;<br>​    &#x2F; {<br>​    	model &#x3D; “Alientek Zynq MpSoc Development Board”;<br>​    	<br>    	leds {<br>    		compatible &#x3D; “gpio-leds”;<br>    		gpio-led0 {<br>    			label &#x3D; “ps_led1”;<br>    			gpios &#x3D; &lt;&amp;gpio 38 GPIO_ACTIVE_HIGH&gt;;<br>    			linux,default-trigger &#x3D; “timer”;<br>    		};<br>    		gpio-led1 {<br>    			label &#x3D; “ps_led2”;<br>    			gpios &#x3D; &lt;&amp;gpio 39 GPIO_ACTIVE_HIGH&gt;;<br>    			default-state &#x3D; “on”;<br>    		};<br>    		gpio-led2 {<br>    			label &#x3D; “pl_led1”;<br>    			gpios &#x3D; &lt;&amp;axi_gpio_0 0 0 GPIO_ACTIVE_HIGH&gt;;<br>    			linux,default-trigger &#x3D; “timer”;<br>    		};<br>    		gpio-led3 {<br>    			label &#x3D; “pl_led2”;<br>    			gpios &#x3D; &lt;&amp;axi_gpio_0 1 0 GPIO_ACTIVE_HIGH&gt;;<br>    			default-state &#x3D; “on”;<br>    		};<br>    	};<br>    	<br>    	keys {<br>    		compatible &#x3D; “gpio-keys”;<br>    		autorepeat;<br>    		gpio-key,wakeup;<br>    		<br>    		gpio-key1 {<br>    			label &#x3D; “ps_key1”;<br>    			gpios &#x3D; &lt;&amp;gpio 40 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_UP>;<br>    		};<br>    			gpio-key2 {<br>    			label &#x3D; “ps_key2”;<br>    			gpios &#x3D; &lt;&amp;gpio 41 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_DOWN>;<br>    		};<br>    			gpio-key3 {<br>    			label &#x3D; “pl_key1”;<br>    			gpios &#x3D; &lt;&amp;gpio 78 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_LEFT>;<br>    		};<br>    			gpio-key4 {<br>    			label &#x3D; “pl_key2”;<br>    			gpios &#x3D; &lt;&amp;gpio 79 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_RIGHT>;<br>    		};<br>    	};<br>    };<br>    	<br>    &amp;gem3 {<br>    	phy-handle &#x3D; &lt;&amp;ethernet_phy&gt;;<br>    	local-mac-address &#x3D; [00 0a 35 00 1e 53];<br>    	ethernet_phy: ethernet-phy@7 {<br>    		reg &#x3D; &lt;0x7&gt;;<br>    	};<br>    };</p>
+<p>​<br>​    &#x2F;include&#x2F; “system-conf.dtsi”<br>​    #include &lt;dt-bindings&#x2F;gpio&#x2F;gpio.h&gt;<br>​    #include &lt;dt-bindings&#x2F;input&#x2F;input.h&gt;<br>​    &#x2F; {<br>​    	model &#x3D; “Alientek Zynq MpSoc Development Board”;<br>​    	<br>​    	leds {<br>​    		compatible &#x3D; “gpio-leds”;<br>​    		gpio-led0 {<br>​    			label &#x3D; “ps_led1”;<br>​    			gpios &#x3D; &lt;&amp;gpio 38 GPIO_ACTIVE_HIGH&gt;;<br>​    			linux,default-trigger &#x3D; “timer”;<br>​    		};<br>​    		gpio-led1 {<br>​    			label &#x3D; “ps_led2”;<br>​    			gpios &#x3D; &lt;&amp;gpio 39 GPIO_ACTIVE_HIGH&gt;;<br>​    			default-state &#x3D; “on”;<br>​    		};<br>​    		gpio-led2 {<br>​    			label &#x3D; “pl_led1”;<br>​    			gpios &#x3D; &lt;&amp;axi_gpio_0 0 0 GPIO_ACTIVE_HIGH&gt;;<br>​    			linux,default-trigger &#x3D; “timer”;<br>​    		};<br>​    		gpio-led3 {<br>​    			label &#x3D; “pl_led2”;<br>​    			gpios &#x3D; &lt;&amp;axi_gpio_0 1 0 GPIO_ACTIVE_HIGH&gt;;<br>​    			default-state &#x3D; “on”;<br>​    		};<br>​    	};<br>​    	<br>    	keys {<br>    		compatible &#x3D; “gpio-keys”;<br>    		autorepeat;<br>    		gpio-key,wakeup;<br>    		<br>    		gpio-key1 {<br>    			label &#x3D; “ps_key1”;<br>    			gpios &#x3D; &lt;&amp;gpio 40 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_UP>;<br>    		};<br>    			gpio-key2 {<br>    			label &#x3D; “ps_key2”;<br>    			gpios &#x3D; &lt;&amp;gpio 41 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_DOWN>;<br>    		};<br>    			gpio-key3 {<br>    			label &#x3D; “pl_key1”;<br>    			gpios &#x3D; &lt;&amp;gpio 78 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_LEFT>;<br>    		};<br>    			gpio-key4 {<br>    			label &#x3D; “pl_key2”;<br>    			gpios &#x3D; &lt;&amp;gpio 79 GPIO_ACTIVE_LOW&gt;;<br>    			linux,code &#x3D; <KEY_RIGHT>;<br>    		};<br>    	};<br>    };<br>    	<br>    &amp;gem3 {<br>    	phy-handle &#x3D; &lt;&amp;ethernet_phy&gt;;<br>    	local-mac-address &#x3D; [00 0a 35 00 1e 53];<br>    	ethernet_phy: ethernet-phy@7 {<br>    		reg &#x3D; &lt;0x7&gt;;<br>    	};<br>    };</p>
 <pre><code>&amp;gem0 &#123;
 	psu_ethernet_0_mdio: mdio &#123;
 		#address-cells = &lt;1&gt;;
@@ -672,14 +670,14 @@
     4 个 gpio led 灯分别对应开发板的 4 个 led 灯，配置信息主要包括 **compatible（用于与内核 驱动匹配的名字）、label（名字）、gpios（对应的 GPIO 管脚）、默认状态以及触发状态** 。 例如 linux,default-trigger = &quot; timer &quot;表示默认的触发状态是 timer 模式，也可以改为 heartbeat 模式，可以用来判断系统是否还在运行。除此之外，还有其他一些内核定义好的触发状态； default-state = &quot;on&quot;表示默认 led 灯是亮着的；gpios = 表示该 led 的控制管脚是 gpio_38，GPIO_ACTIVE_HIGH 表示高电平有效（也就是高电平的时候 led 灯才会亮）。
 </code></pre>
 <h4 id="8、编译-Petalinux-工程"><a href="#8、编译-Petalinux-工程" class="headerlink" title="8、编译 Petalinux 工程"></a>8、编译 Petalinux 工程</h4><p>现在我们就可以编译整个 Petalinux 工程了，在终端输入如下命令：</p>
-<p>​<br>​    petalinux-build<br>​<br>        该命令将<strong>生成设备树 DTB 文件、fsbl 文件、U-Boot 文件，Linux 内核和根文件系统映像</strong> 。 编译完成后，生成的映像将<strong>位于工程的 images 目录下</strong> 。需要说明的是 fsbl、U-Boot 这两个我们在工程中并没有配置，这是因为 Petalinux 会根据 xsa 文件和配置 petalinux 工程<strong>自动配置 fsbl 和 uboot</strong> ，如无特需要求，不需要再手动配置。</p>
+<p>​<br>​    petalinux-build<br>​<br>​        该命令将<strong>生成设备树 DTB 文件、fsbl 文件、U-Boot 文件，Linux 内核和根文件系统映像</strong> 。 编译完成后，生成的映像将<strong>位于工程的 images 目录下</strong> 。需要说明的是 fsbl、U-Boot 这两个我们在工程中并没有配置，这是因为 Petalinux 会根据 xsa 文件和配置 petalinux 工程<strong>自动配置 fsbl 和 uboot</strong> ，如无特需要求，不需要再手动配置。</p>
 <p>执行结果如下图所示：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/f42ccb5a43617856eaa2539ffecdf6cd.png"></p>
 <h4 id="9、制作-BOOT-BIN-启动文件"><a href="#9、制作-BOOT-BIN-启动文件" class="headerlink" title="9、制作 BOOT.BIN 启动文件"></a>9、制作 BOOT.BIN 启动文件</h4><pre><code>    Petalinux 提供了 petalinux-package 命令将 PetaLinux 项目打包为适合部署的格式，其中 “petalinux-package --boot”命令生成可引导映像，该映像可直接与 Zynq 系列设备（包括 Zynq-7000 和 Zynq UltraScale + MPSoC）或基于 MicroBlaze 的 FPGA 设计一起使用。对于 Zynq 系列设备，可引导格式为 BOOT.BIN，可以从 SD 卡引导启动。对于基于 MicroBlaze 的设计， 默认格式为 MCS PROM 文件，适用于通过 Vivado 或其他 PROM 编程器进行编程。
 
     ZYNQ 的启动文件 BOOT.BIN 一般包含 fsbl 文件、bitstream 文件和 uboot 文件。使用下面 的命令可生成 BOOT.BIN 文件：
 </code></pre>
-<p>​<br>​    petalinux-package –boot –fsbl –fpga –u-boot –force<br>​<br>        选项“–fsbl”用于指定 fsbl 文件所在位置，后面接文件对应的路径信息，如果不指定文 件位置，默认对应的是 images&#x2F;linux&#x2F;zynqmp_fsbl.elf；选项“–fpga”用于指定 bitstream 文件所 在位置，后面接该文件对应的路径信息，默认对应的是 images&#x2F;linux&#x2F;system.bit，实际可能有区 别；选项“–u-boot”用于指定 U-Boot 文件所在位置，后面接该文件所在路径信息，默认为 images&#x2F;linux&#x2F;u-boot.elf。这里笔者均没有指定对应的文件的路径信息，那么 Petalinux 会自动使用默认文件。</p>
+<p>​<br>​    petalinux-package –boot –fsbl –fpga –u-boot –force<br>​<br>​        选项“–fsbl”用于指定 fsbl 文件所在位置，后面接文件对应的路径信息，如果不指定文 件位置，默认对应的是 images&#x2F;linux&#x2F;zynqmp_fsbl.elf；选项“–fpga”用于指定 bitstream 文件所 在位置，后面接该文件对应的路径信息，默认对应的是 images&#x2F;linux&#x2F;system.bit，实际可能有区 别；选项“–u-boot”用于指定 U-Boot 文件所在位置，后面接该文件所在路径信息，默认为 images&#x2F;linux&#x2F;u-boot.elf。这里笔者均没有指定对应的文件的路径信息，那么 Petalinux 会自动使用默认文件。</p>
 <p>执行结果如下图所示：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/5bab0f3bbb3cedfb9db39f0ebb9722b0.png"></p>
 <pre><code>    可以看到 Petalinux **自动将 PMU（Platform Management Unit） firmware 文件 pmufw.elf 和 ATF（Arm trusted firmware）文件 bl31.elf 包含进 BOOT.BIN** 。
@@ -716,7 +714,7 @@
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/42da38677d629d0ddd576397d6829da6.png"></p>
 <p>完成了分区创建后，就可以格式化分区了。在终端输入如下命令：</p>
-<p>​<br>​    sudo mkfs.vfat -F 32 -n boot &#x2F;dev&#x2F;sdc1<br>​    sudo mkfs.ext4 -L rootfs &#x2F;dev&#x2F;sdc2<br>​<br>        将第一个分区格式化成 FAT32 分区并命名为 boot，将第二个分区格式化成 ext4 分区并命 名为 rootfs。执行结果如下图所示：</p>
+<p>​<br>​    sudo mkfs.vfat -F 32 -n boot &#x2F;dev&#x2F;sdc1<br>​    sudo mkfs.ext4 -L rootfs &#x2F;dev&#x2F;sdc2<br>​<br>​        将第一个分区格式化成 FAT32 分区并命名为 boot，将第二个分区格式化成 ext4 分区并命 名为 rootfs。执行结果如下图所示：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/6cb68099ed50588483a706cd2d4037fc.png"></p>
 <pre><code>    格式化分区之后就可以挂载分区了（重新插拔读卡器或者使用 mount 命令进行挂载）。挂 载完成后，我们将该工程 image/linux 目录下的 BOOT.BIN 和 image.ub 文件拷贝到名为 boot 的分区也即/dev/sdc1 分区中。然后就可以卸载 SD 卡了。
 </code></pre>
@@ -763,12 +761,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/" rel="prev" title="Xilinx_HLS开发——FPGA学习笔记＜＞">
-      <i class="fa fa-chevron-left"></i> Xilinx_HLS开发——FPGA学习笔记＜＞
+    <a href="/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/" rel="prev" title="FPGA学习笔记(20)——Xilinx_HLS开发">
+      <i class="fa fa-chevron-left"></i> FPGA学习笔记(20)——Xilinx_HLS开发
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/10/02/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/OS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1)%E2%80%94%E2%80%94Linux%E7%B3%BB%E7%BB%9F/" rel="next" title="Linux系统——OS学习笔记＜1＞">
-      Linux系统——OS学习笔记＜1＞ <i class="fa fa-chevron-right"></i>
+    <a href="/2023/10/02/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/OS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1)%E2%80%94%E2%80%94Linux%E7%B3%BB%E7%BB%9F/" rel="next" title="OS学习笔记(1)——Linux系统">
+      OS学习笔记(1)——Linux系统 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -927,13 +925,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">825k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>

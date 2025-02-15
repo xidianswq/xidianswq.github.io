@@ -24,29 +24,25 @@
     var CONFIG = {"hostname":"xidianswq.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#e6c35c","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="图像识别小车（电机部分）——电赛学习笔记（2）">
-<meta property="og:url" content="https://xidianswq.github.io/2023/07/04/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89/index.html">
+  <meta name="description" content="学习来源：B站唐老师讲电赛——PCB设计极速入门，立创EDA+ALTIUM DESIGNER 10.0PCB设计极速入门，立创EDA+ALTIUMDESIGNER10.0_哔哩哔哩_bilibili">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电赛学习笔记(4)——图像识别小车（PCB设计）">
+<meta property="og:url" content="https://xidianswq.github.io/2023/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(4)%E2%80%94%E2%80%94%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88PCB%E8%AE%BE%E8%AE%A1%EF%BC%89/index.html">
 <meta property="og:site_name" content="Switch">
+<meta property="og:description" content="学习来源：B站唐老师讲电赛——PCB设计极速入门，立创EDA+ALTIUM DESIGNER 10.0PCB设计极速入门，立创EDA+ALTIUMDESIGNER10.0_哔哩哔哩_bilibili">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/bcfec2f6ed3a3e801301c91dfeb4307d.jpeg">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b68a6432253fb37113bcd87a78d6af13.png">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/99f4e23df848c63b9a836035426fe043.png">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5483b488abe59c6b56599034cee91db9.png">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/36766f56d5dbe1c3b71e1d2f8cc63d56.png">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f23bb2de689dbeadc754dd5f58a19811.png">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f2fe3b27147efcb57b0964d81171b5b5.png">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4547084918f7ca3e14a1a6aaf1c3ea0c.png">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/79abef952376244b07db4ca4c37604b6.png">
-<meta property="article:published_time" content="2023-07-04T14:32:42.000Z">
-<meta property="article:modified_time" content="2025-02-09T06:26:06.452Z">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/f20d7d97b76a22bfbc89dc11ba4cd542.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/42fa1ac446e75661bc31d493a6a28d3c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c5d70666df4ea8e0417e843702022b96.png">
+<meta property="article:published_time" content="2023-07-25T14:01:44.000Z">
+<meta property="article:modified_time" content="2025-02-15T04:25:30.651Z">
 <meta property="article:author" content="SWQ">
 <meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/bcfec2f6ed3a3e801301c91dfeb4307d.jpeg">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/f20d7d97b76a22bfbc89dc11ba4cd542.png">
 
-<link rel="canonical" href="https://xidianswq.github.io/2023/07/04/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89/">
+<link rel="canonical" href="https://xidianswq.github.io/2023/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(4)%E2%80%94%E2%80%94%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88PCB%E8%AE%BE%E8%AE%A1%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -59,7 +55,7 @@
   };
 </script>
 
-  <title>图像识别小车（电机部分）——电赛学习笔记（2） | Switch</title>
+  <title>电赛学习笔记(4)——图像识别小车（PCB设计） | Switch</title>
   
 
 
@@ -207,7 +203,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2023/07/04/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2023/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(4)%E2%80%94%E2%80%94%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88PCB%E8%AE%BE%E8%AE%A1%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -220,7 +216,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          图像识别小车（电机部分）——电赛学习笔记（2）
+          电赛学习笔记(4)——图像识别小车（PCB设计）
         </h1>
 
         <div class="post-meta">
@@ -231,7 +227,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-07-04 22:32:42" itemprop="dateCreated datePublished" datetime="2023-07-04T22:32:42+08:00">2023-07-04</time>
+              <time title="创建时间：2023-07-25 22:01:44" itemprop="dateCreated datePublished" datetime="2023-07-25T22:01:44+08:00">2023-07-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,7 +240,7 @@
             </span>
 
           
-            <span id="/2023/07/04/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="图像识别小车（电机部分）——电赛学习笔记（2）" title="阅读次数">
+            <span id="/2023/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(4)%E2%80%94%E2%80%94%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88PCB%E8%AE%BE%E8%AE%A1%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="电赛学习笔记(4)——图像识别小车（PCB设计）" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -259,8 +255,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/07/04/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/07/04/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%EF%BC%89/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(4)%E2%80%94%E2%80%94%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88PCB%E8%AE%BE%E8%AE%A1%EF%BC%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(4)%E2%80%94%E2%80%94%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88PCB%E8%AE%BE%E8%AE%A1%EF%BC%89/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -270,7 +266,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>907</span>
+              <span>540</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -289,48 +285,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id=""><a href="#" class="headerlink" title=""></a></h2><hr>
-<h2 id="图片来源：B站唐老师讲电赛"><a href="#图片来源：B站唐老师讲电赛" class="headerlink" title="_  图片来源：B站唐老师讲电赛_"></a><strong>_  图片来源：B站唐老师讲电赛_</strong></h2><p><strong>目录</strong></p>
-<p><a href="about:blank#%C2%A0%E5%9B%BE%E7%89%87%E6%9D%A5%E6%BA%90%EF%BC%9AB%E7%AB%99%E5%94%90%E8%80%81%E5%B8%88%E8%AE%B2%E7%94%B5%E8%B5%9B"><br>图片来源：B站唐老师讲电赛</a></p>
-<p><a href="about:blank#%E4%B8%80.%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84">一.电机部分结构</a></p>
-<p><a href="about:blank#%E4%BA%8C.%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA%E7%A4%BA%E4%BE%8B">二.步进电机示例</a></p>
-<p><a href="about:blank#%E4%B8%89.%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%E7%A4%BA%E4%BE%8B">三.伺服电机示例</a></p>
-<p><a href="about:blank#%E5%9B%9B.%E6%88%91%E4%BB%AC%E7%9A%84%E6%96%B9%E6%A1%88">四.我们的方案</a></p>
-<hr>
-<h2 id="一-电机部分结构"><a href="#一-电机部分结构" class="headerlink" title="一.电机部分结构"></a>一.电机部分结构</h2><p><img src="https://i-blog.csdnimg.cn/blog_migrate/bcfec2f6ed3a3e801301c91dfeb4307d.jpeg"></p>
-<p><img src="https://i-blog.csdnimg.cn/blog_migrate/b68a6432253fb37113bcd87a78d6af13.png"></p>
-<p><img src="https://i-blog.csdnimg.cn/blog_migrate/99f4e23df848c63b9a836035426fe043.png"></p>
-<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5483b488abe59c6b56599034cee91db9.png"><img src="https://i-blog.csdnimg.cn/blog_migrate/36766f56d5dbe1c3b71e1d2f8cc63d56.png"></p>
-<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f23bb2de689dbeadc754dd5f58a19811.png"><img src="https://i-blog.csdnimg.cn/blog_migrate/f2fe3b27147efcb57b0964d81171b5b5.png"></p>
-<p><img src="https://i-blog.csdnimg.cn/blog_migrate/4547084918f7ca3e14a1a6aaf1c3ea0c.png"></p>
-<h2 id="二-步进电机示例"><a href="#二-步进电机示例" class="headerlink" title="二.步进电机示例"></a>二.步进电机示例</h2><p>1.驱动器：L298N（CSDN搜索使用方法）；控制器：stm32；电源暂时用12V直流源</p>
-<p>2.控制：全速模式：in1、in2一低一高控制正反转，全低不转。</p>
-<p>pwm控制模式：使能端连接单片机IO口，通过产生pwm波占空比控制速度（相当于有效电压控制）</p>
-<p>3.编码器：将编码器产生脉冲当做外部时钟传入单片机定时器，定时读取并清零</p>
-<p>4.涉及知识：定时器（内部定时器产生pwm波，外部作为编码计数）</p>
-<p>5.示例代码：</p>
-<p>可参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_65683639/article/details/130562162" title="直流减速编码电机的使用（STM32f103c8t6）L298N电机驱动模块_stm32f103c8t6控制直流电机_阿昕同学的博客-CSDN博客">直流减速编码电机的使用（STM32f103c8t6）L298N电机驱动模块_stm32f103c8t6控制直流电机_阿昕同学的博客-<br>CSDN博客</a></p>
-<h2 id="三-伺服电机示例"><a href="#三-伺服电机示例" class="headerlink" title="三.伺服电机示例"></a>三.伺服电机示例</h2><p>MG995型伺服电机：</p>
-<p>1.结构：可参考：</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/he__yuan/article/details/79195435?spm=1001.2014.3001.5506" title="MG995舵机工作原理及基于STM32的驱动源代码_斜杠青年&#x2F;的博客-CSDN博客">MG995舵机工作原理及基于STM32的驱动源代码_斜杠青年&#x2F;的博客-<br>CSDN博客</a></p>
-<p>2.控制：通过PWM波占空比控制</p>
-<p>固定20ms周期pwm波通过定时器输出  </p>
-<p>TIM1_PWM_Init(199,7199);        &#x2F;&#x2F;(7200<em>200)&#x2F;72000000&#x3D;0.02&#x3D;20ms；（分频</em>周期数）</p>
-<p>占空比通过函数TIM_SetCompare1（TIM1,num）控制，其中num是低电平占周期数</p>
-<p>0.5ms对应195，2.5ms对应175</p>
-<p>四.具体器件</p>
-<p><img src="https://i-blog.csdnimg.cn/blog_migrate/79abef952376244b07db4ca4c37604b6.png"></p>
-<h2 id="四-我们的方案"><a href="#四-我们的方案" class="headerlink" title="四.我们的方案"></a>四.我们的方案</h2><p>后轮电机：MG513直流减速电机（霍尔编码器）</p>
-<p>前轮转向电机（采用阿克曼转向结构）：舵机MG995</p>
-<p>机械臂电机：舵机MG995</p>
-<p>后轮电机驱动：l298n电机驱动模块</p>
-<p>舵机驱动：pca9685 PWM伺服驱动器模块</p>
-<p>超声波测距：cs100a超声波模块</p>
-<p>蓝牙：JDY-31蓝牙模块</p>
-<p>显示屏：SSD1306 OLED IIC显示屏</p>
-<p>稳压芯片：lm2596可调稳压模块*2（12V-5V-3.3V）</p>
-<p>电池：12V3A锂电池（最大电流6A）</p>
-<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/131503991">https://blog.csdn.net/qq_32971095/article/details/131503991</a>，如有侵权，请联系删除。</p>
+        <p>学习来源：B站唐老师讲电赛——PCB设计极速入门，立创EDA+ALTIUM DESIGNER 10.0<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Zg41127BV/?spm_id_from=333.999.0.0&vd_source=01cde8042a76495bf513aa4407a56cd6" title="PCB设计极速入门，立创EDA+ALTIUM DESIGNER 10.0_哔哩哔哩_bilibili">PCB设计极速入门，立创EDA+ALTIUM<br>DESIGNER<br>10.0_哔哩哔哩_bilibili</a></p>
+<p>一.设计过程</p>
+<p>使用嘉立创EDA加Altium Designer联合设计</p>
+<p>1.嘉立创EDA：原理图绘制；器件选型；PCB生成；</p>
+<p>ICEDA操作：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/f20d7d97b76a22bfbc89dc11ba4cd542.png"></p>
+<p>生成的pcd文件和原理图-导出-Altium Designer文件；转至 Altium Designer操作</p>
+<p>2.Altium Designer：基础操作；使用规则（右键-设计-规则-desgin rules右键-导入规则-类型全选-<br>寻找规则文件）；字体大小调节（任意字右键-查找相似对象-text height-same-应用-修改text height）；shift s-DSD-<br>shift s-清除（右下角）；注意各个板层（顶层、底层；顶层走不通打过孔底层走；过孔尽量不经过焊盘）</p>
+<p>调整好后新建PCB工程-右键添加现有文件-保存工程</p>
+<p>走线（TAB键调出参数）</p>
+<p>覆铜（放置多边形平面）</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/42fa1ac446e75661bc31d493a6a28d3c.png"></p>
+<p> 打过孔</p>
+<p>注意事项：芯片电源引脚加电容滤纹波</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/c5d70666df4ea8e0417e843702022b96.png"></p>
+<p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/131583041">https://blog.csdn.net/qq_32971095/article/details/131583041</a>，如有侵权，请联系删除。</p>
 
     </div>
 
@@ -360,12 +330,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/07/04/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(3)%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88jetson%20nano%E9%83%A8%E5%88%86%EF%BC%89/" rel="prev" title="图像识别小车（jetson nano部分）——电赛学习笔记（3）">
-      <i class="fa fa-chevron-left"></i> 图像识别小车（jetson nano部分）——电赛学习笔记（3）
+    <a href="/2023/07/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(6)%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/" rel="prev" title="电赛学习笔记(6)——《基于OpenCV的数字图像处理》">
+      <i class="fa fa-chevron-left"></i> 电赛学习笔记(6)——《基于OpenCV的数字图像处理》
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/07/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(6)%E2%80%94%E2%80%94%E3%80%8A%E5%9F%BA%E4%BA%8EOpenCV%E7%9A%84%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%8B/" rel="next" title="OpenCV学习笔记——《基于OpenCV的数字图像处理》">
-      OpenCV学习笔记——《基于OpenCV的数字图像处理》 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(5)%E2%80%94%E2%80%94PID%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3/" rel="next" title="电赛学习笔记(5)——PID控制算法理解">
+      电赛学习笔记(5)——PID控制算法理解 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -426,7 +396,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E6%9D%A5%E6%BA%90%EF%BC%9AB%E7%AB%99%E5%94%90%E8%80%81%E5%B8%88%E8%AE%B2%E7%94%B5%E8%B5%9B"><span class="nav-number">2.</span> <span class="nav-text">_  图片来源：B站唐老师讲电赛_</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E7%94%B5%E6%9C%BA%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">一.电机部分结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">二.步进电机示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">三.伺服电机示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E6%88%91%E4%BB%AC%E7%9A%84%E6%96%B9%E6%A1%88"><span class="nav-number">6.</span> <span class="nav-text">四.我们的方案</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -524,13 +493,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">825k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>

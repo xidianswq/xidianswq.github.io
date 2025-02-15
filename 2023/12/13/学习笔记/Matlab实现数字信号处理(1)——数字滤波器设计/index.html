@@ -26,8 +26,8 @@
 
   <meta name="description" content="目录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数字滤波器设计——Matlab实现数字信号处理＜1＞">
-<meta property="og:url" content="https://xidianswq.github.io/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%EF%BC%9C1%EF%BC%9E/index.html">
+<meta property="og:title" content="Matlab实现数字信号处理(1)——数字滤波器设计">
+<meta property="og:url" content="https://xidianswq.github.io/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86(1)%E2%80%94%E2%80%94%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="Switch">
 <meta property="og:description" content="目录">
 <meta property="og:locale" content="zh_CN">
@@ -38,16 +38,16 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/c551894f0d504e9663311db49f1e796b.png">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d1539ef72b30697b76fb425b6b10928a.png">
 <meta property="article:published_time" content="2023-12-13T05:05:15.000Z">
-<meta property="article:modified_time" content="2025-02-09T06:22:41.439Z">
+<meta property="article:modified_time" content="2025-02-15T04:26:58.333Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="作业解答">
-<meta property="article:tag" content="算法">
 <meta property="article:tag" content="matlab">
 <meta property="article:tag" content="信号处理">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="作业解答">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/e404226ec441727c6370000e1fe978b0.png">
 
-<link rel="canonical" href="https://xidianswq.github.io/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%EF%BC%9C1%EF%BC%9E/">
+<link rel="canonical" href="https://xidianswq.github.io/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86(1)%E2%80%94%E2%80%94%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/">
 
 
 <script id="page-configurations">
@@ -60,7 +60,7 @@
   };
 </script>
 
-  <title>数字滤波器设计——Matlab实现数字信号处理＜1＞ | Switch</title>
+  <title>Matlab实现数字信号处理(1)——数字滤波器设计 | Switch</title>
   
 
 
@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%EF%BC%9C1%EF%BC%9E/">
+    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86(1)%E2%80%94%E2%80%94%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -221,7 +221,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          数字滤波器设计——Matlab实现数字信号处理＜1＞
+          Matlab实现数字信号处理(1)——数字滤波器设计
         </h1>
 
         <div class="post-meta">
@@ -245,7 +245,7 @@
             </span>
 
           
-            <span id="/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%EF%BC%9C1%EF%BC%9E/" class="post-meta-item leancloud_visitors" data-flag-title="数字滤波器设计——Matlab实现数字信号处理＜1＞" title="阅读次数">
+            <span id="/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86(1)%E2%80%94%E2%80%94%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/" class="post-meta-item leancloud_visitors" data-flag-title="Matlab实现数字信号处理(1)——数字滤波器设计" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -260,8 +260,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%EF%BC%9C1%EF%BC%9E/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1%E2%80%94%E2%80%94Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%EF%BC%9C1%EF%BC%9E/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86(1)%E2%80%94%E2%80%94%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86(1)%E2%80%94%E2%80%94%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -312,18 +312,13 @@
 <p>3．对获得的不同x(n)分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）；</p>
 <p>4．利用巴特沃思、切比雪夫或椭圆滤波器设计数字滤波器（滤波特性自定），要求通过改变滤波器参数或特性（低通、高通、带通或带阻）设计至少两种数字滤波器，分析所设计滤波器（画出频率特性曲线），并对上述给出的不同x(n)分别进行滤波（画出滤波结果），然后加以讨论；</p>
 <p>5．利用窗函数设计法或频率采样法设计数字滤波器（滤波特性自定），要求通过改变滤波器参数或特性（低通、高通、带通或带阻等）设计至少两种数字滤波器，分析所设计滤波器（画出频率特性曲线），并对上述给出的不同x(n)分别进行滤波（画出滤波结果），然后加以讨论。</p>
-<h2 id="二-代码分析"><a href="#二-代码分析" class="headerlink" title="二.代码分析"></a>二.代码分析</h2><h5 id="1-信号产生部分"><a href="#1-信号产生部分" class="headerlink" title="1.信号产生部分"></a>1.信号产生部分</h5><p>​<br>​    function [signal]&#x3D;signal_xt(t_length,T,f,A,u)<br>​    %%  函数描述<br>​    %   功能：利用傅立叶级数展开的方法，自由生成所需的x(t)（不含直流量）；<br>​    %   输入参数：产生序列的长度t_length；采样间隔T；f(t)的基波频率f；傅立叶级数展开的各项幅值和相位。故最高频率为fc&#x3D;length(A)<em>f<br>​    %   使用举例：signal&#x3D;signal_xt(3,0.01,1,[1,2,3,4],[0,1,0,1])<br>​    %%  t,y初始化并计算<br>​    t&#x3D;0:T:t_length-T;<br>​    t_num&#x3D;t_length&#x2F;T;<br>​    signal&#x3D;zeros(1,t_num);<br>​    max&#x3D;0;<br>​    min&#x3D;0;<br>​    for i&#x3D;1:t_num<br>​        for k&#x3D;1:length(A)<br>​            %   计算函数值<br>​            signal(i)&#x3D; signal(i) + A(k)<em>cos(2</em>pi</em>k*t(i)*f+u(k));<br>​            %   最大最小值记录<br>​            if max&lt;signal(i)<br>​                max&#x3D;signal(i);<br>​            end<br>​            if min&gt;signal(i)<br>​                min&#x3D;signal(i);<br>​            end<br>​        end<br>​    end<br>​    %%  结果展示<br>​    figure;<br>​    subplot(2,1,1);<br>​    plot(t,signal);<br>​    %   x，y轴范围限制及标题<br>​    axis([0-0.1,t_length+0.1,min-0.5,max+0.5])<br>​    title(‘x(t)’);<br>​    xlabel(‘t’);<br>​    ylabel(‘x(t)’);<br>​    grid on<br>​<br>    subplot(2,1,2);<br>    stem(t,signal,”.”);<br>    %   x，y轴范围限制及标题<br>    axis([0-0.1,t_length+0.1,min-0.5,max+0.5])<br>    title(‘x(t)’);<br>    xlabel(‘t’);<br>    ylabel(‘x(t)’);<br>    grid on</p>
+<h2 id="二-代码分析"><a href="#二-代码分析" class="headerlink" title="二.代码分析"></a>二.代码分析</h2><h5 id="1-信号产生部分"><a href="#1-信号产生部分" class="headerlink" title="1.信号产生部分"></a>1.信号产生部分</h5><p>​<br>​    function [signal]&#x3D;signal_xt(t_length,T,f,A,u)<br>​    %%  函数描述<br>​    %   功能：利用傅立叶级数展开的方法，自由生成所需的x(t)（不含直流量）；<br>​    %   输入参数：产生序列的长度t_length；采样间隔T；f(t)的基波频率f；傅立叶级数展开的各项幅值和相位。故最高频率为fc&#x3D;length(A)<em>f<br>​    %   使用举例：signal&#x3D;signal_xt(3,0.01,1,[1,2,3,4],[0,1,0,1])<br>​    %%  t,y初始化并计算<br>​    t&#x3D;0:T:t_length-T;<br>​    t_num&#x3D;t_length&#x2F;T;<br>​    signal&#x3D;zeros(1,t_num);<br>​    max&#x3D;0;<br>​    min&#x3D;0;<br>​    for i&#x3D;1:t_num<br>​        for k&#x3D;1:length(A)<br>​            %   计算函数值<br>​            signal(i)&#x3D; signal(i) + A(k)<em>cos(2</em>pi</em>k*t(i)*f+u(k));<br>​            %   最大最小值记录<br>​            if max&lt;signal(i)<br>​                max&#x3D;signal(i);<br>​            end<br>​            if min&gt;signal(i)<br>​                min&#x3D;signal(i);<br>​            end<br>​        end<br>​    end<br>​    %%  结果展示<br>​    figure;<br>​    subplot(2,1,1);<br>​    plot(t,signal);<br>​    %   x，y轴范围限制及标题<br>​    axis([0-0.1,t_length+0.1,min-0.5,max+0.5])<br>​    title(‘x(t)’);<br>​    xlabel(‘t’);<br>​    ylabel(‘x(t)’);<br>​    grid on<br>​<br>​    subplot(2,1,2);<br>​    stem(t,signal,”.”);<br>​    %   x，y轴范围限制及标题<br>​    axis([0-0.1,t_length+0.1,min-0.5,max+0.5])<br>​    title(‘x(t)’);<br>​    xlabel(‘t’);<br>​    ylabel(‘x(t)’);<br>​    grid on</p>
 <p>function [signal]&#x3D;signal_xt(t_length,T,f,A,u)<br>%%  函数描述<br>%   功能：利用傅立叶级数展开的方法，自由生成所需的x(t)（不含直流量）；<br>%   输入参数：产生序列的长度t_length；采样间隔T；f(t)的基波频率f；傅立叶级数展开的各项幅值和相位。故最高频率为fc&#x3D;length(A)*f<br>%   使用举例：signal&#x3D;signal_xt(3,0.01,1,[1,2,3,4],[0,1,0,1])</p>
 <h5 id="2-利用傅立叶级数展开的方法，自由生成所需的x-t"><a href="#2-利用傅立叶级数展开的方法，自由生成所需的x-t" class="headerlink" title="2.利用傅立叶级数展开的方法，自由生成所需的x(t)"></a>2.利用傅立叶级数展开的方法，自由生成所需的x(t)</h5><p>​<br>​    %%  利用傅立叶级数展开的方法，自由生成所需的x(t)，即signal_origin；<br>​    t_length&#x3D;1;     %生成长度<br>​    f&#x3D;1;            %基础频率<br>​    A&#x3D;[3,1,1,3];    %各项幅度<br>​    u&#x3D;[-1,0,1,0];   %各项相位<br>​    signal_origin&#x3D;signal_xt(t_length,0.01,f,A,u);<br>​    fc&#x3D;f*length(A);</p>
 <h5 id="3-通过选择不同的采样间隔T（分别选T-或"><a href="#3-通过选择不同的采样间隔T（分别选T-或" class="headerlink" title="3.通过选择不同的采样间隔T（分别选T&gt;或&lt;1&#x2F;2fc），从x(t)获得相应的x(n)"></a>3.通过选择不同的采样间隔T（分别选T&gt;或&lt;1&#x2F;2fc），从x(t)获得相应的x(n)</h5><p>​<br>​    %%  通过选择不同的采样间隔T（分别选T&gt;或&lt;1&#x2F;2fc），从x(t)获得相应的x(n)；<br>​    T&#x3D;[1&#x2F;(2<em>fc+1),1&#x2F;fc,1&#x2F;(4</em>fc)];<br>​    N&#x3D;zeros(1,length(T));<br>​    for i&#x3D;1:length(T)<br>​        N(i)&#x3D;1&#x2F;T(i);<br>​    end<br>​    x1&#x3D;signal_xt(t_length,T(1),f,A,u);<br>​    x2&#x3D;signal_xt(t_length,T(2),f,A,u);<br>​    x3&#x3D;signal_xt(t_length,T(3),f,A,u);</p>
 <p>选取频率分别为2fc+1、fc、4fc</p>
-<h5 id="3-对获得的不同x-n-分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）"><a href="#3-对获得的不同x-n-分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）" class="headerlink" title="3.对获得的不同x(n)分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）"></a>3.对获得的不同x(n)分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）</h5><p>​<br>​    %%  对获得的不同x(n)分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）；<br>​    X1&#x3D;fft(x1,N(1));<br>​    X2&#x3D;fft(x2,N(2));<br>​    X3&#x3D;fft(x3,N(3));<br>​<br>    %   绘制<br>    figure;<br>    %   幅值绘制<br>    subplot(2,3,1);<br>    stem(0:N(1)-1,abs(X1),’.’);<br>    title(“X1”);<br>    grid on</p>
-<pre><code>subplot(2,3,2);
-stem(0:N(2)-1,abs(X2),&#39;.&#39;);
-title(&quot;X2&quot;);
-grid on
-
-subplot(2,3,3);
+<h5 id="3-对获得的不同x-n-分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）"><a href="#3-对获得的不同x-n-分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）" class="headerlink" title="3.对获得的不同x(n)分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）"></a>3.对获得的不同x(n)分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）</h5><p>​<br>​    %%  对获得的不同x(n)分别作傅立叶变换，分析其频率响应特性（给出幅频与相频特性曲线）；<br>​    X1&#x3D;fft(x1,N(1));<br>​    X2&#x3D;fft(x2,N(2));<br>​    X3&#x3D;fft(x3,N(3));<br>​<br>​    %   绘制<br>​    figure;<br>​    %   幅值绘制<br>​    subplot(2,3,1);<br>​    stem(0:N(1)-1,abs(X1),’.’);<br>​    title(“X1”);<br>​    grid on<br>​<br>    subplot(2,3,2);<br>    stem(0:N(2)-1,abs(X2),’.’);<br>    title(“X2”);<br>    grid on</p>
+<pre><code>subplot(2,3,3);
 stem(0:N(3)-1,abs(X3),&#39;.&#39;);
 title(&quot;X3&quot;);
 grid on
@@ -348,7 +343,7 @@ grid on
 <h5 id="4-利用巴特沃思滤波器设计数字滤波器"><a href="#4-利用巴特沃思滤波器设计数字滤波器" class="headerlink" title="4.利用巴特沃思滤波器设计数字滤波器"></a>4.利用巴特沃思滤波器设计数字滤波器</h5><h6 id="低通滤波器"><a href="#低通滤波器" class="headerlink" title="&lt;1&gt;低通滤波器"></a>&lt;1&gt;低通滤波器</h6><p>​<br>​    %   设置低通滤波器参数<br>​    wp&#x3D;0.35;    %通带边界频率<br>​    ws&#x3D;0.7;     %阻带截止频率<br>​    Rp&#x3D;3;<br>​    As&#x3D;15;<br>​    %   计算滤波器阶数N和3dB截止频率wc<br>​    [Nc,wc]&#x3D;buttord(wp,ws,Rp,As,’s’);<br>​    %   计算滤波器系统函数分子分母多项式系数<br>​    [Bz,Az]&#x3D;butter(Nc,wc,’low’);<br>​    wk&#x3D;64;<br>​    Hk&#x3D;freqz(Bz,Az,wk);</p>
 <p>参数设置及函数使用参考课本《数字信号处理》</p>
 <h6 id="高通滤波器"><a href="#高通滤波器" class="headerlink" title="&lt;2&gt;高通滤波器"></a>&lt;2&gt;高通滤波器</h6><p>​<br>​    %   设置高通滤波器参数<br>​    wp&#x3D;0.75;<br>​    ws&#x3D;0.5;<br>​    rp&#x3D;3;<br>​    rs&#x3D;15;<br>​    [Nc,wc]&#x3D;buttord(wp,ws,rp,rs,’s’);<br>​    [Bz,Az]&#x3D;butter(Nc,wc,’high’);<br>​    wk&#x3D;64;<br>​    Hk&#x3D;freqz(Bz,Az,wk);</p>
-<h6 id="绘图"><a href="#绘图" class="headerlink" title="&lt;3&gt;绘图"></a>&lt;3&gt;绘图</h6><p>​<br>​    %   绘图<br>​    figure;<br>​    subplot(2,3,1);<br>​    stem(0:1&#x2F;63:1,abs(Hk),’.’);<br>​    xlabel(‘频率’);<br>​    ylabel(‘滤波器幅度&#x2F;dB’);<br>​    grid on<br>​<br>    %   滤波后结果<br>    m1&#x3D;filter(Bz,Az,x1);<br>    m2&#x3D;filter(Bz,Az,x2);<br>    m3&#x3D;filter(Bz,Az,x3);<br>    Y1&#x3D;fft(m1,N(1));<br>    Y2&#x3D;fft(m2,N(2));<br>    Y3&#x3D;fft(m3,N(3));<br>    %   绘图<br>    subplot(2,3,4);<br>    stem(0:N(1)-1,abs(Y1),’.’);<br>    title(‘滤波后Y频率特性’);<br>    grid on<br>    subplot(2,3,5);<br>    stem(0:N(2)-1,abs(Y2),’.’);<br>    title(‘滤波后Y频率特性’);<br>    grid on<br>    subplot(2,3,6);<br>    stem(0:N(3)-1,abs(Y3),’.’);<br>    title(‘滤波后Y频率特性’);<br>    grid on</p>
+<h6 id="绘图"><a href="#绘图" class="headerlink" title="&lt;3&gt;绘图"></a>&lt;3&gt;绘图</h6><p>​<br>​    %   绘图<br>​    figure;<br>​    subplot(2,3,1);<br>​    stem(0:1&#x2F;63:1,abs(Hk),’.’);<br>​    xlabel(‘频率’);<br>​    ylabel(‘滤波器幅度&#x2F;dB’);<br>​    grid on<br>​<br>​    %   滤波后结果<br>​    m1&#x3D;filter(Bz,Az,x1);<br>​    m2&#x3D;filter(Bz,Az,x2);<br>​    m3&#x3D;filter(Bz,Az,x3);<br>​    Y1&#x3D;fft(m1,N(1));<br>​    Y2&#x3D;fft(m2,N(2));<br>​    Y3&#x3D;fft(m3,N(3));<br>​    %   绘图<br>​    subplot(2,3,4);<br>​    stem(0:N(1)-1,abs(Y1),’.’);<br>​    title(‘滤波后Y频率特性’);<br>​    grid on<br>​    subplot(2,3,5);<br>​    stem(0:N(2)-1,abs(Y2),’.’);<br>​    title(‘滤波后Y频率特性’);<br>​    grid on<br>​    subplot(2,3,6);<br>​    stem(0:N(3)-1,abs(Y3),’.’);<br>​    title(‘滤波后Y频率特性’);<br>​    grid on</p>
 <h5 id="5-利用窗函数设计法或频率采样法设计数字滤波器"><a href="#5-利用窗函数设计法或频率采样法设计数字滤波器" class="headerlink" title="5.利用窗函数设计法或频率采样法设计数字滤波器"></a>5.利用窗函数设计法或频率采样法设计数字滤波器</h5><h6 id="高通滤波器-1"><a href="#高通滤波器-1" class="headerlink" title="&lt;1&gt;高通滤波器"></a>&lt;1&gt;高通滤波器</h6><p>​<br>​    %   设置高通滤波器参数<br>​    wp&#x3D;pi&#x2F;2;<br>​    ws&#x3D;pi&#x2F;4;<br>​    Bt&#x3D;wp-ws;   %过渡带宽度<br>​    N0&#x3D;ceil(6.2*pi&#x2F;Bt); %汉宁窗计算所需h(n)长度N0<br>​    Nn&#x3D;N0+mod(N0+1,2);  %确保h(n)长度为奇数<br>​    wc&#x3D;(wp+ws)&#x2F;2&#x2F;pi;    %理想高通滤波器通带截止频率<br>​    hn&#x3D;fir1(Nn-1,wc,’HIGH’,hanning(Nn));<br>​    %   高通滤波器频率响应<br>​    Hk&#x3D;fft(hn,length(hn));</p>
 <h6 id="低通滤波器-1"><a href="#低通滤波器-1" class="headerlink" title="&lt;2&gt;低通滤波器"></a>&lt;2&gt;低通滤波器</h6><p>​<br>​    %   设置低通滤波器参数<br>​    wp&#x3D;pi&#x2F;4;<br>​    ws&#x3D;pi&#x2F;2;<br>​    Bt&#x3D;abs(wp-ws);   %过渡带宽度<br>​    N0&#x3D;ceil(6.2*pi&#x2F;Bt); %汉宁窗计算所需h(n)长度N0<br>​    Nn&#x3D;N0+mod(N0+1,2);  %确保h(n)长度为奇数<br>​    wc&#x3D;(wp+ws)&#x2F;2&#x2F;pi;    %理想高通滤波器通带截止频率<br>​    hn&#x3D;fir1(Nn-1,wc,’LOW’,hanning(Nn));<br>​    %   低通滤波器频率响应<br>​    Hk&#x3D;fft(hn,length(hn));</p>
 <h6 id="绘图-1"><a href="#绘图-1" class="headerlink" title="&lt;3&gt;绘图"></a>&lt;3&gt;绘图</h6><p>​<br>​    %   滤波结果<br>​    y1&#x3D;conv(hn,x1);<br>​    y2&#x3D;conv(hn,x2);<br>​    y3&#x3D;conv(hn,x3);<br>​    n1&#x3D;length(y1);<br>​    n2&#x3D;length(y2);<br>​    n3&#x3D;length(y3);<br>​    Y1&#x3D;fft(y1,n1);<br>​    Y2&#x3D;fft(y2,n2);<br>​    Y3&#x3D;fft(y3,n3);<br>​    %   绘图<br>​    figure;<br>​    subplot(2,3,1);<br>​    stem(0:Nn-1,hn,’.’);<br>​    xlabel(‘n’);<br>​    ylabel(‘h(n)’);<br>​    grid on<br>​    subplot(2,3,2);<br>​    stem(0:Nn-1,abs(Hk),’.’);<br>​    xlabel(‘k’);<br>​    ylabel(‘H(k)’);<br>​    grid on<br>​    subplot(2,3,4);<br>​    stem(0:n1-1,abs(Y1),’.’);<br>​    title(‘滤波后Y频率特性’);<br>​    grid on<br>​    subplot(2,3,5);<br>​    stem(0:n2-1,abs(Y2),’.’);<br>​    title(‘滤波后Y频率特性’);<br>​    grid on<br>​    subplot(2,3,6);<br>​    stem(0:n3-1,abs(Y3),’.’);<br>​    title(‘滤波后Y频率特性’);<br>​    grid on</p>
@@ -378,10 +373,10 @@ grid on
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E4%BD%9C%E4%B8%9A%E8%A7%A3%E7%AD%94/" rel="tag"># 作业解答</a>
-              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
               <a href="/tags/matlab/" rel="tag"># matlab</a>
               <a href="/tags/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/" rel="tag"># 信号处理</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/%E4%BD%9C%E4%B8%9A%E8%A7%A3%E7%AD%94/" rel="tag"># 作业解答</a>
           </div>
 
         
@@ -554,13 +549,13 @@ grid on
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">825k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>

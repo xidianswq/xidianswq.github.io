@@ -26,7 +26,7 @@
 
   <meta name="description" content="参考：《DFZU2EG_4EV MPSoC 之嵌入式 VITIS 开发指南》——正点原子">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vitis开发二——FPGA学习笔记＜？＞">
+<meta property="og:title" content="FPGA学习笔记(42)——Vitis开发二">
 <meta property="og:url" content="https://xidianswq.github.io/2024/03/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(42)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%BA%8C/index.html">
 <meta property="og:site_name" content="Switch">
 <meta property="og:description" content="参考：《DFZU2EG_4EV MPSoC 之嵌入式 VITIS 开发指南》——正点原子">
@@ -84,10 +84,10 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/769bdbcd35d49412cc93d1e56acb5bd4.png">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/4761e85c7ba0a68757090675cb7507de.png">
 <meta property="article:published_time" content="2024-03-01T07:51:21.000Z">
-<meta property="article:modified_time" content="2025-02-09T06:29:44.476Z">
+<meta property="article:modified_time" content="2025-02-15T04:29:18.242Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="fpga开发">
+<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/f7f69746d9c8b2612a562e216cbcb06d.png">
@@ -105,7 +105,7 @@
   };
 </script>
 
-  <title>Vitis开发二——FPGA学习笔记＜？＞ | Switch</title>
+  <title>FPGA学习笔记(42)——Vitis开发二 | Switch</title>
   
 
 
@@ -266,7 +266,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Vitis开发二——FPGA学习笔记＜？＞
+          FPGA学习笔记(42)——Vitis开发二
         </h1>
 
         <div class="post-meta">
@@ -290,7 +290,7 @@
             </span>
 
           
-            <span id="/2024/03/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(42)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%BA%8C/" class="post-meta-item leancloud_visitors" data-flag-title="Vitis开发二——FPGA学习笔记＜？＞" title="阅读次数">
+            <span id="/2024/03/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(42)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%BA%8C/" class="post-meta-item leancloud_visitors" data-flag-title="FPGA学习笔记(42)——Vitis开发二" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -385,19 +385,14 @@
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/425827ac7a64452aea8a0413ea593bcf.png"></p>
 <p>时我们还需要在代码的第 401 行例化 breath_led.v 文件：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/6ffed17009e2230f835db7440ba21eee.png"></p>
-<p>​<br>    	&#x2F;&#x2F; Add user logic here<br>        breath_led #(<br>            .START_FREQ_STEP(START_FREQ_STEP)<br>        )<br>        u_breath_led(<br>            .sys_clk (S_AXI_ACLK),<br>            .sys_rst_n (S_AXI_ARESETN),<br>            .sw_ctrl (slv_reg0[0]),<br>            .set_en (slv_reg1[31]),<br>            .set_freq_step (slv_reg1[9:0]),<br>            .led (led)<br>        );<br>    	&#x2F;&#x2F; User logic ends</p>
-<pre><code>    代码中的 **slv_reg0 和 slv_reg1 是寄存器地址 0 和寄存器地址 1 对应的数据** ，我们通过寄存器地址 0 对应 的数据来控制呼吸灯的使能（sw_ctrl），寄存器地址 1 对应数据的最高位控制呼吸灯频率的设置有效信号 （set_en），寄存器地址 1 对应数据的低 10 位控制呼吸灯频率的步长（set_freq_step）。
-
-    此时工程中缺失 breath_led.v 文件，breath_led.v 文件用于实现呼吸灯的功能。右击**“Design Sources”** ，选择**“Add Sources…”** ，在弹出的界面中选择“**Add or Create design source”** ， 点击“NEXT”；点击“**Create File ”** 创建一个新的文件，在弹出的界面输入名称 breath_led ，路径 为../**_custom_ip/ip_repo/breath_led_ip_1.0/_ hdl**，点击“OK”按钮
+<p>​<br>​    	&#x2F;&#x2F; Add user logic here<br>​        breath_led #(<br>​            .START_FREQ_STEP(START_FREQ_STEP)<br>​        )<br>​        u_breath_led(<br>​            .sys_clk (S_AXI_ACLK),<br>​            .sys_rst_n (S_AXI_ARESETN),<br>​            .sw_ctrl (slv_reg0[0]),<br>​            .set_en (slv_reg1[31]),<br>​            .set_freq_step (slv_reg1[9:0]),<br>​            .led (led)<br>​        );<br>​    	&#x2F;&#x2F; User logic ends<br>​<br>        代码中的 <strong>slv_reg0 和 slv_reg1 是寄存器地址 0 和寄存器地址 1 对应的数据</strong> ，我们通过寄存器地址 0 对应 的数据来控制呼吸灯的使能（sw_ctrl），寄存器地址 1 对应数据的最高位控制呼吸灯频率的设置有效信号 （set_en），寄存器地址 1 对应数据的低 10 位控制呼吸灯频率的步长（set_freq_step）。</p>
+<pre><code>    此时工程中缺失 breath_led.v 文件，breath_led.v 文件用于实现呼吸灯的功能。右击**“Design Sources”** ，选择**“Add Sources…”** ，在弹出的界面中选择“**Add or Create design source”** ， 点击“NEXT”；点击“**Create File ”** 创建一个新的文件，在弹出的界面输入名称 breath_led ，路径 为../**_custom_ip/ip_repo/breath_led_ip_1.0/_ hdl**，点击“OK”按钮
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/0e3c33e0d2c764bd425828a96898b80d.png"></p>
 <pre><code>    在弹出的**模块定义界面中点击“OK”按钮** ，接下来在弹出的确认按钮中点击“YES”。双击 u_breath_led(breath_led.v)文件并编辑代码如下：
 </code></pre>
-<p>​<br>    module breath_led(<br>        input          sys_clk        , &#x2F;&#x2F;时钟信号<br>        input          sys_rst_n      , &#x2F;&#x2F;复位信号<br>        input          sw_ctrl        , &#x2F;&#x2F;呼吸灯开关控制信号 1：亮 0:灭<br>        input          set_en         , &#x2F;&#x2F;设置呼吸灯频率设置使能信号<br>        input   [9:0]  set_freq_step  , &#x2F;&#x2F;设置呼吸灯频率变化步长</p>
-<pre><code>    output         led              //LED
-);
-
-//*****************************************************
+<p>​<br>​    module breath_led(<br>​        input          sys_clk        , &#x2F;&#x2F;时钟信号<br>​        input          sys_rst_n      , &#x2F;&#x2F;复位信号<br>​        input          sw_ctrl        , &#x2F;&#x2F;呼吸灯开关控制信号 1：亮 0:灭<br>​        input          set_en         , &#x2F;&#x2F;设置呼吸灯频率设置使能信号<br>​        input   [9:0]  set_freq_step  , &#x2F;&#x2F;设置呼吸灯频率变化步长<br>​<br>        output         led              &#x2F;&#x2F;LED<br>    );</p>
+<pre><code>//*****************************************************
 //**                  main code
 //*****************************************************
 
@@ -530,12 +525,8 @@ endmodule
     新建 vitis 文件夹，将 xsa 文件拷贝到里面。选择菜单 Tools-&gt;Launch Vitis。在弹出的界面中，指定路径到..\custom_ip\user_led\vitis 下，点击 “Launch”，打开 Vitis 软件。
 </code></pre>
 <h3 id="3-软件设计"><a href="#3-软件设计" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><p>新建vitis工程user_led，流程同前，main.c文件内容如下：</p>
-<p>​<br>    #include “stdio.h”<br>    #include “xparameters.h”<br>    #include “xil_printf.h”<br>    #include “breath_led_ip.h”<br>    #include “xil_io.h”<br>    #include “sleep.h”</p>
-<pre><code>#define  LED_IP_BASEADDR    XPAR_BREATH_LED_IP_0_S0_AXI_BASEADDR  //LED IP基地址
-#define  LED_IP_REG0        BREATH_LED_IP_S0_AXI_SLV_REG0_OFFSET  //LED IP寄存器地址0
-#define  LED_IP_REG1        BREATH_LED_IP_S0_AXI_SLV_REG1_OFFSET  //LED IP寄存器地址1
-
-//main函数
+<p>​<br>​    #include “stdio.h”<br>​    #include “xparameters.h”<br>​    #include “xil_printf.h”<br>​    #include “breath_led_ip.h”<br>​    #include “xil_io.h”<br>​    #include “sleep.h”<br>​<br>    #define  LED_IP_BASEADDR    XPAR_BREATH_LED_IP_0_S0_AXI_BASEADDR  &#x2F;&#x2F;LED IP基地址<br>    #define  LED_IP_REG0        BREATH_LED_IP_S0_AXI_SLV_REG0_OFFSET  &#x2F;&#x2F;LED IP寄存器地址0<br>    #define  LED_IP_REG1        BREATH_LED_IP_S0_AXI_SLV_REG1_OFFSET  &#x2F;&#x2F;LED IP寄存器地址1</p>
+<pre><code>//main函数
 int main()
 &#123;
  int freq_flag;      //定义频率状态，用于循环改变呼吸灯的呼吸频率
@@ -598,10 +589,8 @@ int main()
    _  FSBL 执行开始后，CSU ROM 代码进入**后配置阶段** ，该阶段负责系统干预响应。CSU 硬件提供持续的硬件支持，以验证文件，**通过 PCAP 配置 PL，存储和管理安全密钥，解密文件** 。_
 </code></pre>
 <h4 id="启动流程-Boot-Flow"><a href="#启动流程-Boot-Flow" class="headerlink" title="启动流程(Boot Flow)"></a><strong>启动流程(Boot Flow)</strong></h4><p>**         **PMU对内部寄存器、存储器等进行复位，检查电压，则验证 CSU ROM 完整性并释放对 CSU 的复位。PMU<br>负责处理主要的预引导任务和 PS 的管理，以确保系统资源的可靠通电断电。启动 PMU<br>的上电复位(POR)操作，直接或间接的释放了预期上电模块的复位。在这种情况下，PMU 需要 ROM 代码来保持初始化上电顺序。即使在启动过程之后，PMU<br>仍在运行，并且负责处理各种系统复位。在更改系统电源状态时也会使用它(例如上电、睡眠和唤醒)。在初始化启动期间，POR 将 PMU 从复位中释放，然后执行<br>PMU ROM。</p>
-<p>​<br>    下面描述了 PMU 处理器在 POR 复位后，通过运行 PMU ROM 预启动代码完成的操作序列：</p>
-<pre><code>1、 初始化 PS SYSMON 和引导单元所需的 PLL。
-
-2、 清除 PMU RAM 和 CSU RAM(仅外部 POR)。
+<p>​<br>​    下面描述了 PMU 处理器在 POR 复位后，通过运行 PMU ROM 预启动代码完成的操作序列：<br>​<br>    1、 初始化 PS SYSMON 和引导单元所需的 PLL。</p>
+<pre><code>2、 清除 PMU RAM 和 CSU RAM(仅外部 POR)。
 
 3、 验证 PLL 锁。
 
@@ -650,14 +639,8 @@ int main()
 </code></pre>
 <h3 id="3-软件设计-1"><a href="#3-软件设计-1" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><pre><code>    新建vitis工程如上，main.c代码：
 </code></pre>
-<p>​<br>    #include “stdio.h”<br>    #include “xparameters.h”<br>    #include “xgpiops.h”<br>    #include “xgpio.h”<br>    #include “xscugic.h”<br>    #include “xil_exception.h”<br>    #include “xil_printf.h”<br>    #include “sleep.h”</p>
-<pre><code>//宏定义
-#define SCUGIC_ID    XPAR_SCUGIC_0_DEVICE_ID      //中断控制器  ID
-#define GPIOPS_ID    XPAR_XGPIOPS_0_DEVICE_ID     //PS端  GPIO器件  ID
-#define AXI_GPIO_ID  XPAR_AXI_GPIO_0_DEVICE_ID    //PL端  AXI GPIO器件  ID
-#define GPIO_INT_ID  XPAR_FABRIC_GPIO_0_VEC_ID    //PL端  AXI GPIO中断  ID
-
-#define MIO_LED      38                           //PS_LED1 连接到  MIO38
+<p>​<br>​    #include “stdio.h”<br>​    #include “xparameters.h”<br>​    #include “xgpiops.h”<br>​    #include “xgpio.h”<br>​    #include “xscugic.h”<br>​    #include “xil_exception.h”<br>​    #include “xil_printf.h”<br>​    #include “sleep.h”<br>​<br>    &#x2F;&#x2F;宏定义<br>    #define SCUGIC_ID    XPAR_SCUGIC_0_DEVICE_ID      &#x2F;&#x2F;中断控制器  ID<br>    #define GPIOPS_ID    XPAR_XGPIOPS_0_DEVICE_ID     &#x2F;&#x2F;PS端  GPIO器件  ID<br>    #define AXI_GPIO_ID  XPAR_AXI_GPIO_0_DEVICE_ID    &#x2F;&#x2F;PL端  AXI GPIO器件  ID<br>    #define GPIO_INT_ID  XPAR_FABRIC_GPIO_0_VEC_ID    &#x2F;&#x2F;PL端  AXI GPIO中断  ID</p>
+<pre><code>#define MIO_LED      38                           //PS_LED1 连接到  MIO38
 #define KEY_CHANNEL  1                            //PL按键使用 AXI GPIO通道1
 #define KEY_MASK     XGPIO_IR_CH1_MASK            //通道1的位定义
 
@@ -815,12 +798,8 @@ void axi_gpio_handler(void *CallbackRef)
 
     新建main.c文件，代码如下：
 </code></pre>
-<p>​<br>    #include “xparameters.h”<br>    #include “xuartps.h”<br>    #include “xil_printf.h”<br>    #include “xscugic.h”<br>    #include “stdio.h”</p>
-<pre><code>#define UART_DEVICE_ID     XPAR_XUARTPS_0_DEVICE_ID     //串口设备ID
-#define INTC_DEVICE_ID     XPAR_SCUGIC_SINGLE_DEVICE_ID //中断ID
-#define UART_INT_IRQ_ID    XPAR_XUARTPS_0_INTR          //串口中断ID
-
-XScuGic Intc;              //中断控制器驱动程序实例
+<p>​<br>​    #include “xparameters.h”<br>​    #include “xuartps.h”<br>​    #include “xil_printf.h”<br>​    #include “xscugic.h”<br>​    #include “stdio.h”<br>​<br>    #define UART_DEVICE_ID     XPAR_XUARTPS_0_DEVICE_ID     &#x2F;&#x2F;串口设备ID<br>    #define INTC_DEVICE_ID     XPAR_SCUGIC_SINGLE_DEVICE_ID &#x2F;&#x2F;中断ID<br>    #define UART_INT_IRQ_ID    XPAR_XUARTPS_0_INTR          &#x2F;&#x2F;串口中断ID</p>
+<pre><code>XScuGic Intc;              //中断控制器驱动程序实例
 XUartPs Uart_Ps;           //串口驱动程序实例
 
 //UART初始化函数
@@ -952,8 +931,8 @@ int main(void)
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
           </div>
 
@@ -963,12 +942,12 @@ int main(void)
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/02/27/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(40)%E2%80%94%E2%80%94Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/" rel="prev" title="Xilinx Vitis API常用部分解析">
-      <i class="fa fa-chevron-left"></i> Xilinx Vitis API常用部分解析
+    <a href="/2024/02/27/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(40)%E2%80%94%E2%80%94Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/" rel="prev" title="FPGA学习笔记(40)——Xilinx Vitis API常用部分解析">
+      <i class="fa fa-chevron-left"></i> FPGA学习笔记(40)——Xilinx Vitis API常用部分解析
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/03/14/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/c%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E8%BF%9B%E5%8C%96%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%EF%BC%9C1%EF%BC%9E/" rel="next" title="c语言实现进化算法——人工智能导论＜1＞">
-      c语言实现进化算法——人工智能导论＜1＞ <i class="fa fa-chevron-right"></i>
+    <a href="/2024/03/14/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA(1)%E2%80%94%E2%80%94c%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E8%BF%9B%E5%8C%96%E7%AE%97%E6%B3%95/" rel="next" title="人工智能导论(1)——c语言实现进化算法">
+      人工智能导论(1)——c语言实现进化算法 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -1127,13 +1106,13 @@ int main(void)
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">825k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>

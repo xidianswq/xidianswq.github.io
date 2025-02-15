@@ -26,17 +26,17 @@
 
   <meta name="description" content="注：在源代码中 “ctrl+单击” 可查看详细信息">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Xilinx Vitis API常用部分解析">
+<meta property="og:title" content="FPGA学习笔记(40)——Xilinx Vitis API常用部分解析">
 <meta property="og:url" content="https://xidianswq.github.io/2024/02/27/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(40)%E2%80%94%E2%80%94Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/index.html">
 <meta property="og:site_name" content="Switch">
 <meta property="og:description" content="注：在源代码中 “ctrl+单击” 可查看详细信息">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-27T08:57:03.000Z">
-<meta property="article:modified_time" content="2025-02-09T06:30:58.643Z">
+<meta property="article:modified_time" content="2025-02-15T04:29:06.437Z">
 <meta property="article:author" content="SWQ">
+<meta property="article:tag" content="fpga开发">
 <meta property="article:tag" content="c++">
 <meta property="article:tag" content="嵌入式硬件">
-<meta property="article:tag" content="fpga开发">
 <meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
 
@@ -53,7 +53,7 @@
   };
 </script>
 
-  <title>Xilinx Vitis API常用部分解析 | Switch</title>
+  <title>FPGA学习笔记(40)——Xilinx Vitis API常用部分解析 | Switch</title>
   
 
 
@@ -214,7 +214,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Xilinx Vitis API常用部分解析
+          FPGA学习笔记(40)——Xilinx Vitis API常用部分解析
         </h1>
 
         <div class="post-meta">
@@ -238,7 +238,7 @@
             </span>
 
           
-            <span id="/2024/02/27/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(40)%E2%80%94%E2%80%94Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/" class="post-meta-item leancloud_visitors" data-flag-title="Xilinx Vitis API常用部分解析" title="阅读次数">
+            <span id="/2024/02/27/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(40)%E2%80%94%E2%80%94Xilinx%20Vitis%20API%E5%B8%B8%E7%94%A8%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90/" class="post-meta-item leancloud_visitors" data-flag-title="FPGA学习笔记(40)——Xilinx Vitis API常用部分解析" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -264,7 +264,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.5k</span>
+              <span>6.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -284,54 +284,26 @@
 
       
         <p>注：在源代码中 “ctrl+单击” 可查看详细信息  </p>
-<h2 id="一-头文件"><a href="#一-头文件" class="headerlink" title="一.头文件"></a>一.头文件</h2><p>​<br>    #include “xparameters.h” &#x2F;&#x2F;器件参数信息<br>    #include “xstatus.h” &#x2F;&#x2F;包含 XST_FAILURE 和 XST_SUCCESS 的宏定义<br>    #include “xil_printf.h” &#x2F;&#x2F;包含 print()函数<br>    #include “xgpiops.h” &#x2F;&#x2F;包含 PS GPIO 的函数<br>    #include “sleep.h” &#x2F;&#x2F;包含 sleep()函数</p>
-<h2 id="二-宏定义"><a href="#二-宏定义" class="headerlink" title="二.宏定义"></a>二.宏定义</h2><p>​<br>    &#x2F;&#x2F;PS_LED1 连接到 MIO38<br>    #define MIO_LED1 38 </p>
-<pre><code>//宏定义 GPIO_DEVICE_ID
-#define GPIO_DEVICE_ID XPAR_XGPIOPS_0_DEVICE_ID
-</code></pre>
-<h2 id="三-函数"><a href="#三-函数" class="headerlink" title="三.函数"></a>三.函数</h2><h3 id="1-配置"><a href="#1-配置" class="headerlink" title="1.配置"></a>1.配置</h3><h4 id="器件初始化"><a href="#器件初始化" class="headerlink" title="&lt;1&gt;器件初始化"></a>&lt;1&gt;器件初始化</h4><p>​<br>    &#x2F;&#x2F;PS 端 GPIO 驱动实例<br>    XGpioPs gpiops_inst;<br>    &#x2F;&#x2F;PS 端 GPIO 配置信息<br>    XGpioPs_Config *gpiops_cfg_ptr; </p>
-<p>​<br>    &#x2F;&#x2F;根据器件 ID 查找配置信息<br>    gpiops_cfg_ptr &#x3D; XGpioPs_LookupConfig(GPIOPS_ID);<br>    &#x2F;&#x2F;初始化器件驱动<br>    Status &#x3D; XGpioPs_CfgInitialize(&amp;Gpio, ConfigPtr,ConfigPtr-&gt;BaseAddr);<br>    &#x2F;&#x2F;判断是否初始化成功<br>    if (Status !&#x3D; XST_SUCCESS)return XST_FAILURE;</p>
-<p>​<br>​<br>​<br>​<br>​<br>    XGpioPs_Config <em>XGpioPs_LookupConfig(u16 DeviceId);<br>    &#x2F;</em>*<br>    *<br>    * This function looks for the device configuration based on the unique device<br>    * ID. The table XGpioPs_ConfigTable[] contains the configuration information<br>    * for each device in the system.<br>    *<br>    * @param	DeviceId is the unique device ID of the device being looked up.<br>    *<br>    * @return	A pointer to the configuration table entry corresponding to the<br>    *		given device ID, or NULL if no match is found.<br>    *<br>    * @note		None.<br>    *<br>    ******************************************************************************&#x2F;</p>
-<p>​<br>​<br>    s32 XGpioPs_CfgInitialize(XGpioPs <em>InstancePtr, const XGpioPs_Config <em>ConfigPtr,u32 EffectiveAddr);<br>    &#x2F;*****************************************************************************&#x2F;<br>    &#x2F;</em></em><br>    *<br>    * This function initializes a XGpioPs instance&#x2F;driver.<br>    * All members of the XGpioPs instance structure are initialized and<br>    * StubHandlers are assigned to the Bank Status Handlers.<br>    *<br>    * @param	InstancePtr is a pointer to the XGpioPs instance.<br>    * @param	ConfigPtr points to the XGpioPs device configuration structure.<br>    * @param	EffectiveAddr is the device base address in the virtual memory<br>    *		address space. If the address translation is not used then the<br>    *		physical address should be passed.<br>    *		Unexpected errors may occur if the address mapping is changed<br>    *		after this function is invoked.<br>    *<br>    * @return	XST_SUCCESS always.<br>    *<br>    * @note		None.<br>    *<br>    ******************************************************************************&#x2F;</p>
-<p>​<br>​<br>    int XGpio_Initialize(XGpio <em>InstancePtr, u16 DeviceId);<br>    &#x2F;</em>***************************************************************************&#x2F;<br>    &#x2F;**<br>    * Initialize the XGpio instance provided by the caller based on the<br>    * given DeviceID.<br>    *<br>    * Nothing is done except to initialize the InstancePtr.<br>    *<br>    * @param	InstancePtr is a pointer to an XGpio instance. The memory the<br>    *		pointer references must be pre-allocated by the caller. Further<br>    *		calls to manipulate the instance&#x2F;driver through the XGpio API<br>    *		must be made with this pointer.<br>    * @param	DeviceId is the unique id of the device controlled by this XGpio<br>    *		instance. Passing in a device id associates the generic XGpio<br>    *		instance to a specific device, as chosen by the caller or<br>    *		application developer.<br>    *<br>    * @return<br>    *		- XST_SUCCESS if the initialization was successful.<br>    *		- XST_DEVICE_NOT_FOUND  if the device configuration data was not<br>    *		  found for a device with the supplied device ID.<br>    *<br>    * @note		None.<br>    *<br>    *****************************************************************************&#x2F;</p>
-<h4 id="中断配置"><a href="#中断配置" class="headerlink" title="&lt;2&gt;中断配置"></a>&lt;2&gt;中断配置</h4><p>​<br>    &#x2F;&#x2F;建立中断系统，使能KEY按键的下降沿中断<br>    &#x2F;&#x2F;  @param   GicInstancePtr是一个指向XScuGic驱动实例的指针<br>    &#x2F;&#x2F;  @param   gpio是一个指向连接到中断的GPIO组件实例的指针<br>    &#x2F;&#x2F;  @param   GpioIntrId是Gpio中断ID<br>    &#x2F;&#x2F;  @return  如果成功返回XST_SUCCESS, 否则返回XST_FAILURE<br>    int setup_interrupt_system(XScuGic *gic_ins_ptr, XGpioPs *gpio, u16 GpioIntrId)<br>    {<br>        int status;<br>        XScuGic_Config *IntcConfig;     &#x2F;&#x2F;中断控制器配置信息</p>
-<pre><code>    //查找中断控制器配置信息并初始化中断控制器驱动
-    IntcConfig = XScuGic_LookupConfig(INTC_DEVICE_ID);
-    if (NULL == IntcConfig) &#123;
-        return XST_FAILURE;
-    &#125;
-
-    status = XScuGic_CfgInitialize(gic_ins_ptr, IntcConfig,
+<h2 id="一-头文件"><a href="#一-头文件" class="headerlink" title="一.头文件"></a>一.头文件</h2><p>​<br>​    #include “xparameters.h” &#x2F;&#x2F;器件参数信息<br>​    #include “xstatus.h” &#x2F;&#x2F;包含 XST_FAILURE 和 XST_SUCCESS 的宏定义<br>​    #include “xil_printf.h” &#x2F;&#x2F;包含 print()函数<br>​    #include “xgpiops.h” &#x2F;&#x2F;包含 PS GPIO 的函数<br>​    #include “sleep.h” &#x2F;&#x2F;包含 sleep()函数</p>
+<h2 id="二-宏定义"><a href="#二-宏定义" class="headerlink" title="二.宏定义"></a>二.宏定义</h2><p>​<br>​    &#x2F;&#x2F;PS_LED1 连接到 MIO38<br>​    #define MIO_LED1 38<br>​<br>    &#x2F;&#x2F;宏定义 GPIO_DEVICE_ID<br>    #define GPIO_DEVICE_ID XPAR_XGPIOPS_0_DEVICE_ID</p>
+<h2 id="三-函数"><a href="#三-函数" class="headerlink" title="三.函数"></a>三.函数</h2><h3 id="1-配置"><a href="#1-配置" class="headerlink" title="1.配置"></a>1.配置</h3><h4 id="器件初始化"><a href="#器件初始化" class="headerlink" title="&lt;1&gt;器件初始化"></a>&lt;1&gt;器件初始化</h4><p>​<br>​    &#x2F;&#x2F;PS 端 GPIO 驱动实例<br>​    XGpioPs gpiops_inst;<br>​    &#x2F;&#x2F;PS 端 GPIO 配置信息<br>​    XGpioPs_Config *gpiops_cfg_ptr; </p>
+<p>​<br>​    &#x2F;&#x2F;根据器件 ID 查找配置信息<br>​    gpiops_cfg_ptr &#x3D; XGpioPs_LookupConfig(GPIOPS_ID);<br>​    &#x2F;&#x2F;初始化器件驱动<br>​    Status &#x3D; XGpioPs_CfgInitialize(&amp;Gpio, ConfigPtr,ConfigPtr-&gt;BaseAddr);<br>​    &#x2F;&#x2F;判断是否初始化成功<br>​    if (Status !&#x3D; XST_SUCCESS)return XST_FAILURE;</p>
+<p>​<br>​<br>​<br>​<br>​<br>​    XGpioPs_Config <em>XGpioPs_LookupConfig(u16 DeviceId);<br>​    &#x2F;</em>*<br>​    *<br>​    * This function looks for the device configuration based on the unique device<br>​    * ID. The table XGpioPs_ConfigTable[] contains the configuration information<br>​    * for each device in the system.<br>​    *<br>​    * @param	DeviceId is the unique device ID of the device being looked up.<br>​    *<br>​    * @return	A pointer to the configuration table entry corresponding to the<br>​    *		given device ID, or NULL if no match is found.<br>​    *<br>​    * @note		None.<br>​    *<br>​    ******************************************************************************&#x2F;</p>
+<p>​<br>​<br>​    s32 XGpioPs_CfgInitialize(XGpioPs <em>InstancePtr, const XGpioPs_Config <em>ConfigPtr,u32 EffectiveAddr);<br>​    &#x2F;*****************************************************************************&#x2F;<br>​    &#x2F;</em></em><br>​    *<br>​    * This function initializes a XGpioPs instance&#x2F;driver.<br>​    * All members of the XGpioPs instance structure are initialized and<br>​    * StubHandlers are assigned to the Bank Status Handlers.<br>​    *<br>​    * @param	InstancePtr is a pointer to the XGpioPs instance.<br>​    * @param	ConfigPtr points to the XGpioPs device configuration structure.<br>​    * @param	EffectiveAddr is the device base address in the virtual memory<br>​    *		address space. If the address translation is not used then the<br>​    *		physical address should be passed.<br>​    *		Unexpected errors may occur if the address mapping is changed<br>​    *		after this function is invoked.<br>​    *<br>​    * @return	XST_SUCCESS always.<br>​    *<br>​    * @note		None.<br>​    *<br>​    ******************************************************************************&#x2F;</p>
+<p>​<br>​<br>​    int XGpio_Initialize(XGpio <em>InstancePtr, u16 DeviceId);<br>​    &#x2F;</em>***************************************************************************&#x2F;<br>​    &#x2F;**<br>​    * Initialize the XGpio instance provided by the caller based on the<br>​    * given DeviceID.<br>​    *<br>​    * Nothing is done except to initialize the InstancePtr.<br>​    *<br>​    * @param	InstancePtr is a pointer to an XGpio instance. The memory the<br>​    *		pointer references must be pre-allocated by the caller. Further<br>​    *		calls to manipulate the instance&#x2F;driver through the XGpio API<br>​    *		must be made with this pointer.<br>​    * @param	DeviceId is the unique id of the device controlled by this XGpio<br>​    *		instance. Passing in a device id associates the generic XGpio<br>​    *		instance to a specific device, as chosen by the caller or<br>​    *		application developer.<br>​    *<br>​    * @return<br>​    *		- XST_SUCCESS if the initialization was successful.<br>​    *		- XST_DEVICE_NOT_FOUND  if the device configuration data was not<br>​    *		  found for a device with the supplied device ID.<br>​    *<br>​    * @note		None.<br>​    *<br>​    *****************************************************************************&#x2F;</p>
+<h4 id="中断配置"><a href="#中断配置" class="headerlink" title="&lt;2&gt;中断配置"></a>&lt;2&gt;中断配置</h4><p>​<br>​    &#x2F;&#x2F;建立中断系统，使能KEY按键的下降沿中断<br>​    &#x2F;&#x2F;  @param   GicInstancePtr是一个指向XScuGic驱动实例的指针<br>​    &#x2F;&#x2F;  @param   gpio是一个指向连接到中断的GPIO组件实例的指针<br>​    &#x2F;&#x2F;  @param   GpioIntrId是Gpio中断ID<br>​    &#x2F;&#x2F;  @return  如果成功返回XST_SUCCESS, 否则返回XST_FAILURE<br>​    int setup_interrupt_system(XScuGic *gic_ins_ptr, XGpioPs *gpio, u16 GpioIntrId)<br>​    {<br>​        int status;<br>​        XScuGic_Config *IntcConfig;     &#x2F;&#x2F;中断控制器配置信息<br>​<br>        &#x2F;&#x2F;查找中断控制器配置信息并初始化中断控制器驱动<br>        IntcConfig &#x3D; XScuGic_LookupConfig(INTC_DEVICE_ID);<br>        if (NULL &#x3D;&#x3D; IntcConfig) {<br>            return XST_FAILURE;<br>        }</p>
+<pre><code>    status = XScuGic_CfgInitialize(gic_ins_ptr, IntcConfig,
             IntcConfig-&gt;CpuBaseAddress);
     if (status != XST_SUCCESS) &#123;
         return XST_FAILURE;
     &#125;
 </code></pre>
-<p>​<br>        &#x2F;&#x2F;设置并使能中断异常<br>        Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,<br>                (Xil_ExceptionHandler) XScuGic_InterruptHandler, gic_ins_ptr);<br>        Xil_ExceptionEnable();<br>        &#x2F;&#x2F;为中断设置中断处理函数<br>        status &#x3D; XScuGic_Connect(gic_ins_ptr, GpioIntrId,<br>                (Xil_ExceptionHandler) intr_handler, (void *) gpio);<br>        if (status !&#x3D; XST_SUCCESS) {<br>            return status;<br>        }<br>        &#x2F;&#x2F;使能来自于Gpio器件的中断<br>        XScuGic_Enable(gic_ins_ptr, GpioIntrId);<br>        &#x2F;&#x2F;设置KEY按键的中断类型为下降沿中断，按ctrl+单击查看其他类型<br>        XGpioPs_SetIntrTypePin(gpio, KEY, XGPIOPS_IRQ_TYPE_EDGE_FALLING);<br>        &#x2F;&#x2F;使能按键KEY中断<br>        XGpioPs_IntrEnablePin(gpio, KEY);</p>
-<pre><code>    return XST_SUCCESS;
-&#125;
-</code></pre>
-<p>​<br>    &#x2F;&#x2F;设置中断优先级和触发类型(高电平触发)<br>    XScuGic_SetPriorityTriggerType(&amp;scugic_inst, GPIO_INT_ID, 0xA0, 0x1);</p>
+<p>​<br>​        &#x2F;&#x2F;设置并使能中断异常<br>​        Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,<br>​                (Xil_ExceptionHandler) XScuGic_InterruptHandler, gic_ins_ptr);<br>​        Xil_ExceptionEnable();<br>​        &#x2F;&#x2F;为中断设置中断处理函数<br>​        status &#x3D; XScuGic_Connect(gic_ins_ptr, GpioIntrId,<br>​                (Xil_ExceptionHandler) intr_handler, (void *) gpio);<br>​        if (status !&#x3D; XST_SUCCESS) {<br>​            return status;<br>​        }<br>​        &#x2F;&#x2F;使能来自于Gpio器件的中断<br>​        XScuGic_Enable(gic_ins_ptr, GpioIntrId);<br>​        &#x2F;&#x2F;设置KEY按键的中断类型为下降沿中断，按ctrl+单击查看其他类型<br>​        XGpioPs_SetIntrTypePin(gpio, KEY, XGPIOPS_IRQ_TYPE_EDGE_FALLING);<br>​        &#x2F;&#x2F;使能按键KEY中断<br>​        XGpioPs_IntrEnablePin(gpio, KEY);<br>​<br>        return XST_SUCCESS;<br>    }</p>
+<p>​<br>​    &#x2F;&#x2F;设置中断优先级和触发类型(高电平触发)<br>​    XScuGic_SetPriorityTriggerType(&amp;scugic_inst, GPIO_INT_ID, 0xA0, 0x1);</p>
 <p> 中断处理函数：</p>
-<p>​<br>    &#x2F;&#x2F;中断处理函数<br>    &#x2F;&#x2F;  @param   CallBackRef是指向上层回调引用的指针<br>    static void intr_handler(void *callback_ref)<br>    {<br>        XGpioPs *gpio &#x3D; (XGpioPs *) callback_ref;</p>
-<pre><code>    //读取KEY按键引脚的中断状态，判断是否发生中断
-    if (XGpioPs_IntrGetStatusPin(gpio, KEY))&#123;
-        key_press = TRUE;
-        XGpioPs_IntrDisablePin(gpio, KEY);         //屏蔽按键KEY中断
-        //XGpioPs_IntrClearPin(&amp;gpio, KEY);      //清除按键KEY中断
-        //XGpioPs_IntrEnablePin(&amp;gpio, KEY);     //使能按键KEY中断
-    &#125;
-&#125;
-</code></pre>
-<h4 id="uart配置"><a href="#uart配置" class="headerlink" title="&lt;3&gt;uart配置"></a>&lt;3&gt;uart配置</h4><p>​<br>    &#x2F;&#x2F;UART初始化函数<br>    int uart_init(XUartPs* uart_ps)<br>    {<br>        int status;<br>        XUartPs_Config *uart_cfg;</p>
-<pre><code>    uart_cfg = XUartPs_LookupConfig(UART_DEVICE_ID);
-    if (NULL == uart_cfg)
-        return XST_FAILURE;
-    status = XUartPs_CfgInitialize(uart_ps, uart_cfg, uart_cfg-&gt;BaseAddress);
-    if (status != XST_SUCCESS)
-        return XST_FAILURE;
-
-    //UART设备自检
+<p>​<br>​    &#x2F;&#x2F;中断处理函数<br>​    &#x2F;&#x2F;  @param   CallBackRef是指向上层回调引用的指针<br>​    static void intr_handler(void *callback_ref)<br>​    {<br>​        XGpioPs *gpio &#x3D; (XGpioPs *) callback_ref;<br>​<br>        &#x2F;&#x2F;读取KEY按键引脚的中断状态，判断是否发生中断<br>        if (XGpioPs_IntrGetStatusPin(gpio, KEY)){<br>            key_press &#x3D; TRUE;<br>            XGpioPs_IntrDisablePin(gpio, KEY);         &#x2F;&#x2F;屏蔽按键KEY中断<br>            &#x2F;&#x2F;XGpioPs_IntrClearPin(&amp;gpio, KEY);      &#x2F;&#x2F;清除按键KEY中断<br>            &#x2F;&#x2F;XGpioPs_IntrEnablePin(&amp;gpio, KEY);     &#x2F;&#x2F;使能按键KEY中断<br>        }<br>    }</p>
+<h4 id="uart配置"><a href="#uart配置" class="headerlink" title="&lt;3&gt;uart配置"></a>&lt;3&gt;uart配置</h4><p>​<br>​    &#x2F;&#x2F;UART初始化函数<br>​    int uart_init(XUartPs* uart_ps)<br>​    {<br>​        int status;<br>​        XUartPs_Config *uart_cfg;<br>​<br>        uart_cfg &#x3D; XUartPs_LookupConfig(UART_DEVICE_ID);<br>        if (NULL &#x3D;&#x3D; uart_cfg)<br>            return XST_FAILURE;<br>        status &#x3D; XUartPs_CfgInitialize(uart_ps, uart_cfg, uart_cfg-&gt;BaseAddress);<br>        if (status !&#x3D; XST_SUCCESS)<br>            return XST_FAILURE;</p>
+<pre><code>    //UART设备自检
     status = XUartPs_SelfTest(uart_ps);
     if (status != XST_SUCCESS)
         return XST_FAILURE;
@@ -347,14 +319,8 @@
 &#125;
 </code></pre>
 <p>中断函数</p>
-<p>​<br>    &#x2F;&#x2F;UART中断处理函数<br>    void uart_intr_handler(void *call_back_ref)<br>    {<br>        XUartPs *uart_instance_ptr &#x3D; (XUartPs *) call_back_ref;<br>        u32 rec_data &#x3D; 0 ;<br>        u32 isr_status ;                           &#x2F;&#x2F;中断状态标志</p>
-<pre><code>    //读取中断ID寄存器，判断触发的是哪种中断
-    isr_status = XUartPs_ReadReg(uart_instance_ptr-&gt;Config.BaseAddress,
-                   XUARTPS_IMR_OFFSET);
-    isr_status &amp;= XUartPs_ReadReg(uart_instance_ptr-&gt;Config.BaseAddress,
-                   XUARTPS_ISR_OFFSET);
-
-    //判断中断标志位RxFIFO是否触发
+<p>​<br>​    &#x2F;&#x2F;UART中断处理函数<br>​    void uart_intr_handler(void *call_back_ref)<br>​    {<br>​        XUartPs *uart_instance_ptr &#x3D; (XUartPs *) call_back_ref;<br>​        u32 rec_data &#x3D; 0 ;<br>​        u32 isr_status ;                           &#x2F;&#x2F;中断状态标志<br>​<br>        &#x2F;&#x2F;读取中断ID寄存器，判断触发的是哪种中断<br>        isr_status &#x3D; XUartPs_ReadReg(uart_instance_ptr-&gt;Config.BaseAddress,<br>                       XUARTPS_IMR_OFFSET);<br>        isr_status &amp;&#x3D; XUartPs_ReadReg(uart_instance_ptr-&gt;Config.BaseAddress,<br>                       XUARTPS_ISR_OFFSET);</p>
+<pre><code>    //判断中断标志位RxFIFO是否触发
     if (isr_status &amp; (u32)XUARTPS_IXR_RXOVR)&#123;
     	rec_data = XUartPs_RecvByte(XPAR_PSU_UART_0_BASEADDR);
         //清除中断标志
@@ -364,12 +330,9 @@
     XUartPs_SendByte(XPAR_PSU_UART_0_BASEADDR,rec_data);
 &#125;
 </code></pre>
-<h3 id="2-GPIO操作"><a href="#2-GPIO操作" class="headerlink" title="2.GPIO操作"></a>2.GPIO操作</h3><p>​<br>    &#x2F;&#x2F;设置指定引脚的方向：0 输入，1 输出<br>    XGpioPs_SetDirectionPin(&amp;Gpio, MIOLED0, 1);<br>    &#x2F;&#x2F;使能指定引脚输出：0 禁止输出使能，1 使能输出<br>    XGpioPs_SetOutputEnablePin(&amp;Gpio, MIOLED0, 1);<br>    &#x2F;&#x2F;向指定引脚写入数据：0 或 1<br>    XGpioPs_WritePin(&amp;Gpio, MIOLED0, 0x0);<br>    &#x2F;&#x2F;从指定引脚读入数据<br>    XGpioPs_ReadPin(&amp;gpiops_inst, MIO_KEY2)</p>
-<p>​<br>    &#x2F;&#x2F;配置PL AXI GPIO<br>    XGpio_SetDataDirection(&amp;axi_gpio_inst, KEY_CHANNEL, 1);  &#x2F;&#x2F;设置PL AXI GPIO 通道1为输入<br>    XGpio_InterruptEnable(&amp;axi_gpio_inst, KEY_MASK);         &#x2F;&#x2F;使能通道1中断<br>    XGpio_InterruptGlobalEnable(&amp;axi_gpio_inst);             &#x2F;&#x2F;使能AXI GPIO全局中断</p>
-<h3 id="3-其他"><a href="#3-其他" class="headerlink" title="3.其他"></a>3.其他</h3><p>​<br>        &#x2F;&#x2F;uart打印	<br>        print(“MIO Test! \n\r”);    </p>
-<pre><code>    //延时 1 秒
-	sleep(1); 
-</code></pre>
+<h3 id="2-GPIO操作"><a href="#2-GPIO操作" class="headerlink" title="2.GPIO操作"></a>2.GPIO操作</h3><p>​<br>​    &#x2F;&#x2F;设置指定引脚的方向：0 输入，1 输出<br>​    XGpioPs_SetDirectionPin(&amp;Gpio, MIOLED0, 1);<br>​    &#x2F;&#x2F;使能指定引脚输出：0 禁止输出使能，1 使能输出<br>​    XGpioPs_SetOutputEnablePin(&amp;Gpio, MIOLED0, 1);<br>​    &#x2F;&#x2F;向指定引脚写入数据：0 或 1<br>​    XGpioPs_WritePin(&amp;Gpio, MIOLED0, 0x0);<br>​    &#x2F;&#x2F;从指定引脚读入数据<br>​    XGpioPs_ReadPin(&amp;gpiops_inst, MIO_KEY2)</p>
+<p>​<br>​    &#x2F;&#x2F;配置PL AXI GPIO<br>​    XGpio_SetDataDirection(&amp;axi_gpio_inst, KEY_CHANNEL, 1);  &#x2F;&#x2F;设置PL AXI GPIO 通道1为输入<br>​    XGpio_InterruptEnable(&amp;axi_gpio_inst, KEY_MASK);         &#x2F;&#x2F;使能通道1中断<br>​    XGpio_InterruptGlobalEnable(&amp;axi_gpio_inst);             &#x2F;&#x2F;使能AXI GPIO全局中断</p>
+<h3 id="3-其他"><a href="#3-其他" class="headerlink" title="3.其他"></a>3.其他</h3><p>​<br>​        &#x2F;&#x2F;uart打印	<br>​        print(“MIO Test! \n\r”);<br>​<br>        &#x2F;&#x2F;延时 1 秒<br>    	sleep(1); </p>
 <p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/136315297">https://blog.csdn.net/qq_32971095/article/details/136315297</a>，如有侵权，请联系删除。</p>
 
     </div>
@@ -390,9 +353,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
               <a href="/tags/c/" rel="tag"># c++</a>
               <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
-              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
           </div>
 
@@ -406,8 +369,8 @@
       <i class="fa fa-chevron-left"></i> 西电计科大三上数据库系统概论代码合集
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/03/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(42)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%BA%8C/" rel="next" title="Vitis开发二——FPGA学习笔记＜？＞">
-      Vitis开发二——FPGA学习笔记＜？＞ <i class="fa fa-chevron-right"></i>
+    <a href="/2024/03/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(42)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%BA%8C/" rel="next" title="FPGA学习笔记(42)——Vitis开发二">
+      FPGA学习笔记(42)——Vitis开发二 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -566,13 +529,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">825k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:30</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
