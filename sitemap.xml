@@ -2027,7 +2027,14 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/tags/stm32/</loc>
+    <loc>https://xidianswq.github.io/tags/python/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xidianswq.github.io/tags/c/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2041,7 +2048,21 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/tags/c/</loc>
+    <loc>https://xidianswq.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xidianswq.github.io/tags/AI/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xidianswq.github.io/tags/stm32/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2063,27 +2084,6 @@
   
   <url>
     <loc>https://xidianswq.github.io/tags/ubuntu/</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/tags/python/</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/tags/AI/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2223,14 +2223,14 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/tags/soc/</loc>
+    <loc>https://xidianswq.github.io/tags/%E6%B8%B8%E6%88%8F/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/tags/%E6%B8%B8%E6%88%8F/</loc>
+    <loc>https://xidianswq.github.io/tags/soc/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
