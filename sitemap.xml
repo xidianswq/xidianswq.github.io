@@ -2031,6 +2031,13 @@
   </url>
   
   <url>
+    <loc>https://xidianswq.github.io/tags/%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://xidianswq.github.io/tags/%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -2038,7 +2045,7 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/tags/%E8%AE%B0%E5%BD%95/</loc>
+    <loc>https://xidianswq.github.io/tags/fpga%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2081,13 +2088,6 @@
   
   <url>
     <loc>https://xidianswq.github.io/tags/ubuntu/</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/tags/fpga%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2157,14 +2157,14 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <loc>https://xidianswq.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</loc>
+    <loc>https://xidianswq.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2227,13 +2227,6 @@
   </url>
   
   <url>
-    <loc>https://xidianswq.github.io/tags/vhdl/</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://xidianswq.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -2241,7 +2234,21 @@
   </url>
   
   <url>
+    <loc>https://xidianswq.github.io/tags/vhdl/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://xidianswq.github.io/tags/%E5%BD%B1%E8%AF%84/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xidianswq.github.io/tags/%E6%B8%B8%E6%88%8F/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2263,13 +2270,6 @@
   
   <url>
     <loc>https://xidianswq.github.io/tags/%E6%96%87%E7%AB%A0/</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xidianswq.github.io/tags/%E6%B8%B8%E6%88%8F/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
