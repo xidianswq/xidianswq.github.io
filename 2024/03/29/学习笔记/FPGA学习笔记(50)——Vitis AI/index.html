@@ -74,9 +74,9 @@
 <meta property="article:published_time" content="2024-03-29T09:29:19.000Z">
 <meta property="article:modified_time" content="2025-02-15T04:29:26.299Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="fpga开发">
-<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="嵌入式硬件">
+<meta property="article:tag" content="fpga开发">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/089f9efe7c54689a339a571239a84873.png">
@@ -125,7 +125,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -176,17 +176,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -325,11 +325,14 @@
 
       
         <p>参考资料：</p>
-<p>[Xilinx&#x2F;Vitis-AI-Tutorials (github.com)](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI-">https://github.com/Xilinx/Vitis-AI-</a><br>Tutorials “Xilinx&#x2F;Vitis-AI-Tutorials (github.com)“)</p>
+<p>[Xilinx&#x2F;Vitis-AI-Tutorials (github.com)](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI-">https://github.com/Xilinx/Vitis-AI-</a>
+Tutorials “Xilinx&#x2F;Vitis-AI-Tutorials (github.com)“)</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI" title="Xilinx&#x2F;Vitis-
 AI: Vitis AI is Xilinx’s development stack for AI inference on Xilinx hardware
-platforms">Xilinx&#x2F;Vitis-AI: Vitis AI is Xilinx’s development stack for AI inference on<br>Xilinx hardware platforms</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1iR4y1k7wn/?spm_id_from=333.788&vd_source=01cde8042a76495bf513aa4407a56cd6" title="【03】ALINX Zynq UltraScale+ MPSoC XILINX FPGA视频教程Vitis AI开发">【03】ALINX Zynq UltraScale+ MPSoC XILINX FPGA视频教程Vitis<br>AI开发</a></p>
+platforms">Xilinx&#x2F;Vitis-AI: Vitis AI is Xilinx’s development stack for AI inference on
+Xilinx hardware platforms</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1iR4y1k7wn/?spm_id_from=333.788&vd_source=01cde8042a76495bf513aa4407a56cd6" title="【03】ALINX Zynq UltraScale+ MPSoC XILINX FPGA视频教程Vitis AI开发">【03】ALINX Zynq UltraScale+ MPSoC XILINX FPGA视频教程Vitis
+AI开发</a></p>
 <h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一. 简介"></a>一. 简介</h2><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>边缘计算edge-ai；cloud-computing-edge-computing</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/089f9efe7c54689a339a571239a84873.png"></p>
 <p>edge端inference全栈部署方案</p>
@@ -339,7 +342,8 @@ platforms">Xilinx&#x2F;Vitis-AI: Vitis AI is Xilinx’s development stack for AI
 <blockquote>
 <blockquote>
 <ul>
-<li>CPU-only with no GPU acceleration：CPU hosts require no special<br>preparation.<blockquote>
+<li>CPU-only with no GPU acceleration：CPU hosts require no special
+preparation.<blockquote>
 <ul>
 <li>CUDA-capable GPUs</li>
 </ul>
@@ -351,7 +355,10 @@ platforms">Xilinx&#x2F;Vitis-AI: Vitis AI is Xilinx’s development stack for AI
 <blockquote>
 <blockquote>
 <ul>
-<li>AMD ROCm™ GPUs：见[Vitis-<br>AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;install.rst.txt](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a><br>AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;install.rst.txt#id3 “Vitis-<br>AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;install.rst.txt”)</li>
+<li>AMD ROCm™ GPUs：见[Vitis-
+AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;install.rst.txt](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a>
+AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;install.rst.txt#id3 “Vitis-
+AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;install.rst.txt”)</li>
 </ul>
 </blockquote>
 </blockquote>
@@ -360,8 +367,12 @@ platforms">Xilinx&#x2F;Vitis-AI: Vitis AI is Xilinx’s development stack for AI
 </blockquote>
 </blockquote>
 <p>&lt;1&gt;安装docker、Clone github Repository：</p>
-<p>​<br>​    git clone <a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI">https://github.com/Xilinx/Vitis-AI</a><br>​    cd Vitis-AI</p>
-<p>注：You are now ready to start working with the Vitis AI Docker container. At<br>this stage you will choose whether you wish to <strong>use the pre-built container,<br>or build the container from scripts</strong>. docker环境的搭建可以选择Vitis-<br>ai中的脚本搭建或者docker官方直接下载<strong>预构建的</strong> 特定架构docker（见后），即：</p>
+<p>​<br>​    git clone <a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI">https://github.com/Xilinx/Vitis-AI</a>
+​    cd Vitis-AI</p>
+<p>注：You are now ready to start working with the Vitis AI Docker container. At
+this stage you will choose whether you wish to <strong>use the pre-built container,
+or build the container from scripts</strong>. docker环境的搭建可以选择Vitis-
+ai中的脚本搭建或者docker官方直接下载<strong>预构建的</strong> 特定架构docker（见后），即：</p>
 <p>​<br>​    docker pull xilinx&#x2F;vitis-ai-<Framework>-<Arch>:latest</p>
 <table>
 <thead>
@@ -398,23 +409,41 @@ platforms">Xilinx&#x2F;Vitis-AI: Vitis AI is Xilinx’s development stack for AI
 </tr>
 </tbody></table>
 <p>或：</p>
-<p>​<br>​    cd <Vitis-AI install path>&#x2F;Vitis-AI<br>​    .&#x2F;docker_run.sh xilinx&#x2F;vitis-ai-&lt;pytorch|tensorflow2|tensorflow&gt;-&lt;cpu|rocm&gt;:latest</p>
+<p>​<br>​    cd <Vitis-AI install path>&#x2F;Vitis-AI
+​    .&#x2F;docker_run.sh xilinx&#x2F;vitis-ai-&lt;pytorch|tensorflow2|tensorflow&gt;-&lt;cpu|rocm&gt;:latest</p>
 <p>适用机器类型：</p>
 <ol>
 <li>CPU-only</li>
 <li>CUDA-capable GPUs</li>
 <li>ROCm-capable GPUs</li>
 </ol>
-<p>注：The <code>cpu</code> option <em>does not provide GPU acceleration support</em>  which is<br><strong>strongly recommended</strong>  for acceleration of the Vitis AI [:ref:<code>Quantization process &lt;quantization-process&gt;</code>](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a><br>AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;install.rst.txt#id11<br>“:ref:<code>Quantization process &lt;quantization-process&gt;</code> “). The pre-built <code>cpu</code><br>container should only be used when a GPU is not available on the host machine.</p>
+<p>注：The <code>cpu</code> option <em>does not provide GPU acceleration support</em>  which is
+<strong>strongly recommended</strong>  for acceleration of the Vitis AI [:ref:<code>Quantization process &lt;quantization-process&gt;</code>](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a>
+AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;install.rst.txt#id11
+“:ref:<code>Quantization process &lt;quantization-process&gt;</code> “). The pre-built <code>cpu</code>
+container should only be used when a GPU is not available on the host machine.</p>
 <p>（原文详细介绍了在NVIDIA器件上支持CUDA GPU的vitis-ai搭建）</p>
-<p>注：vitis-ai补丁安装：[Vitis-<br>AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;patch_instructions.rst.txt](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a><br>AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;patch_instructions.rst.txt “Vitis-<br>AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;patch_instructions.rst.txt”)</p>
+<p>注：vitis-ai补丁安装：[Vitis-
+AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;patch_instructions.rst.txt](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a>
+AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;patch_instructions.rst.txt “Vitis-
+AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;patch_instructions.rst.txt”)</p>
 <p>&lt;2&gt;安装交叉编译环境</p>
-<p>By default, the<strong>cross compiler</strong> will be installed in<br><strong><code>~/petalinux_sdk_2023.1</code></strong>. The ~&#x2F;petalinux_sdk_2023.1 path is recommended<br>for the installation. Regardless of the path you choose for the installation,<br>make sure the path has read-write permissions. In this quickstart, it is<br>installed in ~&#x2F;petalinux_sdk_2023.1</p>
+<p>By default, the<strong>cross compiler</strong> will be installed in
+<strong><code>~/petalinux_sdk_2023.1</code></strong>. The ~&#x2F;petalinux_sdk_2023.1 path is recommended
+for the installation. Regardless of the path you choose for the installation,
+make sure the path has read-write permissions. In this quickstart, it is
+installed in ~&#x2F;petalinux_sdk_2023.1</p>
 <p>在bash中执行：</p>
-<p>​<br>​    [Host] $ cd Vitis-AI&#x2F;board_setup&#x2F;vek280<br>​    [Host] $ sudo chmod u+r+x host_cross_compiler_setup.sh<br>​    [Host] $ .&#x2F;host_cross_compiler_setup.sh</p>
-<p>注：为下载相关资源，执行前的软件安装源为清华源，也可参考：[Vitis-<br>AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;China_Ubuntu_servers.](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a><br>AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;China_Ubuntu_servers.rst.txt “Vitis-<br>AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;China_Ubuntu_servers.”)</p>
+<p>​<br>​    [Host] $ cd Vitis-AI&#x2F;board_setup&#x2F;vek280
+​    [Host] $ sudo chmod u+r+x host_cross_compiler_setup.sh
+​    [Host] $ .&#x2F;host_cross_compiler_setup.sh</p>
+<p>注：为下载相关资源，执行前的软件安装源为清华源，也可参考：[Vitis-
+AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;China_Ubuntu_servers.](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a>
+AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;China_Ubuntu_servers.rst.txt “Vitis-
+AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;install&#x2F;China_Ubuntu_servers.”)</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/93def47e1072cf25c9fb7e564d9ac777.png"></p>
-<p> When the installation is complete, follow the prompts and execute the<br>following command:</p>
+<p> When the installation is complete, follow the prompts and execute the
+following command:</p>
 <p>​<br>​    source ~&#x2F;petalinux_sdk_2023.1&#x2F;environment-setup-cortexa72-cortexa53-xilinx-linux</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/bc05d626369cb12f1b1b386fad291dfc.png"></p>
 <pre><code>     The **DPU** implements **an efficient tensor-level instruction set **designed to support and **accelerate** various popular **convolutional neural networks** , such as VGG, ResNet, GoogLeNet, YOLO, SSD, and MobileNet, among others. 
@@ -424,8 +453,14 @@ platforms">Xilinx&#x2F;Vitis-AI: Vitis AI is Xilinx’s development stack for AI
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/acb9834ffdad75aafa209db3944d7929.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/b926c0530c9f863597c101da17b84dd2.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/7632c574e72b01f31355845825ac6439.png"></p>
-<h5 id="Zynq-™-UltraScale-™-MPSoC-DPUCZDX8G-workflow-system"><a href="#Zynq-™-UltraScale-™-MPSoC-DPUCZDX8G-workflow-system" class="headerlink" title="Zynq ™ UltraScale+ ™ MPSoC: DPUCZDX8G([workflow-system-"></a>Zynq ™ UltraScale+ ™ MPSoC: DPUCZDX8G([workflow-system-</h5><p>integration.rst.txt at master](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a><br>AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;workflow-system-integration.rst.txt<br>“workflow-system-integration.rst.txt at master”)</p>
-<p>The DPUCZDX8G IP has been optimized for Zynq UltraScale+ MPSoC. You can<br>integrate this IP as a block in the programmable logic (PL) of the selected<br>Zynq UltraScale+ MPSoCs with direct connections to the processing system (PS).<br>The DPU is user-configurable and exposes several parameters which can be<br>specified to optimize PL resources or customize enabled features.</p>
+<h5 id="Zynq-™-UltraScale-™-MPSoC-DPUCZDX8G-workflow-system"><a href="#Zynq-™-UltraScale-™-MPSoC-DPUCZDX8G-workflow-system" class="headerlink" title="Zynq ™ UltraScale+ ™ MPSoC: DPUCZDX8G([workflow-system-"></a>Zynq ™ UltraScale+ ™ MPSoC: DPUCZDX8G([workflow-system-</h5><p>integration.rst.txt at master](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a>
+AI&#x2F;blob&#x2F;master&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;workflow-system-integration.rst.txt
+“workflow-system-integration.rst.txt at master”)</p>
+<p>The DPUCZDX8G IP has been optimized for Zynq UltraScale+ MPSoC. You can
+integrate this IP as a block in the programmable logic (PL) of the selected
+Zynq UltraScale+ MPSoCs with direct connections to the processing system (PS).
+The DPU is user-configurable and exposes several parameters which can be
+specified to optimize PL resources or customize enabled features.</p>
 <p> 下载地址：</p>
 <table>
 <thead>
@@ -592,8 +627,13 @@ platforms">Xilinx&#x2F;Vitis-AI: Vitis AI is Xilinx’s development stack for AI
 <td></td>
 </tr>
 </tbody></table>
-<p>For MPSoC and Versal AI Core (non AIE-ML devices) please refer to the**&#x2F;dpu**<br>subdirectory in the Vitis AI 3.0 Github repository.</p>
-<p><strong>部署过程：</strong>[Vitis-AI-Tutorials&#x2F;Tutorials&#x2F;Vitis-AI-Vivado-TRD at 2.0 ·<br>Xilinx&#x2F;Vitis-AI-Tutorials (github.com)](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI-">https://github.com/Xilinx/Vitis-AI-</a><br>Tutorials&#x2F;tree&#x2F;2.0&#x2F;Tutorials&#x2F;Vitis-AI-Vivado-TRD “Vitis-AI-<br>Tutorials&#x2F;Tutorials&#x2F;Vitis-AI-Vivado-TRD at 2.0 · Xilinx&#x2F;Vitis-AI-Tutorials<br>(github.com)“)</p>
+<p>For MPSoC and Versal AI Core (non AIE-ML devices) please refer to the**&#x2F;dpu**
+subdirectory in the Vitis AI 3.0 Github repository.</p>
+<p><strong>部署过程：</strong>[Vitis-AI-Tutorials&#x2F;Tutorials&#x2F;Vitis-AI-Vivado-TRD at 2.0 ·
+Xilinx&#x2F;Vitis-AI-Tutorials (github.com)](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI-">https://github.com/Xilinx/Vitis-AI-</a>
+Tutorials&#x2F;tree&#x2F;2.0&#x2F;Tutorials&#x2F;Vitis-AI-Vivado-TRD “Vitis-AI-
+Tutorials&#x2F;Tutorials&#x2F;Vitis-AI-Vivado-TRD at 2.0 · Xilinx&#x2F;Vitis-AI-Tutorials
+(github.com)“)</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/959557dd80a7f6cf4d928cceb75051d3.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/0508c091f64853b67804b2e760e60cbb.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/3caf388ba1b35f2a14b2243c95dc133c.png"></p>
@@ -610,21 +650,65 @@ platforms">Xilinx&#x2F;Vitis-AI: Vitis AI is Xilinx’s development stack for AI
 <li>Vitis AI <strong>docker containers</strong> : model development tools</li>
 <li>Vitis AI <strong>github repository</strong> : model deployment libraries, setup scripts, examples and reference designs</li>
 </ul>
-<h3 id="4-vitis-ai工具链"><a href="#4-vitis-ai工具链" class="headerlink" title="4.vitis-ai工具链"></a>4.vitis-ai工具链</h3><p><strong>Model Development</strong><br><strong>Vitis AI Model Zoo</strong><br>The :ref:<code>Vitis AI Model Zoo &lt;workflow-model-zoo&gt;</code> includes <strong>optimized deep<br>learning models</strong> to speed up the deployment of deep learning inference on<br>adaptable AMD platforms. These models cover different applications, including<br>ADAS&#x2F;AD, video surveillance, robotics, and data center. You can get started<br>with these pre-trained models to enjoy the benefits of deep learning<br>acceleration.</p>
-<p><strong>Vitis AI Model Inspector</strong><br>The :ref:<code>Vitis AI Model Inspector &lt;model-inspector&gt;</code> is used to <strong>perform<br>initial sanity checks</strong> to confirm that t<strong>he operators and sequence of<br>operators</strong> in the graph is compatible with Vitis AI. Novel neural network<br>architectures, operators, and activation types are constantly being developed<br>and optimized for prediction accuracy and performance. Vitis AI provides<br>mechanisms to leverage operators that are not natively supported by your<br>specific DPU target.</p>
-<p><strong>Vitis AI Optimizer</strong><br>The :ref:<code>Vitis AI Optimizer &lt;model-optimization&gt;</code> exploits <strong>the notion of<br>sparsity</strong> to r<strong>educe the overall computational complexity</strong> for inference by<br>5x to 50x with minimal accuracy degradation. Many deep neural network<br>topologies employ significant levels of redundancy. This is particularly true<br>when the network backbone is optimized for prediction accuracy with training<br>datasets supporting many classes. In many cases, this redundancy can be<br>reduced by “pruning” some of the operations out of the graph.</p>
-<p><strong>Vitis AI Quantizer</strong><br>The :ref:<code>Vitis AI Quantizer &lt;model-quantization&gt;</code>, integrated as a component<br>of either TensorFlow or PyTorch, <strong>converts 32-bit floating-point weights</strong><br>and activations to<strong>fixed-point integers like INT8</strong> to reduce the computing<br>complexity without losing prediction accuracy. The fixed-point network model<br>requires less memory bandwidth and provides faster speed and higher power<br>efficiency than the floating-point model.</p>
-<p><strong>Vitis AI Compiler</strong><br>The :ref:<code>Vitis AI Compiler &lt;model-compilation&gt;</code> maps the AI quantized<br>model<strong>to a highly-efficient instruction set and dataflow model</strong>. The<br>compiler performs multiple optimizations; for example, batch normalization<br>operations are fused with convolution when the convolution operator precedes<br>the normalization operator. As the DPU supports <strong>multiple dimensions of<br>parallelism</strong> , efficient instruction scheduling is <strong>key to exploiting the<br>inherent parallelism</strong> and potential for <strong>data reuse</strong> in the graph. The<br>Vitis AI Compiler addresses such optimizations.</p>
-<p><strong>Model Deployment<br>Vitis AI Runtime</strong><br>The :ref:<code>Vitis AI Runtime &lt;vitis-ai-runtime&gt;</code> (VART) is<strong>a set of low-level<br>API functions</strong> that support the integration of the DPU into software<br>applications. VART is built on top of the Xilinx Runtime (XRT) amd provides a<br>unified high-level runtime for both Data Center and Embedded targets. Key<br>features of the <strong>Vitis AI Runtime API</strong> include:</p>
-<p>Asynchronous <strong>submission</strong> of <strong>jobs</strong> to the <strong>DPU</strong>.<br>Asynchronous <strong>collection</strong> of <strong>jobs</strong> from the <strong>DPU</strong>.<br><strong>C++ and Python API</strong> implementations.<br>Support for <strong>multi-threading and multi-process</strong> execution.<br><strong>Vitis AI Library</strong><br>The :ref:<code>Vitis AI Library &lt;vitis-ai-library&gt;</code> is a set of <strong>high-level<br>libraries and APIs built on top of the Vitis AI Runtime (VART)</strong>. The higher-<br>level APIs included in the Vitis AI Library give developers a head-start on<br>model deployment. While it is possible for developers to directly leverage the<br>Vitis AI Runtime APIs to deploy a model on AMD platforms, it is often more<br>beneficial to start with a ready-made example that incorporates the various<br>elements of a typical application, including:</p>
-<p><strong>Simplified CPU-based pre and post-processing implementations.</strong><br>Vitis AI Runtime integration at an application level.<br><strong>Vitis AI Profiler</strong><br>The :ref:<code>Vitis AI Profiler &lt;vitis-ai-profiler&gt;</code> profiles and visualizes AI<br>applications to find <strong>bottlenecks</strong> and allocates computing resources among<br>different devices. It is easy to use and requires no code changes. It can<br><strong>trace function calls</strong> and <strong>run time</strong> , and also <strong>collect hardware<br>information</strong> , including CPU, DPU, and memory utilization.</p>
+<h3 id="4-vitis-ai工具链"><a href="#4-vitis-ai工具链" class="headerlink" title="4.vitis-ai工具链"></a>4.vitis-ai工具链</h3><p><strong>Model Development</strong><br><strong>Vitis AI Model Zoo</strong><br>The :ref:<code>Vitis AI Model Zoo &lt;workflow-model-zoo&gt;</code> includes <strong>optimized deep
+learning models</strong> to speed up the deployment of deep learning inference on
+adaptable AMD platforms. These models cover different applications, including
+ADAS&#x2F;AD, video surveillance, robotics, and data center. You can get started
+with these pre-trained models to enjoy the benefits of deep learning
+acceleration.</p>
+<p><strong>Vitis AI Model Inspector</strong><br>The :ref:<code>Vitis AI Model Inspector &lt;model-inspector&gt;</code> is used to <strong>perform
+initial sanity checks</strong> to confirm that t<strong>he operators and sequence of
+operators</strong> in the graph is compatible with Vitis AI. Novel neural network
+architectures, operators, and activation types are constantly being developed
+and optimized for prediction accuracy and performance. Vitis AI provides
+mechanisms to leverage operators that are not natively supported by your
+specific DPU target.</p>
+<p><strong>Vitis AI Optimizer</strong><br>The :ref:<code>Vitis AI Optimizer &lt;model-optimization&gt;</code> exploits <strong>the notion of
+sparsity</strong> to r<strong>educe the overall computational complexity</strong> for inference by
+5x to 50x with minimal accuracy degradation. Many deep neural network
+topologies employ significant levels of redundancy. This is particularly true
+when the network backbone is optimized for prediction accuracy with training
+datasets supporting many classes. In many cases, this redundancy can be
+reduced by “pruning” some of the operations out of the graph.</p>
+<p><strong>Vitis AI Quantizer</strong><br>The :ref:<code>Vitis AI Quantizer &lt;model-quantization&gt;</code>, integrated as a component
+of either TensorFlow or PyTorch, <strong>converts 32-bit floating-point weights</strong>
+and activations to<strong>fixed-point integers like INT8</strong> to reduce the computing
+complexity without losing prediction accuracy. The fixed-point network model
+requires less memory bandwidth and provides faster speed and higher power
+efficiency than the floating-point model.</p>
+<p><strong>Vitis AI Compiler</strong><br>The :ref:<code>Vitis AI Compiler &lt;model-compilation&gt;</code> maps the AI quantized
+model<strong>to a highly-efficient instruction set and dataflow model</strong>. The
+compiler performs multiple optimizations; for example, batch normalization
+operations are fused with convolution when the convolution operator precedes
+the normalization operator. As the DPU supports <strong>multiple dimensions of
+parallelism</strong> , efficient instruction scheduling is <strong>key to exploiting the
+inherent parallelism</strong> and potential for <strong>data reuse</strong> in the graph. The
+Vitis AI Compiler addresses such optimizations.</p>
+<p><strong>Model Deployment<br>Vitis AI Runtime</strong><br>The :ref:<code>Vitis AI Runtime &lt;vitis-ai-runtime&gt;</code> (VART) is<strong>a set of low-level
+API functions</strong> that support the integration of the DPU into software
+applications. VART is built on top of the Xilinx Runtime (XRT) amd provides a
+unified high-level runtime for both Data Center and Embedded targets. Key
+features of the <strong>Vitis AI Runtime API</strong> include:</p>
+<p>Asynchronous <strong>submission</strong> of <strong>jobs</strong> to the <strong>DPU</strong>.<br>Asynchronous <strong>collection</strong> of <strong>jobs</strong> from the <strong>DPU</strong>.<br><strong>C++ and Python API</strong> implementations.<br>Support for <strong>multi-threading and multi-process</strong> execution.<br><strong>Vitis AI Library</strong><br>The :ref:<code>Vitis AI Library &lt;vitis-ai-library&gt;</code> is a set of <strong>high-level
+libraries and APIs built on top of the Vitis AI Runtime (VART)</strong>. The higher-
+level APIs included in the Vitis AI Library give developers a head-start on
+model deployment. While it is possible for developers to directly leverage the
+Vitis AI Runtime APIs to deploy a model on AMD platforms, it is often more
+beneficial to start with a ready-made example that incorporates the various
+elements of a typical application, including:</p>
+<p><strong>Simplified CPU-based pre and post-processing implementations.</strong><br>Vitis AI Runtime integration at an application level.<br><strong>Vitis AI Profiler</strong><br>The :ref:<code>Vitis AI Profiler &lt;vitis-ai-profiler&gt;</code> profiles and visualizes AI
+applications to find <strong>bottlenecks</strong> and allocates computing resources among
+different devices. It is easy to use and requires no code changes. It can
+<strong>trace function calls</strong> and <strong>run time</strong> , and also <strong>collect hardware
+information</strong> , including CPU, DPU, and memory utilization.</p>
 <p>模型开发：示例模型、检查器（语法、适用性）、优化器（稀疏连接）、量化器（位宽）、编译器（DPU指令）</p>
 <p>模型部署：VART（DPU API）、Library（优化预处理、后处理）、分析器（各环节运行时间）</p>
 <h2 id="二-Docker环境搭建"><a href="#二-Docker环境搭建" class="headerlink" title="二.Docker环境搭建"></a>二.Docker环境搭建</h2><p>在第一部分“安装的准备”已经介绍了搭建的两种方法。</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/32b5b070bc91e1a49bc4d0cf742becc9.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/d0f0f5995489ccc5498b68acb9a6ac56.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/3fde56db0b1e14a450d2f3f07ce98f82.png"></p>
-<p>​<br>​    sudo apt-get remove docker-engine docker-ce docker.io<br>​<br>    sudo apt-get install curl</p>
+<p>​<br>​    sudo apt-get remove docker-engine docker-ce docker.io
+​<br>    sudo apt-get install curl</p>
 <pre><code>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
 sudo apt-get update &amp;&amp; sudo apt install docker-ce docker-ce-cll containerd.io
@@ -661,18 +745,42 @@ docker ps -a
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/00f5736efd94ea115591a8121f7171b4.png"></p>
 <p> 而且这个docker预装了conda，进入 tensorflow 的conda并打印其组件：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/1a916ce4ff8de0d37df1060bec900bd9.png"></p>
-<p>其他docker命令：[Docker最新超详细版教程通俗易懂(基础版) - 知乎<br>(zhihu.com)](<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/442442997">https://zhuanlan.zhihu.com/p/442442997</a> “Docker最新超详细版教程通俗易懂(基础版)</p>
+<p>其他docker命令：[Docker最新超详细版教程通俗易懂(基础版) - 知乎
+(zhihu.com)](<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/442442997">https://zhuanlan.zhihu.com/p/442442997</a> “Docker最新超详细版教程通俗易懂(基础版)</p>
 <ul>
 <li>知乎 (zhihu.com)“)</li>
 </ul>
 <h2 id="三-实例"><a href="#三-实例" class="headerlink" title="三.实例"></a>三.实例</h2><h3 id="1-下载示例模型"><a href="#1-下载示例模型" class="headerlink" title="1.下载示例模型"></a>1.下载示例模型</h3><p>在model_zoo文件夹内可以浏览各种支持的模型，这里我们选择tf_yolov3_3.5，打开model_info.md文件：</p>
-<p>​<br>​    # YOLOv3<br>​<br>    ### Contents<br>    1. <a href="#Use-Case-and-Application">Use Case and Application</a><br>    2. <a href="#Specification">Specification</a><br>    3. <a href="#Paper-and-Architecture">Paper and Architecture</a><br>    4. <a href="#Dataset-Preparation">Dataset Preparation</a><br>    5. <a href="#Use-Guide">Use Guide</a><br>    6. <a href="#License">License</a><br>    7. <a href="#Note">Note</a></p>
-<p>​<br>​    ### Use Case and Application<br>​<br>       - Classic Object Detection<br>       - Trained on VOC dataset</p>
-<p>​<br>​    ### Specification<br>​<br>    | Metric             | Value                                   |<br>    | :—————– | :————————————– |<br>    | Framework          | TensorFlow2                             |<br>    | Prune Ratio        | 0%                                      |<br>    | FLOPs              | 65.63G                                  |<br>    | Input Dims (H W C) | 416,416,3                               |<br>    | FP32 Accuracy      | 0.7846 mAP                              |<br>    | INT8 Accuracy      | 0.7729 mAP                              |<br>    | Train Dataset      | voc07+12_trainval	                   |<br>    | Test Dataset       | voc07_test                              |<br>    | Supported Platform | GPU, VEK280, V70                        |</p>
-<p>​<br>​    ### Paper and Architecture<br>​<br>    1. Network Architecture: YOLOv3</p>
+<p>​<br>​    # YOLOv3
+​<br>    ### Contents
+    1. <a href="#Use-Case-and-Application">Use Case and Application</a>
+    2. <a href="#Specification">Specification</a>
+    3. <a href="#Paper-and-Architecture">Paper and Architecture</a>
+    4. <a href="#Dataset-Preparation">Dataset Preparation</a>
+    5. <a href="#Use-Guide">Use Guide</a>
+    6. <a href="#License">License</a>
+    7. <a href="#Note">Note</a></p>
+<p>​<br>​    ### Use Case and Application
+​<br>       - Classic Object Detection
+       - Trained on VOC dataset</p>
+<p>​<br>​    ### Specification
+​<br>    | Metric             | Value                                   |
+    | :—————– | :————————————– |
+    | Framework          | TensorFlow2                             |
+    | Prune Ratio        | 0%                                      |
+    | FLOPs              | 65.63G                                  |
+    | Input Dims (H W C) | 416,416,3                               |
+    | FP32 Accuracy      | 0.7846 mAP                              |
+    | INT8 Accuracy      | 0.7729 mAP                              |
+    | Train Dataset      | voc07+12_trainval	                   |
+    | Test Dataset       | voc07_test                              |
+    | Supported Platform | GPU, VEK280, V70                        |</p>
+<p>​<br>​    ### Paper and Architecture 
+​<br>    1. Network Architecture: YOLOv3</p>
 <pre><code>2. Paper Link: https://arxiv.org/abs/1804.02767
 </code></pre>
-<p>​<br>​    ### Dataset Preparation<br>​<br>    1. Dataset description</p>
+<p>​<br>​    ### Dataset Preparation
+​<br>    1. Dataset description</p>
 <pre><code>The model is trained on VOC2007_trainval + VOC2012_trainval and tested on VOC2007_test.
 
 2. Download and prepare the dataset
@@ -682,14 +790,22 @@ Our script `prepare_data.sh` downloads and prepares the dataset automatically. B
 Dataset diretory structure
   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">VOCdevkit is unpacked from the downloaded data</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">voc2007_test is generated by our code <span class="keyword">for</span> data preparation</span></span><br><span class="line">+ data</span><br><span class="line">  + VOCdevkit</span><br><span class="line">    + VOC2007</span><br><span class="line">      + ImageSets</span><br><span class="line">      + JPEGImages</span><br><span class="line">      + Annotations</span><br><span class="line">  + voc2007_test</span><br><span class="line">    + images</span><br><span class="line">      + 000001.jpg</span><br><span class="line">      + 000002.jpg</span><br><span class="line">      + ...</span><br><span class="line">    + test.txt</span><br><span class="line">    + gt_detection.txt</span><br></pre></td></tr></table></figure>
 </code></pre>
-<p>​<br>​    ### Use Guide<br>​<br>    1. Evaluation<br>        Configure the model path and data path in <a href="code/test/run_eval.sh">code&#x2F;test&#x2F;run_eval.sh</a><br>        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash code/test/run_eval.sh</span><br></pre></td></tr></table></figure></p>
-<p>​<br>​    ### License<br>​<br>    Apache License 2.0</p>
+<p>​<br>​    ### Use Guide
+​<br>    1. Evaluation
+        Configure the model path and data path in <a href="code/test/run_eval.sh">code&#x2F;test&#x2F;run_eval.sh</a>
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash code/test/run_eval.sh</span><br></pre></td></tr></table></figure></p>
+<p>​<br>​    ### License
+​<br>    Apache License 2.0</p>
 <pre><code>For details, please refer to **[Vitis-AI License](https://github.com/Xilinx/Vitis-AI/blob/master/LICENSE)**
 </code></pre>
-<p>​<br>​    ### Note<br>​<br>    1. Data preprocess<br>      <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data channel order: RGB(0~255)</span><br><span class="line">input = input / 255</span><br><span class="line">resize: keep aspect ratio of the raw image and resize it to make the length of the longer side equal to 416</span><br><span class="line">padding: pad along the short side with 0.5 to generate the input image with size = 416 x 416</span><br></pre></td></tr></table></figure><br>    2. Node information</p>
+<p>​<br>​    ### Note
+​<br>    1. Data preprocess
+      <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data channel order: RGB(0~255)</span><br><span class="line">input = input / 255</span><br><span class="line">resize: keep aspect ratio of the raw image and resize it to make the length of the longer side equal to 416</span><br><span class="line">padding: pad along the short side with 0.5 to generate the input image with size = 416 x 416</span><br></pre></td></tr></table></figure>
+    2. Node information</p>
 <pre><code>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input node: &#x27;input_1:0&#x27;</span><br><span class="line">output nodes: &#x27;conv2d_59/BiasAdd:0&#x27;, &#x27;conv2d_67/BiasAdd:0&#x27;, &#x27;conv2d_75/BiasAdd:0&#x27;</span><br></pre></td></tr></table></figure>
 </code></pre>
-<p>​<br>​    ### Quantize<br>​<br>    1. Quantize tool installation</p>
+<p>​<br>​    ### Quantize
+​<br>    1. Quantize tool installation</p>
 <pre><code>   Please refer to [vai_q_tensorflow](../../../src/vai_quantizer/vai_q_tensorflow1.x)
   
 2. Quantize workspace
@@ -704,25 +820,69 @@ Dataset diretory structure
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/154c0219b2383c095a676e4a40d64715.png"></p>
 <p>通常model-zoo提供的模型文件结构如下：</p>
 <p>tensorflow：</p>
-<p>​<br>​    ├── code                            # Contains test code that can execute the model on the target and showcase model performance.<br>​    │<br>​    │<br>​    ├── readme.md                       # Documents the environment requirements, data pre-processing requirements, and model information.<br>​    │                                     Developers should refer to this to understand how to test the model with scripts.<br>​    │<br>​    ├── data                            # The dataset target directory that can be used for model verification and training.<br>​    │                                     When test or training scripts run successfully, the dataset will be placed in this directory.<br>​    │<br>​    ├── quantized<br>​    │   └── quantize_eval_model.pb      # Quantized model for evaluation.<br>​    │<br>​    └── float<br>​        └── frozen.pb                   # The floating-point frozen model is used as the input to the quantizer.<br>​                                          The naming of the protobuf file may differ from the model naming used in the model list.</p>
+<p>​<br>​    ├── code                            # Contains test code that can execute the model on the target and showcase model performance.
+​    │
+​    │
+​    ├── readme.md                       # Documents the environment requirements, data pre-processing requirements, and model information.
+​    │                                     Developers should refer to this to understand how to test the model with scripts.
+​    │
+​    ├── data                            # The dataset target directory that can be used for model verification and training.
+​    │                                     When test or training scripts run successfully, the dataset will be placed in this directory.
+​    │
+​    ├── quantized
+​    │   └── quantize_eval_model.pb      # Quantized model for evaluation.
+​    │
+​    └── float
+​        └── frozen.pb                   # The floating-point frozen model is used as the input to the quantizer.
+​                                          The naming of the protobuf file may differ from the model naming used in the model list.</p>
 <p>pytorch：</p>
-<p>​<br>​    ├── code                            # Contains test and training code.<br>​    │<br>​    │<br>​    ├── readme.md                       # Contains the environment requirements, data pre-processing requirements and model information.<br>​    │                                     Developers should refer to this to understand how to test and train the model with scripts.<br>​    │<br>​    ├── data                            # The dataset target directory that is used for model verification and training.<br>​    │                                     When test or training scripts run successfully, the dataset will be placed in this directory.<br>​    │<br>​    ├── qat                             # Contains the QAT (Quantization Aware Training) results.<br>​    │                                     For some models, the accuracy of QAT is higher than with Post Training Quantization (PTQ) methods.<br>​    │                                     Some models, but not all, provide QAT reference results, and only these models have a QAT folder.<br>​    │<br>​    ├── quantized<br>​    │   ├── _int.pth                    # Quantized model.<br>​    │   ├── quant_info.json             # Quantization steps of tensors got. Please keep it for evaluation of quantized model.<br>​    │   ├── _int.py                     # Converted vai_q_pytorch format model.<br>​    │   └── _int.xmodel                 # Deployed model. The name of different models may be different.<br>​    │                                     For some models that support QAT you could find better quantization results in ‘qat’ folder.<br>​    │<br>​    │<br>​    └── float<br>​        └── _int.pth                    # Trained float-point model. The pth name of different models may be different.<br>​                                          Path and model name in test scripts could be modified according to actual situation.</p>
-<p>打开下载好的tf_yolov3_3.5文件夹，其中按照之前的model_info文件所叙述的内容，进行“Download and prepare the<br>dataset”（不是必须运行）：</p>
+<p>​<br>​    ├── code                            # Contains test and training code.
+​    │
+​    │
+​    ├── readme.md                       # Contains the environment requirements, data pre-processing requirements and model information.
+​    │                                     Developers should refer to this to understand how to test and train the model with scripts.
+​    │
+​    ├── data                            # The dataset target directory that is used for model verification and training.
+​    │                                     When test or training scripts run successfully, the dataset will be placed in this directory.
+​    │
+​    ├── qat                             # Contains the QAT (Quantization Aware Training) results.
+​    │                                     For some models, the accuracy of QAT is higher than with Post Training Quantization (PTQ) methods.
+​    │                                     Some models, but not all, provide QAT reference results, and only these models have a QAT folder.
+​    │
+​    ├── quantized
+​    │   ├── _int.pth                    # Quantized model.
+​    │   ├── quant_info.json             # Quantization steps of tensors got. Please keep it for evaluation of quantized model.
+​    │   ├── _int.py                     # Converted vai_q_pytorch format model.
+​    │   └── _int.xmodel                 # Deployed model. The name of different models may be different.
+​    │                                     For some models that support QAT you could find better quantization results in ‘qat’ folder.
+​    │
+​    │
+​    └── float
+​        └── _int.pth                    # Trained float-point model. The pth name of different models may be different.
+​                                          Path and model name in test scripts could be modified according to actual situation.</p>
+<p>打开下载好的tf_yolov3_3.5文件夹，其中按照之前的model_info文件所叙述的内容，进行“Download and prepare the
+dataset”（不是必须运行）：</p>
 <p>​<br>​    bash code&#x2F;test&#x2F;dataset_tools&#x2F;prepare_data.sh</p>
 <p>下载好的文件结构也在md文件中，在docker中执行评估（不是必须运行）（docker外需配置环境cv2、numpy）：</p>
 <p>​<br>​    bash code&#x2F;test&#x2F;run_eval.sh</p>
 <p>评估结果：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/38b92c92fb4b1a06262e88117770e500.png"></p>
 <p>安装snap和snapcraft后安装模型查看工具netron：</p>
-<p>​<br>​    sudo apt-get install snap<br>​    sudo apt-get install snapcraft<br>​    sudo snap install netron</p>
+<p>​<br>​    sudo apt-get install snap
+​    sudo apt-get install snapcraft
+​    sudo snap install netron</p>
 <p>然后就可以查看float文件夹下的pb文件网络的结构：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/4a57b4d4b3f8c4bcd95910f16c04e505.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/a5c9e1dc7906295e163c8989b3a3b743.png"></p>
-<p>​<br>​    1. Data preprocess<br>​      <code>​      data channel order: RGB(0~255) ​      input = input / 255 ​      resize: keep aspect ratio of the raw image and resize it to make the length of the longer side equal to 416 ​      padding: pad along the short side with 0.5 to generate the input image with size = 416 x 416 ​     </code><br>​    2. Node information<br>​<br>      <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input node: &#x27;input_1:0&#x27;</span><br><span class="line">output nodes: &#x27;conv2d_59/BiasAdd:0&#x27;, &#x27;conv2d_67/BiasAdd:0&#x27;, &#x27;conv2d_75/BiasAdd:0&#x27;</span><br></pre></td></tr></table></figure></p>
+<p>​<br>​    1. Data preprocess
+​      <code>​      data channel order: RGB(0~255) ​      input = input / 255 ​      resize: keep aspect ratio of the raw image and resize it to make the length of the longer side equal to 416 ​      padding: pad along the short side with 0.5 to generate the input image with size = 416 x 416 ​     </code> 
+​    2. Node information
+​<br>      <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input node: &#x27;input_1:0&#x27;</span><br><span class="line">output nodes: &#x27;conv2d_59/BiasAdd:0&#x27;, &#x27;conv2d_67/BiasAdd:0&#x27;, &#x27;conv2d_75/BiasAdd:0&#x27;</span><br></pre></td></tr></table></figure></p>
 <p>可以看到在第59、67、75个conv2d节点后进行了输出：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/030fa826ada83d08a466bb23919680bc.png"></p>
 <h3 id="2-模型量化"><a href="#2-模型量化" class="headerlink" title="2.模型量化"></a>2.模型量化</h3><p>在上述md文件最后给出了量化指引：</p>
-<p>​<br>​    ### Quantize<br>​<br>    1. Quantize tool installation</p>
+<p>​<br>​    ### Quantize
+​<br>    1. Quantize tool installation</p>
 <pre><code>   Please refer to [vai_q_tensorflow](../../../src/vai_quantizer/vai_q_tensorflow1.x)
   
 2. Quantize workspace
@@ -732,16 +892,48 @@ Dataset diretory structure
 <p>量化参考vitis-ai文件夹下src…和code&#x2F;quantize&#x2F;里的内容</p>
 <p>在code&#x2F;quantize&#x2F;中的config.ini是配置文件，包括量化后模型名、存放位置为&#x2F;quantized及各种参数；</p>
 <p>打开quantize.sh脚本，关注以下内容：</p>
-<p>​<br>​    source .&#x2F;config.ini<br>​<br>    vai_q_tensorflow quantize <br>      –input_frozen_graph $FLOAT_MODEL <br>      –input_nodes $Q_INPUT_NODE <br>      –input_shapes ?,$INPUT_HEIGHT,$INPUT_WIDTH,3 <br>      –output_nodes $Q_OUTPUT_NODE <br>      –input_fn $CALIB_INPUT_FN <br>      –method $METHOD <br>      –gpu $GPUS <br>      –calib_iter $CALIB_ITER <br>      –output_dir $QUANTIZE_DIR \</p>
+<p>​<br>​    source .&#x2F;config.ini
+​<br>    vai_q_tensorflow quantize <br>      –input_frozen_graph $FLOAT_MODEL <br>      –input_nodes $Q_INPUT_NODE <br>      –input_shapes ?,$INPUT_HEIGHT,$INPUT_WIDTH,3 <br>      –output_nodes $Q_OUTPUT_NODE <br>      –input_fn $CALIB_INPUT_FN <br>      –method $METHOD <br>      –gpu $GPUS <br>      –calib_iter $CALIB_ITER <br>      –output_dir $QUANTIZE_DIR \</p>
 <p>可以看到在量化过程中其调用config.ini中的各种参数，然后通过src&#x2F;vai_quantizer&#x2F;vai_q_tensorflow1.x工具进行量化，转到对应位置，在readme文件中可以看到详细信息：</p>
-<p>[Vitis-AI&#x2F;src&#x2F;vai_quantizer&#x2F;vai_q_tensorflow1.x at master · Xilinx&#x2F;Vitis-AI<br>(github.com)](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a><br>AI&#x2F;tree&#x2F;master&#x2F;src&#x2F;vai_quantizer&#x2F;vai_q_tensorflow1.x “Vitis-<br>AI&#x2F;src&#x2F;vai_quantizer&#x2F;vai_q_tensorflow1.x at master · Xilinx&#x2F;Vitis-AI<br>(github.com)“)</p>
+<p>[Vitis-AI&#x2F;src&#x2F;vai_quantizer&#x2F;vai_q_tensorflow1.x at master · Xilinx&#x2F;Vitis-AI
+(github.com)](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a>
+AI&#x2F;tree&#x2F;master&#x2F;src&#x2F;vai_quantizer&#x2F;vai_q_tensorflow1.x “Vitis-
+AI&#x2F;src&#x2F;vai_quantizer&#x2F;vai_q_tensorflow1.x at master · Xilinx&#x2F;Vitis-AI
+(github.com)“)</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/9d34d43f9036308c8f83f589b763afd2.jpeg"></p>
-<p>​<br>​    #目的：<br>​    The process of inference is computation intensive and requires a high memory bandwidth to satisfy the low-latency and high-throughput requirement of edge applications.<br>​<br>    #介绍（vitis-ai工具只包含量化工具，修建工具在optimizer中）：<br>    Quantization and channel pruning techniques are employed to address these issues while achieving high performance and high energy efficiency with little degradation in accuracy. Quantization makes it possible to use integer computing units and to represent weights and activations by lower bits, while pruning reduces the overall required operations. In the Vitis AI quantizer, only the quantization tool is included. The pruning tool is packaged in the Vitis AI optimizer. Contact the support team for the Vitis AI development kit if you require the pruning tool.</p>
+<p>​<br>​    #目的：
+​    The process of inference is computation intensive and requires a high memory bandwidth to satisfy the low-latency and high-throughput requirement of edge applications.
+​<br>    #介绍（vitis-ai工具只包含量化工具，修建工具在optimizer中）：
+    Quantization and channel pruning techniques are employed to address these issues while achieving high performance and high energy efficiency with little degradation in accuracy. Quantization makes it possible to use integer computing units and to represent weights and activations by lower bits, while pruning reduces the overall required operations. In the Vitis AI quantizer, only the quantization tool is included. The pruning tool is packaged in the Vitis AI optimizer. Contact the support team for the Vitis AI development kit if you require the pruning tool.</p>
 <p>​    </p>
 <p>将32位浮点数转化为8位整数：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/b4e03ee0be4436f378980db2d44681b1.jpeg"></p>
 <p>量化的步骤：</p>
-<p>​<br>​    ## Running vai_q_tensorflow<br>​    ### Preparing the Float Model and Related Input Files<br>​    |1|frozen_graph.pb|Floating-point frozen inference graph. Ensure that the graph is the inference graph rather than the training graph.|<br>​    |2|calibration dataset|A subset of the training dataset containing 100 to 1000 images.|<br>​    |3|input_fn|An input function to convert the calibration dataset to the input data of the frozen_graph during quantize calibration. Usually performs data pre-processing and augmentation.|<br>​    #### <strong>Generating the Frozen Inference Graph</strong><br>​    Training a model with TensorFlow 1.x creates a folder containing a GraphDef file (usually ending with <em>a.pb</em> or <em>.pbtxt</em> extension) and a set of checkpoint files. What you need for mobile or embedded deployment is a single GraphDef file that has been “frozen,” or had its variables converted into inline constants, so everything is in one file. To handle the conversion, TensorFlow provides <em>freeze_graph.py</em>, which is automatically installed with the vai_q_tensorflow quantizer.<br>​    #### <strong>Preparing the Calibration Dataset and Input Function</strong><br>​    The calibration set is usually a subset of the training&#x2F;validation dataset or actual application images (at least 100 images for performance). The input function is a Python importable function to load the calibration dataset and perform data preprocessing. The vai_q_tensorflow quantizer can accept an input_fn to do the preprocessing, which is not saved in the graph. If the preprocessing subgraph is saved into the frozen graph, the input_fn only needs to read the images from dataset and return a feed_dict.<br>​    ### Quantizing the Model Using vai_q_tensorflow<br>​    ### Generating the Quantized Model<br>​    - <em>quantize_eval_model.pb</em> is used to evaluate the CPU&#x2F;GPUs, and can be used to simulate the results on hardware.<br>​    |1|deploy_model.pb|Quantized model for the Vitis AI compiler (extended TensorFlow format) for targeting DPUCZDX8G implementations.|<br>​    |2|quantize_eval_model.pb|Quantized model for evaluation (also, the Vitis AI compiler input for most DPU architectures, like DPUCAHX8H, and DPUCADF8H).|<br>​    ### (Optional) Fast Finetune<br>​    Fast finetune adjusts the weights layer by layer with calibration dataset and may get better accuracy for some models. It will take much longer time than normal PTQ (still shorter than QAT as calibration dataset is much smaller than train dataset) and is disabled by default to save time, and can be turned on to try to improve the performance if you see accuracy issues.<br>​    ### (Optional) Exporting the Quantized Model to ONNX<br>​    The quantized model is tensorflow protobuf format by default. If you want to get a ONNX format model, just add <em>output_format</em> to the <em>vai_q_tensorflow</em> command.<br>​    ### (Optional) Evaluating the Quantized Model<br>​    If you have scripts to evaluate floating point models, like the models in <a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/master/model_zoo">Vitis AI Model Zoo</a>, apply the following two changes to evaluate the quantized model:…<br>​    ### (Optional) Dumping the Simulation Results<br>​<br>    ## vai_q_tensorflow Quantization Aware Training<br>    Quantization aware training (QAT, also called <em>quantize finetuning</em> in <a href="#quantization-overview">Quantization Overview</a>) is similar to float model training&#x2F;finetuning, but in QAT, the vai_q_tensorflow APIs are used to rewrite the float graph to convert it to a quantized graph before the training starts. The typical workflow is as follows:…<br>    ### Generated Files<br>    ### QAT APIs for TensorFlow 1.x</p>
+<p>​<br>​    ## Running vai_q_tensorflow
+​    ### Preparing the Float Model and Related Input Files
+​    |1|frozen_graph.pb|Floating-point frozen inference graph. Ensure that the graph is the inference graph rather than the training graph.|
+​    |2|calibration dataset|A subset of the training dataset containing 100 to 1000 images.|
+​    |3|input_fn|An input function to convert the calibration dataset to the input data of the frozen_graph during quantize calibration. Usually performs data pre-processing and augmentation.|
+​    #### <strong>Generating the Frozen Inference Graph</strong>
+​    Training a model with TensorFlow 1.x creates a folder containing a GraphDef file (usually ending with <em>a.pb</em> or <em>.pbtxt</em> extension) and a set of checkpoint files. What you need for mobile or embedded deployment is a single GraphDef file that has been “frozen,” or had its variables converted into inline constants, so everything is in one file. To handle the conversion, TensorFlow provides <em>freeze_graph.py</em>, which is automatically installed with the vai_q_tensorflow quantizer.
+​    #### <strong>Preparing the Calibration Dataset and Input Function</strong>
+​    The calibration set is usually a subset of the training&#x2F;validation dataset or actual application images (at least 100 images for performance). The input function is a Python importable function to load the calibration dataset and perform data preprocessing. The vai_q_tensorflow quantizer can accept an input_fn to do the preprocessing, which is not saved in the graph. If the preprocessing subgraph is saved into the frozen graph, the input_fn only needs to read the images from dataset and return a feed_dict.
+​    ### Quantizing the Model Using vai_q_tensorflow
+​    ### Generating the Quantized Model
+​    - <em>quantize_eval_model.pb</em> is used to evaluate the CPU&#x2F;GPUs, and can be used to simulate the results on hardware.
+​    |1|deploy_model.pb|Quantized model for the Vitis AI compiler (extended TensorFlow format) for targeting DPUCZDX8G implementations.|
+​    |2|quantize_eval_model.pb|Quantized model for evaluation (also, the Vitis AI compiler input for most DPU architectures, like DPUCAHX8H, and DPUCADF8H).|
+​    ### (Optional) Fast Finetune
+​    Fast finetune adjusts the weights layer by layer with calibration dataset and may get better accuracy for some models. It will take much longer time than normal PTQ (still shorter than QAT as calibration dataset is much smaller than train dataset) and is disabled by default to save time, and can be turned on to try to improve the performance if you see accuracy issues.
+​    ### (Optional) Exporting the Quantized Model to ONNX
+​    The quantized model is tensorflow protobuf format by default. If you want to get a ONNX format model, just add <em>output_format</em> to the <em>vai_q_tensorflow</em> command.
+​    ### (Optional) Evaluating the Quantized Model
+​    If you have scripts to evaluate floating point models, like the models in <a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/master/model_zoo">Vitis AI Model Zoo</a>, apply the following two changes to evaluate the quantized model:…
+​    ### (Optional) Dumping the Simulation Results
+​<br>    ## vai_q_tensorflow Quantization Aware Training
+    Quantization aware training (QAT, also called <em>quantize finetuning</em> in <a href="#quantization-overview">Quantization Overview</a>) is similar to float model training&#x2F;finetuning, but in QAT, the vai_q_tensorflow APIs are used to rewrite the float graph to convert it to a quantized graph before the training starts. The typical workflow is as follows:…
+    ### Generated Files
+    ### QAT APIs for TensorFlow 1.x</p>
 <pre><code>## Converting to Float16 or BFloat16
 The vai_q_tensorflow supports data type conversions for float models, including Float16, BFloat16, Float, and Double. To achieve this, you can add *convert_datatype* to the vai_q_tensorflow command. 
 
@@ -750,7 +942,10 @@ The vai_q_tensorflow supports data type conversions for float models, including 
 <p> 在准备阶段包括：推理图的固化（freeze_graph.py已安装在vai_q_tensorflow内）、准备验证数据集和输入函数…</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/2035fe160556f3713512b51266287de1.png"></p>
 <p>关于vai_q_tensorflow命令的详细使用见readme中的vai_q_tensorflow Usage，例：</p>
-<p>​<br>​    #show help:<br>​    $vai_q_tensorflow –help<br>​<br>    #quantize:<br>    $vai_q_tensorflow quantize –input_frozen_graph frozen_graph.pb <br>    –input_nodes inputs <br>    –output_nodes predictions <br>    –input_shapes ?,224,224,3 <br>    –input_fn my_input_fn.calib_input</p>
+<p>​<br>​    #show help: 
+​    $vai_q_tensorflow –help
+​<br>    #quantize:
+    $vai_q_tensorflow quantize –input_frozen_graph frozen_graph.pb <br>    –input_nodes inputs <br>    –output_nodes predictions <br>    –input_shapes ?,224,224,3 <br>    –input_fn my_input_fn.calib_input</p>
 <pre><code>#dump quantized model:
 $vai_q_tensorflow dump --input_frozen_graph quantize_results/quantize_eval_model.pb \
 --input_fn my_input_fn.dump_input
@@ -761,7 +956,11 @@ $vai_q_tensorflow dump --input_frozen_graph quantize_results/quantize_eval_model
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/d38f0ab41704bb97f91f371d5b4c3cfd.png"></p>
 <p>量化后的模型文件位于&#x2F;quantize的pb文件，继续运行&#x2F;quantize下的evaluate_quantize_model.sh文件（非必要）对量化后的模型进行评估，结果如下：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/4c32c7a9a74429a18ef81f04ae3638c1.png"></p>
-<h3 id="3-模型编译"><a href="#3-模型编译" class="headerlink" title="3.模型编译"></a>3.模型编译</h3><h2 id="四-mpsoc快速开始"><a href="#四-mpsoc快速开始" class="headerlink" title="四.mpsoc快速开始"></a>四.mpsoc快速开始</h2><p>见：[Vitis-AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;quickstart&#x2F;mpsoc.rst.txt at v3.5 ·<br>Xilinx&#x2F;Vitis-AI (github.com)](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a><br>AI&#x2F;blob&#x2F;v3.5&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;quickstart&#x2F;mpsoc.rst.txt “Vitis-<br>AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;quickstart&#x2F;mpsoc.rst.txt at v3.5 · Xilinx&#x2F;Vitis-AI<br>(github.com)“)</p>
+<h3 id="3-模型编译"><a href="#3-模型编译" class="headerlink" title="3.模型编译"></a>3.模型编译</h3><h2 id="四-mpsoc快速开始"><a href="#四-mpsoc快速开始" class="headerlink" title="四.mpsoc快速开始"></a>四.mpsoc快速开始</h2><p>见：[Vitis-AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;quickstart&#x2F;mpsoc.rst.txt at v3.5 ·
+Xilinx&#x2F;Vitis-AI (github.com)](<a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-">https://github.com/Xilinx/Vitis-</a>
+AI&#x2F;blob&#x2F;v3.5&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;quickstart&#x2F;mpsoc.rst.txt “Vitis-
+AI&#x2F;docs&#x2F;_sources&#x2F;docs&#x2F;quickstart&#x2F;mpsoc.rst.txt at v3.5 · Xilinx&#x2F;Vitis-AI
+(github.com)“)</p>
 <p>（适合xilinx官方开发板zcu102、zcu104、kv260）</p>
 <h2 id="五-官方资料"><a href="#五-官方资料" class="headerlink" title="五.官方资料"></a>五.官方资料</h2><p>vivado_integration：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/6c5bf2b5b0093972699eb12988ab59d9.png"></p>
@@ -779,9 +978,12 @@ $vai_q_tensorflow dump --input_frozen_graph quantize_results/quantize_eval_model
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -789,9 +991,9 @@ $vai_q_tensorflow dump --input_frozen_graph quantize_results/quantize_eval_model
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
               <a href="/tags/AI/" rel="tag"># AI</a>
           </div>
 
@@ -883,20 +1085,20 @@ $vai_q_tensorflow dump --input_frozen_graph quantize_results/quantize_eval_model
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -965,13 +1167,13 @@ $vai_q_tensorflow dump --input_frozen_graph quantize_results/quantize_eval_model
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -1056,6 +1258,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -1120,14 +1324,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>

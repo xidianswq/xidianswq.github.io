@@ -32,7 +32,7 @@
 <meta property="og:description" content="一.使用git提交文件">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-02-11T08:37:17.000Z">
-<meta property="article:modified_time" content="2025-02-11T09:04:16.239Z">
+<meta property="article:modified_time" content="2025-03-09T06:50:58.286Z">
 <meta property="article:author" content="SWQ">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="网站">
@@ -83,7 +83,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -134,17 +134,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -263,7 +263,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.7k</span>
+              <span>5.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -286,10 +286,14 @@
 <p>参考： <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/102592286">从零开始搭建个人博客（超详细） - 知乎</a>  <em><strong>致谢！</strong></em></p>
 </blockquote>
 <h2 id="第一种：本地没有-git-仓库"><a href="#第一种：本地没有-git-仓库" class="headerlink" title="第一种：本地没有 git 仓库"></a>第一种：本地没有 git 仓库</h2><ul>
-<li>直接将远程仓库 clone 到本地；</li>
-<li>将文件添加并 commit 到本地仓库；</li>
-<li>将本地仓库的内容push到远程仓库。</li>
+<li><p>直接将远程仓库 clone 到本地；</p>
+</li>
+<li><p>将文件添加并 commit 到本地仓库；</p>
+</li>
+<li><p>将本地仓库的内容push到远程仓库。</p>
+</li>
 </ul>
+<p><em><strong>注：在对应文件夹路径处输入 <code>git bash</code> （同 <code>cmd</code> ）</strong></em></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">	Hi xidianswq! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">$ git clone git@github.com:xidianswq/switch_homepage.git</span><br><span class="line">	Cloning into &#x27;switch_homepage&#x27;...</span><br><span class="line">	remote: Enumerating objects: 3, done.</span><br><span class="line">	remote: Counting objects: 100% (3/3), done.</span><br><span class="line">	remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)</span><br><span class="line">	Receiving objects: 100% (3/3), done.</span><br><span class="line">$ cd ./switch_homepage</span><br><span class="line">$ git status</span><br><span class="line">	On branch main</span><br><span class="line">	Your branch is up to date with &#x27;origin/main&#x27;.</span><br><span class="line">	Untracked files:</span><br><span class="line">	  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">	        test.txt</span><br><span class="line"></span><br><span class="line">	nothing added to commit but untracked files present (use &quot;git add&quot; to track)</span><br><span class="line">$ git add test.txt</span><br><span class="line">$ git commit -m test.txt &quot;test.txt&quot;</span><br><span class="line">	[main 4463650] test.txt</span><br><span class="line">	 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line">	 create mode 100644 test.txt</span><br><span class="line">$ git log</span><br><span class="line">	commit 4463650540e1bc66dc16aedc8b132e11b5e469ed (HEAD -&gt; main)</span><br><span class="line">	Author: xidianswq &lt;3209507800@qq.com&gt;</span><br><span class="line">	Date:   Thu Feb 6 22:31:41 2025 +0800</span><br><span class="line"></span><br><span class="line">	    test.txt</span><br><span class="line">	</span><br><span class="line">	commit 8f09f668066393a7b16b2c8c5df31e0d6a64eaa1 (origin/main, origin/HEAD)</span><br><span class="line">	Author: xidianswq &lt;94434249+xidianswq@users.noreply.github.com&gt;</span><br><span class="line">	Date:   Thu Feb 6 21:32:08 2025 +0800</span><br><span class="line">	</span><br><span class="line">	    Initial commit</span><br><span class="line">$ git push origin main</span><br><span class="line">	Enumerating objects: 4, done.</span><br><span class="line">	Counting objects: 100% (4/4), done.</span><br><span class="line">	Delta compression using up to 16 threads</span><br><span class="line">	Compressing objects: 100% (2/2), done.</span><br><span class="line">	Writing objects: 100% (3/3), 269 bytes | 269.00 KiB/s, done.</span><br><span class="line">	Total 3 (delta 0), reused 0 (delta 0), pack-reused 0</span><br><span class="line">	To github.com:xidianswq/switch_homepage.git</span><br><span class="line">	   8f09f66..4463650  main -&gt; main</span><br></pre></td></tr></table></figure>
 
 <hr>
@@ -321,7 +325,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack -g</span><br><span class="line">github创建XXX.github.io仓库</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line">hexo init</span><br><span class="line">hexo g</span><br><span class="line">hexo s	#static deploy</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p><strong>解决 bash: hexo: command not found：</strong><br>参考： <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36759224/article/details/100411949?spm=1001.2014.3001.550">完美解决 bash: hexo: command not found-CSDN博客</a> </p>
+<p><strong>解决 bash: hexo: command not found：</strong>
+参考： <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36759224/article/details/100411949?spm=1001.2014.3001.550">完美解决 bash: hexo: command not found-CSDN博客</a> </p>
 </blockquote>
 <hr>
 <h2 id="2-动态部署及后续更新"><a href="#2-动态部署及后续更新" class="headerlink" title="2.动态部署及后续更新"></a>2.动态部署及后续更新</h2><ul>
@@ -338,11 +343,14 @@
 <li>hexo d       #自动生成网站静态文件，并部署到设定的仓库(hexo deploy 的缩写)</li>
 </ul>
 <blockquote>
-<p><strong>注：打开XXX.github.io网页时使用默认分支branch，可在设置内设置默认分支</strong><br>（参考： <a target="_blank" rel="noopener" href="https://blog.csdn.net/Zero_Wong/article/details/123882159?spm=1001.2014.3001.5506">github：master提交项目到远程仓库出现“There isn’t anything to compare.”_there isn鈥檛 anything to compare.-CSDN博客</a> ）。</p>
+<p><strong>注：打开XXX.github.io网页时使用默认分支branch，可在设置内设置默认分支</strong>
+（参考： <a target="_blank" rel="noopener" href="https://blog.csdn.net/Zero_Wong/article/details/123882159?spm=1001.2014.3001.5506">github：master提交项目到远程仓库出现“There isn’t anything to compare.”_there isn鈥檛 anything to compare.-CSDN博客</a> ）。</p>
 </blockquote>
 <hr>
 <h1 id="三-安装及优化NexT主题"><a href="#三-安装及优化NexT主题" class="headerlink" title="三.安装及优化NexT主题"></a>三.安装及优化NexT主题</h1><h2 id="1-安装NexT主题"><a href="#1-安装NexT主题" class="headerlink" title="1.安装NexT主题"></a>1.安装NexT主题</h2><blockquote>
-<p>参考目录：<br> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/105584373">个人博客第7篇——设置next主题 - 知乎</a> ；<br> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/106060640">个人博客第8篇——优化主题（持续更新） - 知乎</a><br><em><strong>致谢！</strong></em></p>
+<p>参考目录：
+ <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/105584373">个人博客第7篇——设置next主题 - 知乎</a> ；
+ <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/106060640">个人博客第8篇——优化主题（持续更新） - 知乎</a><br><em><strong>致谢！</strong></em></p>
 </blockquote>
 <ul>
 <li>在网页根目录：<code>git clone https://github.com/theme-next/hexo-theme-next themes/next</code> 下载主题</li>
@@ -363,7 +371,8 @@
 <hr>
 <h2 id="2-优化主题"><a href="#2-优化主题" class="headerlink" title="2.优化主题"></a>2.优化主题</h2><blockquote>
 <p>参考： </p>
-<p>[1] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/106060640">个人博客第8篇——优化主题（持续更新） - 知乎</a><br>[2]  <a target="_blank" rel="noopener" href="https://blog.csdn.net/2301_77285173/article/details/130189857">在hexo博客中插入图片的方法_hexo插入图片-CSDN博客</a> </p>
+<p>[1] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/106060640">个人博客第8篇——优化主题（持续更新） - 知乎</a>
+[2]  <a target="_blank" rel="noopener" href="https://blog.csdn.net/2301_77285173/article/details/130189857">在hexo博客中插入图片的方法_hexo插入图片-CSDN博客</a> </p>
 <p><em><strong>致谢！</strong></em></p>
 </blockquote>
 <ul>
@@ -447,9 +456,12 @@
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -471,7 +483,10 @@
     <a href="/2025/02/08/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/CSDN%E5%8D%9A%E5%AE%A2%E5%AF%BC%E5%87%BA%E4%B8%BAHexo%E7%9A%84MD%E6%96%87%E4%BB%B6/" rel="prev" title="CSDN博客导出为Hexo的MD文件">
       <i class="fa fa-chevron-left"></i> CSDN博客导出为Hexo的MD文件
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2025/02/18/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" rel="next" title="git常用指令">
+      git常用指令 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -547,20 +562,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -629,13 +644,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -720,6 +735,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -784,14 +801,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>

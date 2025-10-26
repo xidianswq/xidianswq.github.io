@@ -73,9 +73,9 @@
 <meta property="article:published_time" content="2023-09-11T13:42:56.000Z">
 <meta property="article:modified_time" content="2025-02-15T04:28:12.233Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="fpga开发">
-<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="嵌入式硬件">
+<meta property="article:tag" content="fpga开发">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/274a1b99ce88f7fabcba88e6ee3f1a26.png">
 
@@ -123,7 +123,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -174,17 +174,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -326,25 +326,38 @@
 <p><a href="about:blank#%E4%B8%80.IP%E6%A0%B8%E7%9A%84%E4%BD%BF%E7%94%A8">一.IP核的使用</a></p>
 <p><a href="about:blank#1.PLL%20IP%E6%A0%B8">1.PLL IP核</a></p>
 <p><a href="about:blank#%3C1%3EPLL%E7%AE%80%E4%BB%8B">&lt;1&gt;PLL简介</a></p>
-<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;2&gt;xilinx vivado<br>IP核配置</a></p>
-<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E8%B0%83%E7%94%A8">&lt;2&gt;xilinx vivado<br>IP核调用</a></p>
+<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;2&gt;xilinx vivado
+IP核配置</a></p>
+<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E8%B0%83%E7%94%A8">&lt;2&gt;xilinx vivado
+IP核调用</a></p>
 <p><a href="about:blank#2.ROM%20IP%E6%A0%B8">2.ROM IP核</a></p>
-<p><a href="about:blank#%3C1%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;1&gt;xilinx vivado<br>IP核配置</a></p>
+<p><a href="about:blank#%3C1%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;1&gt;xilinx vivado
+IP核配置</a></p>
 <p><a href="about:blank#%E2%91%B4%E5%88%9B%E5%BB%BA%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%87%E4%BB%B6.coe%E6%96%87%E4%BB%B6">⑴创建初始化文件.coe文件</a></p>
-<p><a href="about:blank#%E2%91%B5%E5%8D%95%E7%AB%AF%E5%8F%A3%20ROM%20%E7%9A%84%E9%85%8D%E7%BD%AE">⑵单端口 ROM<br>的配置</a></p>
-<p><a href="about:blank#%E2%91%B6%E5%8F%8C%E7%AB%AF%E5%8F%A3%20ROM%20%E7%9A%84%E9%85%8D%E7%BD%AE">⑶双端口 ROM<br>的配置</a></p>
-<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E8%B0%83%E7%94%A8">&lt;2&gt;xilinx vivado<br>IP核调用</a></p>
+<p><a href="about:blank#%E2%91%B5%E5%8D%95%E7%AB%AF%E5%8F%A3%20ROM%20%E7%9A%84%E9%85%8D%E7%BD%AE">⑵单端口 ROM
+的配置</a></p>
+<p><a href="about:blank#%E2%91%B6%E5%8F%8C%E7%AB%AF%E5%8F%A3%20ROM%20%E7%9A%84%E9%85%8D%E7%BD%AE">⑶双端口 ROM
+的配置</a></p>
+<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E8%B0%83%E7%94%A8">&lt;2&gt;xilinx vivado
+IP核调用</a></p>
 <p><a href="about:blank#3.RAM%20IP%E6%A0%B8">3.RAM IP核</a></p>
-<p><a href="about:blank#%3C1%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;1&gt;xilinx vivado<br>IP核配置</a></p>
-<p><a href="about:blank#%E2%91%B4%E5%8D%95%E7%AB%AF%E5%8F%A3%20ROM%20%E7%9A%84%E9%85%8D%E7%BD%AE">⑴单端口 ROM<br>的配置</a></p>
-<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;2&gt;xilinx vivado<br>IP核配置</a></p>
+<p><a href="about:blank#%3C1%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;1&gt;xilinx vivado
+IP核配置</a></p>
+<p><a href="about:blank#%E2%91%B4%E5%8D%95%E7%AB%AF%E5%8F%A3%20ROM%20%E7%9A%84%E9%85%8D%E7%BD%AE">⑴单端口 ROM
+的配置</a></p>
+<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;2&gt;xilinx vivado
+IP核配置</a></p>
 <p><a href="about:blank#4.FIFO%20IP%E6%A0%B8">4.FIFO IP核</a></p>
 <p><a href="about:blank#%E2%91%B4SCFIFO%20%E7%9A%84%E9%85%8D%E7%BD%AE">⑴SCFIFO 的配置</a></p>
-<p><a href="about:blank#%3C1%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;1&gt;xilinx vivado<br>IP核配置</a></p>
-<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E8%B0%83%E7%94%A8">&lt;2&gt;xilinx vivado<br>IP核调用</a></p>
+<p><a href="about:blank#%3C1%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;1&gt;xilinx vivado
+IP核配置</a></p>
+<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E8%B0%83%E7%94%A8">&lt;2&gt;xilinx vivado
+IP核调用</a></p>
 <p><a href="about:blank#%E2%91%B5DCFIFO%20%E7%9A%84%E9%85%8D%E7%BD%AE">⑵DCFIFO 的配置</a></p>
-<p><a href="about:blank#%3C1%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;1&gt;xilinx vivado<br>IP核配置</a></p>
-<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E8%B0%83%E7%94%A8">&lt;2&gt;xilinx vivado<br>IP核调用</a></p>
+<p><a href="about:blank#%3C1%3Exilinx%20vivado%20IP%E6%A0%B8%E9%85%8D%E7%BD%AE">&lt;1&gt;xilinx vivado
+IP核配置</a></p>
+<p><a href="about:blank#%3C2%3Exilinx%20vivado%20IP%E6%A0%B8%E8%B0%83%E7%94%A8">&lt;2&gt;xilinx vivado
+IP核调用</a></p>
 <p><a href="about:blank#%E2%91%B6%E6%B3%A8%E6%84%8F%E9%97%AE%E9%A2%98">⑶注意问题</a></p>
 <hr>
 <p>前置学习：</p>
@@ -360,18 +373,29 @@
     硬核是完成提供设计的最终阶段产品——掩膜（Mask），以经过完全的布局布线的网 表形式提供，这种硬核既具有可预见性，同时还可以针对特定工艺或购买商进行功耗和尺寸上的优化。尽管硬核由于缺乏灵活性而可移植性差，但由于无须提供寄存器转移级 （RTL）文件，因而更易于实现 IP 保护。比如一些 FPGA 芯片内置的 ARM 核就是硬核。
 </code></pre>
 <p>IP 核在拥有以上众多好处的同时也有他的巨大缺点：  </p>
-<p> 1、在<strong>跨平台时，IP 核往往不通用</strong> ，需要重新设计。IP 核都是不全透明的，是每个 FPGA 开发厂商根据自己芯片适配的定制<br>IP，所以如果你之前用的 Altera 的芯片，用了一 个 PLL，但是因为某些原因需要将代码移植到 Xilinx 平台上，那就必须要将 PLL 给重新替<br>换掉，着增加了代码移植的复杂性。</p>
-<p>2、IP 核就是个黑匣子，是<strong>不透明</strong> 的，我们往往看不到其核心代码。IP 核都是各大 FPGA 厂商专门设计的，都会进行<strong>加密</strong><br>，内核代码都看不到，如果你使用的这个 IP<br>核万一出现了问题或者需要知道其内部结构针对具体的应用进行定制优化时，你是无法进行修改的。以上两个问题就很棘手，所以<strong>有些公司坚持所有的可综合设计都不使用<br>IP 核，就是为了是所有的模块都能够掌控在在自己手里。</strong></p>
-<p>3、有些定制的 IP 核由于是不通用的，往往会有较高的收费，这也是一笔巨大的开 销。所以 IP<br>核在能够加快我们开发周期的情况下也存在以上三种常见的问题，这就是需要 我们权衡利弊，针对具体的需求来做具体的选择。</p>
+<p> 1、在<strong>跨平台时，IP 核往往不通用</strong> ，需要重新设计。IP 核都是不全透明的，是每个 FPGA 开发厂商根据自己芯片适配的定制
+IP，所以如果你之前用的 Altera 的芯片，用了一 个 PLL，但是因为某些原因需要将代码移植到 Xilinx 平台上，那就必须要将 PLL 给重新替
+换掉，着增加了代码移植的复杂性。</p>
+<p>2、IP 核就是个黑匣子，是<strong>不透明</strong> 的，我们往往看不到其核心代码。IP 核都是各大 FPGA 厂商专门设计的，都会进行<strong>加密</strong>
+，内核代码都看不到，如果你使用的这个 IP
+核万一出现了问题或者需要知道其内部结构针对具体的应用进行定制优化时，你是无法进行修改的。以上两个问题就很棘手，所以<strong>有些公司坚持所有的可综合设计都不使用
+IP 核，就是为了是所有的模块都能够掌控在在自己手里。</strong></p>
+<p>3、有些定制的 IP 核由于是不通用的，往往会有较高的收费，这也是一笔巨大的开 销。所以 IP
+核在能够加快我们开发周期的情况下也存在以上三种常见的问题，这就是需要 我们权衡利弊，针对具体的需求来做具体的选择。</p>
 <p>IP 核生成工具提供的 IP 核主要有以下几类：</p>
 <p>1、数学运算模块，包括累加器、乘加器、乘累加器、计数器、加&#x2F;减法器、实&#x2F;复数乘 法器、除法器、CORDIC 算法器、DSP48 宏和浮点数操作器。</p>
-<p>2、存储器构造模块，包括块存储器和分布式存储器、先入先出存储器（FIFO）和移位寄存器。 3、DSP<br>功能，包括直接数字频率合成（DDS）编译器、数字上变频&#x2F;下变频 （DUC&#x2F;DDC）编译器、有限冲激响应（FIR）滤波器、级联积分梳状（CIC）滤波器、离<br>散傅里叶变换（DFT）和快速傅里叶变换（FFT）。</p>
+<p>2、存储器构造模块，包括块存储器和分布式存储器、先入先出存储器（FIFO）和移位寄存器。 3、DSP
+功能，包括直接数字频率合成（DDS）编译器、数字上变频&#x2F;下变频 （DUC&#x2F;DDC）编译器、有限冲激响应（FIR）滤波器、级联积分梳状（CIC）滤波器、离
+散傅里叶变换（DFT）和快速傅里叶变换（FFT）。</p>
 <p>4、信道纠错码，包括 RS 码编码器和译码器、卷积码编码器、Viterbi 译码器、Turbo 码编&#x2F;译码器和低密度奇偶校验码（LDPC）编码器等。</p>
-<p>5、网络应用，包括媒体访问控制器（MAC）、以太网物理编码子层&#x2F;物理介质连接<br>（PCS&#x2F;PMA）、网络负载统计、以太网拓展连接单元接口（XAUI）、减少引脚使用的 XAUI（RXAUI）、MAC 封装包和音&#x2F;视频桥接（AVB）端点。</p>
+<p>5、网络应用，包括媒体访问控制器（MAC）、以太网物理编码子层&#x2F;物理介质连接
+（PCS&#x2F;PMA）、网络负载统计、以太网拓展连接单元接口（XAUI）、减少引脚使用的 XAUI（RXAUI）、MAC 封装包和音&#x2F;视频桥接（AVB）端点。</p>
 <p>6、FPGA 结构属性，包括时钟向导、高速串行收发器（GTX&#x2F;GTP）和系统监视向导。</p>
 <p>7、连接器，包括标准总线接口（如 PCI&#x2F;PCI-X、PCI Express、CAN）和数据接口（如 以太网、RapidIO 等）。</p>
-<p>8、调试和验证，包括逻辑调试内核（集成控制器核（ICON）、集成逻辑分析核 （ILA）、虚拟输入&#x2F;输出核（VIO）、Agilent<br>跟踪核（ATC2）、误比特率测试核 （IBERT）和集成总线分析核（IBA）。</p>
-<p>9、针对不同设计方法的特殊IP核，包括用工程导航工具进行逻辑设计的IP核、用<br>Xilinx系统生成工具进行DSP算法设计的IP核，以及用Xilinx平台开发环境（XPS）或 PlanAhead进行嵌入式设计的IP核。</p>
+<p>8、调试和验证，包括逻辑调试内核（集成控制器核（ICON）、集成逻辑分析核 （ILA）、虚拟输入&#x2F;输出核（VIO）、Agilent
+跟踪核（ATC2）、误比特率测试核 （IBERT）和集成总线分析核（IBA）。</p>
+<p>9、针对不同设计方法的特殊IP核，包括用工程导航工具进行逻辑设计的IP核、用
+Xilinx系统生成工具进行DSP算法设计的IP核，以及用Xilinx平台开发环境（XPS）或 PlanAhead进行嵌入式设计的IP核。</p>
 <h3 id="1-PLL-IP核"><a href="#1-PLL-IP核" class="headerlink" title="1.PLL IP核"></a>1.PLL IP核</h3><h4 id="PLL简介"><a href="#PLL简介" class="headerlink" title="&lt;1&gt;PLL简介"></a>&lt;1&gt;PLL简介</h4><pre><code>    PLL（Phase Locked Loop，即锁相环）是最常用的 IP 核之一，其性能强大，可以对输入到 FPGA 的时钟信号进行任意**分频、倍频、相位调整、占空比调整** ，从而输出一个期望时钟，实际上，即使不想改变输入到 FPGA 时钟的任何参数，也常常会使用 PLL，因为经 过 PLL 后的时钟在抖动（Jitter）方面的性能更好一些。Xilinx 中的 PLL 是模拟锁相环，和数字锁相环不同的是**模拟锁相环** 的优点是**输出的稳定度高、相位连续可调、延时连续可调** ；缺点是当**温度过高或者电磁辐射过强时会失锁** （普通环境下不考虑该问题）。
 </code></pre>
 <p><strong>工作原理</strong> ：</p>
@@ -406,7 +430,11 @@
 <p>再编写一个顶层设计文件来例化这个 PLL IP 核：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/1824668d82cca9e65be6ebe3bf79987d.png"></p>
 <p>仿真：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module tb_pll();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module tb_pll();
+​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;
+    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
 <pre><code>//reg   define
 reg     sys_clk     ;
 //wire  define
@@ -423,7 +451,15 @@ wire    locked      ;
 //初始化系统时钟
 initial sys_clk = 1&#39;b1;
 </code></pre>
-<p>​<br>​    &#x2F;&#x2F;sys_clk:模拟系统时钟，每10ns电平翻转一次，周期为20ns，频率为50Mhz<br>​    always #10 sys_clk &#x3D; ~sys_clk;<br>​<br>​    &#x2F;&#x2F;<em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;<br>​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em> Instantiation <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;<br>​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em>*&#x2F;&#x2F;<br>​<br>    &#x2F;&#x2F;————————pll_inst————————<br>    pll pll_inst<br>    (<br>        .sys_clk        (sys_clk        ),  &#x2F;&#x2F;input     sys_clk</p>
+<p>​<br>​    &#x2F;&#x2F;sys_clk:模拟系统时钟，每10ns电平翻转一次，周期为20ns，频率为50Mhz
+​    always #10 sys_clk &#x3D; ~sys_clk;
+​<br>​    &#x2F;&#x2F;<em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;
+​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em> Instantiation <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;
+​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em>*&#x2F;&#x2F;
+​<br>    &#x2F;&#x2F;————————pll_inst————————
+    pll pll_inst
+    (
+        .sys_clk        (sys_clk        ),  &#x2F;&#x2F;input     sys_clk</p>
 <pre><code>    .clk_mul_2      (clk_mul_2      ),  //output    clk_mul_2
     .clk_div_2      (clk_div_2      ),  //output    clk_div_2
     .clk_phase_90   (clk_phase_90   ),  //output    clk_phase_90
@@ -464,7 +500,12 @@ endmodule
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/59a531959f333f68e956985587bcc348.png"></p>
 <p>剩余操作与单端口 ROM 相同</p>
-<h5 id="xilinx-vivado-IP核调用-1"><a href="#xilinx-vivado-IP核调用-1" class="headerlink" title="&lt;2&gt;xilinx vivado IP核调用"></a>&lt;2&gt;xilinx vivado IP核调用</h5><p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  rom<br>​    (<br>​        input   wire            sys_clk ,   &#x2F;&#x2F;系统时钟，频率50MHz<br>​        input   wire    [7:0]   addra   ,   &#x2F;&#x2F;输入rom地址<br>​<br>        output  wire    [7:0]   douta       &#x2F;&#x2F;输出rom数据</p>
+<h5 id="xilinx-vivado-IP核调用-1"><a href="#xilinx-vivado-IP核调用-1" class="headerlink" title="&lt;2&gt;xilinx vivado IP核调用"></a>&lt;2&gt;xilinx vivado IP核调用</h5><p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  rom
+​    (
+​        input   wire            sys_clk ,   &#x2F;&#x2F;系统时钟，频率50MHz
+​        input   wire    [7:0]   addra   ,   &#x2F;&#x2F;输入rom地址
+​<br>        output  wire    [7:0]   douta       &#x2F;&#x2F;输出rom数据</p>
 <pre><code>);
 
 //********************************************************************//
@@ -482,7 +523,11 @@ rom_256x8 rom_256x8_inst
 endmodule
 </code></pre>
 <p>仿真：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  tb_rom();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  tb_rom();
+​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;
+    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
 <pre><code>//reg   define
 reg         sys_clk     ;
 reg         sys_rst_n   ;
@@ -556,7 +601,14 @@ endmodule
     RTL 顶层的输出信号有：从 RAM 中读取的数据 douta。
 </code></pre>
 <p>RTL 顶层代码如下所示：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  ram<br>​    (<br>​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz<br>​        input   wire    [7:0]   addra       ,   &#x2F;&#x2F;输入ram读写地址<br>​        input   wire    [7:0]   dina        ,   &#x2F;&#x2F;输入ram写入数据<br>​        input   wire            wea         ,   &#x2F;&#x2F;输入ram写使能<br>​<br>        output  wire    [7:0]   douta           &#x2F;&#x2F;输出读ram数据</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  ram
+​    (
+​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz
+​        input   wire    [7:0]   addra       ,   &#x2F;&#x2F;输入ram读写地址
+​        input   wire    [7:0]   dina        ,   &#x2F;&#x2F;输入ram写入数据
+​        input   wire            wea         ,   &#x2F;&#x2F;输入ram写使能
+​<br>        output  wire    [7:0]   douta           &#x2F;&#x2F;输出读ram数据</p>
 <pre><code>);
 
 //********************************************************************//
@@ -576,7 +628,11 @@ ram_256x8   ram_256x8_inst
 endmodule
 </code></pre>
 <p>仿真代码：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  tb_ram();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  tb_ram();
+​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;
+    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
 <pre><code>//reg   define
 reg         sys_clk     ;
 reg         sys_rst_n   ;
@@ -656,7 +712,8 @@ endmodule
 </code></pre>
 <h3 id="4-FIFO-IP核"><a href="#4-FIFO-IP核" class="headerlink" title="4.FIFO IP核"></a>4.FIFO IP核</h3><pre><code>    FIFO（First In First Out，即先入先出），是一种**数据缓冲器** ，用来实现数据先入先出的读写方式。与 ROM 或 RAM 的按地址读写方式不同，FIFO 的读写遵循“先进先出”的原则，即数据按顺序写入 FIFO，先被写入的数据同样在读取的时候先被读出，所以 **FIFO 存储器没有地址线** 。FIFO 有**一个写端口和一个读端口** 外部无需使用者控制地址，使用方便。 FIFO 存储器主要是作为缓存，应用在同步时钟系统和异步时钟系统中，在很多的设计中都会使用，后面实例中如： _多比特数据做跨时钟域的转换、前后带宽不同步等都用到了 FIFO_ 。FIFO 根据读写时钟是否相同，分为**SCFIFO（同步 FIFO）和 DCFIFO（异步 FIFO）** ，SCFIFO 的读写为同一时钟，应用在同步时钟系统中；DCFIFO 的读写时钟不同，应用在异步时钟系统中。
 </code></pre>
-<p>可参考：<a target="_blank" rel="noopener" href="https://reborn.blog.csdn.net/article/details/108553930" title="FPGA设计心得（11）关于FIFO IP核使用的一点注意事项">FPGA设计心得（11）关于FIFO<br>IP核使用的一点注意事项</a></p>
+<p>可参考：<a target="_blank" rel="noopener" href="https://reborn.blog.csdn.net/article/details/108553930" title="FPGA设计心得（11）关于FIFO IP核使用的一点注意事项">FPGA设计心得（11）关于FIFO
+IP核使用的一点注意事项</a></p>
 <h4 id="⑴SCFIFO-的配置"><a href="#⑴SCFIFO-的配置" class="headerlink" title="⑴SCFIFO 的配置"></a><strong>⑴SCFIFO 的配置</strong></h4><h5 id="xilinx-vivado-IP核配置-4"><a href="#xilinx-vivado-IP核配置-4" class="headerlink" title="&lt;1&gt;xilinx vivado IP核配置"></a>&lt;1&gt;xilinx vivado IP核配置</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/c106fa7567b9a84b4d3cb8480483a57a.png">​</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/a853439259bb2a5f665df76c626314e1.png">​</p>
 <pre><code>    3 框是选中 FIFO 的类型，以及使用什么资源来实现。这里我们选择“Common Clock Block RAM”使用块 RAM 来实现同步 FIFO；其中 Common Clock 表示是同步 FIFO， Block RAM 表示的是块 RAM 资源。可以从界面中的表格查看各类型区别
@@ -683,7 +740,21 @@ endmodule
 
     RTL 代码顶层的输出信号有：从 FIFO 中读取的数据 po_data、FIFO 空标志信号 empty、FIFO 满标志信号 full、指示 FIFO 中存在数据个数的信号 data_count。这些信号也是我们需要通过仿真 SCFIFO IP 核主要观察的信号，这些信号通过 Testbench 中给输入信号激励后产生输出。
 </code></pre>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module fifo<br>​    (<br>​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟50Mhz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号<br>​        input   wire    [7:0]   pi_data     ,   &#x2F;&#x2F;输入顶层模块的数据<br>​                                                &#x2F;&#x2F;要写入到FIFO中的数据<br>​        input   wire            pi_flag     ,   &#x2F;&#x2F;输入数据有效标志信号<br>​                                                &#x2F;&#x2F;也作为FIFO的写请求信号<br>​        input   wire            rd_en       ,   &#x2F;&#x2F;FIFO读请求信号<br>​<br>        output  wire    [7:0]   po_data     ,   &#x2F;&#x2F;FIFO读出的数据<br>        output  wire            empty       ,   &#x2F;&#x2F;FIFO空标志信号，高有效<br>        output  wire            full        ,   &#x2F;&#x2F;FIFO满标志信号，高有效<br>        output  wire    [7:0]   data_count      &#x2F;&#x2F;FIFO中存在的数据个数<br>    );</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module fifo
+​    (
+​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟50Mhz
+​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号
+​        input   wire    [7:0]   pi_data     ,   &#x2F;&#x2F;输入顶层模块的数据
+​                                                &#x2F;&#x2F;要写入到FIFO中的数据
+​        input   wire            pi_flag     ,   &#x2F;&#x2F;输入数据有效标志信号
+​                                                &#x2F;&#x2F;也作为FIFO的写请求信号
+​        input   wire            rd_en       ,   &#x2F;&#x2F;FIFO读请求信号
+​<br>        output  wire    [7:0]   po_data     ,   &#x2F;&#x2F;FIFO读出的数据
+        output  wire            empty       ,   &#x2F;&#x2F;FIFO空标志信号，高有效
+        output  wire            full        ,   &#x2F;&#x2F;FIFO满标志信号，高有效
+        output  wire    [7:0]   data_count      &#x2F;&#x2F;FIFO中存在的数据个数
+    );</p>
 <pre><code>//********************************************************************//
 //*************************** Instantiation **************************//
 //********************************************************************//
@@ -709,7 +780,11 @@ endmodule
 <p>仿真：</p>
 <pre><code>    下面是 Testbench 仿真测试文件，和 SCFIFO 的仿真一样，我们也需要给输入信号测试激励，pi_flag 每 4 个时钟周期且没有读请求时产生一个数据有效标志信号也作为 FIFO 的写请求信号，因为需要 pi_data 伴随着 pi_flag 一起产生，所以每当 pi_data 检测到 pi_flag 标 志信号有效时就自加 1，其值从 0~255 循环变化，这样我们就可以在 pi_flag 标志信号有效时将 pi_data 写入到 FIFO 中。而 FIFO 的读请求信号 rd_en 当 FIFO 的满标志信号 full 有效时拉高，当 FIFO 的空标志信号 empty 有效时拉低。
 </code></pre>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module tb_fifo();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module tb_fifo();
+​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;
+    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
 <pre><code>//reg   define
 reg         sys_clk     ;
 reg [7:0]   pi_data     ;
@@ -808,18 +883,37 @@ endmodule
 
     2、FIFO 读出的数据与 FIFO 读请求的关系：因为我们这里是对普通同步 FIFO 模式进行的仿真，所以可以看到当检测到 full 满标志信号有效，rd_en 读请求信号开始拉高，FIFO 开始读数据，FIFO 读出的第一个数据为 0，可以看到数据为 0 的时间有两个时钟周期，**所以第一个 0 为潜伏期导致的，第二个 0 才是我们真正读出来的数据** ，FIFO 中随着数据的读 出，FIFO 中的数据减少，full 满标志信号也拉低了，data_count 信号的值也随着减小。
 </code></pre>
-<p><img src="https://i-blog.csdnimg.cn/blog_migrate/1f14c8432a6eb9fd004287a706d316a2.png"><br>如图所示为位置 2 放大后的波形，这里我们重点观察一下 empty 空标志信号。 因为我们使用的是标准<br>fifo，所以读出的数据要比读使能延后一拍，所以当读出十进制数 据 254 后 empty 空标志信号拉高，表示 FIFO 中的数据已经被读空。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/1f14c8432a6eb9fd004287a706d316a2.png"><br>如图所示为位置 2 放大后的波形，这里我们重点观察一下 empty 空标志信号。 因为我们使用的是标准
+fifo，所以读出的数据要比读使能延后一拍，所以当读出十进制数 据 254 后 empty 空标志信号拉高，表示 FIFO 中的数据已经被读空。</p>
 <h4 id="⑵DCFIFO-的配置"><a href="#⑵DCFIFO-的配置" class="headerlink" title="⑵DCFIFO 的配置"></a><strong>⑵DCFIFO 的配置</strong></h4><h5 id="1-xilinx-vivado-IP核配置"><a href="#1-xilinx-vivado-IP核配置" class="headerlink" title="**&lt; 1&gt;**xilinx vivado IP核配置"></a>**&lt; 1&gt;**xilinx vivado IP核配置</h5><p>与SCFIFO配置不同：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/e0fea968cb4005828177c4488c948c9c.png"></p>
 <pre><code>    2 框中是选中 FIFO 的类型，以及使用什么资源来实现。这里我们选择“Independent Clock Block RAM”使用块 RAM 来实现异步 FIFO；其中 Independent Clock 表示是异步 FIFO，Block RAM 表示的是块 RAM 资源。 
 </code></pre>
-<p>如图所示，可勾选“Write Data Count”和“Read Data Count”生成 FIFO<br>内剩余个数输出信号，一个是基于读时钟，一个是基于写时钟。该输出信号可根据自己设计是否需要进行生成，默认是不生成，这里我们都勾选进行生成。</p>
+<p>如图所示，可勾选“Write Data Count”和“Read Data Count”生成 FIFO
+内剩余个数输出信号，一个是基于读时钟，一个是基于写时钟。该输出信号可根据自己设计是否需要进行生成，默认是不生成，这里我们都勾选进行生成。</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/0314ab41426a1bfe5a18823d095c43d4.png"></p>
 <h5 id="xilinx-vivado-IP核调用-3"><a href="#xilinx-vivado-IP核调用-3" class="headerlink" title="&lt;2&gt;xilinx vivado IP核调用"></a>&lt;2&gt;xilinx vivado IP核调用</h5><pre><code>    RTL 代码顶层的输入信号有：50MHz 的写时钟 wr_clk、输入 256 个 8bit 的数据 pi_data （值为十进制 0~255）和伴随该输入数据有效的标志信号 pi_flag、25MHz 的读时钟 rd_clk、FIFO 的写请求信号 rd_en。这些输入信号需要在 Testbench 中产生激励。
 
     RTL 代码顶层的输出信号有：FIFO 空标志信号 empty、FIFO 满标志信号 full、同步于 wr_clk 指示 FIFO 中存在数据个数的信号 wr_data_count、从 FIFO 中读取的数据 po_data、 同步于 rd_clk 指示 FIFO 中存在数据个数的信号 rd_data_count。这些信号也是我们需要通过仿真 DCFIFO IP 核主要观察的信号，这些信号通过 Testbench 中给输入信号激励后产生输出。
 </code></pre>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module fifo<br>​    (<br>​        input   wire         wr_clk    ,   &#x2F;&#x2F;同步于FIFO写数据的时钟50MHz<br>​        input   wire  [7:0]  pi_data   ,   &#x2F;&#x2F;输入顶层模块的数据，要写入到FIFO中<br>​                                           &#x2F;&#x2F;的数据同步于wrclk时钟<br>​        input   wire         pi_flag   ,   &#x2F;&#x2F;输入数据有效标志信号，也作为FIFO的<br>​                                           &#x2F;&#x2F;写请求信号，同步于wrclk时钟<br>​        input   wire         rd_clk    ,   &#x2F;&#x2F;同步于FIFO读数据的时钟25MHz<br>​        input   wire         rd_en     ,   &#x2F;&#x2F;FIFO读请求信号，同步于rdclk时钟<br>​<br>        output  wire  [15:0] po_data   ,   &#x2F;&#x2F;FIFO读出的数据，同步于rdclk时钟<br>        output  wire         empty     ,   &#x2F;&#x2F;空标志信号，高有效，<br>        output  wire         full      ,   &#x2F;&#x2F;满标志信号，高有效，<br>        output  wire  [6:0]  rd_data_count,&#x2F;&#x2F;FIFO读端口中存在的数据个数，<br>                                           &#x2F;&#x2F;同步于rdclk时钟<br>        output  wire  [7:0]  wr_data_count &#x2F;&#x2F;FIFO写端口中存在的数据个数，<br>                                           &#x2F;&#x2F;同步于wrclk时钟<br>    );</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module fifo
+​    (
+​        input   wire         wr_clk    ,   &#x2F;&#x2F;同步于FIFO写数据的时钟50MHz
+​        input   wire  [7:0]  pi_data   ,   &#x2F;&#x2F;输入顶层模块的数据，要写入到FIFO中
+​                                           &#x2F;&#x2F;的数据同步于wrclk时钟
+​        input   wire         pi_flag   ,   &#x2F;&#x2F;输入数据有效标志信号，也作为FIFO的
+​                                           &#x2F;&#x2F;写请求信号，同步于wrclk时钟
+​        input   wire         rd_clk    ,   &#x2F;&#x2F;同步于FIFO读数据的时钟25MHz
+​        input   wire         rd_en     ,   &#x2F;&#x2F;FIFO读请求信号，同步于rdclk时钟
+​<br>        output  wire  [15:0] po_data   ,   &#x2F;&#x2F;FIFO读出的数据，同步于rdclk时钟
+        output  wire         empty     ,   &#x2F;&#x2F;空标志信号，高有效，
+        output  wire         full      ,   &#x2F;&#x2F;满标志信号，高有效，
+        output  wire  [6:0]  rd_data_count,&#x2F;&#x2F;FIFO读端口中存在的数据个数，
+                                           &#x2F;&#x2F;同步于rdclk时钟
+        output  wire  [7:0]  wr_data_count &#x2F;&#x2F;FIFO写端口中存在的数据个数，
+                                           &#x2F;&#x2F;同步于wrclk时钟
+    );</p>
 <pre><code>//----------------------dcfifo_256x8to128x16_inst-----------------------
 dcfifo_256x8to128x16    dcfifo_256x8to128x16_inst
 (
@@ -840,7 +934,11 @@ endmodule
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/58847d86d5164408b79f24c556aaf70e.png"></p>
 <p>仿真：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module tb_fifo();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module tb_fifo();
+​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;
+    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
 <pre><code>//reg   define
 reg          wr_clk         ;
 reg  [7:0]   pi_data        ;
@@ -979,9 +1077,12 @@ endmodule
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -989,9 +1090,9 @@ endmodule
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
           </div>
 
         
@@ -1000,8 +1101,8 @@ endmodule
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/08/17/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0/" rel="prev" title="项目管理概述">
-      <i class="fa fa-chevron-left"></i> 项目管理概述
+    <a href="/2023/09/08/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6/%E7%9D%A1%E7%95%8C/" rel="prev" title="睡界">
+      <i class="fa fa-chevron-left"></i> 睡界
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/09/11/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(5)%E2%80%94%E2%80%94%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E4%B8%89%EF%BC%88RS232%E3%80%81I2C%EF%BC%89/" rel="next" title="FPGA学习笔记(5)——基础设计三（RS232、I2C）">
@@ -1082,20 +1183,20 @@ endmodule
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1164,13 +1265,13 @@ endmodule
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -1255,6 +1356,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -1319,14 +1422,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>

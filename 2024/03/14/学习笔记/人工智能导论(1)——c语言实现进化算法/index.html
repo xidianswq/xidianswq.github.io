@@ -86,7 +86,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -137,17 +137,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -291,7 +291,20 @@
 <p>变量编码-&gt;生成种群-&gt;交叉-&gt;变异-&gt;选择-&gt;迭代</p>
 <pre><code>    对x1和x2在变量范围内的值按照给定精度计算编码成二进制码的位数；随机生成一定规模的种群，其二进制编码随机； 随机对种群内个体的编码进行交叉；随机对种群内个体的编码进行按位变异；对二进制码进行解码、求解适应度函数值、保留一定数量的精英、采用轮盘赌随机选取其余个体最终组成新的种群；迭代，重复 交叉-&gt;变异-&gt;选择 至最优适应度基本不变或迭代一定次数。
 </code></pre>
-<h2 id="二-代码解析"><a href="#二-代码解析" class="headerlink" title="二.代码解析"></a>二.代码解析</h2><h3 id="1-源码"><a href="#1-源码" class="headerlink" title="1.源码"></a>1.源码</h3><p>​<br>​    #include&lt;stdio.h&gt;<br>​    #include&lt;stdlib.h&gt;<br>​    #include&lt;string.h&gt;<br>​    #include&lt;stdbool.h&gt;<br>​    #include&lt;math.h&gt;<br>​    #include&lt;time.h&gt;<br>​<br>    #define POPULATION_SIZE 100	&#x2F;&#x2F;种群规模<br>    #define RESERVE_NUM 3		&#x2F;&#x2F;每代精英保留数<br>    #define VARI_NUM 2			&#x2F;&#x2F;变量个数<br>    #define ITERATION 1000		&#x2F;&#x2F;迭代次数<br>    #define END_TIMES 100		&#x2F;&#x2F;稳定终止次数<br>    #define PC 0.6				&#x2F;&#x2F;交叉概率<br>    #define CROSS_LEN 8			&#x2F;&#x2F;交叉长度<br>    #define PM 0.1				&#x2F;&#x2F;变异概率 </p>
+<h2 id="二-代码解析"><a href="#二-代码解析" class="headerlink" title="二.代码解析"></a>二.代码解析</h2><h3 id="1-源码"><a href="#1-源码" class="headerlink" title="1.源码"></a>1.源码</h3><p>​<br>​    #include&lt;stdio.h&gt;
+​    #include&lt;stdlib.h&gt;
+​    #include&lt;string.h&gt;
+​    #include&lt;stdbool.h&gt;
+​    #include&lt;math.h&gt;
+​    #include&lt;time.h&gt;
+​<br>    #define POPULATION_SIZE 100	&#x2F;&#x2F;种群规模
+    #define RESERVE_NUM 3		&#x2F;&#x2F;每代精英保留数 
+    #define VARI_NUM 2			&#x2F;&#x2F;变量个数 
+    #define ITERATION 1000		&#x2F;&#x2F;迭代次数
+    #define END_TIMES 100		&#x2F;&#x2F;稳定终止次数 
+    #define PC 0.6				&#x2F;&#x2F;交叉概率 
+    #define CROSS_LEN 8			&#x2F;&#x2F;交叉长度 
+    #define PM 0.1				&#x2F;&#x2F;变异概率 </p>
 <pre><code>//种群结构体 
 typedef struct v&#123;
 	bool encode[50];		//二进制编码 
@@ -539,8 +552,25 @@ void Free_space(v** group)&#123;
 	free(group);
 &#125;
 </code></pre>
-<h3 id="2-算法关键参数"><a href="#2-算法关键参数" class="headerlink" title="2.算法关键参数"></a>2.算法关键参数</h3><p>​<br>​    #define POPULATION_SIZE 100	&#x2F;&#x2F;种群规模<br>​    #define RESERVE_NUM 3		&#x2F;&#x2F;每代精英保留数<br>​    #define VARI_NUM 2			&#x2F;&#x2F;变量个数<br>​    #define ITERATION 1000		&#x2F;&#x2F;迭代次数<br>​    #define END_TIMES 100		&#x2F;&#x2F;稳定终止次数<br>​    #define PC 0.6				&#x2F;&#x2F;交叉概率<br>​    #define CROSS_LEN 8			&#x2F;&#x2F;交叉长度<br>​    #define PM 0.1				&#x2F;&#x2F;变异概率 </p>
-<h3 id="3-定义种群结构体、相关变量及函数"><a href="#3-定义种群结构体、相关变量及函数" class="headerlink" title="3.定义种群结构体、相关变量及函数"></a>3.定义种群结构体、相关变量及函数</h3><p>​<br>​    &#x2F;&#x2F;种群结构体<br>​    typedef struct v{<br>​    	bool encode[50];		&#x2F;&#x2F;二进制编码<br>​    	double value[VARI_NUM];	&#x2F;&#x2F;解码数值<br>​    	bool change;			&#x2F;&#x2F;标记是否发生交叉或变异<br>​    	double fitness;			&#x2F;&#x2F;适应度<br>​    	double fit_rate;		&#x2F;&#x2F;适应度占比<br>​    }v;<br>​<br>    double lower[VARI_NUM],upper[VARI_NUM],accur;	&#x2F;&#x2F;x1,x2上下界和精度<br>    int encode_num,encode_number[VARI_NUM];			&#x2F;&#x2F;二进制编码位数<br>    double real_accur[VARI_NUM];					&#x2F;&#x2F;实际精度<br>    v optimization_popu;							&#x2F;&#x2F;最优个体 </p>
+<h3 id="2-算法关键参数"><a href="#2-算法关键参数" class="headerlink" title="2.算法关键参数"></a>2.算法关键参数</h3><p>​<br>​    #define POPULATION_SIZE 100	&#x2F;&#x2F;种群规模
+​    #define RESERVE_NUM 3		&#x2F;&#x2F;每代精英保留数 
+​    #define VARI_NUM 2			&#x2F;&#x2F;变量个数 
+​    #define ITERATION 1000		&#x2F;&#x2F;迭代次数
+​    #define END_TIMES 100		&#x2F;&#x2F;稳定终止次数 
+​    #define PC 0.6				&#x2F;&#x2F;交叉概率 
+​    #define CROSS_LEN 8			&#x2F;&#x2F;交叉长度 
+​    #define PM 0.1				&#x2F;&#x2F;变异概率 </p>
+<h3 id="3-定义种群结构体、相关变量及函数"><a href="#3-定义种群结构体、相关变量及函数" class="headerlink" title="3.定义种群结构体、相关变量及函数"></a>3.定义种群结构体、相关变量及函数</h3><p>​<br>​    &#x2F;&#x2F;种群结构体 
+​    typedef struct v{
+​    	bool encode[50];		&#x2F;&#x2F;二进制编码 
+​    	double value[VARI_NUM];	&#x2F;&#x2F;解码数值 
+​    	bool change;			&#x2F;&#x2F;标记是否发生交叉或变异<br>​    	double fitness;			&#x2F;&#x2F;适应度
+​    	double fit_rate;		&#x2F;&#x2F;适应度占比 
+​    }v;
+​<br>    double lower[VARI_NUM],upper[VARI_NUM],accur;	&#x2F;&#x2F;x1,x2上下界和精度 
+    int encode_num,encode_number[VARI_NUM];			&#x2F;&#x2F;二进制编码位数 
+    double real_accur[VARI_NUM];					&#x2F;&#x2F;实际精度 
+    v optimization_popu;							&#x2F;&#x2F;最优个体 </p>
 <pre><code>//函数声明 
 v Get_Optimization(void);
 void Init_Population(v* group);
@@ -551,17 +581,73 @@ double Fitness(double x1,double x2);
 void Output_Result(v* optimization);
 void Free_space(v** group);
 </code></pre>
-<h3 id="4-求解流程"><a href="#4-求解流程" class="headerlink" title="4.求解流程"></a>4.求解流程</h3><p>​<br>​    v Get_Optimization(void){<br>​    	<br>    	srand((unsigned)time(NULL));<br>    	int i,j;<br>    	double temp;<br>    	v** group&#x3D;(v**)malloc(3<em>sizeof(v</em>));	&#x2F;&#x2F;原始、交叉、变异种群<br>    	for(i&#x3D;0;i&lt;3;i++)group[i]&#x3D;(v*)malloc(sizeof(v)<em>POPULATION_SIZE);<br>    	v</em> optimization&#x3D;group[0],opt_tmep;				&#x2F;&#x2F;最优种群<br>    	<br>    	&#x2F;&#x2F;初始化种群<br>    	Init_Population(group[0]);<br>    	memcpy(group[1],group[0],sizeof(v)*POPULATION_SIZE);<br>    	memcpy(group[2],group[0],sizeof(v)*POPULATION_SIZE);<br>    	<br>    	&#x2F;&#x2F;迭代<br>    	for(i&#x3D;j&#x3D;0;i&lt;ITERATION;i++){<br>    		<br>    		&#x2F;&#x2F;交叉<br>    		Cross(group[1]);<br>    		&#x2F;&#x2F;变异<br>    		Mutation(group[2]);<br>    		&#x2F;&#x2F;选择<br>    		temp&#x3D;optimization-&gt;fitness;<br>    		optimization&#x3D;Select(group);<br>    		if((optimization-&gt;fitness-temp)&lt;accur){<br>    			j++;<br>    			if(j&gt;&#x3D;END_TIMES)break;		&#x2F;&#x2F;结果保持稳定则退出<br>    		}<br>    	 	<br>    	}<br>    	<br>    	&#x2F;&#x2F;输出结果<br>    	Output_Result(optimization);<br>    	<br>    	opt_tmep&#x3D;*optimization;<br>    	Free_space(group);<br>    	return opt_tmep;<br>    	<br>    }</p>
+<h3 id="4-求解流程"><a href="#4-求解流程" class="headerlink" title="4.求解流程"></a>4.求解流程</h3><p>​<br>​    v Get_Optimization(void){
+​    	
+    	srand((unsigned)time(NULL));
+    	int i,j;
+    	double temp;
+    	v** group&#x3D;(v**)malloc(3<em>sizeof(v</em>));	&#x2F;&#x2F;原始、交叉、变异种群
+    	for(i&#x3D;0;i&lt;3;i++)group[i]&#x3D;(v*)malloc(sizeof(v)<em>POPULATION_SIZE);
+    	v</em> optimization&#x3D;group[0],opt_tmep;				&#x2F;&#x2F;最优种群 
+    	
+    	&#x2F;&#x2F;初始化种群 
+    	Init_Population(group[0]);
+    	memcpy(group[1],group[0],sizeof(v)*POPULATION_SIZE); 
+    	memcpy(group[2],group[0],sizeof(v)*POPULATION_SIZE);
+    	
+    	&#x2F;&#x2F;迭代 
+    	for(i&#x3D;j&#x3D;0;i&lt;ITERATION;i++){
+    		
+    		&#x2F;&#x2F;交叉
+    		Cross(group[1]); 
+    		&#x2F;&#x2F;变异
+    		Mutation(group[2]);
+    		&#x2F;&#x2F;选择 
+    		temp&#x3D;optimization-&gt;fitness;
+    		optimization&#x3D;Select(group); 
+    		if((optimization-&gt;fitness-temp)&lt;accur){
+    			j++;
+    			if(j&gt;&#x3D;END_TIMES)break;		&#x2F;&#x2F;结果保持稳定则退出 
+    		}
+    	 	
+    	}
+    	
+    	&#x2F;&#x2F;输出结果
+    	Output_Result(optimization); 
+    	
+    	opt_tmep&#x3D;*optimization;
+    	Free_space(group);
+    	return opt_tmep;
+    	
+    }</p>
 <h2 id="三-求解结果"><a href="#三-求解结果" class="headerlink" title="三.求解结果"></a>三.求解结果</h2><pre><code>    改变算法关键参数会导致求解结果不同，不同的时间下的结果也不同。可以改变主函数中for循环的结束条件多次进行实验：
 </code></pre>
-<p>​<br>​        &#x2F;&#x2F;可以多次进行实验<br>​    	for(i&#x3D;0;i&lt;1;i++){<br>​    		temp&#x3D;Get_Optimization();<br>​    		if(optimization_popu.fitness&lt;temp.fitness)optimization_popu&#x3D;temp;<br>​    	}<br>​<br>        笔者在一定的参数下得到了最优解：</p>
-<p>​<br>​    最优解为:<br>​    x1&#x3D;11.625358<br>​    x2&#x3D;5.725031<br>​    f(x1,x2)&#x3D;38.850261<br>​    二进制编码为:<br>​    111100111111101111010110100101111<br>​<br>        对于问题二，修改适应度函数：</p>
-<p>​<br>​    &#x2F;&#x2F;适应度函数<br>​    double Fitness(double x1,double x2){<br>​    &#x2F;&#x2F;	return 21.5+x1<em>sin(4</em>M_PI<em>x1)+x2</em>sin(20<em>M_PI</em>x2);<br>​    	return 100<em>pow((x2-x1</em>x1),2)+pow((1-x1),2);<br>​    }<br>​<br>        再输入变量范围及精度 ：</p>
+<p>​<br>​        &#x2F;&#x2F;可以多次进行实验
+​    	for(i&#x3D;0;i&lt;1;i++){
+​    		temp&#x3D;Get_Optimization();
+​    		if(optimization_popu.fitness&lt;temp.fitness)optimization_popu&#x3D;temp;
+​    	}
+​<br>        笔者在一定的参数下得到了最优解：</p>
+<p>​<br>​    最优解为:
+​    x1&#x3D;11.625358
+​    x2&#x3D;5.725031
+​    f(x1,x2)&#x3D;38.850261
+​    二进制编码为:
+​    111100111111101111010110100101111
+​<br>        对于问题二，修改适应度函数：</p>
+<p>​<br>​    &#x2F;&#x2F;适应度函数 
+​    double Fitness(double x1,double x2){
+​    &#x2F;&#x2F;	return 21.5+x1<em>sin(4</em>M_PI<em>x1)+x2</em>sin(20<em>M_PI</em>x2);
+​    	return 100<em>pow((x2-x1</em>x1),2)+pow((1-x1),2);
+​    }
+​<br>        再输入变量范围及精度 ：</p>
 <p>​<br>​    输入样例2：-2.048 2.048 -2.048 2.048 0.0001</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/1ede4e3460860a1737bc72b9a592cb66.png"></p>
-<p>​<br>​    最优解为:x1&#x3D;-2.047875 x2&#x3D;-2.037187 f(x1,x2)&#x3D;3891.799899<br>​    二进制编码为:01000000000000001011010100000000</p>
+<p>​<br>​    最优解为:x1&#x3D;-2.047875 x2&#x3D;-2.037187 f(x1,x2)&#x3D;3891.799899 
+​    二进制编码为:01000000000000001011010100000000</p>
 <h2 id="四-相关思考"><a href="#四-相关思考" class="headerlink" title="四.相关思考"></a>四.相关思考</h2><p>1.增加精度可以增加编码长度，减少交叉变异的影响，增加搜索精度，结果可能更加靠近最优解</p>
-<p>2.增加变异概率以产生更多新的性状（<strong>变异的概率可采用自适应概率，如果最优种个体适应度值长时间未变化，可增加变异概率</strong><br>），以及采用更复杂的交叉、变异算法</p>
+<p>2.增加变异概率以产生更多新的性状（<strong>变异的概率可采用自适应概率，如果最优种个体适应度值长时间未变化，可增加变异概率</strong>
+），以及采用更复杂的交叉、变异算法</p>
 <p>3.交叉、变异过于随机会使求解趋于“遍历”，并且算法的“朝最优解的驱动力”不足</p>
 <p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/136715239">https://blog.csdn.net/qq_32971095/article/details/136715239</a>，如有侵权，请联系删除。</p>
 
@@ -573,9 +659,12 @@ void Free_space(v** group);
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -676,20 +765,20 @@ void Free_space(v** group);
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -758,13 +847,13 @@ void Free_space(v** group);
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -849,6 +938,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -913,14 +1004,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>

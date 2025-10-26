@@ -159,9 +159,9 @@
 <meta property="article:published_time" content="2023-08-16T14:51:36.000Z">
 <meta property="article:modified_time" content="2025-02-15T04:28:05.111Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="fpga开发">
-<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="嵌入式硬件">
+<meta property="article:tag" content="fpga开发">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/b2efe3610ba66737b9104ad2f0d80a3c.png">
 
@@ -209,7 +209,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -260,17 +260,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -414,7 +414,8 @@
 <p><a href="about:blank#1.%E7%A1%AC%E4%BB%B6%E8%B5%84%E6%BA%90">1.硬件资源</a></p>
 <p><a href="about:blank#%C2%A02.%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1"> 2.项目设计</a></p>
 <p><a href="about:blank#%C2%A03.%E6%B3%A2%E5%BD%A2%E8%AE%BE%E8%AE%A1"> 3.波形设计</a></p>
-<p><a href="about:blank#%C2%A04.%E5%88%9B%E5%BB%BAVivado%E5%B7%A5%E7%A8%8B%E2%80%8B%E7%BC%96%E8%BE%91"><br>4.创建Vivado工程​编辑</a></p>
+<p><a href="about:blank#%C2%A04.%E5%88%9B%E5%BB%BAVivado%E5%B7%A5%E7%A8%8B%E2%80%8B%E7%BC%96%E8%BE%91">
+4.创建Vivado工程​编辑</a></p>
 <p><a href="about:blank#%3C1%3E%E6%B7%BB%E5%8A%A0%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6">&lt;1&gt;添加设计文件</a></p>
 <p><a href="about:blank#%3C2%3E%E6%B7%BB%E5%8A%A0%E4%BB%BF%E7%9C%9F%E6%96%87%E4%BB%B6">&lt;2&gt;添加仿真文件</a></p>
 <p><a href="about:blank#5.%E5%BC%95%E8%84%9A%E7%BA%A6%E6%9D%9F">5.引脚约束</a></p>
@@ -423,9 +424,12 @@
 <p><a href="about:blank#8.%E7%A8%8B%E5%BA%8F%E5%9B%BA%E5%8C%96">8.程序固化</a></p>
 <p><a href="about:blank#%E4%BA%8C.%E5%A4%9A%E8%B7%AF%E9%80%89%E6%8B%A9%E5%99%A8">二.多路选择器</a></p>
 <p><a href="about:blank#1.%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95">1.实现方法</a></p>
-<p>[&lt;1&gt;always 中 if-else 实现方法](about:blank#%3C1%3Ealways%20%E4%B8%AD%20if-<br>else%20%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95)</p>
-<p><a href="about:blank#%C2%A0%3C2%3Ealways%20%E4%B8%AD%20case%20%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E2%80%8B%E7%BC%96%E8%BE%91"> &lt;2&gt;always 中 case<br>实现方法​编辑</a></p>
-<p><a href="about:blank#%C2%A0%3C3%3Eassign%20%E4%B8%AD%E6%9D%A1%E4%BB%B6%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%89%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"> &lt;3&gt;assign<br>中条件运算符（三元运算符）实现方法</a></p>
+<p>[&lt;1&gt;always 中 if-else 实现方法](about:blank#%3C1%3Ealways%20%E4%B8%AD%20if-
+else%20%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95)</p>
+<p><a href="about:blank#%C2%A0%3C2%3Ealways%20%E4%B8%AD%20case%20%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E2%80%8B%E7%BC%96%E8%BE%91"> &lt;2&gt;always 中 case
+实现方法​编辑</a></p>
+<p><a href="about:blank#%C2%A0%3C3%3Eassign%20%E4%B8%AD%E6%9D%A1%E4%BB%B6%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%89%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"> &lt;3&gt;assign
+中条件运算符（三元运算符）实现方法</a></p>
 <p><a href="about:blank#2.%E4%BB%BF%E7%9C%9F">2.仿真</a></p>
 <p><a href="about:blank#%E4%B8%89.%E8%AF%91%E7%A0%81%E5%99%A8">三.译码器</a></p>
 <p><a href="about:blank#1.%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95">1.实现方法</a></p>
@@ -437,9 +441,12 @@
 <p><a href="about:blank#1.%E5%85%A8%E5%8A%A0%E5%99%A8">1.全加器</a></p>
 <p><a href="about:blank#%E5%85%AD.%E9%81%BF%E5%85%8DLatch%E7%9A%84%E4%BA%A7%E7%94%9F">六.避免Latch的产生</a></p>
 <p><a href="about:blank#%E4%B8%83.%E5%AF%84%E5%AD%98%E5%99%A8">七.寄存器</a></p>
-<p><a href="about:blank#1.%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%20D%20%E8%A7%A6%E5%8F%91%E5%99%A8%E5%92%8C%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%C2%A0D%20%E8%A7%A6%E5%8F%91%E5%99%A8">1.同步复位 D 触发器和异步复位 D<br>触发器</a></p>
-<p><a href="about:blank#%3C1%3E%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%20D%20%E8%A7%A6%E5%8F%91%E5%99%A8">&lt;1&gt;同步复位 D<br>触发器</a></p>
-<p><a href="about:blank#%3C2%3E%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%20D%20%E8%A7%A6%E5%8F%91%E5%99%A8">&lt;2&gt;异步复位 D<br>触发器</a></p>
+<p><a href="about:blank#1.%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%20D%20%E8%A7%A6%E5%8F%91%E5%99%A8%E5%92%8C%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%C2%A0D%20%E8%A7%A6%E5%8F%91%E5%99%A8">1.同步复位 D 触发器和异步复位 D
+触发器</a></p>
+<p><a href="about:blank#%3C1%3E%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%20D%20%E8%A7%A6%E5%8F%91%E5%99%A8">&lt;1&gt;同步复位 D
+触发器</a></p>
+<p><a href="about:blank#%3C2%3E%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%20D%20%E8%A7%A6%E5%8F%91%E5%99%A8">&lt;2&gt;异步复位 D
+触发器</a></p>
 <p><a href="about:blank#2.%E4%BB%BF%E7%9C%9F">2.仿真</a></p>
 <p><a href="about:blank#%E5%85%AB.%E9%98%BB%E5%A1%9E%E8%B5%8B%E5%80%BC%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%B5%8B%E5%80%BC">八.阻塞赋值与非阻塞赋值</a></p>
 <p><a href="about:blank#%E4%B9%9D.%E8%AE%A1%E6%95%B0%E5%99%A8">九.计数器</a></p>
@@ -486,7 +493,31 @@ default.png?t&#x3D;N7T8">https://zhuanlan.zhihu.com/p/152589392</a></p>
 <h4 id="添加设计文件"><a href="#添加设计文件" class="headerlink" title="&lt;1&gt;添加设计文件"></a>&lt;1&gt;添加设计文件</h4><p><img src="https://i-blog.csdnimg.cn/blog_migrate/af3dc861458df3b6b3b0b48ef0d48397.png"></p>
 <p> 文件会复制到xxx.srcs文件夹内；创建文件路径也在此文件夹中；复制选项上面的选项指复制搜寻并复制子模块RTL文件</p>
 <p>示例RTL代码：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​    &#x2F;&#x2F;<br>​    &#x2F;&#x2F; Company:<br>​    &#x2F;&#x2F; Engineer:<br>​    &#x2F;&#x2F;<br>​    &#x2F;&#x2F; Create Date: 2023&#x2F;08&#x2F;16 22:03:43<br>​    &#x2F;&#x2F; Design Name:<br>​    &#x2F;&#x2F; Module Name: led_creat<br>​    &#x2F;&#x2F; Project Name:<br>​    &#x2F;&#x2F; Target Devices:<br>​    &#x2F;&#x2F; Tool Versions:<br>​    &#x2F;&#x2F; Description:<br>​    &#x2F;&#x2F;<br>​    &#x2F;&#x2F; Dependencies:<br>​    &#x2F;&#x2F;<br>​    &#x2F;&#x2F; Revision:<br>​    &#x2F;&#x2F; Revision 0.01 - File Created<br>​    &#x2F;&#x2F; Additional Comments:<br>​    &#x2F;&#x2F;<br>​    &#x2F;&#x2F;<br>​<br>​    module  led<br>​    (<br>​        input   wire    key_in  ,   &#x2F;&#x2F;输入按键<br>​<br>        output  wire    led_out     &#x2F;&#x2F;输出控制led<br>    );</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​    &#x2F;&#x2F;
+​    &#x2F;&#x2F; Company: 
+​    &#x2F;&#x2F; Engineer: 
+​    &#x2F;&#x2F; 
+​    &#x2F;&#x2F; Create Date: 2023&#x2F;08&#x2F;16 22:03:43
+​    &#x2F;&#x2F; Design Name: 
+​    &#x2F;&#x2F; Module Name: led_creat
+​    &#x2F;&#x2F; Project Name: 
+​    &#x2F;&#x2F; Target Devices: 
+​    &#x2F;&#x2F; Tool Versions: 
+​    &#x2F;&#x2F; Description: 
+​    &#x2F;&#x2F; 
+​    &#x2F;&#x2F; Dependencies: 
+​    &#x2F;&#x2F; 
+​    &#x2F;&#x2F; Revision:
+​    &#x2F;&#x2F; Revision 0.01 - File Created
+​    &#x2F;&#x2F; Additional Comments:
+​    &#x2F;&#x2F; 
+​    &#x2F;&#x2F;
+​<br>​    module  led
+​    (
+​        input   wire    key_in  ,   &#x2F;&#x2F;输入按键
+​<br>        output  wire    led_out     &#x2F;&#x2F;输出控制led
+    );</p>
 <pre><code>//********************************************************************//
 //***************************** Main Code ****************************//
 //********************************************************************//
@@ -501,7 +532,13 @@ endmodule
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/a1dd6f2041ad2af10e07bce42ef0ed57.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/8a5b95f6c18a4f91ac7113d884df5d06.png"></p>
 <p>代码示例：</p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  tb_led();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;wire  define<br>    wire    led_out ;</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  tb_led();
+​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;
+    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+    &#x2F;&#x2F;wire  define
+    wire    led_out ;</p>
 <pre><code>//reg   define
 reg     key_in  ;
 
@@ -556,8 +593,13 @@ endmodule
 <p>可以看到生成的bit文件保存在.runs文件夹中</p>
 <h3 id="8-程序固化"><a href="#8-程序固化" class="headerlink" title="8.程序固化"></a>8.程序固化</h3><p><strong>首先在.xdc连接文件添加以下代码，目的是使用spi4加速（如果不添加后续只能使用spi1）</strong></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/140e2313fb9fd6db965f491478b676bd.png"></p>
-<p>​<br>​    set_property CFGBVS VCCO [current_design]<br>​    set_property CONFIG_VOLTAGE 3.3 [current_design]<br>​    set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]<br>​    set_property CONFIG_MODE SPIx4 [current_design]<br>​    set_property BITSTREAM.CONFIG.CONFIGRATE 50 [current_design]</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42741023/article/details/110523933" title="XILINX 7系列配置4线SPI_spi_setconfig">XILINX<br>7系列配置4线SPI_spi_setconfig</a></p>
+<p>​<br>​    set_property CFGBVS VCCO [current_design]
+​    set_property CONFIG_VOLTAGE 3.3 [current_design]
+​    set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]
+​    set_property CONFIG_MODE SPIx4 [current_design]
+​    set_property BITSTREAM.CONFIG.CONFIGRATE 50 [current_design]</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42741023/article/details/110523933" title="XILINX 7系列配置4线SPI_spi_setconfig">XILINX
+7系列配置4线SPI_spi_setconfig</a></p>
 <p>MSC文件是xilinx的二进制文件</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/0dc2ae66a16b4d70850a1f4ae1018297.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/9cce811c897aaa8d84456affe85324ee.png"></p>
@@ -593,8 +635,12 @@ endmodule
 <h3 id="2-仿真-2"><a href="#2-仿真-2" class="headerlink" title="2.仿真"></a>2.仿真</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/005205dcc527510028d73ea92813072b.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/04a58b1443519b04e6ba1b564905ca29.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/53534ff8355e13c45c4c60f415bed274.png"></p>
-<h2 id="五-层次化设计"><a href="#五-层次化设计" class="headerlink" title="五.层次化设计"></a>五.层次化设计</h2><p>**         <em>自上而下设计</em>** ：自上而下的设计是<strong>从系统级开始</strong> ，<strong>把系统分为基本单元</strong> ，然后再把每个单元划分为<strong>下<br>一层次的基本单元</strong> ，一直这样做下去，<strong>直到直接可以用 EDA 元件库中的原件来实现为止。</strong> 在自顶向下设计方法中，我们首<br>先定义顶层功能块，进而分析需要哪些构成顶层模块的必 要子模块；然后进一步对各个子模块进行分解，直到到达无法进一步分解的底层功能块。</p>
-<p>**         <em>自下而上设计</em>** ：自底向上的设计是一种传统的设计方法，对设计进行逐次划分的过程是<strong>从存在的基本单元出发的</strong><br>，设计树最末枝上的单元要么是<strong>已经构造出的单元</strong> ，要么是<strong>其他 项目开发好的单元</strong><br>或者是可外购得到的单元。在自底向上建模方法中，我们首先对现有的功能块进行分 析，然后使用这些模块来搭建规模大一些的功能块，如此继续<strong>直至顶层模块</strong> 。</p>
+<h2 id="五-层次化设计"><a href="#五-层次化设计" class="headerlink" title="五.层次化设计"></a>五.层次化设计</h2><p>**         <em>自上而下设计</em>** ：自上而下的设计是<strong>从系统级开始</strong> ，<strong>把系统分为基本单元</strong> ，然后再把每个单元划分为<strong>下
+一层次的基本单元</strong> ，一直这样做下去，<strong>直到直接可以用 EDA 元件库中的原件来实现为止。</strong> 在自顶向下设计方法中，我们首
+先定义顶层功能块，进而分析需要哪些构成顶层模块的必 要子模块；然后进一步对各个子模块进行分解，直到到达无法进一步分解的底层功能块。</p>
+<p>**         <em>自下而上设计</em>** ：自底向上的设计是一种传统的设计方法，对设计进行逐次划分的过程是<strong>从存在的基本单元出发的</strong>
+，设计树最末枝上的单元要么是<strong>已经构造出的单元</strong> ，要么是<strong>其他 项目开发好的单元</strong>
+或者是可外购得到的单元。在自底向上建模方法中，我们首先对现有的功能块进行分 析，然后使用这些模块来搭建规模大一些的功能块，如此继续<strong>直至顶层模块</strong> 。</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/7538cc8f96cd3ed8557ff715e102cc35.png"></p>
 <h3 id="1-全加器"><a href="#1-全加器" class="headerlink" title="1.全加器"></a>1.全加器</h3><p>&lt;1&gt;实现</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/098c9d43dc2c588dda513c7f86aef146.png"></p>
@@ -654,7 +700,20 @@ endmodule
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/b6e5825667316f9e53a7c78b93238025.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/bb3cb18907d7b8039a8cab21a18b9a46.png"></p>
 <p><strong>方法 2 实现： 实用的降频方法</strong></p>
-<p>方法一中的 clk_out 输出信号是我们想要的分频后的信号，然后很多同学就直接把这个<br>信号当作新的低频时钟来使用，并实现了自己想要的功能。大家肯定会觉得能够实现功能 就一切 OK 了，而往往忽略了一些隐患的存在，如果你对 FPGA<br>的了解多一些就会理解其 实这是不严谨的做法，这种做法所衍生的潜在问题在低速系统中不易察觉，而在高速系统<br>中就很容易出现问题。因为我们通过这种方式分频得到的时钟虽然表面上是对系统时钟进<br>行了分频产生了一个新的低频时钟，但实际上和真正的时钟信号还是有很大区别的。因为在 FPGA<br>中凡是时钟信号都要连接到全局时钟网络上，<strong>全局时钟网络也称为全局时钟树， 是 FPGA<br>厂商专为时钟路径而特殊设计的，它能够使时钟信号到达每个寄存器的时间都尽 可能相同，以保证更低的时钟偏斜（Skew）和抖动（Jitter）</strong><br>。而我们用这种分频的方式产 生的 clk_out 信号并没有<strong>连接到全局时钟网络</strong> 上，但 sys_clk 则是由外部晶振直接通过管脚 连接到了<br>FPGA 的专用时钟管脚上，自然就会连接到全局时钟网络上，所以在 <strong>sys_clk 时钟 工作下的信号要比在 clk_out<br>时钟工作下的信号更容易在高速系统中保持稳定</strong> ，既然发现了 问题那我们该怎么办呢？这时可不要忘记了上一章中刚学到的 flag 标志信号，这里我们就<br>可以用上了，我们可以产生一个用于标记 6 分频的 clk_flag 标志信号，这样每两 clk_flag 脉 冲之间的频率就是对 sys_clk 时钟信号的<br>6 分频，但是计数器计数的个数我们需增加一些， 如图 17-4 所示需要从 0~5 共 6 个数，否则不能实现 6 分频的功能。和方法 1 对比可以发<br>现，相当于<strong>把 clk_out 的上升沿信号变成了 clk_flag 的脉冲电平信号</strong> （和上一章方法 2 中的 cnt_flag<br>是一样的道理），为后级模块实现相同的降频效果。虽然这样会多使用一些寄存器资源，不过不用担心我们的系统是完全可以承担的起的，而得到的好处却远远大于这点资源的使用，能让系统更加稳定。<img src="https://i-blog.csdnimg.cn/blog_migrate/a4604d25ce110aa5d7fcf14ae08cc6b7.png"></p>
+<p>方法一中的 clk_out 输出信号是我们想要的分频后的信号，然后很多同学就直接把这个
+信号当作新的低频时钟来使用，并实现了自己想要的功能。大家肯定会觉得能够实现功能 就一切 OK 了，而往往忽略了一些隐患的存在，如果你对 FPGA
+的了解多一些就会理解其 实这是不严谨的做法，这种做法所衍生的潜在问题在低速系统中不易察觉，而在高速系统
+中就很容易出现问题。因为我们通过这种方式分频得到的时钟虽然表面上是对系统时钟进
+行了分频产生了一个新的低频时钟，但实际上和真正的时钟信号还是有很大区别的。因为在 FPGA
+中凡是时钟信号都要连接到全局时钟网络上，<strong>全局时钟网络也称为全局时钟树， 是 FPGA
+厂商专为时钟路径而特殊设计的，它能够使时钟信号到达每个寄存器的时间都尽 可能相同，以保证更低的时钟偏斜（Skew）和抖动（Jitter）</strong>
+。而我们用这种分频的方式产 生的 clk_out 信号并没有<strong>连接到全局时钟网络</strong> 上，但 sys_clk 则是由外部晶振直接通过管脚 连接到了
+FPGA 的专用时钟管脚上，自然就会连接到全局时钟网络上，所以在 <strong>sys_clk 时钟 工作下的信号要比在 clk_out
+时钟工作下的信号更容易在高速系统中保持稳定</strong> ，既然发现了 问题那我们该怎么办呢？这时可不要忘记了上一章中刚学到的 flag 标志信号，这里我们就
+可以用上了，我们可以产生一个用于标记 6 分频的 clk_flag 标志信号，这样每两 clk_flag 脉 冲之间的频率就是对 sys_clk 时钟信号的
+6 分频，但是计数器计数的个数我们需增加一些， 如图 17-4 所示需要从 0~5 共 6 个数，否则不能实现 6 分频的功能。和方法 1 对比可以发
+现，相当于<strong>把 clk_out 的上升沿信号变成了 clk_flag 的脉冲电平信号</strong> （和上一章方法 2 中的 cnt_flag
+是一样的道理），为后级模块实现相同的降频效果。虽然这样会多使用一些寄存器资源，不过不用担心我们的系统是完全可以承担的起的，而得到的好处却远远大于这点资源的使用，能让系统更加稳定。<img src="https://i-blog.csdnimg.cn/blog_migrate/a4604d25ce110aa5d7fcf14ae08cc6b7.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/de1332e424bc46b895e1e0d63443eacf.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/ad6b10f466b0b610deb1f226a1481d6d.png"></p>
 <h3 id="2-奇分频"><a href="#2-奇分频" class="headerlink" title="2.奇分频"></a>2.奇分频</h3><p>&lt;1&gt;方法一：分频（两结果或运算）</p>
@@ -713,7 +772,18 @@ endmodule
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/b8759c5a5b929f36c23f74d72c739fdb.png"></p>
 <pre><code>    大家在画状态转移图时容易出现状态跳转情况遗漏的问题，这里我们给大家总结一个 小技巧：我们可以观察到，输入有多少种情况（上一节是两种输入情况，本节是三种输入 情况），每个状态的跳转就有多少种情况（上一节每个状态都有两种跳转情况。这样根据输入来确定状态的跳转就能够保证我们不漏掉任何一 种状态跳转。
 </code></pre>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  complex_fsm<br>​    (<br>​        input   wire    sys_clk         ,   &#x2F;&#x2F;系统时钟50MHz<br>​        input   wire    sys_rst_n       ,   &#x2F;&#x2F;全局复位<br>​        input   wire    pi_money_one    ,   &#x2F;&#x2F;投币1元<br>​        input   wire    pi_money_half   ,   &#x2F;&#x2F;投币0.5元<br>​<br>        output  reg     po_money        ,   &#x2F;&#x2F;po_money为1时表示找零<br>                                            &#x2F;&#x2F;po_money为0时表示不找零<br>        output  reg     po_cola             &#x2F;&#x2F;po_cola为1时出可乐<br>                                            &#x2F;&#x2F;po_cola为0时不出可乐<br>    );</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  complex_fsm
+​    (
+​        input   wire    sys_clk         ,   &#x2F;&#x2F;系统时钟50MHz
+​        input   wire    sys_rst_n       ,   &#x2F;&#x2F;全局复位
+​        input   wire    pi_money_one    ,   &#x2F;&#x2F;投币1元
+​        input   wire    pi_money_half   ,   &#x2F;&#x2F;投币0.5元
+​<br>        output  reg     po_money        ,   &#x2F;&#x2F;po_money为1时表示找零
+                                            &#x2F;&#x2F;po_money为0时表示不找零
+        output  reg     po_cola             &#x2F;&#x2F;po_cola为1时出可乐
+                                            &#x2F;&#x2F;po_cola为0时不出可乐
+    );</p>
 <pre><code>//********************************************************************//
 //****************** Parameter and Internal Signal *******************//
 //********************************************************************//
@@ -802,7 +872,11 @@ always@(posedge sys_clk or negedge sys_rst_n)
 
 endmodule
 </code></pre>
-<p>​<br>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  tb_complex_fsm();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<p>​<br>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  tb_complex_fsm();
+​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;
+    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
 <pre><code>//reg   define
 reg         sys_clk;
 reg         sys_rst_n;
@@ -889,7 +963,23 @@ endmodule
 <pre><code>    首先是音调的频率我们该如何产生？我们先计算该频率单个方波的时间：1 / 262 ≈ 0.003816794s=3816794ns；而我们单个系统时钟（50MHz）的时间为：1 / 50000000 =0.00000002s = 20ns；所以我们需用：3816794 / 20 ≈ 190840 个系统时钟去产生一个 PWM 波，该 PWM 波形的频率即为 262。故我们需先对 190840 个系统时钟进行计数，这里我们 声明 freq_cnt 信号进行计数。
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/efc4721fe989ceadb077cfa024b628d1.png"></p>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  beep<br>​    #(<br>​        parameter   TIME_500MS &#x3D;   25’d24999999,   &#x2F;&#x2F;0.5s计数值<br>​        parameter   DO  &#x3D;   18’d190839 ,   &#x2F;&#x2F;“哆”音调分频计数值（频率262）<br>​        parameter   RE  &#x3D;   18’d170067 ,   &#x2F;&#x2F;“来”音调分频计数值（频率294）<br>​        parameter   MI  &#x3D;   18’d151514 ,   &#x2F;&#x2F;“咪”音调分频计数值（频率330）<br>​        parameter   FA  &#x3D;   18’d143265 ,   &#x2F;&#x2F;“发”音调分频计数值（频率349）<br>​        parameter   SO  &#x3D;   18’d127550 ,   &#x2F;&#x2F;“梭”音调分频计数值（频率392）<br>​        parameter   LA  &#x3D;   18’d113635 ,   &#x2F;&#x2F;“拉”音调分频计数值（频率440）<br>​        parameter   XI  &#x3D;   18’d101214     &#x2F;&#x2F;“西”音调分频计数值（频率494）<br>​    )<br>​    (<br>​        input   wire        sys_clk     ,   &#x2F;&#x2F;系统时钟,频率50MHz<br>​        input   wire        sys_rst_n   ,   &#x2F;&#x2F;系统复位，低有效<br>​<br>        output  reg         beep            &#x2F;&#x2F;输出蜂鸣器控制信号<br>    );</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  beep
+​    #(
+​        parameter   TIME_500MS &#x3D;   25’d24999999,   &#x2F;&#x2F;0.5s计数值
+​        parameter   DO  &#x3D;   18’d190839 ,   &#x2F;&#x2F;“哆”音调分频计数值（频率262）
+​        parameter   RE  &#x3D;   18’d170067 ,   &#x2F;&#x2F;“来”音调分频计数值（频率294）
+​        parameter   MI  &#x3D;   18’d151514 ,   &#x2F;&#x2F;“咪”音调分频计数值（频率330）
+​        parameter   FA  &#x3D;   18’d143265 ,   &#x2F;&#x2F;“发”音调分频计数值（频率349）
+​        parameter   SO  &#x3D;   18’d127550 ,   &#x2F;&#x2F;“梭”音调分频计数值（频率392）
+​        parameter   LA  &#x3D;   18’d113635 ,   &#x2F;&#x2F;“拉”音调分频计数值（频率440）
+​        parameter   XI  &#x3D;   18’d101214     &#x2F;&#x2F;“西”音调分频计数值（频率494）
+​    )
+​    (
+​        input   wire        sys_clk     ,   &#x2F;&#x2F;系统时钟,频率50MHz
+​        input   wire        sys_rst_n   ,   &#x2F;&#x2F;系统复位，低有效
+​<br>        output  reg         beep            &#x2F;&#x2F;输出蜂鸣器控制信号
+    );</p>
 <pre><code>//********************************************************************//
 //****************** Parameter and Internal Signal *******************//
 //********************************************************************//
@@ -963,7 +1053,11 @@ always@(posedge sys_clk or  negedge sys_rst_n)
 
 endmodule
 </code></pre>
-<p>​<br>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  tb_beep();<br>​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
+<p>​<br>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  tb_beep();
+​<br>    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;
+    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;</p>
 <pre><code>//reg   define
 reg     sys_clk     ;   //时钟
 reg     sys_rst_n   ;   //复位
@@ -1015,7 +1109,20 @@ endmodule
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/b28c0e71220e72cd013719c820965bed.png"></p>
 <h4 id="data-gen"><a href="#data-gen" class="headerlink" title="&lt;1&gt;data_gen"></a>&lt;1&gt;data_gen</h4><pre><code>    生成0-999999的计数值，用20位二进制表示。bcd_8421生成6位十进制8421码。再转化成相应段码。
 </code></pre>
-<p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  data_gen<br>​    #(<br>​        parameter   CNT_MAX &#x3D; 23’d4999_999, &#x2F;&#x2F;100ms计数值<br>​        parameter   DATA_MAX&#x3D; 20’d999_999   &#x2F;&#x2F;显示的最大值<br>​    )<br>​    (<br>​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号，低电平有效<br>​<br>        output  reg     [19:0]  data        ,   &#x2F;&#x2F;数码管要显示的值<br>        output  wire    [5:0]   point       ,   &#x2F;&#x2F;小数点显示,高电平有效<br>        output  reg             seg_en      ,   &#x2F;&#x2F;数码管使能信号，高电平有效<br>        output  wire            sign            &#x2F;&#x2F;符号位，高电平显示负号<br>    );</p>
+<p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  data_gen
+​    #(
+​        parameter   CNT_MAX &#x3D; 23’d4999_999, &#x2F;&#x2F;100ms计数值
+​        parameter   DATA_MAX&#x3D; 20’d999_999   &#x2F;&#x2F;显示的最大值
+​    )
+​    (
+​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz
+​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号，低电平有效
+​<br>        output  reg     [19:0]  data        ,   &#x2F;&#x2F;数码管要显示的值
+        output  wire    [5:0]   point       ,   &#x2F;&#x2F;小数点显示,高电平有效
+        output  reg             seg_en      ,   &#x2F;&#x2F;数码管使能信号，高电平有效
+        output  wire            sign            &#x2F;&#x2F;符号位，高电平显示负号
+    );</p>
 <pre><code>//********************************************************************//
 //****************** Parameter and Internal Signal *******************//
 //********************************************************************//
@@ -1070,7 +1177,19 @@ always@(posedge sys_clk or negedge sys_rst_n)
 
 endmodule
 </code></pre>
-<h4 id="bcd-8421"><a href="#bcd-8421" class="headerlink" title="&lt;2&gt;bcd_8421"></a>&lt;2&gt;bcd_8421</h4><p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  bcd_8421<br>​    (<br>​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号，低电平有效<br>​        input   wire    [19:0]  data        ,   &#x2F;&#x2F;输入需要转换的数据<br>​<br>        output  reg     [3:0]   unit        ,   &#x2F;&#x2F;个位BCD码<br>        output  reg     [3:0]   ten         ,   &#x2F;&#x2F;十位BCD码<br>        output  reg     [3:0]   hun         ,   &#x2F;&#x2F;百位BCD码<br>        output  reg     [3:0]   tho         ,   &#x2F;&#x2F;千位BCD码<br>        output  reg     [3:0]   t_tho       ,   &#x2F;&#x2F;万位BCD码<br>        output  reg     [3:0]   h_hun           &#x2F;&#x2F;十万位BCD码<br>    );</p>
+<h4 id="bcd-8421"><a href="#bcd-8421" class="headerlink" title="&lt;2&gt;bcd_8421"></a>&lt;2&gt;bcd_8421</h4><p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  bcd_8421
+​    (
+​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz
+​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号，低电平有效
+​        input   wire    [19:0]  data        ,   &#x2F;&#x2F;输入需要转换的数据
+​<br>        output  reg     [3:0]   unit        ,   &#x2F;&#x2F;个位BCD码
+        output  reg     [3:0]   ten         ,   &#x2F;&#x2F;十位BCD码
+        output  reg     [3:0]   hun         ,   &#x2F;&#x2F;百位BCD码
+        output  reg     [3:0]   tho         ,   &#x2F;&#x2F;千位BCD码
+        output  reg     [3:0]   t_tho       ,   &#x2F;&#x2F;万位BCD码
+        output  reg     [3:0]   h_hun           &#x2F;&#x2F;十万位BCD码
+    );</p>
 <pre><code>//********************************************************************//
 //******************** Parameter And Internal Signal *****************//
 //********************************************************************//
@@ -1158,7 +1277,18 @@ endmodule
 
     shift_flag：移位判断操作标志信号。前面说到我们需要对数据进行移位和判断，判断在前移位在后，所以这里我们声明一个标志信号，用于控制判断和移位的先后顺序，**当 shift_flag 为低时对数据进行判断，当 shift_flag 为高时对数据进行移位** 。需要注意的是无论 是移位操作和判断操作都是在单个系统时钟下完成的，故我们判断 20 次移位 20 次在 40 个 系统时钟内就能完成。 
 </code></pre>
-<h4 id="seg-dynamic"><a href="#seg-dynamic" class="headerlink" title="&lt;3&gt; seg_dynamic"></a>&lt;3&gt; seg_dynamic</h4><p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  seg_dynamic<br>​    (<br>​        input   wire            sys_clk     , &#x2F;&#x2F;系统时钟，频率50MHz<br>​        input   wire            sys_rst_n   , &#x2F;&#x2F;复位信号，低有效<br>​        input   wire    [19:0]  data        , &#x2F;&#x2F;数码管要显示的值<br>​        input   wire    [5:0]   point       , &#x2F;&#x2F;小数点显示,高电平有效<br>​        input   wire            seg_en      , &#x2F;&#x2F;数码管使能信号，高电平有效<br>​        input   wire            sign        , &#x2F;&#x2F;符号位，高电平显示负号<br>​<br>        output  reg     [5:0]   sel         , &#x2F;&#x2F;数码管位选信号<br>        output  reg     [7:0]   seg           &#x2F;&#x2F;数码管段选信号<br>    );</p>
+<h4 id="seg-dynamic"><a href="#seg-dynamic" class="headerlink" title="&lt;3&gt; seg_dynamic"></a>&lt;3&gt; seg_dynamic</h4><p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  seg_dynamic
+​    (
+​        input   wire            sys_clk     , &#x2F;&#x2F;系统时钟，频率50MHz
+​        input   wire            sys_rst_n   , &#x2F;&#x2F;复位信号，低有效
+​        input   wire    [19:0]  data        , &#x2F;&#x2F;数码管要显示的值
+​        input   wire    [5:0]   point       , &#x2F;&#x2F;小数点显示,高电平有效
+​        input   wire            seg_en      , &#x2F;&#x2F;数码管使能信号，高电平有效
+​        input   wire            sign        , &#x2F;&#x2F;符号位，高电平显示负号
+​<br>        output  reg     [5:0]   sel         , &#x2F;&#x2F;数码管位选信号
+        output  reg     [7:0]   seg           &#x2F;&#x2F;数码管段选信号
+    );</p>
 <pre><code>//********************************************************************//
 //****************** Parameter and Internal Signal *******************//
 //********************************************************************//
@@ -1337,7 +1467,14 @@ bcd_8421    bcd_8421_inst
 
 endmodule
 </code></pre>
-<h4 id="top-seg-dynamic"><a href="#top-seg-dynamic" class="headerlink" title="&lt;4&gt;top_seg_dynamic"></a>&lt;4&gt;top_seg_dynamic</h4><p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    module  top_seg_dynamic<br>​    (<br>​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz<br>​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号，低电平有效<br>​<br>        output  wire    [5:0]   sel         ,   &#x2F;&#x2F;数码管位选信号<br>        output  wire    [7:0]   seg             &#x2F;&#x2F;数码管段选信号<br>    );</p>
+<h4 id="top-seg-dynamic"><a href="#top-seg-dynamic" class="headerlink" title="&lt;4&gt;top_seg_dynamic"></a>&lt;4&gt;top_seg_dynamic</h4><p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    module  top_seg_dynamic
+​    (
+​        input   wire            sys_clk     ,   &#x2F;&#x2F;系统时钟，频率50MHz
+​        input   wire            sys_rst_n   ,   &#x2F;&#x2F;复位信号，低电平有效
+​<br>        output  wire    [5:0]   sel         ,   &#x2F;&#x2F;数码管位选信号
+        output  wire    [7:0]   seg             &#x2F;&#x2F;数码管段选信号
+    );</p>
 <pre><code>//********************************************************************//
 //******************** Parameter And Internal Signal *****************//
 //********************************************************************//
@@ -1380,9 +1517,33 @@ seg_dynamic seg_dynamic_inst
 
 endmodule
 </code></pre>
-<h3 id="2-仿真-6"><a href="#2-仿真-6" class="headerlink" title="2.仿真"></a>2.仿真</h3><p>​<br>​    &#96;timescale  1ns&#x2F;1ns<br>​<br>​    &#x2F;&#x2F; Author  : EmbedFire<br>​    &#x2F;&#x2F; 实验平台: 野火FPGA系列开发板<br>​    &#x2F;&#x2F; 公司    : <a target="_blank" rel="noopener" href="http://www.embedfire.com/">http://www.embedfire.com</a><br>​    &#x2F;&#x2F; 论坛    : <a target="_blank" rel="noopener" href="http://www.firebbs.cn/">http://www.firebbs.cn</a><br>​    &#x2F;&#x2F; 淘宝    : <a target="_blank" rel="noopener" href="https://fire-stm32.taobao.com/">https://fire-stm32.taobao.com</a></p>
-<p>​<br>​    module  tb_top_seg_dynamic();<br>​<br>​    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>​    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;<br>​    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;<br>​    &#x2F;&#x2F;wire  define<br>​    wire    sel    ;   &#x2F;&#x2F;数码管位选信号<br>​    wire    seg    ;   &#x2F;&#x2F;数码管段选信号</p>
-<p>​<br>​    &#x2F;&#x2F;reg   define<br>​    reg     sys_clk     ;<br>​    reg     sys_rst_n   ;<br>​<br>​    &#x2F;&#x2F;<em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;<br>​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em> Main Code <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;<br>​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em>*&#x2F;&#x2F;<br>​<br>    &#x2F;&#x2F;对sys_clk,sys_rst_n赋初始值<br>    initial<br>        begin<br>            sys_clk     &#x3D;   1’b1;<br>            sys_rst_n   &lt;&#x3D;  1’b0;<br>            #100<br>            sys_rst_n   &lt;&#x3D;  1’b1;<br>        end</p>
+<h3 id="2-仿真-6"><a href="#2-仿真-6" class="headerlink" title="2.仿真"></a>2.仿真</h3><p>​<br>​    &#96;timescale  1ns&#x2F;1ns
+​<br>​    &#x2F;&#x2F; Author  : EmbedFire
+​    &#x2F;&#x2F; 实验平台: 野火FPGA系列开发板
+​    &#x2F;&#x2F; 公司    : <a target="_blank" rel="noopener" href="http://www.embedfire.com/">http://www.embedfire.com</a>
+​    &#x2F;&#x2F; 论坛    : <a target="_blank" rel="noopener" href="http://www.firebbs.cn/">http://www.firebbs.cn</a>
+​    &#x2F;&#x2F; 淘宝    : <a target="_blank" rel="noopener" href="https://fire-stm32.taobao.com/">https://fire-stm32.taobao.com</a></p>
+<p>​<br>​    module  tb_top_seg_dynamic();
+​<br>​    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+​    &#x2F;&#x2F;****************** Parameter and Internal Signal *******************&#x2F;&#x2F;
+​    &#x2F;&#x2F;********************************************************************&#x2F;&#x2F;
+​    &#x2F;&#x2F;wire  define
+​    wire    sel    ;   &#x2F;&#x2F;数码管位选信号
+​    wire    seg    ;   &#x2F;&#x2F;数码管段选信号</p>
+<p>​<br>​    &#x2F;&#x2F;reg   define
+​    reg     sys_clk     ;
+​    reg     sys_rst_n   ;
+​<br>​    &#x2F;&#x2F;<em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;
+​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em> Main Code <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>&#x2F;&#x2F;
+​    &#x2F;&#x2F;</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em>*&#x2F;&#x2F;
+​<br>    &#x2F;&#x2F;对sys_clk,sys_rst_n赋初始值
+    initial
+        begin
+            sys_clk     &#x3D;   1’b1;
+            sys_rst_n   &lt;&#x3D;  1’b0;
+            #100
+            sys_rst_n   &lt;&#x3D;  1’b1;
+        end</p>
 <pre><code>//clk:产生时钟
 always  #10 sys_clk &lt;=  ~sys_clk;
 
@@ -1415,9 +1576,12 @@ endmodule
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -1425,9 +1589,9 @@ endmodule
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
           </div>
 
         
@@ -1518,20 +1682,20 @@ endmodule
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1600,13 +1764,13 @@ endmodule
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -1691,6 +1855,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -1755,14 +1921,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>

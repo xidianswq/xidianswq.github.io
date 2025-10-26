@@ -59,8 +59,8 @@
 <meta property="article:published_time" content="2023-06-29T07:26:49.000Z">
 <meta property="article:modified_time" content="2025-02-15T04:24:03.285Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="嵌入式硬件">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/d33cf8d47d4d2de8371c40cc43edf710.png">
 
@@ -108,7 +108,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -159,17 +159,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -308,11 +308,14 @@
 
       
         <h2 id="学习资料来源：B站唐老师讲电赛"><a href="#学习资料来源：B站唐老师讲电赛" class="headerlink" title="学习资料来源：B站唐老师讲电赛"></a><em><strong>学习资料来源：B站唐老师讲电赛</strong></em></h2><p><strong>目录</strong></p>
-<p><a href="about:blank#%E4%B8%80.%E7%BA%BF%E6%80%A7%E7%94%B5%E6%BA%90%EF%BC%88%E7%BA%BF%E6%80%A7%E7%A8%B3%E5%8E%8B%E5%99%A8LDO%EF%BC%89%EF%BC%9AVin%E3%80%81Vout%EF%BC%9B%E5%8E%8B%E5%B7%AE%EF%BC%88Vin-V%E5%B7%AE%3EVout%E6%97%B6%E6%AD%A3%E5%B8%B8%E5%B7%A5%E4%BD%9C%EF%BC%89%C2%A0%E3%80%81Ci%E3%80%81Co%EF%BC%88%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%BB%A4%E6%B3%A2%E7%94%B5%E5%AE%B9%EF%BC%8C%E9%99%8D%E5%99%AA%EF%BC%89">一.线性电源（线性稳压器LDO）：Vin、Vout；压差（Vin-V差&gt;Vout时正常工作）<br>、Ci、Co（输入输出滤波电容，降噪）</a></p>
+<p><a href="about:blank#%E4%B8%80.%E7%BA%BF%E6%80%A7%E7%94%B5%E6%BA%90%EF%BC%88%E7%BA%BF%E6%80%A7%E7%A8%B3%E5%8E%8B%E5%99%A8LDO%EF%BC%89%EF%BC%9AVin%E3%80%81Vout%EF%BC%9B%E5%8E%8B%E5%B7%AE%EF%BC%88Vin-V%E5%B7%AE%3EVout%E6%97%B6%E6%AD%A3%E5%B8%B8%E5%B7%A5%E4%BD%9C%EF%BC%89%C2%A0%E3%80%81Ci%E3%80%81Co%EF%BC%88%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%BB%A4%E6%B3%A2%E7%94%B5%E5%AE%B9%EF%BC%8C%E9%99%8D%E5%99%AA%EF%BC%89">一.线性电源（线性稳压器LDO）：Vin、Vout；压差（Vin-V差&gt;Vout时正常工作）
+、Ci、Co（输入输出滤波电容，降噪）</a></p>
 <p><a href="about:blank#1.%E5%8F%82%E6%95%B0%EF%BC%9AVi%EF%BC%8CVo%EF%BC%88%E5%8F%AF%E8%B0%83%EF%BC%8C%E7%94%B5%E9%98%BB%E5%88%86%E5%8E%8B%EF%BC%89%EF%BC%8C%E5%8E%8B%E9%99%8D%EF%BC%8C%E8%BE%93%E5%87%BA%E7%94%B5%E6%B5%81Io%EF%BC%88max%EF%BC%89%EF%BC%8C%EF%BC%88%E5%99%AA%E5%A3%B0%EF%BC%8C%E9%9D%99%E6%80%81%E7%94%B5%E6%B5%81Iq%EF%BC%8C%E6%95%88%E7%8E%87%3DVo%2FVi%EF%BC%8C%E8%80%97%E6%95%A3%E5%8A%9F%E7%8E%87%3Dv%E5%B7%AE*Iload%EF%BC%89">1.参数：Vi，Vo（可调，电阻分压），压降，输出电流Io（max），（噪声，静态电流Iq，效率&#x3D;Vo&#x2F;Vi，耗散功率&#x3D;v差*Iload）</a></p>
 <p><a href="about:blank#2.PCB">        2.PCB</a></p>
-<p><a href="about:blank#%C2%A0%E4%BA%8C.%E7%94%B5%E5%AE%B9%E5%BC%8F%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%EF%BC%88%E7%94%B5%E8%8D%B7%E6%B3%B5%EF%BC%89"><br>二.电容式开关电源（电荷泵）</a></p>
-<p><a href="about:blank#1%C2%B7%E7%A8%B3%E5%8E%8B%E5%9E%8B%E7%94%B5%E8%8D%B7%E6%B3%B5%E5%BC%80%E5%85%B3%E7%A8%B3%E5%8E%8B%E5%99%A8%E5%8E%9F%E7%90%86%EF%BC%88%E9%A3%9E%E8%B7%A8%E7%94%B5%E5%AE%B9%EF%BC%8CS1%E3%80%81S3%2FS2%E3%80%81S4%E5%88%87%E6%8D%A2%E5%BC%80%E5%85%B3%EF%BC%8CC1%E5%85%85%E6%94%BE%E7%94%B5%EF%BC%89%E2%80%8B%E7%BC%96%E8%BE%91%C2%A0%E8%B4%9F%E5%8E%8B">1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3&#x2F;S2、S4切换开关，C1充放电）​编辑<br>负压</a></p>
+<p><a href="about:blank#%C2%A0%E4%BA%8C.%E7%94%B5%E5%AE%B9%E5%BC%8F%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%EF%BC%88%E7%94%B5%E8%8D%B7%E6%B3%B5%EF%BC%89">
+二.电容式开关电源（电荷泵）</a></p>
+<p><a href="about:blank#1%C2%B7%E7%A8%B3%E5%8E%8B%E5%9E%8B%E7%94%B5%E8%8D%B7%E6%B3%B5%E5%BC%80%E5%85%B3%E7%A8%B3%E5%8E%8B%E5%99%A8%E5%8E%9F%E7%90%86%EF%BC%88%E9%A3%9E%E8%B7%A8%E7%94%B5%E5%AE%B9%EF%BC%8CS1%E3%80%81S3%2FS2%E3%80%81S4%E5%88%87%E6%8D%A2%E5%BC%80%E5%85%B3%EF%BC%8CC1%E5%85%85%E6%94%BE%E7%94%B5%EF%BC%89%E2%80%8B%E7%BC%96%E8%BE%91%C2%A0%E8%B4%9F%E5%8E%8B">1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3&#x2F;S2、S4切换开关，C1充放电）​编辑
+负压</a></p>
 <p><a href="about:blank#PCB%EF%BC%9A">PCB：</a></p>
 <p><a href="about:blank#%E4%B8%89.%E7%94%B5%E6%84%9F%E5%BC%8F%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%EF%BC%88%E5%8F%82%E6%95%B0%EF%BC%9AVI%EF%BC%9BV0%EF%BC%9BIO%EF%BC%9B%E5%BC%80%E5%85%B3%E8%AF%84%E7%8E%87Fsw%EF%BC%9BEN%EF%BC%9BFB%EF%BC%89">三.电感式开关电源（参数：VI；V0；IO；开关评率Fsw；EN；FB）</a></p>
 <p><a href="about:blank#*%E8%AE%BE%E8%AE%A1%E5%AE%9E%E4%BE%8B%EF%BC%9A">*设计实例：</a></p>
@@ -334,7 +337,8 @@
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/ae73145b8a1e4c2a6707fbf38c1d0486.png"></p>
 <h2 id="二-电容式开关电源（电荷泵）"><a href="#二-电容式开关电源（电荷泵）" class="headerlink" title="二.电容式开关电源（电荷泵）"></a>二.电容式开关电源（电荷泵）</h2><p>常用：HX4002（2.7~5.5-&gt;5）</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/c570bfe596d08bd80536caa7bc3996b7.png"></p>
-<h3 id="1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3-S2、S4切换开关，C1充放电）"><a href="#1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3-S2、S4切换开关，C1充放电）" class="headerlink" title="1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3&#x2F;S2、S4切换开关，C1充放电）"></a>1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3&#x2F;S2、S4切换开关，C1充放电）</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/c1e956f406406b2a825f0b7d7c9b99a6.png"><br>负压</p>
+<h3 id="1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3-S2、S4切换开关，C1充放电）"><a href="#1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3-S2、S4切换开关，C1充放电）" class="headerlink" title="1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3&#x2F;S2、S4切换开关，C1充放电）"></a>1·稳压型电荷泵开关稳压器原理（飞跨电容，S1、S3&#x2F;S2、S4切换开关，C1充放电）</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/c1e956f406406b2a825f0b7d7c9b99a6.png">
+负压</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/203446207be2fbe6c344b483e902a9e9.png"></p>
 <p>半压（两跨容，串联充电，并联充电）、倍压反之</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/d3c11d9321a69b002cc2346187f8b3f9.png"></p>
@@ -349,7 +353,8 @@
 <p> 改成负压输出的改造（接地端与原输出端互换）</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/2d21361e0b91acac3643071203b9c022.png"></p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/df20a2e55b8792485d63db18ccf2a9e6.png"></p>
-<p>  例：SY8120I稳压芯片结构<br><img src="https://i-blog.csdnimg.cn/blog_migrate/28a2114b9b75501ad4ca1dd053b2eddd.png"></p>
+<p>  例：SY8120I稳压芯片结构
+<img src="https://i-blog.csdnimg.cn/blog_migrate/28a2114b9b75501ad4ca1dd053b2eddd.png"></p>
 <p>FB接内部误差放大器反相输入端，正向端接0.6V参考，根据RH&#x2F;RL得Vo</p>
 <h3 id="设计实例："><a href="#设计实例：" class="headerlink" title="*设计实例："></a>*设计实例：</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/284bbac4e893f0274aa71c622f768211.png"></p>
 <p> 注：内部电磁干扰问题（EMI），造成高频振铃信号</p>
@@ -365,9 +370,12 @@
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -375,8 +383,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
           </div>
 
         
@@ -385,8 +393,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/04/24/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/OS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)%E2%80%94%E2%80%94FreeRTOS%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="OS学习笔记(2)——FreeRTOS（一）">
-      <i class="fa fa-chevron-left"></i> OS学习笔记(2)——FreeRTOS（一）
+    <a href="/2023/05/19/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E5%A3%B0%E9%9F%B3%E6%98%AF%E4%B8%80%E7%A7%8D%E5%B9%B2%E6%89%B0/" rel="prev" title="声音是一种干扰">
+      <i class="fa fa-chevron-left"></i> 声音是一种干扰
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/07/04/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%94%B5%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(3)%E2%80%94%E2%80%94%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E5%B0%8F%E8%BD%A6%EF%BC%88jetson%20nano%E9%83%A8%E5%88%86%EF%BC%89/" rel="next" title="电赛学习笔记(3)——图像识别小车（jetson nano部分）">
@@ -467,20 +475,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -549,13 +557,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -640,6 +648,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -704,14 +714,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>

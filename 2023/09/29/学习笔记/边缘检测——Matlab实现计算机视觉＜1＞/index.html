@@ -94,7 +94,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -145,17 +145,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -311,7 +311,8 @@
 <p>• 对于 Sobel 滤波结果，显示 x 方向的梯度、y 方向的梯度、梯度幅度、梯 度角度等</p>
 <p>• 对于 Canny 算子滤波，显示滤波后边缘检测结果 并分析不同滤波结果的差异。</p>
 <p>说明：</p>
-<p>（1）基于原理，自行实现，进行计算（禁止使用自带函数进行滤波）。各种滤 波函数应进行封装，并在统一的 test 文件（test.m or<br>test.py）中调用使用。</p>
+<p>（1）基于原理，自行实现，进行计算（禁止使用自带函数进行滤波）。各种滤 波函数应进行封装，并在统一的 test 文件（test.m or
+test.py）中调用使用。</p>
 <p>（2） 所得各图像，按照子图样式显示(subplot)，并标注(title)</p>
 <p>（3） 打包文件夹，包含代码和文档，文档中应包含上述结果的截图及最终分 析。</p>
 <p>要求：内容完备（包含计算过程），结构清晰、排版美观。</p>
@@ -356,7 +357,8 @@
 <h2 id="附录："><a href="#附录：" class="headerlink" title="附录："></a>附录：</h2><h3 id="1-使用的sobel算子"><a href="#1-使用的sobel算子" class="headerlink" title="1.使用的sobel算子"></a>1.使用的sobel算子</h3><p>s_x&#x3D;1&#x2F;8*[1,0,-1;2,0,-2;1,0,-1];</p>
 <p>s_y&#x3D;1&#x2F;8*[-1,-2,-1;0,0,0;1,2,1];</p>
 <h3 id="2-使用的5-5高斯平滑模版"><a href="#2-使用的5-5高斯平滑模版" class="headerlink" title="2.使用的5*5高斯平滑模版"></a>2.使用的5*5高斯平滑模版</h3><p>gs&#x3D;1&#x2F;159*[2,4,5,4,2;4,9,12,9,4;5,12,15,12,5;4,9,12,9,4;2,4,5,4,2];</p>
-<h3 id="3-源代码"><a href="#3-源代码" class="headerlink" title="3.源代码"></a>3.源代码</h3><p>​<br>    function []&#x3D;Sobel_Canny_Filter(Src_img)<br>    %% 输入参数：同路径下照片名。使用举例：Sobel_Canny_filter(‘Test.jpg’)</p>
+<h3 id="3-源代码"><a href="#3-源代码" class="headerlink" title="3.源代码"></a>3.源代码</h3><p>​<br>    function []&#x3D;Sobel_Canny_Filter(Src_img)
+    %% 输入参数：同路径下照片名。使用举例：Sobel_Canny_filter(‘Test.jpg’)</p>
 <pre><code>%%  一阶导数——Sobel算子。
 F=imread(Src_img);
 f=double(rgb2gray(F));
@@ -537,9 +539,12 @@ end
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -557,8 +562,8 @@ end
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(41)%E2%80%94%E2%80%94Vitis%E5%BC%80%E5%8F%91%E4%B8%80/" rel="prev" title="FPGA学习笔记(41)——Vitis开发一">
-      <i class="fa fa-chevron-left"></i> FPGA学习笔记(41)——Vitis开发一
+    <a href="/2023/09/26/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E7%8E%B0%E5%9C%A8%E7%9A%84%E6%83%85%E6%84%9F%E6%98%AF%E5%90%A6%E5%8F%AA%E6%98%AF%E4%B8%80%E7%A7%8D%E4%BB%8E%E4%BC%97%E5%BF%83%E7%90%86/" rel="prev" title="现在的情感是否只是一种从众心理">
+      <i class="fa fa-chevron-left"></i> 现在的情感是否只是一种从众心理
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/10/01/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(20)%E2%80%94%E2%80%94Xilinx_HLS%E5%BC%80%E5%8F%91/" rel="next" title="FPGA学习笔记(20)——Xilinx_HLS开发">
@@ -639,20 +644,20 @@ end
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -721,13 +726,13 @@ end
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -812,6 +817,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -876,14 +883,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>

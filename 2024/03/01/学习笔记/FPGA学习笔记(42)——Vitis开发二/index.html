@@ -86,9 +86,9 @@
 <meta property="article:published_time" content="2024-03-01T07:51:21.000Z">
 <meta property="article:modified_time" content="2025-02-15T04:29:18.242Z">
 <meta property="article:author" content="SWQ">
-<meta property="article:tag" content="fpga开发">
-<meta property="article:tag" content="嵌入式硬件">
 <meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="嵌入式硬件">
+<meta property="article:tag" content="fpga开发">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/f7f69746d9c8b2612a562e216cbcb06d.png">
 
@@ -136,7 +136,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -187,17 +187,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -356,8 +356,12 @@
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/eb004f9d3e754f9cc51b150f9afb459d.png"></p>
 <p>接下来对 AXI 接口进行设置：</p>
 <p><strong>Name（名称）</strong> ：这里修改成 S0_AXI。</p>
-<p><strong>Interface Tpye（接口类型）</strong> ：共三种接口类型可选，分别是 <strong>Lite、Full 和 Stream</strong> 。AXI4-Lite<br>接口是<strong>简化版</strong> 的 AXI4 接口，用于较少数据量的存储映射通信；AXI4-Full 接口是<strong>高性能存储映射接口</strong><br>，用于较多数据量的存储映射通信；AXI4-Stream 用于<strong>高速数据流传输</strong> ，非存储映射接口。本次实验只需少量数据的通信， 因此接口类型选择默认的<br>Lite 接口。</p>
-<p><strong>Interface Mode（接口模式）</strong> ：接口模式有 <strong>Slave（从机）和 Master（主机）</strong> 两种模式可选，AXI<br>协议是<strong>主机和从机通过“握手”的方式建立连接</strong> ，这里选择默认的 <strong>Slave 接口模式</strong> 。</p>
+<p><strong>Interface Tpye（接口类型）</strong> ：共三种接口类型可选，分别是 <strong>Lite、Full 和 Stream</strong> 。AXI4-Lite
+接口是<strong>简化版</strong> 的 AXI4 接口，用于较少数据量的存储映射通信；AXI4-Full 接口是<strong>高性能存储映射接口</strong>
+，用于较多数据量的存储映射通信；AXI4-Stream 用于<strong>高速数据流传输</strong> ，非存储映射接口。本次实验只需少量数据的通信， 因此接口类型选择默认的
+Lite 接口。</p>
+<p><strong>Interface Mode（接口模式）</strong> ：接口模式有 <strong>Slave（从机）和 Master（主机）</strong> 两种模式可选，AXI
+协议是<strong>主机和从机通过“握手”的方式建立连接</strong> ，这里选择默认的 <strong>Slave 接口模式</strong> 。</p>
 <p><strong>Data Width（数据宽度）</strong> ：数据位宽保持默认，即 32 位位宽。</p>
 <p><strong>Memory Size（存储器大小）</strong> ： 在 AXI4-Lite 接口模式下，该选项不可设置。</p>
 <p><strong>Number of Registers（寄存器数量）</strong> ：用于配置 PL LED 呼吸灯寄存器的数量，这里保持默认。</p>
@@ -385,13 +389,33 @@
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/425827ac7a64452aea8a0413ea593bcf.png"></p>
 <p>时我们还需要在代码的第 401 行例化 breath_led.v 文件：</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/6ffed17009e2230f835db7440ba21eee.png"></p>
-<p>​<br>​    	&#x2F;&#x2F; Add user logic here<br>​        breath_led #(<br>​            .START_FREQ_STEP(START_FREQ_STEP)<br>​        )<br>​        u_breath_led(<br>​            .sys_clk (S_AXI_ACLK),<br>​            .sys_rst_n (S_AXI_ARESETN),<br>​            .sw_ctrl (slv_reg0[0]),<br>​            .set_en (slv_reg1[31]),<br>​            .set_freq_step (slv_reg1[9:0]),<br>​            .led (led)<br>​        );<br>​    	&#x2F;&#x2F; User logic ends<br>​<br>        代码中的 <strong>slv_reg0 和 slv_reg1 是寄存器地址 0 和寄存器地址 1 对应的数据</strong> ，我们通过寄存器地址 0 对应 的数据来控制呼吸灯的使能（sw_ctrl），寄存器地址 1 对应数据的最高位控制呼吸灯频率的设置有效信号 （set_en），寄存器地址 1 对应数据的低 10 位控制呼吸灯频率的步长（set_freq_step）。</p>
+<p>​<br>​    	&#x2F;&#x2F; Add user logic here
+​        breath_led #(
+​            .START_FREQ_STEP(START_FREQ_STEP)
+​        )
+​        u_breath_led(
+​            .sys_clk (S_AXI_ACLK),
+​            .sys_rst_n (S_AXI_ARESETN),
+​            .sw_ctrl (slv_reg0[0]),
+​            .set_en (slv_reg1[31]),
+​            .set_freq_step (slv_reg1[9:0]),
+​            .led (led)
+​        );
+​    	&#x2F;&#x2F; User logic ends
+​<br>        代码中的 <strong>slv_reg0 和 slv_reg1 是寄存器地址 0 和寄存器地址 1 对应的数据</strong> ，我们通过寄存器地址 0 对应 的数据来控制呼吸灯的使能（sw_ctrl），寄存器地址 1 对应数据的最高位控制呼吸灯频率的设置有效信号 （set_en），寄存器地址 1 对应数据的低 10 位控制呼吸灯频率的步长（set_freq_step）。</p>
 <pre><code>    此时工程中缺失 breath_led.v 文件，breath_led.v 文件用于实现呼吸灯的功能。右击**“Design Sources”** ，选择**“Add Sources…”** ，在弹出的界面中选择“**Add or Create design source”** ， 点击“NEXT”；点击“**Create File ”** 创建一个新的文件，在弹出的界面输入名称 breath_led ，路径 为../**_custom_ip/ip_repo/breath_led_ip_1.0/_ hdl**，点击“OK”按钮
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/0e3c33e0d2c764bd425828a96898b80d.png"></p>
 <pre><code>    在弹出的**模块定义界面中点击“OK”按钮** ，接下来在弹出的确认按钮中点击“YES”。双击 u_breath_led(breath_led.v)文件并编辑代码如下：
 </code></pre>
-<p>​<br>​    module breath_led(<br>​        input          sys_clk        , &#x2F;&#x2F;时钟信号<br>​        input          sys_rst_n      , &#x2F;&#x2F;复位信号<br>​        input          sw_ctrl        , &#x2F;&#x2F;呼吸灯开关控制信号 1：亮 0:灭<br>​        input          set_en         , &#x2F;&#x2F;设置呼吸灯频率设置使能信号<br>​        input   [9:0]  set_freq_step  , &#x2F;&#x2F;设置呼吸灯频率变化步长<br>​<br>        output         led              &#x2F;&#x2F;LED<br>    );</p>
+<p>​<br>​    module breath_led(
+​        input          sys_clk        , &#x2F;&#x2F;时钟信号
+​        input          sys_rst_n      , &#x2F;&#x2F;复位信号
+​        input          sw_ctrl        , &#x2F;&#x2F;呼吸灯开关控制信号 1：亮 0:灭
+​        input          set_en         , &#x2F;&#x2F;设置呼吸灯频率设置使能信号
+​        input   [9:0]  set_freq_step  , &#x2F;&#x2F;设置呼吸灯频率变化步长
+​<br>        output         led              &#x2F;&#x2F;LED
+    );</p>
 <pre><code>//*****************************************************
 //**                  main code
 //*****************************************************
@@ -525,7 +549,15 @@ endmodule
     新建 vitis 文件夹，将 xsa 文件拷贝到里面。选择菜单 Tools-&gt;Launch Vitis。在弹出的界面中，指定路径到..\custom_ip\user_led\vitis 下，点击 “Launch”，打开 Vitis 软件。
 </code></pre>
 <h3 id="3-软件设计"><a href="#3-软件设计" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><p>新建vitis工程user_led，流程同前，main.c文件内容如下：</p>
-<p>​<br>​    #include “stdio.h”<br>​    #include “xparameters.h”<br>​    #include “xil_printf.h”<br>​    #include “breath_led_ip.h”<br>​    #include “xil_io.h”<br>​    #include “sleep.h”<br>​<br>    #define  LED_IP_BASEADDR    XPAR_BREATH_LED_IP_0_S0_AXI_BASEADDR  &#x2F;&#x2F;LED IP基地址<br>    #define  LED_IP_REG0        BREATH_LED_IP_S0_AXI_SLV_REG0_OFFSET  &#x2F;&#x2F;LED IP寄存器地址0<br>    #define  LED_IP_REG1        BREATH_LED_IP_S0_AXI_SLV_REG1_OFFSET  &#x2F;&#x2F;LED IP寄存器地址1</p>
+<p>​<br>​    #include “stdio.h”
+​    #include “xparameters.h”
+​    #include “xil_printf.h”
+​    #include “breath_led_ip.h”
+​    #include “xil_io.h”
+​    #include “sleep.h”
+​<br>    #define  LED_IP_BASEADDR    XPAR_BREATH_LED_IP_0_S0_AXI_BASEADDR  &#x2F;&#x2F;LED IP基地址
+    #define  LED_IP_REG0        BREATH_LED_IP_S0_AXI_SLV_REG0_OFFSET  &#x2F;&#x2F;LED IP寄存器地址0
+    #define  LED_IP_REG1        BREATH_LED_IP_S0_AXI_SLV_REG1_OFFSET  &#x2F;&#x2F;LED IP寄存器地址1</p>
 <pre><code>//main函数
 int main()
 &#123;
@@ -572,14 +604,18 @@ int main()
 </code></pre>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/b90ad057bdb4f0e9b727ccacfb8609e6.png"></p>
 <p>接着“build project”，如果编译出现error，可以参考：</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62179548/article/details/132042828" title="Vitis2021.1报错：fatal error: xparameters.h: No such file or directory-CSDN博客">Vitis2021.1报错：fatal error: xparameters.h: No such file or directory-<br>CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_62179548/article/details/132042828" title="Vitis2021.1报错：fatal error: xparameters.h: No such file or directory-CSDN博客">Vitis2021.1报错：fatal error: xparameters.h: No such file or directory-
+CSDN博客</a></p>
 <p>若run时出现错误：</p>
-<p>Error while launching program: Hardaware specification file used in the launch<br>configuration ‘Debugger_user_led_ip-Default’ doesn’t exist at the location<br>…..</p>
+<p>Error while launching program: Hardaware specification file used in the launch
+configuration ‘Debugger_user_led_ip-Default’ doesn’t exist at the location
+…..</p>
 <h3 id="4-下载验证"><a href="#4-下载验证" class="headerlink" title="4.下载验证"></a>4.下载验证</h3><pre><code>    打开 Vitis Terminal 终端，设置并连接串口。在应用工程 user_led 上右击，选择**“Run As”** ，然后选择第一项**“1 Launch on Hardware (System Debugger)”** 。
 </code></pre>
 <h2 id="二-程序固化实验"><a href="#二-程序固化实验" class="headerlink" title="二.程序固化实验"></a>二.程序固化实验</h2><pre><code>   之前都是通过 JTAG 接口将 FPGA 配置文件和应用程序下载到 MPSOC 器件中。接下来尝试把程序存储在非易失性存储器中，在上电或者复位时让程序自动运行，这个过程需要启动引导程序**（Boot Loader）** 的参与。**Boot Loader 会加载 FPGA 配置文件，以及运行在 ARM 中的软件应用。**
 </code></pre>
-<p>**        <strong>本章的实验任务是在“AXI GPIO 按键控制 LED 实验”的基础上</strong>创建 FSBL** ，实现程序上电自启动，<strong>包括从 SD<br>卡启动，QSPI Flash 和 eMMC 启动三种方式</strong> 。</p>
+<p>**        <strong>本章的实验任务是在“AXI GPIO 按键控制 LED 实验”的基础上</strong>创建 FSBL** ，实现程序上电自启动，<strong>包括从 SD
+卡启动，QSPI Flash 和 eMMC 启动三种方式</strong> 。</p>
 <h3 id="1-简介-1"><a href="#1-简介-1" class="headerlink" title="1.*简介"></a>1.*简介</h3><pre><code>    MPSOC 的系统启动过程由**平台管理单元**(**PMU**)和**配置安全单元**(**CSU**)管理和执行。启动过程包括三个功能阶段：**预配置阶段、配置阶段和后配置阶段** 。
 
    _ **预配置阶段** 由**平台管理单元** 控制。平台管理单元运行 **PMU ROM** 代码以设置系统。PMU 处理所有复位和唤醒过程。_
@@ -588,8 +624,13 @@ int main()
 
    _  FSBL 执行开始后，CSU ROM 代码进入**后配置阶段** ，该阶段负责系统干预响应。CSU 硬件提供持续的硬件支持，以验证文件，**通过 PCAP 配置 PL，存储和管理安全密钥，解密文件** 。_
 </code></pre>
-<h4 id="启动流程-Boot-Flow"><a href="#启动流程-Boot-Flow" class="headerlink" title="启动流程(Boot Flow)"></a><strong>启动流程(Boot Flow)</strong></h4><p>**         **PMU对内部寄存器、存储器等进行复位，检查电压，则验证 CSU ROM 完整性并释放对 CSU 的复位。PMU<br>负责处理主要的预引导任务和 PS 的管理，以确保系统资源的可靠通电断电。启动 PMU<br>的上电复位(POR)操作，直接或间接的释放了预期上电模块的复位。在这种情况下，PMU 需要 ROM 代码来保持初始化上电顺序。即使在启动过程之后，PMU<br>仍在运行，并且负责处理各种系统复位。在更改系统电源状态时也会使用它(例如上电、睡眠和唤醒)。在初始化启动期间，POR 将 PMU 从复位中释放，然后执行<br>PMU ROM。</p>
-<p>​<br>​    下面描述了 PMU 处理器在 POR 复位后，通过运行 PMU ROM 预启动代码完成的操作序列：<br>​<br>    1、 初始化 PS SYSMON 和引导单元所需的 PLL。</p>
+<h4 id="启动流程-Boot-Flow"><a href="#启动流程-Boot-Flow" class="headerlink" title="启动流程(Boot Flow)"></a><strong>启动流程(Boot Flow)</strong></h4><p>**         **PMU对内部寄存器、存储器等进行复位，检查电压，则验证 CSU ROM 完整性并释放对 CSU 的复位。PMU
+负责处理主要的预引导任务和 PS 的管理，以确保系统资源的可靠通电断电。启动 PMU
+的上电复位(POR)操作，直接或间接的释放了预期上电模块的复位。在这种情况下，PMU 需要 ROM 代码来保持初始化上电顺序。即使在启动过程之后，PMU
+仍在运行，并且负责处理各种系统复位。在更改系统电源状态时也会使用它(例如上电、睡眠和唤醒)。在初始化启动期间，POR 将 PMU 从复位中释放，然后执行
+PMU ROM。</p>
+<p>​<br>​    下面描述了 PMU 处理器在 POR 复位后，通过运行 PMU ROM 预启动代码完成的操作序列：
+​<br>    1、 初始化 PS SYSMON 和引导单元所需的 PLL。</p>
 <pre><code>2、 清除 PMU RAM 和 CSU RAM(仅外部 POR)。
 
 3、 验证 PLL 锁。
@@ -639,7 +680,19 @@ int main()
 </code></pre>
 <h3 id="3-软件设计-1"><a href="#3-软件设计-1" class="headerlink" title="3.软件设计"></a>3.软件设计</h3><pre><code>    新建vitis工程如上，main.c代码：
 </code></pre>
-<p>​<br>​    #include “stdio.h”<br>​    #include “xparameters.h”<br>​    #include “xgpiops.h”<br>​    #include “xgpio.h”<br>​    #include “xscugic.h”<br>​    #include “xil_exception.h”<br>​    #include “xil_printf.h”<br>​    #include “sleep.h”<br>​<br>    &#x2F;&#x2F;宏定义<br>    #define SCUGIC_ID    XPAR_SCUGIC_0_DEVICE_ID      &#x2F;&#x2F;中断控制器  ID<br>    #define GPIOPS_ID    XPAR_XGPIOPS_0_DEVICE_ID     &#x2F;&#x2F;PS端  GPIO器件  ID<br>    #define AXI_GPIO_ID  XPAR_AXI_GPIO_0_DEVICE_ID    &#x2F;&#x2F;PL端  AXI GPIO器件  ID<br>    #define GPIO_INT_ID  XPAR_FABRIC_GPIO_0_VEC_ID    &#x2F;&#x2F;PL端  AXI GPIO中断  ID</p>
+<p>​<br>​    #include “stdio.h”
+​    #include “xparameters.h”
+​    #include “xgpiops.h”
+​    #include “xgpio.h”
+​    #include “xscugic.h”
+​    #include “xil_exception.h”
+​    #include “xil_printf.h”
+​    #include “sleep.h”
+​<br>    &#x2F;&#x2F;宏定义
+    #define SCUGIC_ID    XPAR_SCUGIC_0_DEVICE_ID      &#x2F;&#x2F;中断控制器  ID
+    #define GPIOPS_ID    XPAR_XGPIOPS_0_DEVICE_ID     &#x2F;&#x2F;PS端  GPIO器件  ID
+    #define AXI_GPIO_ID  XPAR_AXI_GPIO_0_DEVICE_ID    &#x2F;&#x2F;PL端  AXI GPIO器件  ID
+    #define GPIO_INT_ID  XPAR_FABRIC_GPIO_0_VEC_ID    &#x2F;&#x2F;PL端  AXI GPIO中断  ID</p>
 <pre><code>#define MIO_LED      38                           //PS_LED1 连接到  MIO38
 #define KEY_CHANNEL  1                            //PL按键使用 AXI GPIO通道1
 #define KEY_MASK     XGPIO_IR_CH1_MASK            //通道1的位定义
@@ -798,7 +851,14 @@ void axi_gpio_handler(void *CallbackRef)
 
     新建main.c文件，代码如下：
 </code></pre>
-<p>​<br>​    #include “xparameters.h”<br>​    #include “xuartps.h”<br>​    #include “xil_printf.h”<br>​    #include “xscugic.h”<br>​    #include “stdio.h”<br>​<br>    #define UART_DEVICE_ID     XPAR_XUARTPS_0_DEVICE_ID     &#x2F;&#x2F;串口设备ID<br>    #define INTC_DEVICE_ID     XPAR_SCUGIC_SINGLE_DEVICE_ID &#x2F;&#x2F;中断ID<br>    #define UART_INT_IRQ_ID    XPAR_XUARTPS_0_INTR          &#x2F;&#x2F;串口中断ID</p>
+<p>​<br>​    #include “xparameters.h”
+​    #include “xuartps.h”
+​    #include “xil_printf.h”
+​    #include “xscugic.h”
+​    #include “stdio.h”
+​<br>    #define UART_DEVICE_ID     XPAR_XUARTPS_0_DEVICE_ID     &#x2F;&#x2F;串口设备ID
+    #define INTC_DEVICE_ID     XPAR_SCUGIC_SINGLE_DEVICE_ID &#x2F;&#x2F;中断ID
+    #define UART_INT_IRQ_ID    XPAR_XUARTPS_0_INTR          &#x2F;&#x2F;串口中断ID</p>
 <pre><code>XScuGic Intc;              //中断控制器驱动程序实例
 XUartPs Uart_Ps;           //串口驱动程序实例
 
@@ -908,7 +968,8 @@ int main(void)
 
     在代码的第 42 行至第 63 行为 **UART 中断处理函数** ，由于 RxFIFO 的触发等级设置为 1，因此每次接收到数据都会进入此中断函数。程序中首先**读取中断 ID 寄存器** ，判断触发的是**哪种中断** ，再读取**中断的状态** 。 当判断中断标志位为 **RxFIFO 触发中断** 时，通过 **XUartPs_RecvByte** 函数来**读取接收到的数据** ，并**清除对应的中断标志位** 。最后通过 **XUartPs_SendByte** 函数**发送接收到的数据** ，实现串口环回的功能。
 </code></pre>
-<p>注：首先程序会对 UART 串口进行初始化，我们知道，当使用一些打印函数的时候（如：xil_printf()），实际上调用的还是 UART 相关的 API<br>函数，如果在<strong>初始化的过程中， 使用打印函数，或者在打印的过程中对串口进行初始化，都会导致串口助手打印信息出错。</strong></p>
+<p>注：首先程序会对 UART 串口进行初始化，我们知道，当使用一些打印函数的时候（如：xil_printf()），实际上调用的还是 UART 相关的 API
+函数，如果在<strong>初始化的过程中， 使用打印函数，或者在打印的过程中对串口进行初始化，都会导致串口助手打印信息出错。</strong></p>
 <h2 id="四-定时器中断实验"><a href="#四-定时器中断实验" class="headerlink" title="四.定时器中断实验"></a>四.定时器中断实验</h2><pre><code>    MPSOC 中 PS 部分包含许多不同类型的定时器，包括**全局定时器、TTC 定时器、系统看门狗定时器** 等。 定时器可以不受 CPU 的干预，自己独立运行，来完成计时、定时、中断以及计算来自 MIO 或 EMIO 引脚 的信号脉冲宽度等。本章我们将向大家介绍 **TTC**(**三路定时器**)以 TTC(三路定时器)**中断** 的使用方法。
 </code></pre>
 <h3 id="1-简介-3"><a href="#1-简介-3" class="headerlink" title="1.简介"></a>1.简介</h3><p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/136352300">https://blog.csdn.net/qq_32971095/article/details/136352300</a>，如有侵权，请联系删除。</p>
@@ -921,9 +982,12 @@ int main(void)
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -931,9 +995,9 @@ int main(void)
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
               <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6/" rel="tag"># 嵌入式硬件</a>
+              <a href="/tags/fpga%E5%BC%80%E5%8F%91/" rel="tag"># fpga开发</a>
           </div>
 
         
@@ -1024,20 +1088,20 @@ int main(void)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1106,13 +1170,13 @@ int main(void)
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -1197,6 +1261,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -1261,14 +1327,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>

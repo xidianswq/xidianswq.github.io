@@ -1225,7 +1225,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #22ff93;
+  background: #17ffda;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2616,4 +2616,84 @@ pre {
 code,
 pre {
   border: 1px solid #d6d6d6;
+}
+.post-body p {
+  text-indent: 0;
+  margin-bottom: 1.2em;
+  line-height: 1.6;
+  margin-top: 0;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+.post-body p + p {
+  margin-top: 1.2em;
+}
+.post-body ul,
+.post-body ol {
+  padding-left: 1.5em;
+  margin-bottom: 0.8em;
+}
+.post-body li {
+  margin-bottom: 0.3em;
+  line-height: 1.5;
+  font-size: 15px;
+}
+.post-body blockquote {
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  border-left: 4px solid #00b8a9;
+  background-color: #f8f9fa;
+}
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+  margin-top: 1.8em;
+  margin-bottom: 0.8em;
+  text-indent: 0;
+}
+.post-body h1 {
+  font-size: 1.8em;
+}
+.post-body h2 {
+  font-size: 1.5em;
+}
+.post-body h3 {
+  font-size: 1.3em;
+}
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+  font-size: 1.1em;
+}
+.post-body p:empty {
+  height: 1.2em;
+  display: block;
+}
+.post-body p:not(:empty) + p:not(:empty) {
+  margin-top: 1.2em;
+}
+.post {
+  max-width: 95%;
+  padding: 25px;
+  margin: 0 auto;
+}
+.post-body blockquote {
+  margin: 0.8em 0;
+  padding: 0.4em 0.8em;
+  border-left: 3px solid #00b8a9;
+  background-color: #f8f9fa;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.post-body code {
+  font-size: 14px;
+  padding: 2px 4px;
+}
+.post-body pre {
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 8px;
 }

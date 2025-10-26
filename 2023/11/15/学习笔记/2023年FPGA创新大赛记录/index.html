@@ -87,7 +87,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -138,17 +138,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -292,12 +292,15 @@
 <p><a href="about:blank#1.%E4%BB%BB%E5%8A%A1%E5%88%86%E8%A7%A3">1.任务分解</a></p>
 <p><a href="about:blank#2.%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1">2.模块设计</a></p>
 <p><a href="about:blank#%E4%B8%89.%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5">三.设计实践</a></p>
-<p><a href="about:blank#1.adc_stm32%C2%A0%E4%BF%A1%E5%8F%B7%E9%87%87%E9%9B%86%E6%A8%A1%E5%9D%97">1.adc_stm32<br>信号采集模块</a></p>
-<p><a href="about:blank#2.proc_fpga%20FPGA%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97">2.proc_fpga<br>FPGA主体模块</a></p>
+<p><a href="about:blank#1.adc_stm32%C2%A0%E4%BF%A1%E5%8F%B7%E9%87%87%E9%9B%86%E6%A8%A1%E5%9D%97">1.adc_stm32
+信号采集模块</a></p>
+<p><a href="about:blank#2.proc_fpga%20FPGA%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97">2.proc_fpga
+FPGA主体模块</a></p>
 <p><a href="about:blank#%3C1%3Euart%E5%8D%8F%E8%AE%AE%E6%95%B0%E6%8D%AE%E6%8E%A5%E6%94%B6%E6%A8%A1%E5%9D%97%E2%80%94%E2%80%94uart_rx">&lt;1&gt;uart协议数据接收模块——uart_rx</a></p>
 <p><a href="about:blank#%3C2%3E%E4%B8%B2%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%A7%A3%E7%A0%81%E6%A8%A1%E5%9D%97%E2%80%94%E2%80%94decoder">&lt;2&gt;串行数据解码模块——decoder</a></p>
 <p><a href="about:blank#%3C3%3E%20%E9%A1%B6%E5%B1%82%E6%A8%A1%E5%9D%97">&lt;3&gt; 顶层模块</a></p>
-<p><a href="about:blank#3.signal_proc%20%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%A8%A1%E5%9D%97">3.signal_proc<br>信号处理模块</a></p>
+<p><a href="about:blank#3.signal_proc%20%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%A8%A1%E5%9D%97">3.signal_proc
+信号处理模块</a></p>
 <p><a href="about:blank#%E5%9B%9B.%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%9A">四.注意事项</a></p>
 <hr>
 <h2 id="一-基本信息"><a href="#一-基本信息" class="headerlink" title="一.基本信息"></a>一.基本信息</h2><p>参赛厂商：AMD</p>
@@ -360,9 +363,86 @@
 </code></pre>
 <p> stm32关键代码：</p>
 <p>（1）初始化stm32的多个ADC外设并启用DMA转运</p>
-<p>​<br>    void AD_Init(void)<br>    {<br>    	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);<br>    	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);<br>    	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);<br>    &#x2F;&#x2F;	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);<br>    	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);<br>    	<br>    	RCC_ADCCLKConfig(RCC_PCLK2_Div6);				&#x2F;&#x2F;72M&#x2F;6&#x3D;12,ADC最大时间不能超过14M<br>    	<br>    	GPIO_InitTypeDef GPIO_InitStructure;<br>    	GPIO_InitStructure.GPIO_Mode &#x3D; GPIO_Mode_AIN;	&#x2F;&#x2F;设置模拟输入模式<br>    	GPIO_InitStructure.GPIO_Pin &#x3D; GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;<br>    	GPIO_InitStructure.GPIO_Speed &#x3D; GPIO_Speed_50MHz;<br>    	GPIO_Init(GPIOA, &amp;GPIO_InitStructure);<br>    	GPIO_InitStructure.GPIO_Pin &#x3D; GPIO_Pin_0 | GPIO_Pin_1;<br>    	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);<br>    &#x2F;&#x2F;	GPIO_InitStructure.GPIO_Pin &#x3D; GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;<br>    &#x2F;&#x2F;	GPIO_Init(GPIOC, &amp;GPIO_InitStructure);<br>    	<br>    	&#x2F;&#x2F;ADC1,ADC通道x,规则采样顺序值为y,采样时间为55.5周期<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 2, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 4, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 5, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_5, 6, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 7, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 8, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 9, ADC_SampleTime_55Cycles5);<br>    	ADC_RegularChannelConfig(ADC1, ADC_Channel_9, 10, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 11, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 12, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 13, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_13, 14, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 15, ADC_SampleTime_55Cycles5);<br>    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_15, 16, ADC_SampleTime_55Cycles5);<br>    		<br>    	ADC_InitTypeDef ADC_InitStructure;<br>    	ADC_InitStructure.ADC_Mode &#x3D; ADC_Mode_Independent;					&#x2F;&#x2F;ADC工作在独立模式<br>    	ADC_InitStructure.ADC_DataAlign &#x3D; ADC_DataAlign_Right;				&#x2F;&#x2F;ADC数据右对齐<br>    	ADC_InitStructure.ADC_ExternalTrigConv &#x3D; ADC_ExternalTrigConv_None;	&#x2F;&#x2F;外部触发转换关闭<br>    	ADC_InitStructure.ADC_ContinuousConvMode &#x3D; ENABLE;					&#x2F;&#x2F;模数转换工作在连续转换模式<br>    	ADC_InitStructure.ADC_ScanConvMode &#x3D; ENABLE;						&#x2F;&#x2F;是否使用扫描模式<br>    	ADC_InitStructure.ADC_NbrOfChannel &#x3D; CHANNEL_NUM;					&#x2F;&#x2F;顺序进行规则转换的ADC通道的数目<br>    	ADC_Init(ADC1, &amp;ADC_InitStructure);<br>    	<br>    	&#x2F;&#x2F;DMA初始化<br>    	DMA_InitTypeDef DMA_InitStructure;<br>    	DMA_InitStructure.DMA_PeripheralBaseAddr &#x3D; (uint32_t)&amp;ADC1-&gt;DR;				&#x2F;&#x2F;DMA外设ADC基地址<br>    	DMA_InitStructure.DMA_PeripheralDataSize &#x3D; DMA_PeripheralDataSize_HalfWord;	&#x2F;&#x2F;数据宽度为16位<br>    	DMA_InitStructure.DMA_PeripheralInc &#x3D; DMA_PeripheralInc_Disable;			&#x2F;&#x2F;外设地址寄存器不变<br>    	DMA_InitStructure.DMA_MemoryBaseAddr &#x3D; (uint32_t)AD_Value;					&#x2F;&#x2F;DMA外设ADC基地址<br>    	DMA_InitStructure.DMA_MemoryDataSize &#x3D; DMA_MemoryDataSize_HalfWord;			&#x2F;&#x2F;数据宽度为16位<br>    	DMA_InitStructure.DMA_MemoryInc &#x3D; DMA_MemoryInc_Enable;						&#x2F;&#x2F;内存地址寄存器递增<br>    	DMA_InitStructure.DMA_DIR &#x3D; DMA_DIR_PeripheralSRC;							&#x2F;&#x2F;内存作为数据传输的目的地<br>    	DMA_InitStructure.DMA_BufferSize &#x3D; CHANNEL_NUM;								&#x2F;&#x2F;DMA通道的DMA缓存的大小<br>    	DMA_InitStructure.DMA_Mode &#x3D; DMA_Mode_Circular;								&#x2F;&#x2F;工作在循环缓存模式<br>    	&#x2F;&#x2F;M2M是否使用软件触发<br>    	DMA_InitStructure.DMA_M2M &#x3D; DMA_M2M_Disable;								&#x2F;&#x2F;DMA通道x没有设置为内存到内存传输<br>    	DMA_InitStructure.DMA_Priority &#x3D; DMA_Priority_Medium;						&#x2F;&#x2F;DMA通道 x拥有中优先级<br>    	DMA_Init(DMA1_Channel1, &amp;DMA_InitStructure);<br>    	<br>    	&#x2F;&#x2F;外设使能<br>    	DMA_Cmd(DMA1_Channel1, ENABLE);<br>    	ADC_DMACmd(ADC1, ENABLE);<br>    	ADC_Cmd(ADC1, ENABLE);<br>    	<br>    	&#x2F;&#x2F;复位校准寄存器<br>    	ADC_ResetCalibration(ADC1);<br>    	while (ADC_GetResetCalibrationStatus(ADC1) &#x3D;&#x3D; SET);<br>    	ADC_StartCalibration(ADC1);<br>    	while (ADC_GetCalibrationStatus(ADC1) &#x3D;&#x3D; SET);<br>    	<br>    	ADC_SoftwareStartConvCmd(ADC1, ENABLE);<br>    }</p>
+<p>​<br>    void AD_Init(void)
+    {
+    	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+    	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+    	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+    &#x2F;&#x2F;	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+    	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+    	
+    	RCC_ADCCLKConfig(RCC_PCLK2_Div6);				&#x2F;&#x2F;72M&#x2F;6&#x3D;12,ADC最大时间不能超过14M
+    	
+    	GPIO_InitTypeDef GPIO_InitStructure;
+    	GPIO_InitStructure.GPIO_Mode &#x3D; GPIO_Mode_AIN;	&#x2F;&#x2F;设置模拟输入模式
+    	GPIO_InitStructure.GPIO_Pin &#x3D; GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
+    	GPIO_InitStructure.GPIO_Speed &#x3D; GPIO_Speed_50MHz;
+    	GPIO_Init(GPIOA, &amp;GPIO_InitStructure);
+    	GPIO_InitStructure.GPIO_Pin &#x3D; GPIO_Pin_0 | GPIO_Pin_1;
+    	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);
+    &#x2F;&#x2F;	GPIO_InitStructure.GPIO_Pin &#x3D; GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;
+    &#x2F;&#x2F;	GPIO_Init(GPIOC, &amp;GPIO_InitStructure);
+    	
+    	&#x2F;&#x2F;ADC1,ADC通道x,规则采样顺序值为y,采样时间为55.5周期
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_55Cycles5);
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 2, ADC_SampleTime_55Cycles5);
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_55Cycles5);
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 4, ADC_SampleTime_55Cycles5);
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 5, ADC_SampleTime_55Cycles5);
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_5, 6, ADC_SampleTime_55Cycles5);
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 7, ADC_SampleTime_55Cycles5);
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 8, ADC_SampleTime_55Cycles5);
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 9, ADC_SampleTime_55Cycles5);
+    	ADC_RegularChannelConfig(ADC1, ADC_Channel_9, 10, ADC_SampleTime_55Cycles5);
+    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 11, ADC_SampleTime_55Cycles5);
+    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 12, ADC_SampleTime_55Cycles5);
+    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 13, ADC_SampleTime_55Cycles5);
+    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_13, 14, ADC_SampleTime_55Cycles5);
+    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 15, ADC_SampleTime_55Cycles5);
+    &#x2F;&#x2F;	ADC_RegularChannelConfig(ADC1, ADC_Channel_15, 16, ADC_SampleTime_55Cycles5);
+    		
+    	ADC_InitTypeDef ADC_InitStructure;
+    	ADC_InitStructure.ADC_Mode &#x3D; ADC_Mode_Independent;					&#x2F;&#x2F;ADC工作在独立模式
+    	ADC_InitStructure.ADC_DataAlign &#x3D; ADC_DataAlign_Right;				&#x2F;&#x2F;ADC数据右对齐
+    	ADC_InitStructure.ADC_ExternalTrigConv &#x3D; ADC_ExternalTrigConv_None;	&#x2F;&#x2F;外部触发转换关闭
+    	ADC_InitStructure.ADC_ContinuousConvMode &#x3D; ENABLE;					&#x2F;&#x2F;模数转换工作在连续转换模式
+    	ADC_InitStructure.ADC_ScanConvMode &#x3D; ENABLE;						&#x2F;&#x2F;是否使用扫描模式
+    	ADC_InitStructure.ADC_NbrOfChannel &#x3D; CHANNEL_NUM;					&#x2F;&#x2F;顺序进行规则转换的ADC通道的数目
+    	ADC_Init(ADC1, &amp;ADC_InitStructure);
+    	
+    	&#x2F;&#x2F;DMA初始化
+    	DMA_InitTypeDef DMA_InitStructure;
+    	DMA_InitStructure.DMA_PeripheralBaseAddr &#x3D; (uint32_t)&amp;ADC1-&gt;DR;				&#x2F;&#x2F;DMA外设ADC基地址
+    	DMA_InitStructure.DMA_PeripheralDataSize &#x3D; DMA_PeripheralDataSize_HalfWord;	&#x2F;&#x2F;数据宽度为16位
+    	DMA_InitStructure.DMA_PeripheralInc &#x3D; DMA_PeripheralInc_Disable;			&#x2F;&#x2F;外设地址寄存器不变
+    	DMA_InitStructure.DMA_MemoryBaseAddr &#x3D; (uint32_t)AD_Value;					&#x2F;&#x2F;DMA外设ADC基地址
+    	DMA_InitStructure.DMA_MemoryDataSize &#x3D; DMA_MemoryDataSize_HalfWord;			&#x2F;&#x2F;数据宽度为16位
+    	DMA_InitStructure.DMA_MemoryInc &#x3D; DMA_MemoryInc_Enable;						&#x2F;&#x2F;内存地址寄存器递增
+    	DMA_InitStructure.DMA_DIR &#x3D; DMA_DIR_PeripheralSRC;							&#x2F;&#x2F;内存作为数据传输的目的地
+    	DMA_InitStructure.DMA_BufferSize &#x3D; CHANNEL_NUM;								&#x2F;&#x2F;DMA通道的DMA缓存的大小
+    	DMA_InitStructure.DMA_Mode &#x3D; DMA_Mode_Circular;								&#x2F;&#x2F;工作在循环缓存模式
+    	&#x2F;&#x2F;M2M是否使用软件触发
+    	DMA_InitStructure.DMA_M2M &#x3D; DMA_M2M_Disable;								&#x2F;&#x2F;DMA通道x没有设置为内存到内存传输
+    	DMA_InitStructure.DMA_Priority &#x3D; DMA_Priority_Medium;						&#x2F;&#x2F;DMA通道 x拥有中优先级
+    	DMA_Init(DMA1_Channel1, &amp;DMA_InitStructure);
+    	
+    	&#x2F;&#x2F;外设使能
+    	DMA_Cmd(DMA1_Channel1, ENABLE);
+    	ADC_DMACmd(ADC1, ENABLE);
+    	ADC_Cmd(ADC1, ENABLE);
+    	
+    	&#x2F;&#x2F;复位校准寄存器
+    	ADC_ResetCalibration(ADC1);
+    	while (ADC_GetResetCalibrationStatus(ADC1) &#x3D;&#x3D; SET);
+    	ADC_StartCalibration(ADC1);
+    	while (ADC_GetCalibrationStatus(ADC1) &#x3D;&#x3D; SET);
+    	
+    	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+    }</p>
 <p>（2）初始化stm32的多个ADC外设并启用DMA转运</p>
-<p>​<br>    void Get_Voltage()<br>    {<br>    	int i&#x3D;0;</p>
+<p>​<br>    void Get_Voltage()
+    {
+    	int i&#x3D;0;</p>
 <pre><code>	//数据包起始标志
 	Usart_TransmitByte(0xFF);
 	Usart_TransmitByte(0xFF); 
@@ -483,7 +563,8 @@ endmodule
 <pre><code>     decode 模块检测到两个连续的 FF 后 r_en 使能开始记录数据，数据的高低字节用 byte_cnt 加以区分，每记录两个字节使 channel_cnt 加一，超出 CHANNEL_NUM 结束记录， data_parallel 输出120为并行数据。
 </code></pre>
 <p>仿真代码：</p>
-<p>​<br>    &#96;timescale 1us &#x2F; 1ns<br>    module  tb_decoder();</p>
+<p>​<br>    &#96;timescale 1us &#x2F; 1ns
+    module  tb_decoder();</p>
 <pre><code>//********************************************************************//
 //****************** Parameter and Internal Signal *******************//
 //********************************************************************//
@@ -777,7 +858,8 @@ signal_proc_inst signal_proc_inst_inst
 endmodule
 </code></pre>
 <p>仿真代码：</p>
-<p>​<br>    &#96;timescale 1ns &#x2F; 1ps<br>    module  tb_proc_fpga();</p>
+<p>​<br>    &#96;timescale 1ns &#x2F; 1ps
+    module  tb_proc_fpga();</p>
 <pre><code>//********************************************************************//
 //****************** Parameter and Internal Signal *******************//
 //********************************************************************//
@@ -799,7 +881,8 @@ always #5 clk_in1_n = ~clk_in1_n;
 assign tx_data=rx_data;
 assign tx_flag=rx_flag;
 </code></pre>
-<p>​<br>​<br>    parameter   UART_BPS    &#x3D;   20’d115200        ,   &#x2F;&#x2F;比特率<br>                CLK_FREQ    &#x3D;   28’d100_000_000  ;   &#x2F;&#x2F;时钟频率</p>
+<p>​<br>​<br>    parameter   UART_BPS    &#x3D;   20’d115200        ,   &#x2F;&#x2F;比特率
+                CLK_FREQ    &#x3D;   28’d100_000_000  ;   &#x2F;&#x2F;时钟频率</p>
 <pre><code>//********************************************************************//
 //***************************** Main Code ****************************//
 //********************************************************************//
@@ -869,7 +952,59 @@ endmodule
 </code></pre>
 <p>​     </p>
 <h3 id="3-signal-proc-信号处理模块"><a href="#3-signal-proc-信号处理模块" class="headerlink" title="3.signal_proc 信号处理模块"></a>3.signal_proc 信号处理模块</h3><p>HLS工程代码解析：</p>
-<p>​<br>    #include &lt;ap_cint.h&gt;<br>    #include &lt;math.h&gt;<br>    void signal_proc(uint12 a1,uint12 a2,uint12 a3,uint12 a4,uint12 a5,uint12 a6,uint12 a7,uint12 a8,uint12 a9,uint12 a10,uint12 a11,uint12 a12,uint12 a13,uint12 a14,uint12 a15,uint12 a16,uint1 *c1,uint1 *c2,uint1 *c3,uint1 *c4,uint1 *c5,uint1 *c6,uint1 *c7,uint1 *c8,uint1 *c9,uint1 *c10,uint1 <em>c11,uint1 <em>c12,uint1 <em>c13,uint1 <em>c14,uint1 <em>c15,uint1 <em>c16)<br>    {<br>    #pragma HLS INTERFACE ap_none port&#x3D;a1<br>    #pragma HLS INTERFACE ap_none port&#x3D;a2<br>    #pragma HLS INTERFACE ap_none port&#x3D;a3<br>    #pragma HLS INTERFACE ap_none port&#x3D;a4<br>    #pragma HLS INTERFACE ap_none port&#x3D;a5<br>    #pragma HLS INTERFACE ap_none port&#x3D;a6<br>    #pragma HLS INTERFACE ap_none port&#x3D;a7<br>    #pragma HLS INTERFACE ap_none port&#x3D;a8<br>    #pragma HLS INTERFACE ap_none port&#x3D;a9<br>    #pragma HLS INTERFACE ap_none port&#x3D;a10<br>    #pragma HLS INTERFACE ap_none port&#x3D;a11<br>    #pragma HLS INTERFACE ap_none port&#x3D;a12<br>    #pragma HLS INTERFACE ap_none port&#x3D;a13<br>    #pragma HLS INTERFACE ap_none port&#x3D;a14<br>    #pragma HLS INTERFACE ap_none port&#x3D;a15<br>    #pragma HLS INTERFACE ap_none port&#x3D;a16<br>    #pragma HLS INTERFACE ap_none port&#x3D;c1<br>    #pragma HLS INTERFACE ap_none port&#x3D;c2<br>    #pragma HLS INTERFACE ap_none port&#x3D;c3<br>    #pragma HLS INTERFACE ap_none port&#x3D;c4<br>    #pragma HLS INTERFACE ap_none port&#x3D;c5<br>    #pragma HLS INTERFACE ap_none port&#x3D;c6<br>    #pragma HLS INTERFACE ap_none port&#x3D;c7<br>    #pragma HLS INTERFACE ap_none port&#x3D;c8<br>    #pragma HLS INTERFACE ap_none port&#x3D;c9<br>    #pragma HLS INTERFACE ap_none port&#x3D;c10<br>    #pragma HLS INTERFACE ap_none port&#x3D;c11<br>    #pragma HLS INTERFACE ap_none port&#x3D;c12<br>    #pragma HLS INTERFACE ap_none port&#x3D;c13<br>    #pragma HLS INTERFACE ap_none port&#x3D;c14<br>    #pragma HLS INTERFACE ap_none port&#x3D;c15<br>    #pragma HLS INTERFACE ap_none port&#x3D;c16<br>    #pragma HLS INTERFACE ap_ctrl_none port&#x3D;return<br>    	uint5 i;<br>    	uint12 b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16;<br>    	uint2 time&#x3D;0;<br>    	uint16 xzuo[16]&#x3D;{1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4};<br>    	uint16 yzuo[16]&#x3D;{1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4};<br>    	double A[256];<br>    	for(i&#x3D;0;i&lt;&#x3D;15;i++)<br>    	    for(int j&#x3D;0;j&lt;&#x3D;15;j++)<br>    	    {<br>    	    	A[i</em>16+j]&#x3D;sqrt((xzuo[i]-xzuo[j])</em>(xzuo[i]-xzuo[j])+(yzuo[i]-yzuo[j])</em>(yzuo[i]-yzuo[j]));<br>    	    	A[i</em>16+j]&#x3D;(1.0)&#x2F;(A[i</em>16+j]<em>A[i</em>16+j]<em>A[i</em>16+j]);<br>    		}<br>        for(i&#x3D;0;i&lt;&#x3D;15;i++)<br>        {<br>        	A[17</em>i]&#x3D;0;<br>    	}</p>
+<p>​<br>    #include &lt;ap_cint.h&gt;
+    #include &lt;math.h&gt;
+    void signal_proc(uint12 a1,uint12 a2,uint12 a3,uint12 a4,uint12 a5,uint12 a6,uint12 a7,uint12 a8,uint12 a9,uint12 a10,uint12 a11,uint12 a12,uint12 a13,uint12 a14,uint12 a15,uint12 a16,uint1 *c1,uint1 *c2,uint1 *c3,uint1 *c4,uint1 *c5,uint1 *c6,uint1 *c7,uint1 *c8,uint1 *c9,uint1 *c10,uint1 <em>c11,uint1 <em>c12,uint1 <em>c13,uint1 <em>c14,uint1 <em>c15,uint1 <em>c16)
+    {
+    #pragma HLS INTERFACE ap_none port&#x3D;a1
+    #pragma HLS INTERFACE ap_none port&#x3D;a2
+    #pragma HLS INTERFACE ap_none port&#x3D;a3
+    #pragma HLS INTERFACE ap_none port&#x3D;a4
+    #pragma HLS INTERFACE ap_none port&#x3D;a5
+    #pragma HLS INTERFACE ap_none port&#x3D;a6
+    #pragma HLS INTERFACE ap_none port&#x3D;a7
+    #pragma HLS INTERFACE ap_none port&#x3D;a8
+    #pragma HLS INTERFACE ap_none port&#x3D;a9
+    #pragma HLS INTERFACE ap_none port&#x3D;a10
+    #pragma HLS INTERFACE ap_none port&#x3D;a11
+    #pragma HLS INTERFACE ap_none port&#x3D;a12
+    #pragma HLS INTERFACE ap_none port&#x3D;a13
+    #pragma HLS INTERFACE ap_none port&#x3D;a14
+    #pragma HLS INTERFACE ap_none port&#x3D;a15
+    #pragma HLS INTERFACE ap_none port&#x3D;a16
+    #pragma HLS INTERFACE ap_none port&#x3D;c1
+    #pragma HLS INTERFACE ap_none port&#x3D;c2
+    #pragma HLS INTERFACE ap_none port&#x3D;c3
+    #pragma HLS INTERFACE ap_none port&#x3D;c4
+    #pragma HLS INTERFACE ap_none port&#x3D;c5
+    #pragma HLS INTERFACE ap_none port&#x3D;c6
+    #pragma HLS INTERFACE ap_none port&#x3D;c7
+    #pragma HLS INTERFACE ap_none port&#x3D;c8
+    #pragma HLS INTERFACE ap_none port&#x3D;c9
+    #pragma HLS INTERFACE ap_none port&#x3D;c10
+    #pragma HLS INTERFACE ap_none port&#x3D;c11
+    #pragma HLS INTERFACE ap_none port&#x3D;c12
+    #pragma HLS INTERFACE ap_none port&#x3D;c13
+    #pragma HLS INTERFACE ap_none port&#x3D;c14
+    #pragma HLS INTERFACE ap_none port&#x3D;c15
+    #pragma HLS INTERFACE ap_none port&#x3D;c16
+    #pragma HLS INTERFACE ap_ctrl_none port&#x3D;return
+    	uint5 i;
+    	uint12 b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16;
+    	uint2 time&#x3D;0;
+    	uint16 xzuo[16]&#x3D;{1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4};
+    	uint16 yzuo[16]&#x3D;{1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4};
+    	double A[256];
+    	for(i&#x3D;0;i&lt;&#x3D;15;i++)
+    	    for(int j&#x3D;0;j&lt;&#x3D;15;j++)
+    	    {
+    	    	A[i</em>16+j]&#x3D;sqrt((xzuo[i]-xzuo[j])</em>(xzuo[i]-xzuo[j])+(yzuo[i]-yzuo[j])</em>(yzuo[i]-yzuo[j]));
+    	    	A[i</em>16+j]&#x3D;(1.0)&#x2F;(A[i</em>16+j]<em>A[i</em>16+j]<em>A[i</em>16+j]);
+    		}
+        for(i&#x3D;0;i&lt;&#x3D;15;i++)
+        {
+        	A[17</em>i]&#x3D;0;
+    	}</p>
 <pre><code>	while(1)
 	&#123;
 		if(time==0)
@@ -993,10 +1128,19 @@ endmodule
 <h2 id="四-注意事项"><a href="#四-注意事项" class="headerlink" title="四.注意事项"></a>四.注意事项</h2><p>&lt;1&gt;实例化时注意各个模块的时序，检查代码使用的时钟频率及各参数是否正确；实例化时连接线的运用，不能重复对一变量赋值！；注意实例调用时名称统一。</p>
 <p>&lt;2&gt;编写好仿真文件进行仿真后再下载。</p>
 <p>&lt;3&gt;报错：[DRC MDRV-1] Multiple Driver Nets</p>
-<p>[Vivado综合报multi-driven<br>nets的错误的解决方法](<a target="_blank" rel="noopener" href="https://blog.csdn.net/wordwarwordwar/article/details/80428358?ops_request_misc=&request_id=&biz_id=102&utm_term=multiple%20driver%20nets&utm_medium=distribute.pc_search_result.none-">https://blog.csdn.net/wordwarwordwar/article/details/80428358?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=multiple%20driver%20nets&amp;utm_medium=distribute.pc_search_result.none-</a><br>task-blog-2<del>all</del>sobaiduweb~default-0-80428358.nonecase&amp;spm&#x3D;1018.2226.3001.4187<br>“Vivado综合报multi-driven nets的错误的解决方法”)</p>
-<p>[Vivado编译过程中出现[DRC MDRV-1] Multiple Driver<br>Nets](<a target="_blank" rel="noopener" href="https://blog.csdn.net/jk_101/article/details/131824877?ops_request_misc=&request_id=&biz_id=102&utm_term=multiple%20driver%20nets&utm_medium=distribute.pc_search_result.none-">https://blog.csdn.net/jk_101/article/details/131824877?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=multiple%20driver%20nets&amp;utm_medium=distribute.pc_search_result.none-</a><br>task-<br>blog-2<del>all</del>sobaiduweb~default-1-131824877.nonecase&amp;spm&#x3D;1018.2226.3001.4187<br>“Vivado编译过程中出现[DRC MDRV-1] Multiple Driver Nets”)</p>
+<p>[Vivado综合报multi-driven
+nets的错误的解决方法](<a target="_blank" rel="noopener" href="https://blog.csdn.net/wordwarwordwar/article/details/80428358?ops_request_misc=&request_id=&biz_id=102&utm_term=multiple%20driver%20nets&utm_medium=distribute.pc_search_result.none-">https://blog.csdn.net/wordwarwordwar/article/details/80428358?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=multiple%20driver%20nets&amp;utm_medium=distribute.pc_search_result.none-</a>
+task-blog-2<del>all</del>sobaiduweb~default-0-80428358.nonecase&amp;spm&#x3D;1018.2226.3001.4187
+“Vivado综合报multi-driven nets的错误的解决方法”)</p>
+<p>[Vivado编译过程中出现[DRC MDRV-1] Multiple Driver
+Nets](<a target="_blank" rel="noopener" href="https://blog.csdn.net/jk_101/article/details/131824877?ops_request_misc=&request_id=&biz_id=102&utm_term=multiple%20driver%20nets&utm_medium=distribute.pc_search_result.none-">https://blog.csdn.net/jk_101/article/details/131824877?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=multiple%20driver%20nets&amp;utm_medium=distribute.pc_search_result.none-</a>
+task-
+blog-2<del>all</del>sobaiduweb~default-1-131824877.nonecase&amp;spm&#x3D;1018.2226.3001.4187
+“Vivado编译过程中出现[DRC MDRV-1] Multiple Driver Nets”)</p>
 <p>&lt;4&gt;未使用的输入输出不要定义，定义后生成比特流前必须绑定引脚</p>
-<p>&lt;5&gt;按照官方推荐的配套工具软件，比如Vivado 2023.1对应Vitis HLS<br>2023.1，如果使用不配套版本，HLS导出的IP核Vivado可能无法完全识别，报错“missing<br>Source”（全部展开IP核显示有缺少模块说明，如下图：）</p>
+<p>&lt;5&gt;按照官方推荐的配套工具软件，比如Vivado 2023.1对应Vitis HLS
+2023.1，如果使用不配套版本，HLS导出的IP核Vivado可能无法完全识别，报错“missing
+Source”（全部展开IP核显示有缺少模块说明，如下图：）</p>
 <p><img src="https://i-blog.csdnimg.cn/blog_migrate/50188b6c5223368c01c9481331d5b841.png"></p>
 <p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/133853116">https://blog.csdn.net/qq_32971095/article/details/133853116</a>，如有侵权，请联系删除。</p>
 
@@ -1008,9 +1152,12 @@ endmodule
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -1027,12 +1174,12 @@ endmodule
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/10/29/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(8)%E2%80%94%E2%80%94%E8%BF%9B%E9%98%B6%E8%AE%BE%E8%AE%A1%E4%B8%80%EF%BC%88DDR3%EF%BC%89/" rel="prev" title="FPGA学习笔记(8)——进阶设计一（DDR3）">
-      <i class="fa fa-chevron-left"></i> FPGA学习笔记(8)——进阶设计一（DDR3）
+    <a href="/2023/11/06/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E6%B5%99%E6%B1%9F%E7%BB%8D%E5%85%B4%E6%9F%AF%E6%A1%A5%E8%B5%9B%E8%89%87%E6%8C%91%E6%88%98%E8%B5%9B/" rel="prev" title="浙江绍兴柯桥赛艇挑战赛">
+      <i class="fa fa-chevron-left"></i> 浙江绍兴柯桥赛艇挑战赛
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/12/13/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Matlab%E5%AE%9E%E7%8E%B0%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86(1)%E2%80%94%E2%80%94%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/" rel="next" title="Matlab实现数字信号处理(1)——数字滤波器设计">
-      Matlab实现数字信号处理(1)——数字滤波器设计 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/11/26/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6/%E8%BF%99%E6%AC%A1%E5%8F%AF%E8%83%BD%E6%98%AF%E6%88%91%E4%BB%AC%E8%BF%99%E6%9D%A1%E8%89%87%E4%B8%8A%E7%9A%84%E5%85%84%E5%BC%9F%E4%BB%AC%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E4%B8%80%E8%B5%B7%E6%AF%94%E8%B5%9B%E4%BA%86/" rel="next" title="这次可能是我们这条艇上的兄弟们最后一次一起比赛了">
+      这次可能是我们这条艇上的兄弟们最后一次一起比赛了 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -1109,20 +1256,20 @@ endmodule
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1191,13 +1338,13 @@ endmodule
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -1282,6 +1429,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -1346,14 +1495,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>

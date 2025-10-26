@@ -84,7 +84,7 @@
   </style>
 </noscript>
 
-<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -135,17 +135,17 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">216</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -296,7 +296,30 @@ int Pid_Control(float kp,float ki,float kd,int Target_Num,int Current_Num,int PI
 
 #endif
 </code></pre>
-<p>​<br>​<br>​    &#x2F;&#x2F;<strong><strong><strong><strong><strong>pid.c</strong></strong></strong></strong></strong><br>​    #include “pid.h”<br>​<br>    &#x2F;&#x2F;速度环控制<br>    int Pid_Control(float kp,float ki,float kd,int Target_Num,int Current_Num,int PID_Mode)<br>    {<br>    	int Pid_Num&#x3D;0;		&#x2F;&#x2F;返回的控制值<br>    	<br>    	static float Error_k&#x3D;0;<br>    	static float Error_k1&#x3D;0;<br>    	static float Error_k2&#x3D;0;<br>    	<br>    	Error_k&#x3D;Target_Num-Current_Num;<br>    	Error_k1&#x3D;Error_k-Error_k1;<br>    	<br>    	if(PID_Mode&#x3D;&#x3D;PID_INCREASE)<br>    	{<br>    		Error_k2&#x3D;Error_k-2<em>Error_k1+Error_k2;<br>    		Pid_Num&#x3D;kp</em>Error_k+ki<em>Error_k2+kd</em>Error_k1;<br>    	}<br>    	<br>    	else if(PID_Mode&#x3D;&#x3D;PID_REALIZE)<br>    	{<br>    		Pid_Num&#x3D;kp<em>Error_k+kd</em>Error_k1;<br>    	}</p>
+<p>​<br>​<br>​    &#x2F;&#x2F;<strong><strong><strong><strong><strong>pid.c</strong></strong></strong></strong></strong>
+​    #include “pid.h”
+​<br>    &#x2F;&#x2F;速度环控制
+    int Pid_Control(float kp,float ki,float kd,int Target_Num,int Current_Num,int PID_Mode)
+    {
+    	int Pid_Num&#x3D;0;		&#x2F;&#x2F;返回的控制值
+    	
+    	static float Error_k&#x3D;0;
+    	static float Error_k1&#x3D;0;
+    	static float Error_k2&#x3D;0;
+    	
+    	Error_k&#x3D;Target_Num-Current_Num;
+    	Error_k1&#x3D;Error_k-Error_k1;
+    	
+    	if(PID_Mode&#x3D;&#x3D;PID_INCREASE)
+    	{
+    		Error_k2&#x3D;Error_k-2<em>Error_k1+Error_k2;
+    		Pid_Num&#x3D;kp</em>Error_k+ki<em>Error_k2+kd</em>Error_k1;
+    	}
+    	
+    	else if(PID_Mode&#x3D;&#x3D;PID_REALIZE)
+    	{
+    		Pid_Num&#x3D;kp<em>Error_k+kd</em>Error_k1;
+    	}</p>
 <pre><code>	Error_k2=Error_k1;
 	Error_k1=Error_k;
 
@@ -311,7 +334,8 @@ int Pid_Control(float kp,float ki,float kd,int Target_Num,int Current_Num,int PI
 <p> PID三参数：P用于提高响应速度，I减小静差、D减小静差</p>
 <p>在实践生产工程中，不同的控制系统对控制器效果的要求不一样。比如平衡车、倒立摆对系统的快速性要求很高,响应太慢会导致系统失控。智能家居里面的门窗自动开合系统,对快速性要求就不高,但是对稳定性和准确性的要求就很高,所以需要严格控制系统的超调量和静差。</p>
 <p>所以PID参数在不同的控制系统中是不一样的。只要我们理解了每个PID参数的作用,我们就可以应对工程中的各种项目的PID参数整定了。</p>
-<p> 位置控制的调节经验可以总结为：先只使用P控制，增大P系数至系统震荡之后加入微分控制以增大阻尼,消除震荡之后再根据系统对响应和静差等的具体要求，调节P 和<br>I 参数。</p>
+<p> 位置控制的调节经验可以总结为：先只使用P控制，增大P系数至系统震荡之后加入微分控制以增大阻尼,消除震荡之后再根据系统对响应和静差等的具体要求，调节P 和
+I 参数。</p>
 <p>一般而言,一个控制系统的控制难度,一般取决于系统的转动惯量和对响应的速度要求等。转动惯量越小、对响应速度要求越低, PID参数就越不敏感。</p>
 <p>本文转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32971095/article/details/131927399">https://blog.csdn.net/qq_32971095/article/details/131927399</a>，如有侵权，请联系删除。</p>
 
@@ -323,9 +347,12 @@ int Pid_Control(float kp,float ki,float kd,int Target_Num,int Current_Num,int PI
 
     
       <div>
-        <div>
+        
+<div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;"><i>&gt --------------- THE END -------------- &lt</i></div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
     
 </div>
       </div>
@@ -425,20 +452,20 @@ int Pid_Control(float kp,float ki,float kd,int Target_Num,int Current_Num,int PI
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -507,13 +534,13 @@ int Pid_Control(float kp,float ki,float kd,int Target_Num,int Current_Num,int PI
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">825k</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:30</span>
+    <span title="站点阅读时长">22:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -598,6 +625,8 @@ $(document).ready(function() {
 
 <script src="/js/bookmark.js"></script>
 
+<script src="/js/floating-history.js"></script>
+
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
@@ -662,14 +691,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   <script async src="/js/cursor/fireworks.js"></script>
 
 
-<!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
-                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
-                console.log('已挂载history_calendar')
-                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
-                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
-            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
-
-            history_calendar_injector_config()
-        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --></body>
+</body>
 </html>
