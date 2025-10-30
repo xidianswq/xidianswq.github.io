@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Zhi Mang Xing:300,300italic,400,400italic,700,700italic|Ma Shan Zheng:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200..900&family=Permanent+Marker&family=Satisfy&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xidianswq.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#e6c35c","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="基因分析课题">
+<meta property="og:url" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Switch">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%B7%B7%E5%90%88%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80%E4%BC%98%E7%82%B9.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%88%B4%E5%B0%94%E7%A7%91%E6%8A%80%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E6%B5%8B%E5%BA%8F%E4%B8%89%E5%A4%A7%E5%88%86%E6%9E%90%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%85%A8%E4%B9%A6%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E8%A1%A8%E8%BE%BE%E4%B8%AD%E5%BF%83%E6%B3%95%E5%88%99.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E9%80%9A%E7%94%A8%E9%81%97%E4%BC%A0%E5%AF%86%E7%A0%81.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E4%BB%BF%E5%B0%84%E7%A9%BA%E4%BD%8D%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E7%9A%84%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E6%80%A7%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/CheckPoint%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/CheckPoint%E7%AE%97%E6%B3%95%E5%9C%A8%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8%E7%B3%BB%E7%BB%9F%E4%B8%8A%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%AE%9E%E7%8E%B0.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%98%9F%E5%BD%A2%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/genome_analysis_steps.png">
+<meta property="article:published_time" content="2025-10-26T02:25:00.000Z">
+<meta property="article:modified_time" content="2025-10-30T02:14:03.946Z">
+<meta property="article:author" content="SWQ">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="高性能计算">
+<meta property="article:tag" content="分子生物学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%B7%B7%E5%90%88%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80%E4%BC%98%E7%82%B9.png">
+
+<link rel="canonical" href="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基因分析课题 | Switch</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Switch</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to My Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">215</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻扬，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基因分析课题
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar" color=f6416c></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-10-26 10:25:00" itemprop="dateCreated datePublished" datetime="2025-10-26T10:25:00+08:00">2025-10-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="基因分析课题" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<h1 id="一、总体分析"><a href="#一、总体分析" class="headerlink" title="一、总体分析"></a>一、总体分析</h1><h2 id="1、前期思考"><a href="#1、前期思考" class="headerlink" title="1、前期思考"></a>1、前期思考</h2><ul>
+<li><p>交叉点——计算生物学中的大规模计算及算法与<strong>高性能计算</strong>结合；重点基础还是掌握高性能计算方法，在这个基础上进行具体算法的适配与实践；人工智能赋能生物计算的今天，这些老的方法的作用和地位如何，最终研究加速ai+生物计算算法？</p>
+</li>
+<li><p>硬件系统</p>
+<p>数据流（依赖网上数据库）：基因测序仪产生输入（FASTQ文件）；输出（VCF文件）；中间数据（BAM文件）</p>
+<p>function：基因分析——比对排序去重比对</p>
+<blockquote>
+<p>当前主流基因组分析流程（几个步骤：Base-calling、Quality Control、Pre-Alignment </p>
+<p>Filtering、Read Mapping、Variant Calling）；</p>
+</blockquote>
+<p>方法一：实现一个完善的SoC【硬】，完全运行自定义指令集</p>
+<p>方法二——选用核（香山core）加专用加速部分【硬设计】，<strong>首先把香山core及上面的linux跑起来</strong>【软熟悉】，再编写自定义指令并执行（参考异构操作的方法，或调用显卡的方法）</p>
+</li>
+<li><p>软件系统</p>
+<p>方法一：裸机程序或简单操作系统——IO系统操作与显示（按钮、OLED屏）</p>
+<p>方法二：linux——命令行操作与显示（键盘、显示器）</p>
+</li>
+<li><p>问题</p>
+<p>完全熟悉基因分析流程、算法及<strong>实例</strong></p>
+<p>FPGA目前还在家</p>
+</li>
+</ul>
+<h2 id="2、立项分析"><a href="#2、立项分析" class="headerlink" title="2、立项分析"></a>2、立项分析</h2><ul>
+<li><p>现状</p>
+<p>处理大规模基因组数据集，测序数据的分析 速度远落后于数据生成速度</p>
+<p>当前基于CPU或异构计算的基因分析工作流存在设备成本高昂、计算资源利 用率低、数据存储与传输瓶颈、长读段实时处理困难等问题</p>
+</li>
+<li><p>实际应用</p>
+<p>序列比对、变异检测及复杂生物信息学分析</p>
+<p>公共卫生事件时，需要在<strong>最短时间内处理大量样本并识别病原体</strong>，提供基因分析结果，追踪病毒的传播路径和变异情况；肿瘤精准治疗</p>
+</li>
+<li><p>市场解决方案</p>
+<p>基于CPU和GPU加速的解决方案，拆解计算任务，提高并行度；效果30h-&gt;30min</p>
+<p>计算：CPU+Sentieon软件 和 Nvidia GPU+Parabrics软件</p>
+<p>存储：全本地、全外置（相对稍快）、混合式（最佳选择）</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%B7%B7%E5%90%88%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80%E4%BC%98%E7%82%B9.png" alt="img"> </p>
+<ul>
+<li><p>戴尔科技解决方案</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%88%B4%E5%B0%94%E7%A7%91%E6%8A%80%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.png" alt="img"> </p>
+<p> 高性能分布式共享存储采用戴尔分布式横向扩展存储PowerScale，主要缓存基因测序仪输出的海量待分析数据和二级、三级分析结果数据，并为二、三级分析提供高速IO读写支持和数据共享支持。 </p>
+<p>普通算力集群采用戴尔PowerEdge C系列刀片服务器，主要进行<strong>外显子测序(WES)，转录组测序(RNA-Seq)，蛋白结合位点分析(ChIP-Seq)等分析工作</strong>，这些工作对算力和内存的需求相对较低，建议配置Intel 5系CPU，256GB以上内存，采用2块1.92TB NVME硬盘存储参考基因组文件，二级分析时产生的临时文件等。 </p>
+<p>高性能算力集群采用戴尔PowerEdge R750机架式服务器，主要进行<strong>全基因组测序(WGS)，靶向测序(Panel)等</strong>，这些分析工作对算力和内存要求都非常高，建议配置Intel 8系CPU，1TB以上内存，采用4块1.92TB NVME硬盘存储参考基因组文件，二级分析时产生的临时文件等。并可根据二、三级分析加速需求，AI建模&#x2F;推理需求等选配GPU加速卡。 </p>
+</li>
+<li><p><strong>四代基因测序的对比</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>测序技术</strong></th>
+<th></th>
+<th><strong>第一代</strong></th>
+<th></th>
+<th></th>
+<th><strong>第二代</strong></th>
+<th></th>
+<th><strong>第三代</strong></th>
+<th><strong>第四代</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>代表性测序平台</strong></td>
+<td>ABI3730XL</td>
+<td>IlluminaHiSeqX</td>
+<td>LifeTechPGM</td>
+<td>LifeTechPGM</td>
+<td>LifeTechSOLiDT</td>
+<td>Roche454FLX</td>
+<td>PacBioRS</td>
+<td>OxfordNanoporeMinION</td>
+</tr>
+<tr>
+<td><strong>原理</strong></td>
+<td>桑格双脱氧测序法</td>
+<td>可逆链终止测序法</td>
+<td>半导体测序法</td>
+<td>半导体测序法</td>
+<td>连接测序法</td>
+<td>焦磷酸测序法</td>
+<td>单分子实时测序</td>
+<td>纳米孔测序法</td>
+</tr>
+<tr>
+<td><strong>测序长度</strong></td>
+<td>900bp</td>
+<td>150bp2</td>
+<td>200bp×2</td>
+<td>400bp</td>
+<td>50bp×2</td>
+<td>1000bp</td>
+<td>7000-8000bp</td>
+<td>超过150k</td>
+</tr>
+<tr>
+<td><strong>通量</strong></td>
+<td>300Mb&#x2F;年</td>
+<td>219Tb&#x2F;年</td>
+<td>11Tb&#x2F;年</td>
+<td>1.4Tb&#x2F;年</td>
+<td>4.4Tb&#x2F;年</td>
+<td>180Gb&#x2F;年</td>
+<td>146Gb&#x2F;年</td>
+<td>9000-1800Gb&#x2F;年</td>
+</tr>
+<tr>
+<td><strong>测序费用</strong></td>
+<td>107美元&#x2F;Gb</td>
+<td>7-10美元&#x2F;Gb</td>
+<td>80 美元&#x2F;Gb</td>
+<td>450美元&#x2F;G</td>
+<td>60 美元&#x2F;Gb</td>
+<td>160美元&#x2F;Gb</td>
+<td>2000美元&#x2F;G</td>
+<td>13美元&#x2F;G</td>
+</tr>
+<tr>
+<td><strong>准确率</strong></td>
+<td>100%</td>
+<td>99.80%</td>
+<td>99%</td>
+<td>99%</td>
+<td>&gt;99.94%</td>
+<td>&gt;99%</td>
+<td>88%</td>
+<td>99%</td>
+</tr>
+<tr>
+<td><strong>优点</strong></td>
+<td>测序长度长、准确率高</td>
+<td>通量大、单位测序成本低</td>
+<td>较长读长，成本中等，读取速度快，避免了 PCR 偏向性问题</td>
+<td>极限读长，成本中等，实时监控测序，测序过程简单快捷，微量建库</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>缺点</strong></td>
+<td>通量低、成本高、测序结果存在偏好性</td>
+<td>测序长度短导致序列拼接难度大、测序结果存在偏好性、测序过程繁琐</td>
+<td>准确度低设备昂贵</td>
+<td>准确度低，边缘点检测易出错误。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3、具体原理"><a href="#3、具体原理" class="headerlink" title="3、具体原理"></a>3、具体原理</h2><p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/760741958_121226060">算力＋存力：优化基因测序的关键所在</a> GenerationSequencing </p>
+<p>   <img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E6%B5%8B%E5%BA%8F%E4%B8%89%E5%A4%A7%E5%88%86%E6%9E%90%E9%98%B6%E6%AE%B5.png" alt="img"> </p>
+<p>  <strong>一级分析</strong>：将需要进行测序的生物样本送入基因测序仪中，由测序仪进行<strong>WGS(全基因组测序)、WES(外显子测序)<strong>等测序操作，测序结果输出到可用于计算机进行分析的</strong>FASTQ文件</strong>中。FASTQ文件类似一个文本文件，每两行或三行记录一个DNA片段的碱基序列信息，测序质量信息等。 完整的DNA测序样本在进行测序前会被用<strong>超声波击碎为上千万条</strong>。</p>
+<p>  <strong>二级分析</strong>：这个过程现在通常由高性能处理集群完成。首先通过高性能服务器将测序仪生成的FASTQ文件(盗版书)与参考基因组文件(正版书)进行<strong>比对</strong>生成<strong>BAM文件</strong>。然后对BAM文件进行<strong>排序和去重</strong>，生成可以用于变异检测的BAM文件。</p>
+<p>  在最后，将BAM文件(有正确页号和行号的盗版书)与参考基因组文件(正版书)再次进行<strong>比对</strong>，找出BAM文件中所有与参考基因组文件不同之处，并将这些不同(变异)写入到<strong>VCF文件</strong>中。</p>
+<p>  <strong>三级分析</strong>：医学专家或科研人员通过分析服务器和专业数据库对VCF文件进行解读，给出疾病解读报告或者基因关联分析报告。疾病解读报告主要用于临床，比如某种基因突变是否可以使用某种靶向药物等。基因关联分析报告主要用于科学研究，比如某种基因突变会带来某种生理现象或者疾病等。</p>
+<h2 id="4、课题内容及目标"><a href="#4、课题内容及目标" class="headerlink" title="4、课题内容及目标"></a>4、课题内容及目标</h2><p>分析并针对基因分析工作流，分析并针对现有加速技术优化和缺陷（综述），基于FPGA提出新型专用体系结构（基础部件、可拓展性、技术算法通用性）</p>
+<ul>
+<li><p><strong>具体研究内容</strong>（具体见立项书）</p>
+<ul>
+<li>工作流</li>
+<li>定制化指令集架构</li>
+<li>高效计算架构（异构；通用核加专用加速器；具体架构【流水线、任务并行调度、动态任务划分…】）</li>
+<li>存储与通信结构（存储层次【缓存替换策略与预取机制】与片上互连【NOC、总线…】、）</li>
+<li>原型验证设计实现（硬件设计、软件工具链【编译器、汇编器、调试器】、性能能效面积对比【与通用平台】）</li>
+</ul>
+</li>
+<li><p>目标</p>
+<p>针对什么问题，搭建什么结构，实现什么软硬件，达到什么性能</p>
+</li>
+<li><p>拟解决的关键科学问题</p>
+<p>针对各种算法的分析与专用指令集架构和计算结构的构建。实现过程中的技术细节和优化细节。</p>
+</li>
+</ul>
+<h2 id="5、研究方案及可行性"><a href="#5、研究方案及可行性" class="headerlink" title="5、研究方案及可行性"></a>5、研究方案及可行性</h2><p>把研究内容的点拆开讲即可；800字的自信宣言，讲团队的丰富经验和项目的技术可行性。</p>
+<h2 id="6、项目特色与创新之处"><a href="#6、项目特色与创新之处" class="headerlink" title="6、项目特色与创新之处"></a>6、项目特色与创新之处</h2><ul>
+<li>面向的是基因分析全流程（一体性）</li>
+<li>负载特征驱动的定制化硬件设计（定制化）</li>
+<li>高效并行与低功耗的专用计算架构 及 面向海量数据的高效存储与通信结构创新（性能功耗）</li>
+<li>基于FPGA的可重构原型验证系统构建（平台优势）</li>
+</ul>
+<h1 id="二、相关资料"><a href="#二、相关资料" class="headerlink" title="二、相关资料"></a>二、相关资料</h1><h2 id="1、《生物信息学导论：面向高性能计算的算法与应用》"><a href="#1、《生物信息学导论：面向高性能计算的算法与应用》" class="headerlink" title="1、《生物信息学导论：面向高性能计算的算法与应用》"></a>1、《生物信息学导论：面向高性能计算的算法与应用》</h2><p>学科交叉，生物信息学和高性能计算相结合</p>
+<p>相关基础问题的求解算法及原理实现——序列比对（算法、并行化方法）、蛋白质组分析（结构预测、质谱分析）、生物学网络分析（聚类）</p>
+<p>全书架构：</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%85%A8%E4%B9%A6%E6%9E%B6%E6%9E%84.png" alt="1761355492812"></p>
+<h3 id="一、分子生物学基础"><a href="#一、分子生物学基础" class="headerlink" title="一、分子生物学基础"></a>一、分子生物学基础</h3><p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E8%A1%A8%E8%BE%BE%E4%B8%AD%E5%BF%83%E6%B3%95%E5%88%99.png" alt="1761360443768"></p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E9%80%9A%E7%94%A8%E9%81%97%E4%BC%A0%E5%AF%86%E7%A0%81.png" alt="1761360368659"></p>
+<p>印迹与杂交技术</p>
+<p>DNA测序——链式终止法（chain-termination method）</p>
+<p>现代分子生物学中经典计算问题——基因发现问题、序列对比问题、预测三维空间结构…</p>
+<h3 id="二、数学及计算科学基础"><a href="#二、数学及计算科学基础" class="headerlink" title="二、数学及计算科学基础"></a>二、数学及计算科学基础</h3><ul>
+<li><p>线性代数理论</p>
+</li>
+<li><p>n维欧氏空间Rn，C为全体复数集；共轭转置矩阵与转置矩阵；酋矩阵与正交矩阵（转置矩阵&#x3D;逆矩阵）；矩阵<strong>范数</strong>；矩阵<strong>特征值与特征向量</strong>；矩阵的<strong>广义逆</strong></p>
+</li>
+<li><p>概率论理论</p>
+<ul>
+<li><p>随机事件（基本事件、全事件空间）</p>
+</li>
+<li><p>马尔科夫链——一个随机过程X，有限状态空间S{S1…Sn}、实践离散（0,1，…），具有无记忆性（下一状态只和当前状态有关）、时间齐次性（概率与t无关）</p>
+<p>概率转移矩阵Px；吸收状态Si（进入后无法离开，因向其他部分转移的概率为0【矩阵乘】）、k步转移概率矩阵、相通与不可约（任意两个状态都相通）</p>
+<p>一条马氏链可由其初始状态概率分布π&#x3D;(π1,…πn)和状态转移矩阵完全刻画</p>
+<p>状态Si在m步首次转移到Sj的概率fmij；迟早转移的概率fij；常返fii&#x3D;1，返回的平均步数μii&#x3D;Σm*fmij，零常返的；遍历的；平稳的</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>【……遇到不会的再回来看】</strong></p>
+<h3 id="三、序列对比的基本方法"><a href="#三、序列对比的基本方法" class="headerlink" title="三、序列对比的基本方法"></a>三、序列对比的基本方法</h3><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>利用动态规划技术</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>算法</th>
+<th>罚分模型</th>
+<th>改进</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>局部比对问题</td>
+<td>Smith-Waterman算法</td>
+<td>仿射空间罚分模型O(n^3)</td>
+<td>动态规划算法O(n^2)</td>
+</tr>
+<tr>
+<td>全局比对问题</td>
+<td>Neddleman-Wunsch算法</td>
+<td>固定空位罚分模型O(n^2)</td>
+<td>Huang X[144] O(n)</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="9、-仿射空位罚分模型下的局部对比算法"><a href="#9、-仿射空位罚分模型下的局部对比算法" class="headerlink" title="9、 仿射空位罚分模型下的局部对比算法"></a>9、 仿射空位罚分模型下的局部对比算法</h4><p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E4%BB%BF%E5%B0%84%E7%A9%BA%E4%BD%8D%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E7%9A%84%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95.png" alt="1761530211354"></p>
+<h4 id="10、降阶空间存储的两序列对比算法"><a href="#10、降阶空间存储的两序列对比算法" class="headerlink" title="10、降阶空间存储的两序列对比算法"></a>10、降阶空间存储的两序列对比算法</h4><p>一、线性空间复杂性算法</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E6%80%A7%E7%AE%97%E6%B3%95.png" alt="1761530439143"></p>
+<p>二、CheckPoint算法</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/CheckPoint%E7%AE%97%E6%B3%95.png" alt="1761530541568"></p>
+<p>映射到多处理器的并行计算系统</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/CheckPoint%E7%AE%97%E6%B3%95%E5%9C%A8%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8%E7%B3%BB%E7%BB%9F%E4%B8%8A%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%AE%9E%E7%8E%B0.png" alt="1761530687095"></p>
+<h4 id="15、多序列比对"><a href="#15、多序列比对" class="headerlink" title="15、多序列比对"></a>15、多序列比对</h4><p>三、星形比对算法</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%98%9F%E5%BD%A2%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95.png" alt="1761530991930"></p>
+<h3 id="四、序列比对的并行计算"><a href="#四、序列比对的并行计算" class="headerlink" title="四、序列比对的并行计算"></a>四、序列比对的并行计算</h3><h3 id="五、基于字符串精确匹配的序列比较"><a href="#五、基于字符串精确匹配的序列比较" class="headerlink" title="五、基于字符串精确匹配的序列比较"></a>五、基于字符串精确匹配的序列比较</h3><p>六、基因识别</p>
+<p>七、马氏链与隐马氏模型</p>
+<h2 id="2、Accelerating-Genome-Analysis-A-Primer-on-an-Ongoing-Journey"><a href="#2、Accelerating-Genome-Analysis-A-Primer-on-an-Ongoing-Journey" class="headerlink" title="2、Accelerating Genome Analysis: A Primer on an Ongoing Journey"></a>2、Accelerating Genome Analysis: A Primer on an Ongoing Journey</h2><p>基因组分析基本上是从一个已知的测序片段**比对定位（Read mapping）**过程开始的，在这个过程中，将生物基因组的测序片段与参考基因组进行比对（<strong>sequence alignment</strong>）。 瓶颈在于read mapping，如今基因测序比分析快得多。</p>
+<blockquote>
+<p>read: small random fragments of an organism’s DNA sequence. (hundred to million bases)</p>
+<p>baes: 碱基</p>
+</blockquote>
+<p>文章分析read mapping的发展方向，展示高性能计算架构，即最先进的 1）算法 2）软硬件协同方式 3）硬件加速方法；展示结构是按照基因分析流程的三个步骤，针对每个步骤介绍加速方法。</p>
+<p>基因组拼接（Genome assembly）是目前快速准确确定个体整个基因组的瓶颈（bottleneck），这是因为拼接需要复杂的算法和大量的数据集。</p>
+<p>read mapping中read与reference genome比对的错误来源（测序错误、个体变异）；故使用近似字符串匹配算法<strong>ASM</strong>（approximate string matching），过去通常使用<strong>DP（dynamic programming，动态规划）算法</strong>作为软件在CPU上，占用了70%的处理时间[^1]，例如minimap2[^2]（一个read mapper）；并使用基因变异回溯（genomic <strong>variant calling</strong>）算法找到不同。</p>
+<p>最先进的CPU上read mapper[^3]综述，问题：</p>
+<ul>
+<li>cpu和主存间数据传输；</li>
+<li>测序和分析速度矛盾，相差几十倍；</li>
+<li>增加CPU数提高速度就会提高功耗，且比对未知基因时依次比对的工作量更大，云计算对数据保护不友好。</li>
+</ul>
+<h3 id="READ-MAPPING"><a href="#READ-MAPPING" class="headerlink" title="READ MAPPING"></a>READ MAPPING</h3><p>找相似子序列（<strong>E edits</strong>，其中E是距离阈值edit distance threshold，为将一个序列转换为另一个序列所需的最小更改次数。 编辑操作包括删除、插入和替换一个或两个序列中的字符）；前置操作indexing and filtering以减少比对片段数</p>
+<p>具体过程：1）划分Read和Reference Genome的 substrings (<strong>seeds</strong>，通过哈希索引或精确匹配算法（如k-mer匹配）找到的完全相同的短序列片段) 并索引编号（即图中<strong>k-mers</strong>，为长度为k的滑动窗口），定位相同片段 2）过滤器（<strong>pre-alignment filters</strong>）过滤不相似（超过E）的配对，减少序列比对算法使用次数 3）再次使用ASM进行比对，并使用<strong>DP算法</strong>寻找使比对分数（alignment score，自定义，基于the number of edits and&#x2F;or matches）最大的前缀（<strong>prefixes</strong>）</p>
+<p>输出结果到 sequence alignment&#x2F;map <strong>(SAM) file</strong></p>
+<p>注：DP算法提供最精确值但时空复杂度为O(n^2)，n为序列长</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/genome_analysis_steps.png" alt="1761701068129"></p>
+<ul>
+<li><p>ACCELERATING INDEXING</p>
+<p>采用seed以避免对整个Genome使用ASM，只有read上的关联location才使用ASM。最大的挑战在于选择seed的长度和产生索引的数量。过短需要检查的location太多，太长匹配率下降。</p>
+<p>加速方法：减少seeds数， 通过从基因组区域内的一组相邻种子中寻找<strong>最小代表性种子集合</strong>(称为最小化器，minimizers) 。<u>可以通过强制排序来计算代表集（按字典顺序或哈希值）<strong>？</strong></u>并使用先进数据结构来索引（例如FM-index[^4]，全文索引的压缩表示和不解压下的查询（query）；优点：可查询任意长度种子、比minimap2的存储占用小1倍。但压缩导致定位速度较经典算法慢，改进——BWA-MEM2[^5]）</p>
+<ul>
+<li><p>Reducing Data Movement During Indexing</p>
+<p>RADAR[^6]存算一体ASIC</p>
+</li>
+</ul>
+</li>
+<li><p>ACCELERATING PRE-ALIGNMENT FILTERING</p>
+<p>根据E edits过滤， Pre-alignment filter 的四种主要方法： 1) the pigeonhole principle; 2) base counting; 3) q-gram filtering; or 4) sparse DP. </p>
+<p>一般选用3)、4），其性能与read长度线性相关，且与edit distance无关</p>
+<ul>
+<li><p>Pigeonhole Principle</p>
+<p>长度为m的read， the read and reference segment are considered similar if they <strong>share at most E+1 nonoverlapping subsequences</strong>（differ by E edits）, with a total length of at least m-E. </p>
+<p>Shouji‘s work[^1]（其他工作：SHD on FPGA、GenCache for cache）</p>
+</li>
+<li><p>base counting filter</p>
+<p>根据各碱基总数过滤，差别大于E则过滤。</p>
+</li>
+<li><p>q-gram filtering</p>
+<p><strong>q-gram</strong>: all of the sequence’s possible overlapping（重叠的） substrings of length q【 例如，对于字符串 <code>&quot;hello&quot;</code>，它的 <strong>2-gram</strong> 有： <code>he</code>, <code>el</code>, <code>ll</code>, <code>lo</code> 】</p>
+<p>m、E对共享q-gram数的影响：Given a sequence of length m, the minimum number of shared q-grams between two similar sequences is therefore [m-q+1, q*E] .</p>
+<p>特性：对于e编辑敏感，将破坏多个q-gram（q-gram filtering is generally <strong>robust in handling only a small number of edits</strong>, as the presence of edits in any q-gram is significantly underestimated (e.g., counted as a single edit). ）</p>
+<p>GRIM-Filter[^7]</p>
+</li>
+<li><p>sparse DP</p>
+<p>仅在种子之间的间隙区域（非精确匹配区域）执行DP计算（种子本身是完全匹配的）</p>
+</li>
+</ul>
+</li>
+<li><p>ACCELERATING SEQUENCE ALIGNMENT</p>
+<p>长read对DP算法计算复杂度提升大，此时用到 Heuristic-Based Alignment Accelerators</p>
+<ul>
+<li><p>Accurate Alignment Accelerators</p>
+</li>
+<li><p>Heuristic-Based Alignment Accelerators</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>[^1]:M. Alser, H. Hassan, A. Kumar, O. Mutlu, and C. Alkan, “Shouji: A fast and efficient pre-alignment filter for sequence alignment,” Bioinformatics, vol. 35, pp. 4255–4263, 2019.
+[^2]: H. Li, “Minimap2: Pairwise alignment for nucleotide sequences,” Bioinformatics, vol. 34, pp. 3094–3100, 2018. 
+[^3]: M. Alser et al., “Technology dictates algorithms: Recent developments in read alignment”, 2020, arXiv:2003.00110. 
+[^4]: R. Langarita et al., “Compressed sparse FM-index: Fast sequence alignment using large k-steps,” IEEE&#x2F; ACMTrans. Comput. Biol. Bioinformatics,tobe published, doi: 10.1109&#x2F;TCBB.2020.3000253.
+[^5]:M. Vasimuddin, S. Misra, H. Li, and S. Aluru, “Efficient architecture-aware acceleration of BWA-MEM for multicore systems,” in Proc. IEEE Int. Parallel Distrib. Process. Symp., 2019, pp. 314–324.
+[^6]:W. Huangfu, S. Li, X. Hu, and Y. Xie, “RADAR: A 3D-ReRAMbasedDNA alignment accelerator architecture,” inProc.Des.Autom. Conf., 2018, pp. 1–6.
+[^7]:A. Goyal et al., “Ultra-fast next generation human genome sequencing data processing using DRAGENÒ Bio-IT processor for precision medicine,” Open J. Genetics, vol. 7, pp. 9–19, 2017.</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
+    
+</div>
+      </div>
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" rel="tag"># 高性能计算</a>
+              <a href="/tags/%E5%88%86%E5%AD%90%E7%94%9F%E7%89%A9%E5%AD%A6/" rel="tag"># 分子生物学</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/24/%E4%BD%9C%E5%93%81%E5%93%81%E9%89%B4/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E5%BA%9F%E9%83%BD%E3%80%8B%E2%80%94%E2%80%94%E8%B4%BE%E5%B9%B3%E5%87%B9/" rel="prev" title="《废都》——贾平凹">
+      <i class="fa fa-chevron-left"></i> 《废都》——贾平凹
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%EF%BC%9A%E9%87%8F%E5%8C%96%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95%E3%80%8B/" rel="next" title="《计算机体系结构：量化研究方法》——大卫·帕特森">
+      《计算机体系结构：量化研究方法》——大卫·帕特森 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%80%BB%E4%BD%93%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">一、总体分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%89%8D%E6%9C%9F%E6%80%9D%E8%80%83"><span class="nav-number">1.1.</span> <span class="nav-text">1、前期思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E7%AB%8B%E9%A1%B9%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">2、立项分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%85%B7%E4%BD%93%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">3、具体原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E8%AF%BE%E9%A2%98%E5%86%85%E5%AE%B9%E5%8F%8A%E7%9B%AE%E6%A0%87"><span class="nav-number">1.4.</span> <span class="nav-text">4、课题内容及目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E7%A0%94%E7%A9%B6%E6%96%B9%E6%A1%88%E5%8F%8A%E5%8F%AF%E8%A1%8C%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">5、研究方案及可行性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E9%A1%B9%E7%9B%AE%E7%89%B9%E8%89%B2%E4%B8%8E%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84"><span class="nav-number">1.6.</span> <span class="nav-text">6、项目特色与创新之处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">二、相关资料</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E3%80%8A%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%AF%BC%E8%AE%BA%EF%BC%9A%E9%9D%A2%E5%90%91%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97%E7%9A%84%E7%AE%97%E6%B3%95%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1、《生物信息学导论：面向高性能计算的算法与应用》</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E5%AD%90%E7%94%9F%E7%89%A9%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.1.1.</span> <span class="nav-text">一、分子生物学基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E5%AD%A6%E5%8F%8A%E8%AE%A1%E7%AE%97%E7%A7%91%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.1.2.</span> <span class="nav-text">二、数学及计算科学基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BA%8F%E5%88%97%E5%AF%B9%E6%AF%94%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">三、序列对比的基本方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9%E3%80%81-%E4%BB%BF%E5%B0%84%E7%A9%BA%E4%BD%8D%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E7%9A%84%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">9、 仿射空位罚分模型下的局部对比算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10%E3%80%81%E9%99%8D%E9%98%B6%E7%A9%BA%E9%97%B4%E5%AD%98%E5%82%A8%E7%9A%84%E4%B8%A4%E5%BA%8F%E5%88%97%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">10、降阶空间存储的两序列对比算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15%E3%80%81%E5%A4%9A%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9"><span class="nav-number">2.1.3.4.</span> <span class="nav-text">15、多序列比对</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E7%9A%84%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97"><span class="nav-number">2.1.4.</span> <span class="nav-text">四、序列比对的并行计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%9F%BA%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B2%BE%E7%A1%AE%E5%8C%B9%E9%85%8D%E7%9A%84%E5%BA%8F%E5%88%97%E6%AF%94%E8%BE%83"><span class="nav-number">2.1.5.</span> <span class="nav-text">五、基于字符串精确匹配的序列比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81Accelerating-Genome-Analysis-A-Primer-on-an-Ongoing-Journey"><span class="nav-number">2.2.</span> <span class="nav-text">2、Accelerating Genome Analysis: A Primer on an Ongoing Journey</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#READ-MAPPING"><span class="nav-number">2.2.1.</span> <span class="nav-text">READ MAPPING</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SWQ"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SWQ</p>
+  <div class="site-description" itemprop="description">舟遥遥以轻扬，风飘飘而吹衣</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://qm.qq.com/q/fJkfzkochO" title="QQ → https:&#x2F;&#x2F;qm.qq.com&#x2F;q&#x2F;fJkfzkochO" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/348651384" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;348651384" rel="noopener" target="_blank"><i class="fa fa-tv fa-fw"></i>bilibili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/profiles/76561199188319035/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561199188319035&#x2F;" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw"></i>Steam</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://c6.y.qq.com/base/fcgi-bin/u?__=sZVdegbNTeC3" title="Music → https:&#x2F;&#x2F;c6.y.qq.com&#x2F;base&#x2F;fcgi-bin&#x2F;u?__&#x3D;sZVdegbNTeC3" rel="noopener" target="_blank"><i class="fa fa-music fa-fw"></i>Music</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1309889000&auto=1&height=66"></iframe>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021-8 ~ 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.5m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">22:21</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+<script src="/js/floating-history.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'H2FYHQwVGaUkawg5DkrA6d6M-gzGzoHsz',
+      appKey     : 'zndS0u9Qj7qj8CqnJINs2MGT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : 'https://h2fyhqwv.lc-cn-n1-shared.com'
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+</body>
+</html>
