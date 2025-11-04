@@ -133,7 +133,8 @@ NexT.motion.middleWares = {
 
     if (postBlock.length > 0) {
       var postMotionOptions = window.postMotionOptions || {
-        stagger : 100,
+        stagger : 50,     // 优化：减少元素间延迟（从100ms降到30ms）
+        duration: 500,    // 优化：缩短动画持续时间（加快展开速度）
         drag    : true,
         complete: function() {
           integrator.next();
