@@ -86,6 +86,25 @@
     (function() {
       var storageKey = 'switch_homepage__access_granted';
       var docEl = document.documentElement;
+      var guardEnabled = true;
+      var configuredPassword = '';
+      
+        
+        
+          configuredPassword = 'siwuqiang';
+        
+      
+
+      if (!guardEnabled || !configuredPassword) {
+        docEl.classList.add('content-unlocked');
+        window.__SITE_PASSWORD_GUARD__ = {
+          storageKey: storageKey,
+          enabled: false,
+          password: ''
+        };
+        return;
+      }
+
       try {
         if (window.localStorage && localStorage.getItem(storageKey) === '1') {
           docEl.classList.add('content-unlocked');
@@ -95,13 +114,17 @@
       } catch (err) {
         docEl.classList.add('content-locked');
       }
-      window.__SITE_PASSWORD_GUARD__ = { storageKey: storageKey };
+      window.__SITE_PASSWORD_GUARD__ = {
+        storageKey: storageKey,
+        enabled: true,
+        password: configuredPassword
+      };
     })();
   </script>
   <div id="password-protect" class="password-protect" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="password-modal">
       <h2 class="password-title"></h2>
-      <p class="password-subtitle">PLEASE ENTER YOUR NAME</p>
+      <p class="password-subtitle">Please Enter MY NAME</p>
       <label class="password-label" for="site-password-input">访问密码</label>
       <input id="site-password-input" class="password-input" type="password" autocomplete="current-password" placeholder="请输入密码" />
       <button id="site-password-submit" class="password-submit" type="button">确认</button>
@@ -220,7 +243,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2025/11/07/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E6%96%B0%E8%AE%AD%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%E5%8F%8A%E5%BB%B6%E7%BB%AD/">
+    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2025/11/07/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%B0%8F%E8%AE%B0%E5%90%88%E9%9B%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -234,7 +257,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/07/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E6%96%B0%E8%AE%AD%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%E5%8F%8A%E5%BB%B6%E7%BB%AD/" class="post-title-link" itemprop="url">新训工作总结及延续</a>
+            <a href="/2025/11/07/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%B0%8F%E8%AE%B0%E5%90%88%E9%9B%86/" class="post-title-link" itemprop="url">小记合集</a>
         </h2>
 
         <div class="post-meta">
@@ -249,7 +272,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2025-11-07 16:57:00" itemprop="dateCreated datePublished" datetime="2025-11-07T16:57:00+08:00">2025-11-07</time>
+              <time title="创建时间：2025-11-07 22:00:00" itemprop="dateCreated datePublished" datetime="2025-11-07T22:00:00+08:00">2025-11-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,12 +280,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%80%9D%E8%80%83/" itemprop="url" rel="index"><span itemprop="name">思考</span></a>
+                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
                 </span>
             </span>
 
           
-            <span id="/2025/11/07/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E6%96%B0%E8%AE%AD%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%E5%8F%8A%E5%BB%B6%E7%BB%AD/" class="post-meta-item leancloud_visitors" data-flag-title="新训工作总结及延续" title="阅读次数">
+            <span id="/2025/11/07/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%B0%8F%E8%AE%B0%E5%90%88%E9%9B%86/" class="post-meta-item leancloud_visitors" data-flag-title="小记合集" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -277,8 +300,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2025/11/07/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E6%96%B0%E8%AE%AD%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%E5%8F%8A%E5%BB%B6%E7%BB%AD/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2025/11/07/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E6%96%B0%E8%AE%AD%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%E5%8F%8A%E5%BB%B6%E7%BB%AD/" itemprop="commentCount"></span>
+    <a title="valine" href="/2025/11/07/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%B0%8F%E8%AE%B0%E5%90%88%E9%9B%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/11/07/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%B0%8F%E8%AE%B0%E5%90%88%E9%9B%86/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -288,14 +311,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>62k</span>
+              <span>571</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>57 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -307,10 +330,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="一、感情探索历程"><a href="#一、感情探索历程" class="headerlink" title="一、感情探索历程"></a>一、感情探索历程</h2>
+          <p>11.08</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2025/11/07/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E6%96%B0%E8%AE%AD%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%E5%8F%8A%E5%BB%B6%E7%BB%AD/#more" rel="contents">
+              <a class="btn" href="/2025/11/07/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%B0%8F%E8%AE%B0%E5%90%88%E9%9B%86/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -429,6 +452,118 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2025/10/27/%E5%85%B6%E4%BB%96/%E6%9C%88%E6%80%BB%E7%BB%93/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2025/11/08/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%85%B3%E4%BA%8E%E5%8E%86%E5%8F%B2%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%E5%92%8C%E5%BD%BB%E5%BA%95%E7%9A%84%E8%87%AA%E6%88%91%E9%9D%A9%E5%91%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻扬，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/08/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%85%B3%E4%BA%8E%E5%8E%86%E5%8F%B2%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%E5%92%8C%E5%BD%BB%E5%BA%95%E7%9A%84%E8%87%AA%E6%88%91%E9%9D%A9%E5%91%BD/" class="post-title-link" itemprop="url">关于历史经验总结和彻底的自我革命</a>
+        </h2>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar" color=f6416c></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-11-08 15:58:00" itemprop="dateCreated datePublished" datetime="2025-11-08T15:58:00+08:00">2025-11-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%80%9D%E8%80%83/" itemprop="url" rel="index"><span itemprop="name">思考</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2025/11/08/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%85%B3%E4%BA%8E%E5%8E%86%E5%8F%B2%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%E5%92%8C%E5%BD%BB%E5%BA%95%E7%9A%84%E8%87%AA%E6%88%91%E9%9D%A9%E5%91%BD/" class="post-meta-item leancloud_visitors" data-flag-title="关于历史经验总结和彻底的自我革命" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/11/08/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%85%B3%E4%BA%8E%E5%8E%86%E5%8F%B2%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%E5%92%8C%E5%BD%BB%E5%BA%95%E7%9A%84%E8%87%AA%E6%88%91%E9%9D%A9%E5%91%BD/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/11/08/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%85%B3%E4%BA%8E%E5%8E%86%E5%8F%B2%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%E5%92%8C%E5%BD%BB%E5%BA%95%E7%9A%84%E8%87%AA%E6%88%91%E9%9D%A9%E5%91%BD/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>252</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>提升个人6个大方向</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/08/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%85%B3%E4%BA%8E%E5%8E%86%E5%8F%B2%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%E5%92%8C%E5%BD%BB%E5%BA%95%E7%9A%84%E8%87%AA%E6%88%91%E9%9D%A9%E5%91%BD/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -684,7 +819,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2025/11/05/%E6%9C%AA%E5%AE%8C%E6%88%90/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/">
+    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2025/11/05/%E4%BD%9C%E5%93%81%E5%93%81%E9%89%B4/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -698,7 +833,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/05/%E6%9C%AA%E5%AE%8C%E6%88%90/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/" class="post-title-link" itemprop="url">《曹征路文集》——曹征路</a>
+            <a href="/2025/11/05/%E4%BD%9C%E5%93%81%E5%93%81%E9%89%B4/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/" class="post-title-link" itemprop="url">《曹征路文集》——曹征路</a>
         </h2>
 
         <div class="post-meta">
@@ -722,7 +857,7 @@
             </span>
 
           
-            <span id="/2025/11/05/%E6%9C%AA%E5%AE%8C%E6%88%90/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/" class="post-meta-item leancloud_visitors" data-flag-title="《曹征路文集》——曹征路" title="阅读次数">
+            <span id="/2025/11/05/%E4%BD%9C%E5%93%81%E5%93%81%E9%89%B4/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/" class="post-meta-item leancloud_visitors" data-flag-title="《曹征路文集》——曹征路" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -737,8 +872,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2025/11/05/%E6%9C%AA%E5%AE%8C%E6%88%90/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2025/11/05/%E6%9C%AA%E5%AE%8C%E6%88%90/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/" itemprop="commentCount"></span>
+    <a title="valine" href="/2025/11/05/%E4%BD%9C%E5%93%81%E5%93%81%E9%89%B4/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/11/05/%E4%BD%9C%E5%93%81%E5%93%81%E9%89%B4/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -772,7 +907,7 @@
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2025/11/05/%E6%9C%AA%E5%AE%8C%E6%88%90/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/#more" rel="contents">
+              <a class="btn" href="/2025/11/05/%E4%BD%9C%E5%93%81%E5%93%81%E9%89%B4/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E6%9B%B9%E5%BE%81%E8%B7%AF%E6%96%87%E9%9B%86%E3%80%8B%E2%80%94%E2%80%94%E6%9B%B9%E5%BE%81%E8%B7%AF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1225,120 +1360,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2025/10/25/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E4%B8%80%E5%8F%B7%E9%99%A2%E7%94%9F%E6%B4%BB%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="SWQ">
-      <meta itemprop="description" content="舟遥遥以轻扬，风飘飘而吹衣">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Switch">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/25/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E4%B8%80%E5%8F%B7%E9%99%A2%E7%94%9F%E6%B4%BB%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">一号院生活作息初步分析</a>
-        </h2>
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar" color=f6416c></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2025-10-25 11:11:00" itemprop="dateCreated datePublished" datetime="2025-10-25T11:11:00+08:00">2025-10-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%80%9D%E8%80%83/" itemprop="url" rel="index"><span itemprop="name">思考</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2025/10/25/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E4%B8%80%E5%8F%B7%E9%99%A2%E7%94%9F%E6%B4%BB%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90/" class="post-meta-item leancloud_visitors" data-flag-title="一号院生活作息初步分析" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2025/10/25/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E4%B8%80%E5%8F%B7%E9%99%A2%E7%94%9F%E6%B4%BB%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2025/10/25/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E4%B8%80%E5%8F%B7%E9%99%A2%E7%94%9F%E6%B4%BB%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>590</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>草草分析，于事无补，聊以自慰。</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/10/25/%E9%9A%8F%E7%AC%94/%E6%80%9D%E8%80%83/%E4%B8%80%E5%8F%B7%E9%99%A2%E7%94%9F%E6%B4%BB%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2562,7 +2583,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>397</span>
+              <span>489</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -25184,13 +25205,13 @@ DESIGNER
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">23:57</span>
+    <span title="站点阅读时长">23:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -25344,17 +25365,26 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
 <script>
   (function() {
     var guard = window.__SITE_PASSWORD_GUARD__;
-    if (!guard) {
-      return;
-    }
-
-    var PASSWORD = 'liuxian'; // TODO: Replace with your own password
-    var storageKey = guard.storageKey;
-    var docEl = document.documentElement;
     var overlay = document.getElementById('password-protect');
     var input = document.getElementById('site-password-input');
     var submit = document.getElementById('site-password-submit');
     var errorEl = document.getElementById('site-password-error');
+
+    if (!guard || guard.enabled === false || !guard.password) {
+      if (overlay) {
+        overlay.setAttribute('aria-hidden', 'true');
+        if (typeof overlay.remove === 'function') {
+          overlay.remove();
+        } else {
+          overlay.style.display = 'none';
+        }
+      }
+      return;
+    }
+
+    var PASSWORD = String(guard.password || '');
+    var storageKey = guard.storageKey;
+    var docEl = document.documentElement;
 
     if (!overlay || !input || !submit || !errorEl) {
       return;

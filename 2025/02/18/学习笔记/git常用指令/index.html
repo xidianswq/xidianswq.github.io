@@ -91,6 +91,25 @@
     (function() {
       var storageKey = 'switch_homepage__access_granted';
       var docEl = document.documentElement;
+      var guardEnabled = true;
+      var configuredPassword = '';
+      
+        
+        
+          configuredPassword = 'siwuqiang';
+        
+      
+
+      if (!guardEnabled || !configuredPassword) {
+        docEl.classList.add('content-unlocked');
+        window.__SITE_PASSWORD_GUARD__ = {
+          storageKey: storageKey,
+          enabled: false,
+          password: ''
+        };
+        return;
+      }
+
       try {
         if (window.localStorage && localStorage.getItem(storageKey) === '1') {
           docEl.classList.add('content-unlocked');
@@ -100,13 +119,17 @@
       } catch (err) {
         docEl.classList.add('content-locked');
       }
-      window.__SITE_PASSWORD_GUARD__ = { storageKey: storageKey };
+      window.__SITE_PASSWORD_GUARD__ = {
+        storageKey: storageKey,
+        enabled: true,
+        password: configuredPassword
+      };
     })();
   </script>
   <div id="password-protect" class="password-protect" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="password-modal">
       <h2 class="password-title"></h2>
-      <p class="password-subtitle">PLEASE ENTER YOUR NAME</p>
+      <p class="password-subtitle">Please Enter MY NAME</p>
       <label class="password-label" for="site-password-input">访问密码</label>
       <input id="site-password-input" class="password-input" type="password" autocomplete="current-password" placeholder="请输入密码" />
       <button id="site-password-submit" class="password-submit" type="button">确认</button>
@@ -639,13 +662,13 @@ $ git reset HEAD^ hello.php  # 回退 hello.php 文件的版本到上一个版�
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.5m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">23:57</span>
+    <span title="站点阅读时长">23:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
@@ -799,17 +822,26 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
 <script>
   (function() {
     var guard = window.__SITE_PASSWORD_GUARD__;
-    if (!guard) {
-      return;
-    }
-
-    var PASSWORD = 'liuxian'; // TODO: Replace with your own password
-    var storageKey = guard.storageKey;
-    var docEl = document.documentElement;
     var overlay = document.getElementById('password-protect');
     var input = document.getElementById('site-password-input');
     var submit = document.getElementById('site-password-submit');
     var errorEl = document.getElementById('site-password-error');
+
+    if (!guard || guard.enabled === false || !guard.password) {
+      if (overlay) {
+        overlay.setAttribute('aria-hidden', 'true');
+        if (typeof overlay.remove === 'function') {
+          overlay.remove();
+        } else {
+          overlay.style.display = 'none';
+        }
+      }
+      return;
+    }
+
+    var PASSWORD = String(guard.password || '');
+    var storageKey = guard.storageKey;
+    var docEl = document.documentElement;
 
     if (!overlay || !input || !submit || !errorEl) {
       return;
