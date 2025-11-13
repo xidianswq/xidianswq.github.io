@@ -47,8 +47,9 @@
 <meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/SeGraM.png">
 <meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/Example%20of%20the%20SneakySnake%20chip%20maze.png">
 <meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/SneakySnake%20chip%20maze.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/Overall%20system%20architecture%20and%20the%20execution%20flow%20of%20minimap2-fpga.png">
 <meta property="article:published_time" content="2025-10-26T02:25:00.000Z">
-<meta property="article:modified_time" content="2025-11-05T06:22:10.609Z">
+<meta property="article:modified_time" content="2025-11-13T06:30:35.499Z">
 <meta property="article:author" content="SWQ">
 <meta property="article:tag" content="学习笔记">
 <meta property="article:tag" content="高性能计算">
@@ -210,7 +211,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">220</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">221</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -329,14 +330,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>15k</span>
+              <span>23k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>13 分钟</span>
+              <span>21 分钟</span>
             </span>
 
         </div>
@@ -371,7 +372,7 @@
 <p>FPGA目前还在家</p>
 </li>
 </ul>
-<h2 id="2、立项分析"><a href="#2、立项分析" class="headerlink" title="2、立项分析"></a>2、立项分析</h2><ul>
+<h2 id="2、发展现状"><a href="#2、发展现状" class="headerlink" title="2、发展现状"></a>2、发展现状</h2><ul>
 <li><p>现状</p>
 <p>处理大规模基因组数据集，测序数据的分析 速度远落后于数据生成速度</p>
 <p>当前基于CPU或异构计算的基因分析工作流存在设备成本高昂、计算资源利 用率低、数据存储与传输瓶颈、长读段实时处理困难等问题</p>
@@ -510,7 +511,7 @@
 <ul>
 <li><p><strong>具体研究内容</strong>（具体见立项书）</p>
 <ul>
-<li>工作流</li>
+<li>工作流及其负载（数据流）特征</li>
 <li>定制化指令集架构</li>
 <li>高效计算架构（异构；通用核加专用加速器；具体架构【流水线、任务并行调度、动态任务划分…】）</li>
 <li>存储与通信结构（存储层次【缓存替换策略与预取机制】与片上互连【NOC、总线…】、）</li>
@@ -633,6 +634,7 @@
 <p>根据各碱基总数过滤，差别大于E则过滤。</p>
 </li>
 <li><p>q-gram filtering</p>
+<p>一般long read mappers使用、</p>
 <p><strong>q-gram</strong>: all of the sequence’s possible overlapping（重叠的） substrings of length q.</p>
 <p>例如，对于字符串 <code>&quot;hello&quot;</code>，它的 <strong>2-gram</strong> 有： <code>he</code>, <code>el</code>, <code>ll</code>, <code>lo</code> </p>
 <p>m、E对共享q-gram数的影响：Given a sequence of length m, the minimum number of shared q-grams between two similar sequences is therefore [m-q+1, q*E] .</p>
@@ -683,8 +685,8 @@ memory），对数据格式的转换耗时【UCSC’s 2bit format (<a target="_b
 [^7]:A. Goyal et al., “Ultra-fast next generation human genome sequencing data processing using DRAGENÒ Bio-IT processor for precision medicine,” Open J. Genetics, vol. 7, pp. 9–19, 2017.
 [^8]: J. Daily, “Parasail: SIMD C library for global, semiglobal, and local pairwise sequence alignments,” BMC Bioinformatics, vol. 17, 2016, Art. no. 81. 
 [^9]:D. Fujiki et al., “GenAx: A genome sequencing accelerator,” in Proc. 45th Annu. Int. Symp. Comput. Archit., 2018, pp. 69–82.
-[^10]:S
-[^11]:S
+[^10]:S. Gupta, M. Imani, B. Khaleghi, V. Kumar, and T. Rosing, “RAPID: A ReRAM processing in-memory architecture for DNA sequence alignment,” in Proc. IEEE&#x2F;ACM Int. Symp. Low Power Electron. Des., 2019, pp. 1–6.
+[^11]:S. S. Banerjee et al., “ASAP: Accelerated short-read alignment on programmable hardware,” IEEE Trans. Comput., vol. 68, no. 3, pp. 331–346, Mar. 2019
 [^12]:M. So	si	c and M. Siki	c, “Edlib: A C&#x2F;C++ library for fast, exact sequence alignment using edit distance,” Bioinformatics, vol. 33, pp. 1394–1395, 2017.
 [^13]: X. Fei, Z. Dan, L. Lina, M. Xin, and Z. Chunlei, “FPGASW: Accelerating large-scale Smith-Waterman sequence alignment application with backtracking on FPGA linear systolic array,” Interdisciplinary Sci.: Comput. Life Sci., vol. 10, pp. 176–188, 2018. 
 [^14]: Y. Turakhia, G. Bejerano, and W. J. Dally, “Darwin: A genomics co-processor provides up to 15,000x acceleration on long read assembly,” in Proc. Archit. Support Program. Lang. Oper. Syst., 2018, pp. 199–213.
@@ -737,7 +739,8 @@ Non-matching reads that have no potential matching locations in the reference ge
 </ul>
 </li>
 </ol>
-<h2 id="3、-Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><a href="#3、-Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis" class="headerlink" title="3、 Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis"></a>3、 Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</h2><h2 id="4、FPGA-Based-Near-Memory-Acceleration-of-Modern-Data-Intensive-Applications"><a href="#4、FPGA-Based-Near-Memory-Acceleration-of-Modern-Data-Intensive-Applications" class="headerlink" title="4、FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications"></a>4、FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications</h2><p>一、架构</p>
+<h2 id="3、-Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><a href="#3、-Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis" class="headerlink" title="3、 Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis"></a>3、 Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</h2><p>具体算法</p>
+<h2 id="4、FPGA-Based-Near-Memory-Acceleration-of-Modern-Data-Intensive-Applications"><a href="#4、FPGA-Based-Near-Memory-Acceleration-of-Modern-Data-Intensive-Applications" class="headerlink" title="4、FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications"></a>4、FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications</h2><p>一、架构</p>
 <p>IBM Power9 Core——1024-bit OCAPI——FPGA accelerator</p>
 <p>![Heterogeneous platform with an IBM POWER9 system connected to an HBM-based FPGA board via OCAPI](基因分析课题&#x2F;Heterogeneous platform with an IBM POWER9 system connected to an HBM-based FPGA board via OCAPI.png)</p>
 <ul>
@@ -807,8 +810,164 @@ an IBMPOWER9 processor, using OCAPI (OpenCAPI)；an accelerator functional unit 
 </li>
 </ul>
 <p>[^1]:M. Alser et al., “SneakySnake: A fast and accurate universal genome pre-alignment filter for CPUs, GPUs, and FPGAs,” Bioinformatics, vol. 36, no. 22&#x2F;23, pp. 5282– 5290, 2020.</p>
-<h2 id="5、Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><a href="#5、Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis" class="headerlink" title="5、Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis"></a>5、Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</h2><p>We explain <strong>state-of-the-art algorithmic methods and hardware-based acceleration approaches</strong> for each step of the genome analysis pipeline and provide <strong>experimental evaluations</strong></p>
+<h2 id="5、Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><a href="#5、Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis" class="headerlink" title="5、Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis"></a>5、Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</h2><p>每步的最新算法和加速方法、以及实验对比方法</p>
+<p>We explain <strong>state-of-the-art algorithmic methods and hardware-based acceleration approaches</strong> for each step of the genome analysis pipeline and provide <strong>experimental evaluations</strong></p>
+<p>一、整体介绍</p>
+<ul>
+<li><p>全流程</p>
+<p>![Overview of a typical genome analysis pipeline](基因分析课题&#x2F;Overview of a typical genome analysis pipeline.png)</p>
+<ol>
+<li><p>Genomic sequencing data is first obtained through sequencing a new sample, downloading from publicly-available databases, or computer simulation. Sequencing starts with (A) extracting the DNA, (B) fragmenting it, (C) preparing its library, and (D) using sequencing machines for providing raw sequencing data. </p>
+</li>
+<li><p>Raw sequencing data needs to be converted into read sequences of A, C, G, T in the DNA alphabet using basecalling techniques. Basecalling techniques are sequencing technology dependent. </p>
+</li>
+<li><p>To ensure high quality sequencing reads, a quality control step is performed to <strong>filter</strong> out low quality subsequences of a read or an entire read sequence. </p>
+</li>
+<li><p>Read mapping step is performed to locate each read sequence in a reference genome. Read mapping is four steps: (A) <strong>indexing</strong> the reference genome, (B) extracting <strong>seeds</strong> from each read and locating common seeds with the index, (C) pre-alignment <strong>filtering</strong> dissimilar sequence pairs, and (D) performing sequence alignment for every sequence pair that passes the filtering. （DP）</p>
+</li>
+<li><p>Detecting and inferring genomic variations usually consists of three steps: (A) processing the read mapping data for increasing its quality, (B) classifying variations between mapped reads and a reference genome, and (C) identifying genomic variations.</p>
+</li>
+</ol>
+</li>
+<li><p>现状：产生数据速度和处理速度的不匹配、数据转移功耗大</p>
+</li>
+</ul>
+<p>二、获取基因序列数据</p>
+<p>Genomic sequencing data (reads) can be obtained by </p>
+<ul>
+<li><ol>
+<li>sequencing a DNA sample【测序机器】</li>
+</ol>
+<p>1)短读取(高达几百个bp)，2)超长读取(范围从数百到数百万个bp)，以及3)准确的长读取(高达几千个bp) </p>
+<p>【详细比对表格，lllumina、ONT、PacBio三大产品具体原理及链接】</p>
+<p>短读数具有低测序错误率和高测序吞吐量(碱基数目)的优点。短读取的另一个可被视为优势的属性是存储在同一FASTQ文件中的所有读取的长度相等，这有助于实现例如多个CPU线程之间的负载平衡。 </p>
+<p><strong>每种测序技术都有其独特的优缺点。由于其非常高的准确度和低成本，短读数将继续被广泛使用。</strong>【对比表格】 </p>
+</li>
+<li><ol start="2">
+<li>downloading real sequencing data from publicly available databases【数据库】</li>
+</ol>
+<ul>
+<li>基因测序序列FASTQ文件[^1][^2]</li>
+<li>基因参考序列FASTA文件[^3][^4]</li>
+</ul>
+</li>
+<li><ol start="3">
+<li>simulating sequencing data【模拟】, as we show in Figure 1.1</li>
+</ol>
+<p> 这三种类型的读取模拟器的例子包括用于短读取的ART[79]、Mason[77]和ReSeq[80]，用于超长读取的PBSIM2[75]和NanoSim[76]，以及用于精确长读取(称为HiFi读取)的PBSIM[81]。然而，读模拟的使用带来了一些限制，因为模拟数据概括了真实数据的重要特征，并<strong>过度简化&#x2F;偏向了被测试方法的挑战</strong>[19]。为了避免这种偏差，一种常见的、更全面的方法是用真实的实验数据来补充模拟数据。</p>
+</li>
+</ul>
+<p>三、basecalling</p>
+<p>【三大产品的】</p>
+<p>将原始数据转换为ATCG</p>
+<p>四、质量控制Quality Control</p>
+<p>The QC step evaluates the quality of the entire read sequence by (1) examining the intrinsic quality of the read sequence, that is the average quality score <strong>generated by the sequencing machine before or after basecalling</strong>【质量打分】, (2) assessing the length of the read【长度评估】, and (3) evaluating the number of ambiguous bases (N) in a read.【不确定个数】</p>
+<p>常用工具：【FastQC[137]、 LongQC [138], which uses expensive read mapping, minimap2 [130], for low coverage detection. RabbitQC [139] exploits modern <strong>multicore CPUs</strong> to parallelize the QC computations and provides an order of magnitude <strong>faster performance for the three prominent types of sequencing technologies</strong>. 】 </p>
+<p>我们观察到，目前有大量的软件工具用于QC，但我们仍然缺乏有效的硬件加速器来改进QC步骤。 </p>
+<p>五、read mapping</p>
+<p>【三种最先进read mapper对应三种长度read的性能 three state-of-the-art read mappers 】</p>
+<p>![three state-of-the-art read mappers](基因分析课题&#x2F;three state-of-the-art read mappers.png)</p>
+<p> 加速read mapping的四个步骤</p>
+<ul>
+<li>Accelerating Indexing and Seeding</li>
+</ul>
+<p>  <strong>采样、查询（简单匹配？）</strong></p>
+<p>  索引和播种基本上使用相同的算法来<strong>从参考基因组或读取序列中提取子序列</strong>。唯一的区别是，索引步骤将从参考基因组中提取的种子存储在索引数据库中，而播种步骤使用提取的种子来查询索引数据库。 </p>
+<p>  改进索引和种子步骤有三个主要方向：(1)更好的<strong>种子采样技术</strong>（seed sampling techniques），(2)更好的<strong>索引数据结构</strong>（indexing data structures），(3)通过专门的硬件加速任务并最大限度地减少其数据移动。 </p>
+<ul>
+<li><p><strong>Sampling</strong> Seed</p>
+<p>例如，选择长度为k的所有可能的重叠子序列(称为<strong>k-mer</strong>)作为种子会导致<strong>每个碱基出现在k个种子中</strong>，从而导致不必要的高内存占用和由于大量种子命中而导致的低效查询。 【minimap2减小k-mers种子集合】</p>
+<p>【<strong>最小化</strong>k-mers（Minimizer-based approach）：对每组w个重叠的k-mer强加排序(例如，按词典顺序或通过散列值)，并且仅选择具有最小顺序的k-mer作为种子】</p>
+<p>【<strong>同步器</strong>方法（syncmer approach）： 该同步器方法选择一个种子作为最小器，其子串位于固定位置处的顺序与其他种子的子串的顺序相比达到最小。 】</p>
+<p>【其他提高种子灵敏度方法：<strong>spaced</strong> [150] （间隔种子，如<strong>S-conLSH</strong>[153]）and <strong>strobemer</strong> [151] seeds（频闪种子， 根据选择标准动态地改变空间的大小。 ）】</p>
+<p>【 虽然<strong>MinHash</strong>方法在比较相似长度的序列时很有效，但它在比较不同长度的序列时使用了许多冗余的最小化器来确保高精度，这带来了很高的性能成本和内存开销[156]。 】</p>
+</li>
+<li><p>Improving Data Structures for <strong>Seed Lookups</strong></p>
+<p>查找种子匹配的直接数据结构是<strong>哈希表</strong>， 将每个种子的<strong>哈希值存储为关键字</strong>，并将每个种子的<strong>位置列表存储为值</strong>。 （重在选择哈希函数，【BLEND[144]】，高度相似的种子可以具有相同的散列值，而不相似的种子仍然被分配给具有低冲突率的不同散列值。）</p>
+<p>其他数据结构：【 <strong>FM-index</strong> (implemented by Langarita et al. [157])，<strong>压缩表示不解压查询</strong>。这种方法有两个主要优势。1)可以查询<strong>任意长度的种子</strong>，减少了查询种子的数量。2)与最小ap2的索引步骤[18]相比，它通常具有<strong>更少的内存占用</strong>(减少3.8MAP2[18]⨉)。 FM索引的一个主要瓶颈是通过查询FM索引来<strong>定位精确匹配的速度明显慢于经典索引</strong>[157,158]。  使用支持SIMD的CPU，FM索引可以加速至2⨉[159]】</p>
+<p>【 <strong>BWA-MEM2</strong> [158] proposes an uncompressed version of the FM-index that is at least <strong>10⨉ larger</strong> than the compressed FM-index to speed up the querying step by <strong>2⨉ faster</strong>. 】</p>
+<p>【<strong>learned indexes</strong> [161].—— use <strong>machine learning</strong> models ，reduced size of the index as it does not store the locations of the seeds. <strong>However</strong>, it is shown that a learned-index based read mapper has <strong>the same memory footprint</strong> as the hash-table based read mapper [162]. 】</p>
+</li>
+<li><p>Reducing Data Movement During Indexing </p>
+<p>【<strong>MEDAL</strong>[163]——加一个<strong>ASIC</strong> accelerators for seeding】</p>
+<p>【<strong>GenStore</strong>[53]——a seeding and filtering accelerator inside <strong>SSDs</strong>,——the index and reads do not have to be moved outside of the storage device for seeding】</p>
+<p>【<strong>RADAR</strong>[164]——基于ReRAM——The database can be directly queried <strong>without offloading it</strong>, <strong>leading to a small amount of data movement</strong> and highly energy efficient operation.】</p>
+</li>
+<li><p>Accelerating Pre-Alignment Filtering</p>
+</li>
+</ul>
+<p>  checks the <strong>similarity</strong> between each <strong>read</strong> and each <strong>segment</strong> extracted at these mapping locations in the reference genome</p>
+<p>  根据E edits过滤，减少DP-based alignment的使用</p>
+<ul>
+<li><p>Pigeonhole Principle</p>
+<p>Pigeonhole-based pre-alignment filtering can <strong>accelerate</strong> read mappers even <strong>without specialized hardware</strong>. </p>
+<p>【Adjacency Filter[147]】</p>
+<p>【Shifted Hamming Distance (<strong>SHD</strong>)——use SIMD-capable CPUs】</p>
+<p>【<strong>GateKeeper</strong>[166]——FPGA architectures to accelerate SHD】</p>
+<p>【<strong>MAGNET</strong>[168]——provides a comprehensive <strong>analysis</strong> of all sources of <strong>filtering inaccuracy</strong> of GateKeeper and SHD.】</p>
+<p>【<strong>Shouji</strong>[140]——improve the accuracy——using a new algorithm and a new FPGA architecture】</p>
+<p>【<strong>SneakySnake</strong>[51]——single net routing (SNR) problem——SneakySnake is the only pre-alignment filter that efficiently works on CPUs, GPUs,and FPGAs.—— 使用高带宽内存(HBM)重新设计[54] 】</p>
+<p>【GenCache[169]——highly-parallel pre-alignment filtering inside the CPU cache】</p>
+<p>其他：一块用更快using different existing pre-alignment filters together ；评估论文——Several pigeonhole principle based pre-alignment filters are <strong>evaluated</strong> for wide-range FPGA platforms [171].</p>
+</li>
+<li><p>Base Counting</p>
+</li>
+</ul>
+<pre><code>【mrsFAST-Ultra [172] and GASSST [170]】
 
+【A **PIM implementation** of base counting can improve filtering time by 100⨉ compared **to its CPU implementation** [173].】
+</code></pre>
+<ul>
+<li><p>q-gram Filtering Approach</p>
+<p>【GRIM-Filter[^7]】</p>
+</li>
+<li><p>Sparse Dynamic Programming</p>
+</li>
+</ul>
+<pre><code>利用读取段和参考段之间共享的精确匹配(种子)来减少执行时间 
+
+这些算法根据E edits将种子的部分对应位置排除，（这些位置在索引期间已经被检测为精确匹配）
+
+**chaining**—— 稀疏DP过滤技术通过将重叠的种子（overlapping seeds）连接起来构建更长的链（longer chains），并以计算链的总长度（total length）作为序列对的过滤指标，该方法用于加速预对齐过滤。
+
+【used in minimap2 [130] and rHAT [176]】
+
+【mm2-fast [162]——accelerates minimap2’s chaining step by up to 3.1⨉ with **SIMD instructions**.】
+
+【mm2-ax [178]——accelerates mm2-fast’s chaining step by up to 12.6⨉ using a **GPU**.】
+
+【Modular Aligner [179]—— 提出了一种基于两种种子过滤技术的chaining替代方案，在准确性和运行时间方面均实现了优于minimap2的性能表现】
+</code></pre>
+<ul>
+<li><p>Accelerating Sequence Alignment </p>
+</li>
+<li><p>硬件加速<strong>最优仿射间隙得分</strong>（<strong>optimal affine gap scoring DP-based algorithms</strong>）</p>
+<p>算法：</p>
+<ul>
+<li><p>经典仿射间隙得分基于【Smith-Waterman-Gotoh algorithm [180]】</p>
+</li>
+<li><p>【 <strong>the fastest known edit distance algorithm</strong> [181] has a nearly quadratic running time,<strong>O(m2&#x2F;log2 m)</strong> 】</p>
+</li>
+<li><p>【带状算法<strong>Ukkonen’s banded algorithm</strong>[182]. ——only a subset of the entries of the DP table is computed, called <strong>diagonal vectors</strong>（对角向量）, as first proposed—— This reduces the runtime complexity to <strong>O(m*E).</strong> ——<strong>对短read有效</strong>】</p>
+</li>
+</ul>
+<p>硬件实现：</p>
+<ul>
+<li>(1) using SIMD-capable CPUs, </li>
+<li>(2) using multicore CPUs and GPUs, </li>
+<li>(3) using FPGAs, </li>
+<li>(4) using ASICs, and </li>
+<li>(5) using processing-in-memory architectures.</li>
+</ul>
+</li>
+<li><p>developing heuristics that sacrifice the optimality of the alignment score solution in order to reduce alignment time.——减少DP矩阵计算条目</p>
+</li>
+</ul>
+<p>[^1]:M. Alser, S. Waymost, R. Ayyala, B. Lawlor, R.J. Abdill, N. Rajkumar, N. LaPierre, J. Brito, A.M. Ribeiro-dos-Santos, C. Firtina, N. Almadhoun, V. Sarwal, E. Eskin, Q. Hu, D. Strong, Byoung-Do, Kim, M.S. Abedalthagafi, O. Mutlu, S. Mangul, Packaging, containerization, and virtualization of computational omics methods: Advances, challenges, and opportunities, arXiv [q-bio.GN]. (2022). <a target="_blank" rel="noopener" href="http://arxiv.org/abs/2203.16261">http://arxiv.org/abs/2203.16261</a>.
+[^2]:Home - SRA - NCBI, (n.d.). <a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/sra">https://www.ncbi.nlm.nih.gov/sra</a> (accessed March 27, 2022).
+[^3]:EMBL-EBI, ENA browser, (n.d.). <a target="_blank" rel="noopener" href="https://www.ebi.ac.uk/ena">https://www.ebi.ac.uk/ena</a> (accessed March 27, 2022).
+[^4]:RefSeq: NCBI Reference Sequence Database, (n.d.). <a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/refseq">https://www.ncbi.nlm.nih.gov/refseq</a> (accessed March 27, 2022).</p>
+<h2 id="6、Efficient-end‑to‑end-long‑read-sequence-mapping-using-minimap2‑fpga-integrated-with-hardware-accelerated-chaining"><a href="#6、Efficient-end‑to‑end-long‑read-sequence-mapping-using-minimap2‑fpga-integrated-with-hardware-accelerated-chaining" class="headerlink" title="6、Efficient end‑to‑end long‑read  sequence mapping using  minimap2‑fpga integrated  with hardware accelerated chaining"></a>6、Efficient end‑to‑end long‑read  sequence mapping using  minimap2‑fpga integrated  with hardware accelerated chaining</h2><img src="基因分析课题/Overall system architecture and the execution flow of minimap2-fpga.png" alt="1762761042171" style="zoom: 50%;" />
     </div>
 
     
@@ -907,7 +1066,7 @@ an IBMPOWER9 processor, using OCAPI (OpenCAPI)；an accelerator functional unit 
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%80%BB%E4%BD%93%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">一、总体分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%89%8D%E6%9C%9F%E6%80%9D%E8%80%83"><span class="nav-number">1.1.</span> <span class="nav-text">1、前期思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E7%AB%8B%E9%A1%B9%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">2、立项分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%85%B7%E4%BD%93%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">3、具体原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E8%AF%BE%E9%A2%98%E5%86%85%E5%AE%B9%E5%8F%8A%E7%9B%AE%E6%A0%87"><span class="nav-number">1.4.</span> <span class="nav-text">4、课题内容及目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E7%A0%94%E7%A9%B6%E6%96%B9%E6%A1%88%E5%8F%8A%E5%8F%AF%E8%A1%8C%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">5、研究方案及可行性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E9%A1%B9%E7%9B%AE%E7%89%B9%E8%89%B2%E4%B8%8E%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84"><span class="nav-number">1.6.</span> <span class="nav-text">6、项目特色与创新之处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">二、相关资料</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E3%80%8A%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%AF%BC%E8%AE%BA%EF%BC%9A%E9%9D%A2%E5%90%91%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97%E7%9A%84%E7%AE%97%E6%B3%95%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1、《生物信息学导论：面向高性能计算的算法与应用》</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E5%AD%90%E7%94%9F%E7%89%A9%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.1.1.</span> <span class="nav-text">一、分子生物学基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E5%AD%A6%E5%8F%8A%E8%AE%A1%E7%AE%97%E7%A7%91%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.1.2.</span> <span class="nav-text">二、数学及计算科学基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BA%8F%E5%88%97%E5%AF%B9%E6%AF%94%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">三、序列对比的基本方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9%E3%80%81-%E4%BB%BF%E5%B0%84%E7%A9%BA%E4%BD%8D%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E7%9A%84%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">9、 仿射空位罚分模型下的局部对比算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10%E3%80%81%E9%99%8D%E9%98%B6%E7%A9%BA%E9%97%B4%E5%AD%98%E5%82%A8%E7%9A%84%E4%B8%A4%E5%BA%8F%E5%88%97%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">10、降阶空间存储的两序列对比算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15%E3%80%81%E5%A4%9A%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9"><span class="nav-number">2.1.3.4.</span> <span class="nav-text">15、多序列比对</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E7%9A%84%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97"><span class="nav-number">2.1.4.</span> <span class="nav-text">四、序列比对的并行计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%9F%BA%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B2%BE%E7%A1%AE%E5%8C%B9%E9%85%8D%E7%9A%84%E5%BA%8F%E5%88%97%E6%AF%94%E8%BE%83"><span class="nav-number">2.1.5.</span> <span class="nav-text">五、基于字符串精确匹配的序列比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%9F%BA%E5%9B%A0%E8%AF%86%E5%88%AB"><span class="nav-number">2.1.6.</span> <span class="nav-text">六、基因识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%A9%AC%E6%B0%8F%E9%93%BE%E4%B8%8E%E9%9A%90%E9%A9%AC%E6%B0%8F%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.7.</span> <span class="nav-text">七、马氏链与隐马氏模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81Accelerating-Genome-Analysis-A-Primer-on-an-Ongoing-Journey"><span class="nav-number">2.2.</span> <span class="nav-text">2、Accelerating Genome Analysis: A Primer on an Ongoing Journey</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81-Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><span class="nav-number">2.3.</span> <span class="nav-text">3、 Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81FPGA-Based-Near-Memory-Acceleration-of-Modern-Data-Intensive-Applications"><span class="nav-number">2.4.</span> <span class="nav-text">4、FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><span class="nav-number">2.5.</span> <span class="nav-text">5、Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%80%BB%E4%BD%93%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">一、总体分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%89%8D%E6%9C%9F%E6%80%9D%E8%80%83"><span class="nav-number">1.1.</span> <span class="nav-text">1、前期思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%8F%91%E5%B1%95%E7%8E%B0%E7%8A%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2、发展现状</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%85%B7%E4%BD%93%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">3、具体原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E8%AF%BE%E9%A2%98%E5%86%85%E5%AE%B9%E5%8F%8A%E7%9B%AE%E6%A0%87"><span class="nav-number">1.4.</span> <span class="nav-text">4、课题内容及目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E7%A0%94%E7%A9%B6%E6%96%B9%E6%A1%88%E5%8F%8A%E5%8F%AF%E8%A1%8C%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">5、研究方案及可行性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E9%A1%B9%E7%9B%AE%E7%89%B9%E8%89%B2%E4%B8%8E%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84"><span class="nav-number">1.6.</span> <span class="nav-text">6、项目特色与创新之处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">二、相关资料</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E3%80%8A%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%AF%BC%E8%AE%BA%EF%BC%9A%E9%9D%A2%E5%90%91%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97%E7%9A%84%E7%AE%97%E6%B3%95%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1、《生物信息学导论：面向高性能计算的算法与应用》</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E5%AD%90%E7%94%9F%E7%89%A9%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.1.1.</span> <span class="nav-text">一、分子生物学基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E5%AD%A6%E5%8F%8A%E8%AE%A1%E7%AE%97%E7%A7%91%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.1.2.</span> <span class="nav-text">二、数学及计算科学基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BA%8F%E5%88%97%E5%AF%B9%E6%AF%94%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">三、序列对比的基本方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9%E3%80%81-%E4%BB%BF%E5%B0%84%E7%A9%BA%E4%BD%8D%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E7%9A%84%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">9、 仿射空位罚分模型下的局部对比算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10%E3%80%81%E9%99%8D%E9%98%B6%E7%A9%BA%E9%97%B4%E5%AD%98%E5%82%A8%E7%9A%84%E4%B8%A4%E5%BA%8F%E5%88%97%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">10、降阶空间存储的两序列对比算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15%E3%80%81%E5%A4%9A%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9"><span class="nav-number">2.1.3.4.</span> <span class="nav-text">15、多序列比对</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E7%9A%84%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97"><span class="nav-number">2.1.4.</span> <span class="nav-text">四、序列比对的并行计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%9F%BA%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B2%BE%E7%A1%AE%E5%8C%B9%E9%85%8D%E7%9A%84%E5%BA%8F%E5%88%97%E6%AF%94%E8%BE%83"><span class="nav-number">2.1.5.</span> <span class="nav-text">五、基于字符串精确匹配的序列比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%9F%BA%E5%9B%A0%E8%AF%86%E5%88%AB"><span class="nav-number">2.1.6.</span> <span class="nav-text">六、基因识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%A9%AC%E6%B0%8F%E9%93%BE%E4%B8%8E%E9%9A%90%E9%A9%AC%E6%B0%8F%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.7.</span> <span class="nav-text">七、马氏链与隐马氏模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81Accelerating-Genome-Analysis-A-Primer-on-an-Ongoing-Journey"><span class="nav-number">2.2.</span> <span class="nav-text">2、Accelerating Genome Analysis: A Primer on an Ongoing Journey</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81-Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><span class="nav-number">2.3.</span> <span class="nav-text">3、 Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81FPGA-Based-Near-Memory-Acceleration-of-Modern-Data-Intensive-Applications"><span class="nav-number">2.4.</span> <span class="nav-text">4、FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><span class="nav-number">2.5.</span> <span class="nav-text">5、Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81Efficient-end%E2%80%91to%E2%80%91end-long%E2%80%91read-sequence-mapping-using-minimap2%E2%80%91fpga-integrated-with-hardware-accelerated-chaining"><span class="nav-number">2.6.</span> <span class="nav-text">6、Efficient end‑to‑end long‑read  sequence mapping using  minimap2‑fpga integrated  with hardware accelerated chaining</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -923,7 +1082,7 @@ an IBMPOWER9 processor, using OCAPI (OpenCAPI)；an accelerator functional unit 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1011,7 +1170,7 @@ an IBMPOWER9 processor, using OCAPI (OpenCAPI)；an accelerator functional unit 
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">23:01</span>
+    <span title="站点阅读时长">22:53</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
   </div>
