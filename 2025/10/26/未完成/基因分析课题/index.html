@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Zhi Mang Xing:300,300italic,400,400italic,700,700italic|Ma Shan Zheng:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200..900&family=Permanent+Marker&family=Satisfy&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xidianswq.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#e6c35c","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="基因分析课题">
+<meta property="og:url" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Switch">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%B7%B7%E5%90%88%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80%E4%BC%98%E7%82%B9.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%88%B4%E5%B0%94%E7%A7%91%E6%8A%80%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E6%B5%8B%E5%BA%8F%E4%B8%89%E5%A4%A7%E5%88%86%E6%9E%90%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%85%A8%E4%B9%A6%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E8%A1%A8%E8%BE%BE%E4%B8%AD%E5%BF%83%E6%B3%95%E5%88%99.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E9%80%9A%E7%94%A8%E9%81%97%E4%BC%A0%E5%AF%86%E7%A0%81.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E7%82%B9%E9%98%B5%E5%9B%BE%E6%95%88%E6%9E%9C%E6%AF%94%E8%BE%83.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%85%A8%E5%B1%80%E6%AF%94%E5%AF%B9%E4%B8%8BHij%E7%9A%84%E4%B8%89%E7%A7%8D%E8%AE%A1%E7%AE%97%E6%83%85%E5%BD%A2.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/hij%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E4%BE%8B%E5%AD%901.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%B1%80%E9%83%A8%E6%AF%94%E5%AF%B9%E7%9A%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95Hij%E9%80%92%E6%8E%A8%E5%85%AC%E5%BC%8F.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E4%BE%8B%E5%AD%902.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E9%87%8D%E5%8F%A0%E5%8C%BA%E5%9F%9F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%9F%BA%E6%9C%AC%E6%83%85%E5%BD%A2.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E4%BE%8B%E5%AD%903.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%85%B6%E4%BB%96%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E4%BB%BF%E5%B0%84%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E5%85%A8%E5%B1%80%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E4%BB%BF%E5%B0%84%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E5%B1%80%E9%83%A8%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/Gotoh%E9%80%92%E6%8E%A8%E5%85%B3%E7%B3%BB1.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/Gotoh%E9%80%92%E6%8E%A8%E5%85%B3%E7%B3%BB2.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E4%BB%BF%E5%B0%84%E7%A9%BA%E4%BD%8D%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E7%9A%84%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E4%BB%BF%E5%B0%84%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E5%B1%80%E9%83%A8%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E6%80%A7%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/Hirschberg%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/CheckPoint%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/CheckPoint%E7%AE%97%E6%B3%95%E5%9C%A8%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8%E7%B3%BB%E7%BB%9F%E4%B8%8A%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%AE%9E%E7%8E%B0.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%88%86%E5%9D%97%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%88%86%E5%9D%97%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%B8%A6%E7%8A%B6%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%B8%A6%E7%8A%B6%E6%AF%94%E5%AF%B9%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%9C%80%E4%BD%B3%E6%AD%A3%E5%88%99%E5%8C%96%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/FASTA%E7%AE%97%E6%B3%95%E4%B8%AD%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/FASTA%E7%AE%97%E6%B3%95%E7%AC%AC%E4%BA%8C%E6%AD%A5.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%98%9F%E5%BD%A2%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/genome_analysis_steps.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/GateKeeper.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/Shouji.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/GenASM%20.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/SeGraM.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/Example%20of%20the%20SneakySnake%20chip%20maze.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/SneakySnake%20chip%20maze.png">
+<meta property="og:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/Overall%20system%20architecture%20and%20the%20execution%20flow%20of%20minimap2-fpga.png">
+<meta property="article:published_time" content="2025-10-26T02:25:00.000Z">
+<meta property="article:modified_time" content="2025-12-08T00:29:49.949Z">
+<meta property="article:author" content="SWQ">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="高性能计算">
+<meta property="article:tag" content="分子生物学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%B7%B7%E5%90%88%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80%E4%BC%98%E7%82%B9.png">
+
+<link rel="canonical" href="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基因分析课题 | Switch</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="Switch" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <script>
+    (function() {
+      var storageKey = 'switch_homepage__access_granted';
+      var docEl = document.documentElement;
+      var guardEnabled = true;
+      var configuredPassword = '';
+      
+        
+        
+          configuredPassword = 'siwuqiang';
+        
+      
+
+      if (!guardEnabled || !configuredPassword) {
+        docEl.classList.add('content-unlocked');
+        window.__SITE_PASSWORD_GUARD__ = {
+          storageKey: storageKey,
+          enabled: false,
+          password: ''
+        };
+        return;
+      }
+
+      try {
+        if (window.localStorage && localStorage.getItem(storageKey) === '1') {
+          docEl.classList.add('content-unlocked');
+        } else {
+          docEl.classList.add('content-locked');
+        }
+      } catch (err) {
+        docEl.classList.add('content-locked');
+      }
+      window.__SITE_PASSWORD_GUARD__ = {
+        storageKey: storageKey,
+        enabled: true,
+        password: configuredPassword
+      };
+    })();
+  </script>
+  <div id="password-protect" class="password-protect" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="password-modal">
+      <h2 class="password-title"></h2>
+      <p class="password-subtitle">Please Enter MY NAME</p>
+      <label class="password-label" for="site-password-input">访问密码</label>
+      <input id="site-password-input" class="password-input" type="password" autocomplete="current-password" placeholder="请输入密码" />
+      <button id="site-password-submit" class="password-submit" type="button">确认</button>
+      <p id="site-password-error" class="password-error" aria-live="assertive"></p>
+    </div>
+  </div>
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Switch</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Welcome to My Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">47</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">233</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xidianswq.github.io/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="SWQ">
+      <meta itemprop="description" content="舟遥遥以轻扬，风飘飘而吹衣">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Switch">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基因分析课题
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar" color=f6416c></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-10-26 10:25:00" itemprop="dateCreated datePublished" datetime="2025-10-26T10:25:00+08:00">2025-10-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="基因分析课题" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>30k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>27 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<h1 id="一、总体分析"><a href="#一、总体分析" class="headerlink" title="一、总体分析"></a>一、总体分析</h1><h2 id="1、前期思考"><a href="#1、前期思考" class="headerlink" title="1、前期思考"></a>1、前期思考</h2><ul>
+<li><p>交叉点——计算生物学中的大规模计算及算法与<strong>高性能计算</strong>结合；重点基础还是掌握高性能计算方法，在这个基础上进行具体算法的适配与实践；人工智能赋能生物计算的今天，这些老的方法的作用和地位如何，最终研究加速ai+生物计算算法？</p>
+</li>
+<li><p>硬件系统</p>
+<p>数据流（依赖网上数据库）：基因测序仪产生输入（FASTQ文件）；输出（VCF文件）；中间数据（BAM文件）</p>
+<p>function：基因分析——比对排序去重比对</p>
+<blockquote>
+<p>当前主流基因组分析流程（几个步骤：Base-calling、Quality Control、Pre-Alignment </p>
+<p>Filtering、Read Mapping、Variant Calling）；</p>
+</blockquote>
+<p>方法一：实现一个完善的SoC【硬】，完全运行自定义指令集</p>
+<p>方法二——选用核（香山core）加专用加速部分【硬设计】，<strong>首先把香山core及上面的linux跑起来</strong>【软熟悉】，再编写自定义指令并执行（参考异构操作的方法，或调用显卡的方法）</p>
+</li>
+<li><p>软件系统</p>
+<p>方法一：裸机程序或简单操作系统——IO系统操作与显示（按钮、OLED屏）</p>
+<p>方法二：linux——命令行操作与显示（键盘、显示器）</p>
+</li>
+<li><p>问题</p>
+<p>完全熟悉基因分析流程、算法及<strong>实例</strong></p>
+<p>FPGA目前还在家</p>
+</li>
+</ul>
+<h2 id="2、发展现状"><a href="#2、发展现状" class="headerlink" title="2、发展现状"></a>2、发展现状</h2><ul>
+<li><p>现状</p>
+<p>处理大规模基因组数据集，测序数据的分析 速度远落后于数据生成速度</p>
+<p>当前基于CPU或异构计算的基因分析工作流存在设备成本高昂、计算资源利 用率低、数据存储与传输瓶颈、长读段实时处理困难等问题</p>
+</li>
+<li><p>实际应用</p>
+<p>序列比对、变异检测及复杂生物信息学分析</p>
+<p>公共卫生事件时，需要在<strong>最短时间内处理大量样本并识别病原体</strong>，提供基因分析结果，追踪病毒的传播路径和变异情况；肿瘤精准治疗</p>
+</li>
+<li><p>市场解决方案</p>
+<p>基于CPU和GPU加速的解决方案，拆解计算任务，提高并行度；效果30h-&gt;30min</p>
+<p>计算：CPU+Sentieon软件 和 Nvidia GPU+Parabrics软件</p>
+<p>存储：全本地、全外置（相对稍快）、混合式（最佳选择）</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%B7%B7%E5%90%88%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80%E4%BC%98%E7%82%B9.png" alt="img"> </p>
+<ul>
+<li><p>戴尔科技解决方案</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%88%B4%E5%B0%94%E7%A7%91%E6%8A%80%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.png" alt="img"> </p>
+<p> 高性能分布式共享存储采用戴尔分布式横向扩展存储PowerScale，主要缓存基因测序仪输出的海量待分析数据和二级、三级分析结果数据，并为二、三级分析提供高速IO读写支持和数据共享支持。 </p>
+<p>普通算力集群采用戴尔PowerEdge C系列刀片服务器，主要进行<strong>外显子测序(WES)，转录组测序(RNA-Seq)，蛋白结合位点分析(ChIP-Seq)等分析工作</strong>，这些工作对算力和内存的需求相对较低，建议配置Intel 5系CPU，256GB以上内存，采用2块1.92TB NVME硬盘存储参考基因组文件，二级分析时产生的临时文件等。 </p>
+<p>高性能算力集群采用戴尔PowerEdge R750机架式服务器，主要进行<strong>全基因组测序(WGS)，靶向测序(Panel)等</strong>，这些分析工作对算力和内存要求都非常高，建议配置Intel 8系CPU，1TB以上内存，采用4块1.92TB NVME硬盘存储参考基因组文件，二级分析时产生的临时文件等。并可根据二、三级分析加速需求，AI建模&#x2F;推理需求等选配GPU加速卡。 </p>
+</li>
+<li><p><strong>四代基因测序的对比</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>测序技术</strong></th>
+<th></th>
+<th><strong>第一代</strong></th>
+<th></th>
+<th></th>
+<th><strong>第二代</strong></th>
+<th></th>
+<th><strong>第三代</strong></th>
+<th><strong>第四代</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>代表性测序平台</strong></td>
+<td>ABI3730XL</td>
+<td>IlluminaHiSeqX</td>
+<td>LifeTechPGM</td>
+<td>LifeTechPGM</td>
+<td>LifeTechSOLiDT</td>
+<td>Roche454FLX</td>
+<td>PacBioRS</td>
+<td>OxfordNanoporeMinION</td>
+</tr>
+<tr>
+<td><strong>原理</strong></td>
+<td>桑格双脱氧测序法</td>
+<td>可逆链终止测序法</td>
+<td>半导体测序法</td>
+<td>半导体测序法</td>
+<td>连接测序法</td>
+<td>焦磷酸测序法</td>
+<td>单分子实时测序</td>
+<td>纳米孔测序法</td>
+</tr>
+<tr>
+<td><strong>测序长度</strong></td>
+<td>900bp</td>
+<td>150bp2</td>
+<td>200bp×2</td>
+<td>400bp</td>
+<td>50bp×2</td>
+<td>1000bp</td>
+<td>7000-8000bp</td>
+<td>超过150k</td>
+</tr>
+<tr>
+<td><strong>通量</strong></td>
+<td>300Mb&#x2F;年</td>
+<td>219Tb&#x2F;年</td>
+<td>11Tb&#x2F;年</td>
+<td>1.4Tb&#x2F;年</td>
+<td>4.4Tb&#x2F;年</td>
+<td>180Gb&#x2F;年</td>
+<td>146Gb&#x2F;年</td>
+<td>9000-1800Gb&#x2F;年</td>
+</tr>
+<tr>
+<td><strong>测序费用</strong></td>
+<td>107美元&#x2F;Gb</td>
+<td>7-10美元&#x2F;Gb</td>
+<td>80 美元&#x2F;Gb</td>
+<td>450美元&#x2F;G</td>
+<td>60 美元&#x2F;Gb</td>
+<td>160美元&#x2F;Gb</td>
+<td>2000美元&#x2F;G</td>
+<td>13美元&#x2F;G</td>
+</tr>
+<tr>
+<td><strong>准确率</strong></td>
+<td>100%</td>
+<td>99.80%</td>
+<td>99%</td>
+<td>99%</td>
+<td>&gt;99.94%</td>
+<td>&gt;99%</td>
+<td>88%</td>
+<td>99%</td>
+</tr>
+<tr>
+<td><strong>优点</strong></td>
+<td>测序长度长、准确率高</td>
+<td>通量大、单位测序成本低</td>
+<td>较长读长，成本中等，读取速度快，避免了 PCR 偏向性问题</td>
+<td>极限读长，成本中等，实时监控测序，测序过程简单快捷，微量建库</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>缺点</strong></td>
+<td>通量低、成本高、测序结果存在偏好性</td>
+<td>测序长度短导致序列拼接难度大、测序结果存在偏好性、测序过程繁琐</td>
+<td>准确度低设备昂贵</td>
+<td>准确度低，边缘点检测易出错误。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3、具体原理"><a href="#3、具体原理" class="headerlink" title="3、具体原理"></a>3、具体原理</h2><p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/760741958_121226060">算力＋存力：优化基因测序的关键所在</a> GenerationSequencing </p>
+<p>   <img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E6%B5%8B%E5%BA%8F%E4%B8%89%E5%A4%A7%E5%88%86%E6%9E%90%E9%98%B6%E6%AE%B5.png" alt="img"> </p>
+<p>  <strong>一级分析</strong>：将需要进行测序的生物样本送入基因测序仪中，由测序仪进行<strong>WGS(全基因组测序)、WES(外显子测序)<strong>等测序操作，测序结果输出到可用于计算机进行分析的</strong>FASTQ文件</strong>中。FASTQ文件类似一个文本文件，每两行或三行记录一个DNA片段的碱基序列信息，测序质量信息等。 完整的DNA测序样本在进行测序前会被用<strong>超声波击碎为上千万条</strong>。</p>
+<p>  <strong>二级分析</strong>：这个过程现在通常由高性能处理集群完成。首先通过高性能服务器将测序仪生成的FASTQ文件(盗版书)与参考基因组文件(正版书)进行<strong>比对</strong>生成<strong>BAM文件</strong>。然后对BAM文件进行<strong>排序和去重</strong>，生成可以用于变异检测的BAM文件。</p>
+<p>  在最后，将BAM文件(有正确页号和行号的盗版书)与参考基因组文件(正版书)再次进行<strong>比对</strong>，找出BAM文件中所有与参考基因组文件不同之处，并将这些不同(变异)写入到<strong>VCF文件</strong>中。</p>
+<p>  <strong>三级分析</strong>：医学专家或科研人员通过分析服务器和专业数据库对VCF文件进行解读，给出疾病解读报告或者基因关联分析报告。疾病解读报告主要用于临床，比如某种基因突变是否可以使用某种靶向药物等。基因关联分析报告主要用于科学研究，比如某种基因突变会带来某种生理现象或者疾病等。</p>
+<h2 id="4、课题内容及目标"><a href="#4、课题内容及目标" class="headerlink" title="4、课题内容及目标"></a>4、课题内容及目标</h2><p>分析并针对基因分析工作流，分析并针对现有加速技术优化和缺陷（综述），基于FPGA提出新型专用体系结构（基础部件、可拓展性、技术算法通用性）</p>
+<ul>
+<li><p><strong>具体研究内容</strong>（具体见立项书）</p>
+<ul>
+<li>工作流及其负载（数据流）特征</li>
+<li>定制化指令集架构</li>
+<li>高效计算架构（异构；通用核加专用加速器；具体架构【流水线、任务并行调度、动态任务划分…】）</li>
+<li>存储与通信结构（存储层次【缓存替换策略与预取机制】与片上互连【NOC、总线…】、）</li>
+<li>原型验证设计实现（硬件设计、软件工具链【编译器、汇编器、调试器】、性能能效面积对比【与通用平台】）</li>
+</ul>
+</li>
+<li><p>目标</p>
+<p>针对什么问题，搭建什么结构，实现什么软硬件，达到什么性能</p>
+</li>
+<li><p>拟解决的关键科学问题</p>
+<p>针对各种算法的分析与专用指令集架构和计算结构的构建。实现过程中的技术细节和优化细节。</p>
+</li>
+</ul>
+<h2 id="5、研究方案及可行性"><a href="#5、研究方案及可行性" class="headerlink" title="5、研究方案及可行性"></a>5、研究方案及可行性</h2><p>把研究内容的点拆开讲即可；800字的自信宣言，讲团队的丰富经验和项目的技术可行性。</p>
+<h2 id="6、项目特色与创新之处"><a href="#6、项目特色与创新之处" class="headerlink" title="6、项目特色与创新之处"></a>6、项目特色与创新之处</h2><ul>
+<li>面向的是基因分析全流程（一体性）</li>
+<li>负载特征驱动的定制化硬件设计（定制化）</li>
+<li>高效并行与低功耗的专用计算架构 及 面向海量数据的高效存储与通信结构创新（性能功耗）</li>
+<li>基于FPGA的可重构原型验证系统构建（平台优势）</li>
+</ul>
+<h1 id="二、相关资料"><a href="#二、相关资料" class="headerlink" title="二、相关资料"></a>二、相关资料</h1><h2 id="1、《生物信息学导论：面向高性能计算的算法与应用》"><a href="#1、《生物信息学导论：面向高性能计算的算法与应用》" class="headerlink" title="1、《生物信息学导论：面向高性能计算的算法与应用》"></a>1、《生物信息学导论：面向高性能计算的算法与应用》</h2><p>学科交叉，生物信息学和高性能计算相结合</p>
+<p>相关基础问题的求解算法及原理实现——序列比对（算法、并行化方法）、蛋白质组分析（结构预测、质谱分析）、生物学网络分析（聚类）</p>
+<p>全书架构：</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%85%A8%E4%B9%A6%E6%9E%B6%E6%9E%84.png" alt="1761355492812"></p>
+<h3 id="一、分子生物学基础"><a href="#一、分子生物学基础" class="headerlink" title="一、分子生物学基础"></a>一、分子生物学基础</h3><p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E5%9F%BA%E5%9B%A0%E8%A1%A8%E8%BE%BE%E4%B8%AD%E5%BF%83%E6%B3%95%E5%88%99.png" alt="1761360443768"></p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E9%80%9A%E7%94%A8%E9%81%97%E4%BC%A0%E5%AF%86%E7%A0%81.png" alt="1761360368659"></p>
+<p>印迹与杂交技术</p>
+<p>DNA测序——链式终止法（chain-termination method）</p>
+<p>现代分子生物学中经典计算问题——基因发现问题、序列对比问题、预测三维空间结构…</p>
+<h3 id="二、数学及计算科学基础"><a href="#二、数学及计算科学基础" class="headerlink" title="二、数学及计算科学基础"></a>二、数学及计算科学基础</h3><ul>
+<li><p>线性代数理论</p>
+</li>
+<li><p>n维欧氏空间Rn，C为全体复数集；共轭转置矩阵与转置矩阵；酋矩阵与正交矩阵（转置矩阵&#x3D;逆矩阵）；矩阵<strong>范数</strong>；矩阵<strong>特征值与特征向量</strong>；矩阵的<strong>广义逆</strong></p>
+</li>
+<li><p>概率论理论</p>
+<ul>
+<li><p>随机事件（基本事件、全事件空间）</p>
+</li>
+<li><p>马尔科夫链——一个随机过程X，有限状态空间S{S1…Sn}、实践离散（0,1，…），具有无记忆性（下一状态只和当前状态有关）、时间齐次性（概率与t无关）</p>
+<p>概率转移矩阵Px；吸收状态Si（进入后无法离开，因向其他部分转移的概率为0【矩阵乘】）、k步转移概率矩阵、相通与不可约（任意两个状态都相通）</p>
+<p>一条马氏链可由其初始状态概率分布π&#x3D;(π1,…πn)和状态转移矩阵完全刻画</p>
+<p>状态Si在m步首次转移到Sj的概率fmij；迟早转移的概率fij；常返fii&#x3D;1，返回的平均步数μii&#x3D;Σm*fmij，零常返的；遍历的；平稳的</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>【……遇到不会的再回来看】</strong></p>
+<h3 id="三、序列对比的基本方法"><a href="#三、序列对比的基本方法" class="headerlink" title="三、序列对比的基本方法"></a>三、序列对比的基本方法</h3><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>利用动态规划技术</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>算法</th>
+<th>罚分模型</th>
+<th>改进</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>局部比对问题</td>
+<td>Smith-Waterman算法</td>
+<td>仿射空间罚分模型O(n^3)</td>
+<td>动态规划算法O(n^2)</td>
+</tr>
+<tr>
+<td>全局比对问题</td>
+<td>Neddleman-Wunsch算法</td>
+<td>固定空位罚分模型O(n^2)</td>
+<td>Huang X[144] O(n)</td>
+</tr>
+</tbody></table>
+<p>全局对比问题—<del>局部比对需求</del>—&gt;局部比对为题—<del>多出来孤立区域不罚分</del>—&gt;</p>
+<h4 id="1、序列相似性与同源性"><a href="#1、序列相似性与同源性" class="headerlink" title="1、序列相似性与同源性"></a>1、序列相似性与同源性</h4><ul>
+<li><p>比较序列相似性的应用场景——四方面</p>
+</li>
+<li><p>确定序列相似性的方法——作图法；动态规划算法</p>
+</li>
+</ul>
+<h4 id="2、点阵图"><a href="#2、点阵图" class="headerlink" title="2、点阵图"></a>2、点阵图</h4><ul>
+<li><p>原始点阵图——两长度分别为s、t序列作为图像的横纵坐标轴，当si与tj相同是，绘制像素点。则出现连续相同片段后会在图中形成斜线段</p>
+</li>
+<li><p>滑动窗口点阵图——<strong>窗口长度w</strong>，<strong>阈值T</strong>，设定一<strong>比对得分</strong>计算方法，若从(si,tj)开始的长度为w的连续子串S<del>i</del>S<del>i+1</del>…S<del>i+w-1</del>和T<del>j</del>T<del>j+1</del>…T<del>j+w-1</del>的比对得分&lt;&#x3D;T，则在(si,tj)绘制像素点</p>
+</li>
+</ul>
+<img src="基因分析课题/点阵图效果比较.png" alt="点阵图效果比较" style="zoom:50%;" />
+
+
+
+<h4 id="3、两序列比对概述"><a href="#3、两序列比对概述" class="headerlink" title="3、两序列比对概述"></a>3、两序列比对概述</h4><ul>
+<li><p>残基：一个核苷酸残基 &#x3D; 一个碱基 + 一个糖分子 + 一个磷酸基团</p>
+</li>
+<li><p>残基的<strong>四种状态</strong>：匹配、替换、插入、删除（插删相当于在序列中引入了起占位作用的空位字符“-”）</p>
+</li>
+<li><p>寻找最佳对齐方法：建立比对优劣的量化方法（打分模版——要求<em><strong>简单并具有生物学意义</strong></em>）</p>
+<ul>
+<li><p>最常用<strong>打分矩阵</strong>：<strong>PAM系列矩阵；BLOSUM系列矩阵</strong></p>
+</li>
+<li><p>常见<strong>罚分模型</strong>：固定空位罚分模型、仿射空间罚分模型</p>
+</li>
+<li><p>打分准测</p>
+<ul>
+<li><p>将评估复杂序列比对转化为评估每一列的比对，总得分为各列得分总和</p>
+</li>
+<li><p>为四种状态赋分（<strong>由于插入和删除通常赋负分，也称为“罚分模型”</strong>）</p>
+<p>e.g. <strong>S(a,b)&#x3D;S(b,a)为匹配或替换的评分</strong>；S(a,-)&#x3D;S(-,a)为插入或删除的得分。对于长度为L的连续空位字符形成的<strong>空位区</strong>，固定空位罚分模型的打分为<code>f(L)=-d*L</code>；而仿射~得分为<code>f(L)=-g-d*(L-1)</code>，其中g和d为非负常数。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="4、全局比对的动态规划方法"><a href="#4、全局比对的动态规划方法" class="headerlink" title="4、全局比对的动态规划方法"></a>4、全局比对的动态规划方法</h4><p>全局比对问题 ——Neddleman-Wunsch算法（NW算法）——使用固定空位罚分（线性罚分）模型</p>
+<p>利用动态规划思想将子问题最优解组合</p>
+<ul>
+<li><p>prefix(s,i)表示字符串s的长度为i的<strong>前缀子窜</strong></p>
+</li>
+<li><p>二维动态规划<strong>辅助矩阵H</strong>，每个元素H<del>i,j</del>表示prefix(s,i)和prefix(t,j)的最佳比对得分</p>
+</li>
+<li><p>步骤</p>
+<ul>
+<li><p>初始化H<del>i,0</del>和H<del>0,j</del></p>
+</li>
+<li><p>递推计算每个H<del>i,j</del>，并用箭头记录来源（在图上向下、右、右下移动分别表示插入、删除和匹配或替换）</p>
+<img src="基因分析课题/全局比对下Hij的三种计算情形.png" alt="全局比对下Hij的三种计算情形" style="zoom:67%;" />
+
+<img src="基因分析课题/hij计算公式.png" alt="hij计算公式" style="zoom:67%;" />
+</li>
+<li><p>回溯</p>
+<p>最右下角H<del>m,n</del>的值即为最佳得分，<strong>从(m,n)到(0,0)的路径</strong>【因为是全局对比】即为最佳比对方式，不唯一</p>
+</li>
+</ul>
+</li>
+<li><p>示例</p>
+<img src="基因分析课题/序列比对例子1.png" alt="序列比对例子1" style="zoom:50%;" /></li>
+</ul>
+<h4 id="5、局部对比的动态规划方法"><a href="#5、局部对比的动态规划方法" class="headerlink" title="5、局部对比的动态规划方法"></a>5、局部对比的动态规划方法</h4><p>局部比对问题——Smith-Waterman算法（SW算法）——使用固定空位罚分模型</p>
+<p>辅助矩阵H新含义：H<del>I,j</del>表示prefix(s,i)和prefix(t,j)的所有<strong>后缀串</strong>之间最佳比对得分；序列中任一位置都可能是起始或终止位置；<strong>一旦发现向右或下方向得分不升反降，终止这种延伸（<em>即没有箭头</em>）</strong>；<strong>得分<em>小于</em>0时放弃延伸（<em>停止记录</em>），重新开始新对比区域z</strong></p>
+<ul>
+<li><p>步骤</p>
+<ul>
+<li><p>初始化H<del>i,0</del>和H<del>0,j</del></p>
+</li>
+<li><p>递推计算每个H<del>i,j</del></p>
+<img src="基因分析课题/局部比对的动态规划算法Hij递推公式.png" alt="局部比对的动态规划算法Hij递推公式" style="zoom:67%;" />
+</li>
+<li><p>回溯</p>
+<p><em><strong>回溯起点是H矩阵中的最大元素，回溯到0后终止</strong></em>（当回溯到0时若仍有箭头，可选择继续回溯）</p>
+<p>一般尽可能保留较长的比对结果</p>
+</li>
+</ul>
+</li>
+<li><p>示例</p>
+<img src="基因分析课题/序列比对例子2.png" alt="序列比对例子2" style="zoom:67%;" /></li>
+</ul>
+<h4 id="6、重叠区域匹配的准全局比对算法"><a href="#6、重叠区域匹配的准全局比对算法" class="headerlink" title="6、重叠区域匹配的准全局比对算法"></a>6、重叠区域匹配的准全局比对算法</h4><ul>
+<li><p>针对孤立突出区域不再罚分</p>
+<p>允许序列左端孤立突出的比对 ；允许序列右端孤立突出的比对，四种情况进行两两“或”或者“与”</p>
+<img src="基因分析课题/重叠区域匹配的四种基本情形.png" alt="重叠区域匹配的四种基本情形" style="zoom:67%;" />
+
+<p>当4种基本情形同时满足，则完全演变为局部比对的Smith-Waterman算法。</p>
+<img src="基因分析课题/序列比对例子3.png" alt="序列比对例子3" style="zoom: 67%;" /></li>
+</ul>
+<h4 id="7、空位罚分模型"><a href="#7、空位罚分模型" class="headerlink" title="7、空位罚分模型"></a>7、空位罚分模型</h4><ul>
+<li><p>固定空位罚分（线性罚分）模型——空位得分固定</p>
+</li>
+<li><p>仿射空位罚分模型——考虑<strong>断开核酸链需要能量</strong>，连续插入或删除多个空位时得分情况应当有所区别</p>
+<p>连续k个空位的罚分：w(k)&#x3D;g<del>0</del>+g<del>e</del><em>(k-1)&#x3D;(g<del>0</del>-g<del>e</del>)+g<del>e</del></em>k&#x3D;a+b*k</p>
+<p>g<del>0</del>为打开空位区罚分，g<del>e</del>为延长空位区罚分</p>
+</li>
+<li><p>其他罚分模型</p>
+<img src="基因分析课题/其他罚分模型.png" alt="其他罚分模型" style="zoom:67%;" /></li>
+</ul>
+<h4 id="8、仿射空位罚分模型下的全局比对算法"><a href="#8、仿射空位罚分模型下的全局比对算法" class="headerlink" title="8、仿射空位罚分模型下的全局比对算法"></a>8、仿射空位罚分模型下的全局比对算法</h4><p>在仿射罚分模型下，全局最优比对需要三个动态规划辅助矩阵：一个(m+1)*(n+1)阶矩阵H，两个m*n阶矩阵E和F</p>
+<p>每个矩阵含义如下：</p>
+<img src="基因分析课题/仿射罚分模型下全局比对算法.png" alt="仿射罚分模型下全局比对算法" style="zoom: 67%;" />
+
+
+
+
+
+<hr>
+<h4 id="9、-仿射空位罚分模型下的局部对比算法"><a href="#9、-仿射空位罚分模型下的局部对比算法" class="headerlink" title="9、 仿射空位罚分模型下的局部对比算法"></a>9、 仿射空位罚分模型下的局部对比算法</h4><p>在仿射空位罚分模型下的全局对比算法的基础上，在三个动态规划辅助矩阵递推公式中，右端的max算子中加一个0项。其时间复杂性为O(m2n+mn2)</p>
+<img src="基因分析课题/仿射罚分模型下局部比对算法.png" alt="仿射罚分模型下局部比对算法" style="zoom:67%;" />
+
+<ul>
+<li><p>Gotoh简化递推公式<a href="%E4%B9%A6%E6%9C%AC%E5%BC%95%E7%94%A812">^1</a>，降为O(mn)</p>
+<img src="基因分析课题/Gotoh递推关系1.png" alt="Gotoh递推关系1" style="zoom:67%;" />
+
+<img src="基因分析课题/Gotoh递推关系2.png" alt="Gotoh递推关系2" style="zoom:67%;" />
+</li>
+<li><p><strong>算法伪代码表示</strong></p>
+<p>初始化：1）H矩阵的0行0列均设置为0；2）F矩阵一般F<del>i,0</del>&#x3D;负无穷；3）E矩阵一般E<del>0,j</del>&#x3D;负无穷</p>
+<img src="基因分析课题/仿射空位罚分模型下的局部对比算法.png" alt="1761530211354" style="zoom:67%;" />
+</li>
+<li><p>数据依赖关系网络</p>
+<img src="基因分析课题/仿射罚分模型下局部比对算法数据依赖关系网络.png" alt="仿射罚分模型下局部比对算法数据依赖关系网络" style="zoom:67%;" /></li>
+</ul>
+<h4 id="10、降阶空间存储的两序列对比算法"><a href="#10、降阶空间存储的两序列对比算法" class="headerlink" title="10、降阶空间存储的两序列对比算法"></a>10、降阶空间存储的两序列对比算法</h4><p>为降低算法空间复杂度，从原来O(mn)降阶到O(min{m,n})</p>
+<p>一、线性空间复杂性算法</p>
+<p>减小空间占用，得到最佳比分V。但时间开销为原来两倍，且没有回溯用的指针信息，难以给出最优回溯路径。</p>
+<img src="基因分析课题/线性空间复杂性算法.png" alt="1761530439143" style="zoom:67%;" />
+
+<ul>
+<li><p>Hirschberg算法</p>
+<p>空间开销仍是O(min{m,n})，但可回溯</p>
+<p>核心思想：将一段序列对比划分成两个小序列比对问题</p>
+<img src="基因分析课题/Hirschberg算法.png" alt="Hirschberg算法" style="zoom:67%;" />
+
+<img src="基因分析课题/CheckPoint算法.png" alt="1761530541568" style="zoom:67%;" />
+
+<p>见P77图</p>
+</li>
+</ul>
+<p>二、CheckPoint算法</p>
+<p>降低空间开销，利用有限空间进行超长序列比对算法。是一个可分为多个级别的算法族，标识为<strong>L级算法</strong>。级别越高的算法空间开销越小，但其时间开销也越大。</p>
+<ul>
+<li><p>基本算法</p>
+<p>两序列s、t长度分别为m、n，m&gt;&#x3D;n。假定存储容量限制<strong>只能保存R行共M&#x3D;R*n元素</strong>。计算得分矩阵时只存储个别**选定行（CheckPoint）**的内容；</p>
+<p>在回溯过程中，再<strong>利用CheckPoint的值重新计算被删除行的信息</strong></p>
+</li>
+<li><p>二级算法</p>
+</li>
+<li><p>多级算法</p>
+</li>
+<li><p>并行运算</p>
+<p>映射到多处理器的并行计算系统</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/CheckPoint%E7%AE%97%E6%B3%95%E5%9C%A8%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8%E7%B3%BB%E7%BB%9F%E4%B8%8A%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%AE%9E%E7%8E%B0.png" alt="1761530687095"></p>
+</li>
+</ul>
+<h4 id="11、降低时间开销的两序列对比算法"><a href="#11、降低时间开销的两序列对比算法" class="headerlink" title="11、降低时间开销的两序列对比算法"></a>11、降低时间开销的两序列对比算法</h4><p>一、分块比对算法</p>
+<p>在固定空位罚分下全局比对基础上：<strong>将两序列s和t分成长度为b的等长块，按快进行比对</strong>（序列块-序列块【替换状态】，序列块-空位块【插入&#x2F;删除】）</p>
+<p>先计算所有$\frac{n}{b}<em>\frac{n}{b}$ 种序列块的比对组合，得到每种组合的最佳得分$\beta_{i,j}$，一个块的开销为$O(\frac{n}{b}</em>\frac{n}{b})$，总计算时间开销为$O(\frac{n}{b}*\frac{n}{b}*b^{2})$</p>
+<ul>
+<li><p>递推公式</p>
+<img src="基因分析课题/分块比对算法.png" alt="分块比对算法" style="zoom:67%;" />
+
+<img src="基因分析课题/分块比对算法示意图.png" alt="分块比对算法示意图" style="zoom:50%;" />
+</li>
+<li><p>加速方法<a href="%E4%B9%A6%E6%9C%AC%E5%BC%95%E7%94%A812">^1</a></p>
+<p>预先计算各种可能的序列块比对得分，制表，比对的时候直接查表。一个残基4中可能，长度为b则有$4^{b}$种可能，取$b&#x3D;log_{2}n$，制表共有$4^{b}<em>4^{b}&#x3D;n$个元素，制表时间开销为$O(n</em>(log_{2}n)^{2})$；每次查表开销为$O(b)$，总计算时间开销为$O(\frac{n}{b}*\frac{n}{b}*b)&#x3D;O(\frac{n^2}{log_2n})$</p>
+<p>以空间（比对得分表）换时间</p>
+</li>
+</ul>
+<p>二、带状比对算法</p>
+<p>两条高度同源DNA具有相似长度，最佳路径靠近主对角线</p>
+<p>k宽带状比对算法，<strong>只关注主对角线附近$|i-j|\leq k$的区域</strong>，其他位置直接赋值$-\infty$且不需要保存，从而节省存储开销，算法运行时间为$O(nk)$</p>
+<ul>
+<li><p>验证是否为不带限制的最优比对</p>
+<p>扩大区域验证、设定下限阈值T、推测带状宽度k</p>
+<img src="基因分析课题/带状比对算法.png" alt="带状比对算法" style="zoom: 50%;" />
+</li>
+<li><p>若m和n不同，则考虑带状区域$m-n-k\leq i-j\leq k$的位置$(i,j)$</p>
+<img src="基因分析课题/带状比对示意图.png" alt="带状比对示意图" style="zoom:50%;" /></li>
+</ul>
+<h4 id="12、对比得分的正则化"><a href="#12、对比得分的正则化" class="headerlink" title="12、对比得分的正则化"></a>12、对比得分的正则化</h4><p><strong>由于不同长度路径得分相同时短路径实际更优，故需考虑路径长度进行正则化</strong>，求解最佳正则化局部比对问题。以正则化的局部比对评分代替标准的局部比对评分</p>
+<img src="基因分析课题/最佳正则化局部对比.png" alt="最佳正则化局部对比" style="zoom:50%;" />
+
+<ul>
+<li><p>Dinkelbach优化算法</p>
+<p>时空复杂度均为$O(mn)$</p>
+</li>
+</ul>
+<h4 id="13、启发式的近似寻优比对算法"><a href="#13、启发式的近似寻优比对算法" class="headerlink" title="13、启发式的近似寻优比对算法"></a>13、启发式的近似寻优比对算法</h4><p>实践中经常拿一条查询序列去跟一个庞大数据库中每条序列进行逐一比对。于是发展各种<strong>基于启发式的、速度更高、存储量更低</strong>的<strong>近似比对算法</strong>。由于是近似寻优方法，这些算法<strong>不一定总能找到最优的比对</strong>。</p>
+<ol>
+<li><p>FASTA（Fast All，能用于核苷酸和蛋白质序列的同源比较）</p>
+<p>算法过程：</p>
+<ul>
+<li><p>寻找长度为k的公共子串（<strong>热点区域</strong>）。典型情况下，对于蛋白质序列取k&#x3D;2，对于核苷酸序列取k&#x3D;6。</p>
+</li>
+<li><p>延长热点区域</p>
+<img src="基因分析课题/FASTA算法中候选区域示意图.png" alt="FASTA算法中候选区域示意图" style="zoom:50%;" />
+
+<p>将原始点阵图沿对角线方向连接两个或两个以上热点的更长区域…</p>
+<img src="基因分析课题/FASTA算法第二步.png" alt="FASTA算法第二步" style="zoom:60%;" />
+</li>
+<li><p>将第二部的部分比对区域连接获得更长比对（图论问题）</p>
+<p>每个片段为一个节点，权值为片段比对的得分值；</p>
+<p>两片断：u右端位于(i,j)，v左端位于(k,l)，i&lt;k且j&lt;l。</p>
+<p>u和v之间构成有向边，边的权重为负值；</p>
+<p>在所有节点和边寻找最佳路径。</p>
+</li>
+<li><p>寻找备选区域</p>
+<p>基于上一步比对判断在其两侧宽度为b的候选区域，采取精确的SW算法计算最佳比对，作为最终输出结果。</p>
+</li>
+</ul>
+<p>注：参数k和b起到了执行时间和比对最优性二者之间的折中。</p>
+</li>
+<li><p>BLAST（即将过时）（basic local alignment search tool，基本的局部比对搜索工具）</p>
+<p>不采用动态规划方法。包括搜索算法和搜索结果的统计学评估两个部分，步骤如下：</p>
+<ul>
+<li><p>寻找查询序列与靶序列之间长度为w的“近似匹配片段”</p>
+<p>一般核酸序列w&#x3D;11，蛋白质w&#x3D;3</p>
+</li>
+<li><p>筛选相距较远的近似匹配片段</p>
+<p>两片断距离超过d，予以舍弃</p>
+</li>
+<li><p>向两端延长近似匹配片段，形成更长比对区域</p>
+</li>
+</ul>
+<p>NCBI BLAST改进（两次命中）</p>
+</li>
+</ol>
+<h4 id="14、比对得分的统计学显著性"><a href="#14、比对得分的统计学显著性" class="headerlink" title="14、比对得分的统计学显著性"></a>14、比对得分的统计学显著性</h4><p>评判比对是否具有显著性，使用SW算法或其他启发式算法能够获得许多高分匹配片段区域，简称HSP。Karlin-Altschul统计学方法描述了HSP得分值的分布情况，认为其概率密度函数服从一类极值分布（extreme value distribution）</p>
+<h4 id="15、多序列比对"><a href="#15、多序列比对" class="headerlink" title="15、多序列比对"></a>15、多序列比对</h4><p>三、星形比对算法</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/%E6%98%9F%E5%BD%A2%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95.png" alt="1761530991930"></p>
+<h3 id="四、序列比对的并行计算"><a href="#四、序列比对的并行计算" class="headerlink" title="四、序列比对的并行计算"></a>四、序列比对的并行计算</h3><h3 id="五、基于字符串精确匹配的序列比较"><a href="#五、基于字符串精确匹配的序列比较" class="headerlink" title="五、基于字符串精确匹配的序列比较"></a>五、基于字符串精确匹配的序列比较</h3><h3 id="六、基因识别"><a href="#六、基因识别" class="headerlink" title="六、基因识别"></a>六、基因识别</h3><h3 id="七、马氏链与隐马氏模型"><a href="#七、马氏链与隐马氏模型" class="headerlink" title="七、马氏链与隐马氏模型"></a>七、马氏链与隐马氏模型</h3><h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><h2 id="2、Accelerating-Genome-Analysis-A-Primer-on-an-Ongoing-Journey"><a href="#2、Accelerating-Genome-Analysis-A-Primer-on-an-Ongoing-Journey" class="headerlink" title="2、Accelerating Genome Analysis: A Primer on an Ongoing Journey"></a>2、Accelerating Genome Analysis: A Primer on an Ongoing Journey</h2><p>基因组分析基本上是从一个已知的测序片段**比对定位（Read mapping）**过程开始的，在这个过程中，将生物基因组的测序片段与参考基因组进行比对（<strong>sequence alignment</strong>）。 瓶颈在于read mapping，如今基因测序比分析快得多。</p>
+<blockquote>
+<p>read: small random fragments of an organism’s DNA sequence. (hundred to million bases)</p>
+<p>baes: 碱基</p>
+</blockquote>
+<p>文章分析read mapping的发展方向，展示高性能计算架构，即最先进的 1）算法 2）软硬件协同方式 3）硬件加速方法；展示结构是按照基因分析流程的三个步骤，针对每个步骤介绍加速方法。</p>
+<p>基因组拼接（Genome assembly）是目前快速准确确定个体整个基因组的瓶颈（bottleneck），这是因为拼接需要复杂的算法和大量的数据集。</p>
+<p>read mapping中read与reference genome比对的错误来源（测序错误、个体变异）；故使用近似字符串匹配算法<strong>ASM</strong>（approximate string matching），过去通常使用<strong>DP（dynamic programming，动态规划）算法</strong>作为软件在CPU上，占用了70%的处理时间<a href="%E4%B9%A6%E6%9C%AC%E5%BC%95%E7%94%A812">^1</a>，例如【minimap2[^2]】（一个read mapper）；并使用基因变异回溯（genomic <strong>variant calling</strong>）算法找到不同。</p>
+<p>【最先进的CPU上read mapper[^3]综述】，问题：</p>
+<ul>
+<li>cpu和主存间数据传输；</li>
+<li>测序和分析速度矛盾，相差几十倍；</li>
+<li>增加CPU数提高速度就会提高功耗，且比对未知基因时依次比对的工作量更大，云计算对数据保护不友好。</li>
+</ul>
+<p>READ MAPPING</p>
+<p>找相似子序列（<strong>E edits</strong>，其中E是距离阈值edit distance threshold，为将一个序列转换为另一个序列所需的最小更改次数。 编辑操作包括删除、插入和替换一个或两个序列中的字符）；前置操作indexing and filtering以减少比对片段数</p>
+<p>具体过程：1）划分Read和Reference Genome的 substrings (<strong>seeds</strong>，通过哈希索引或精确匹配算法（如k-mer匹配）找到的完全相同的短序列片段) 并索引编号（即图中<strong>k-mers</strong>，为长度为k的滑动窗口），定位相同片段 2）过滤器（<strong>pre-alignment filters</strong>）过滤不相似（超过E）的配对，减少序列比对算法使用次数 3）解决 一个ASM（approximate string matching）问题，使用<em><strong>DP算法</strong></em>寻找使比对分数（alignment score，自定义，先定位edits，再基于<em>the number of edits and&#x2F;or matches</em>）最大的前缀（<strong>prefixes，即从开头到某一位置的子串</strong>）</p>
+<p>输出结果到 sequence alignment&#x2F;map <strong>(SAM) file</strong></p>
+<p>注：DP算法提供最精确值但时空复杂度为O(n^2)，n为序列长</p>
+<p><img src="%E5%9F%BA%E5%9B%A0%E5%88%86%E6%9E%90%E8%AF%BE%E9%A2%98/genome_analysis_steps.png" alt="1761701068129"></p>
+<ul>
+<li><p>ACCELERATING INDEXING</p>
+<p>采用seed以避免对整个Genome使用ASM，只有read上的关联location才使用ASM。最大的挑战在于选择seed的长度和产生索引的数量。过短需要检查的location太多，太长匹配率下降。</p>
+<p>加速方法：减少seeds数， 通过从基因组区域内的一组相邻种子中寻找<strong>最小代表性种子集合</strong>(称为最小化器，minimizers) 。<u>可以通过强制排序来计算代表集（按字典顺序或哈希值）<strong>？</strong></u>并使用先进数据结构来索引（例如【FM-index[^4]】，全文索引的压缩表示和不解压下的查询（query）；优点：可查询任意长度种子、比minimap2的存储占用小1倍。但压缩导致定位速度较经典算法慢，改进——【BWA-MEM2[^5]】）</p>
+<ul>
+<li><p>Reducing Data Movement During Indexing</p>
+<p>【RADAR[^6]存算一体ASIC】</p>
+</li>
+</ul>
+</li>
+<li><p>ACCELERATING PRE-ALIGNMENT FILTERING</p>
+<p>根据E edits过滤， Pre-alignment filter 的四种主要方法： 1) the pigeonhole principle; 2) base counting; 3) q-gram filtering; or 4) sparse DP. </p>
+<p>一般选用3)、4），其性能与read长度线性相关，且与edit distance无关</p>
+<ul>
+<li><p>信鸽原理Pigeonhole Principle</p>
+<p>长度为m的read， the read and reference segment are considered similar if they <strong>share at most E+1 nonoverlapping subsequences</strong>（differ by E edits）, with a total length of at least m-E. </p>
+<p>【Shouji‘s work<a href="%E4%B9%A6%E6%9C%AC%E5%BC%95%E7%94%A812">^1</a>】（其他工作：SHD on FPGA、GenCache for cache）</p>
+</li>
+<li><p>base counting filter</p>
+<p>根据各碱基总数过滤，差别大于E则过滤。</p>
+</li>
+<li><p>q-gram filtering</p>
+<p>一般long read mappers使用、</p>
+<p><strong>q-gram</strong>: all of the sequence’s possible overlapping（重叠的） substrings of length q.</p>
+<p>例如，对于字符串 <code>&quot;hello&quot;</code>，它的 <strong>2-gram</strong> 有： <code>he</code>, <code>el</code>, <code>ll</code>, <code>lo</code> </p>
+<p>m、E对共享q-gram数的影响：Given a sequence of length m, the minimum number of shared q-grams between two similar sequences is therefore [m-q+1, q*E] .</p>
+<p>特性：对于e编辑敏感，将破坏多个q-gram（q-gram filtering is generally <strong>robust in handling only a small number of edits</strong>, as the presence of edits in any q-gram is significantly underestimated (e.g., counted as a single edit). ）</p>
+<p>【GRIM-Filter[^7]】</p>
+</li>
+<li><p>sparse DP</p>
+<p>仅在种子之间的间隙区域（非精确匹配区域）执行DP计算（种子本身是完全匹配的）</p>
+</li>
+</ul>
+</li>
+<li><p>ACCELERATING SEQUENCE ALIGNMENT</p>
+<p>长read对DP算法计算复杂度提升大，此时用到 Heuristic-Based Alignment Accelerators</p>
+<ul>
+<li><p>Accurate Alignment Accelerators</p>
+<p>SIMD CPUs【Parasail[^8] and KSW2 (used in mini-map2[^2])，加速diagonal bands计算】、多核CPUGPU【GASAL2，面向GPU碱基不采用二进制编码，较Parasail快20x，但索引结构很大】、FPGA【脉冲阵列a linear systolic array，加速DP算法，FPGASW[^13]、Darwin[^14]】、ASICs【GenAx[^9]】、PIM架构【computation inside or near the memory chip，RAPID[^10]】</p>
+</li>
+<li><p>Heuristic-Based Alignment Accelerators</p>
+<p>通过限制算法灵活性提升速度。如不执行回溯操作backtracking、限制评分函数的灵活性，即使用固定的评分算法（Levenshtein distance and Myers’s bit-vector algorithm【ASAP[^11]】、Edlib[^12]），但都可能导致次优解。</p>
+<p>限制DP算法的输入数：1）sparse DP；2）“using a greedy approach to maintain a high alignment score”（按alignment score减少DP计算输入和提前结束【X-drop[^15]、Z-drop】）</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>DISCUSSION AND FUTURE OPPORTUNITIES</p>
+<p>四大挑战</p>
+<ul>
+<li><p>加速整个read mapping过程</p>
+<ul>
+<li>Illumina【 <a target="_blank" rel="noopener" href="https://www.illumina.com/products/by-type/informatics-products/dragen-secondary-analysis.html">DRAGEN secondary analysis | Software for NGS data analysis</a> 】，DRAGEN reduces the overall analysis time from 32 CPU hours to only <strong>37 min</strong>[^7]；</li>
+<li>NVIDIA Parabricks software suite. <a target="_blank" rel="noopener" href="https://developer.nvidia.com/clara-parabricks">https://developer.nvidia.com/clara-parabricks</a></li>
+</ul>
+</li>
+<li><p>减少数据移动【<strong>GenASM</strong>[^16] is a framework that uses bitvector based ASM（<strong>Bitap algorithm</strong>） to accelerate multiple steps of the genome analysis pipeline, and is designed to be implemented inside 3-D-stacked memory. （ design a fast and flexible framework <em>for both short and long reads</em>, which can <em>accelerate multiple steps</em> of genome sequence analysis (GSA) ） 】</p>
+</li>
+<li><p>开发灵活的硬件架构——读映射器需要将其算法和硬件结构调整为模块化和可扩展的，以便能够基于测序技术对任意序列长度和编辑距离阈值进行实现。 </p>
+</li>
+<li><p>开发更高效文件格式（目前打多FASTQ&#x2F;FASTA format，each base takes a single byte (8 bits) of
+memory），对数据格式的转换耗时【UCSC’s 2bit format (<a target="_blank" rel="noopener" href="https://genome.ucsc.edu/goldenPath/help/twoBit)%E3%80%91We">https://genome.ucsc.edu/goldenPath/help/twoBit)】We</a> are not aware of any recent read mapper that uses such formats.</p>
+</li>
+</ul>
+<p><a href="%E4%B9%A6%E6%9C%AC%E5%BC%95%E7%94%A812">^1</a>:M. Alser, H. Hassan, A. Kumar, O. Mutlu, and C. Alkan, “Shouji: A fast and efficient pre-alignment filter for sequence alignment,” Bioinformatics, vol. 35, pp. 4255–4263, 2019.
+[^2]: H. Li, “Minimap2: Pairwise alignment for nucleotide sequences,” Bioinformatics, vol. 34, pp. 3094–3100, 2018. 
+[^3]: M. Alser et al., “Technology dictates algorithms: Recent developments in read alignment”, 2020, arXiv:2003.00110. 
+[^4]: R. Langarita et al., “Compressed sparse FM-index: Fast sequence alignment using large k-steps,” IEEE&#x2F; ACMTrans. Comput. Biol. Bioinformatics,tobe published, doi: 10.1109&#x2F;TCBB.2020.3000253.
+[^5]:M. Vasimuddin, S. Misra, H. Li, and S. Aluru, “Efficient architecture-aware acceleration of BWA-MEM for multicore systems,” in Proc. IEEE Int. Parallel Distrib. Process. Symp., 2019, pp. 314–324.
+[^6]:W. Huangfu, S. Li, X. Hu, and Y. Xie, “RADAR: A 3D-ReRAMbasedDNA alignment accelerator architecture,” inProc.Des.Autom. Conf., 2018, pp. 1–6.
+[^7]:A. Goyal et al., “Ultra-fast next generation human genome sequencing data processing using DRAGENÒ Bio-IT processor for precision medicine,” Open J. Genetics, vol. 7, pp. 9–19, 2017.
+[^8]: J. Daily, “Parasail: SIMD C library for global, semiglobal, and local pairwise sequence alignments,” BMC Bioinformatics, vol. 17, 2016, Art. no. 81. 
+[^9]:D. Fujiki et al., “GenAx: A genome sequencing accelerator,” in Proc. 45th Annu. Int. Symp. Comput. Archit., 2018, pp. 69–82.
+[^10]:S. Gupta, M. Imani, B. Khaleghi, V. Kumar, and T. Rosing, “RAPID: A ReRAM processing in-memory architecture for DNA sequence alignment,” in Proc. IEEE&#x2F;ACM Int. Symp. Low Power Electron. Des., 2019, pp. 1–6.
+[^11]:S. S. Banerjee et al., “ASAP: Accelerated short-read alignment on programmable hardware,” IEEE Trans. Comput., vol. 68, no. 3, pp. 331–346, Mar. 2019
+[^12]:M. So	si	c and M. Siki	c, “Edlib: A C&#x2F;C++ library for fast, exact sequence alignment using edit distance,” Bioinformatics, vol. 33, pp. 1394–1395, 2017.
+[^13]: X. Fei, Z. Dan, L. Lina, M. Xin, and Z. Chunlei, “FPGASW: Accelerating large-scale Smith-Waterman sequence alignment application with backtracking on FPGA linear systolic array,” Interdisciplinary Sci.: Comput. Life Sci., vol. 10, pp. 176–188, 2018. 
+[^14]: Y. Turakhia, G. Bejerano, and W. J. Dally, “Darwin: A genomics co-processor provides up to 15,000x acceleration on long read assembly,” in Proc. Archit. Support Program. Lang. Oper. Syst., 2018, pp. 199–213.
+[^15]:Z. Zhang, S. Schwartz, L. Wagner, and W. Miller, “A greedy algorithm for aligning DNA sequences,” J. Comput. Biol., vol. 7, pp. 203–214, 2000.
+[^16]: D. Senol Cali et al., “GenASM: A low-power, memoryefficient approximate string matching acceleration framework for genome sequence analysis,” in Proc. 53rd Int. Symp. Microarchitecture, 2020. </p>
+<p>PPT中其他参考：</p>
+<p>一、Specialized Architectures</p>
+<ol>
+<li>“GateKeeper: A New Hardware Architecture for Accelerating Pre-Alignment in DNA Short Read Mapping”</li>
+</ol>
+<img src="基因分析课题/GateKeeper.png" alt="1762303263373" style="zoom: 50%;" />
+
+<ol start="2">
+<li><p>“Shouji: A Fast and Efficient Pre-Alignment Filter for Sequence Alignment”</p>
+<img src="基因分析课题/Shouji.png" alt="1762303415930" style="zoom:50%;" />
+</li>
+<li><p>“SneakySnake: A Fast and Accurate Universal Genome Pre-Alignment Filter for CPUs, GPUs, and FPGAs”</p>
+</li>
+<li><p>“GenASM: A High-Performance, Low-Power Approximate String Matching Acceleration Framework for Genome Sequence Analysis”</p>
+<img src="基因分析课题/GenASM .png" alt="GenASM " style="zoom:50%;" />
+</li>
+<li><p>“SeGraM: A Universal Hardware Accelerator for Genomic Sequence-to-Graph and Sequence-to-Sequence Mapping”【video】</p>
+<img src="基因分析课题/SeGraM.png" alt="SeGraM" style="zoom:50%;" /></li>
+</ol>
+<p>二、Processing in Memory &amp; Storage</p>
+<ol>
+<li><p>“FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications“</p>
+</li>
+<li><p>“GenStore: A High-Performance and Energy-Efficient In-Storage Computing System for Genome Sequence Analysis”</p>
+<ul>
+<li><p>Computation overhead</p>
+<p>Through efficient heuristics [CLICK]
+hardware accelerators [CLICK]
+and various filters that prune reads that do not require expensive computation [CLICK]. </p>
+</li>
+<li><p><strong>Data movement overhead</strong>  （Examples of the reads that not require the costlt alignment step）</p>
+<p>Exactly-matching reads to the reference genome that do not need approximate string matching performed during alignment
+Non-matching reads that have no potential matching locations in the reference genome hence skip the alignemt step</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Processing-in-Memory（PIM）</strong> system RELATED PAPER（近内存计算、内存内计算）</p>
+<ul>
+<li>“A Modern Primer on Processing in Memory”</li>
+<li>“Processing-in-Memory: A Workload-Driven Perspective”</li>
+<li>“Memory-Centric Computing Systems”【video】</li>
+<li>Benchmarking a New Paradigm: An Experimental Analysis of a Real Processing-in-Memory Architecture【video】</li>
+<li>“A Framework for High-throughput Sequence Alignment using Real Processing-in-Memory Systems“</li>
+<li>GenPIP: In-Memory Acceleration of Genome Analysis via Tight Integration of Basecalling and Read Mapping</li>
+</ul>
+</li>
+</ol>
+<h2 id="3、-Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><a href="#3、-Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis" class="headerlink" title="3、 Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis"></a>3、 Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</h2><p>具体算法</p>
+<h2 id="4、FPGA-Based-Near-Memory-Acceleration-of-Modern-Data-Intensive-Applications"><a href="#4、FPGA-Based-Near-Memory-Acceleration-of-Modern-Data-Intensive-Applications" class="headerlink" title="4、FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications"></a>4、FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications</h2><p>一、架构</p>
+<p>IBM Power9 Core——1024-bit OCAPI——FPGA accelerator</p>
+<p>![Heterogeneous platform with an IBM POWER9 system connected to an HBM-based FPGA board via OCAPI](基因分析课题&#x2F;Heterogeneous platform with an IBM POWER9 system connected to an HBM-based FPGA board via OCAPI.png)</p>
+<ul>
+<li>16 pseudo-memory channels；eight memory controllers；connected to a host CPU,
+an IBMPOWER9 processor, using OCAPI (OpenCAPI)；an accelerator functional unit (AFU)；TLx (Transaction Layer) and the DLx (Data Link Layer)；processing elements (PEs)</li>
+</ul>
+<p>二、方法步骤、对比、结论</p>
+<ul>
+<li><p>数据移动开销：data has to move back and forth from the memory units using a relatively slow and power-hungry off-chip bus to the computation units for processing. </p>
+<p>low arithmetic intensity with complex memory access behavior. </p>
+</li>
+<li><p>FPGA发展趋势：four key trends of Modern FPGAs</p>
+<ul>
+<li>FPGA with <strong>HBM</strong>（ large speedups and energy savings over a high-end IBM POWER9 system and a conventional FPGA board with <strong>DDR4 memory</strong>. ）</li>
+<li>UltraRAM (<strong>URAM</strong>) and Block RAM (<strong>BRAM</strong>)  for on-chip memory</li>
+<li><strong>cache</strong>-coherent interconnects ( a shared memory space,  access the host system’s memory <em>using a pointer</em>, rather than requiring <em>multiple copies of the data</em>. )</li>
+<li>制造工艺7–14-nm FinFET</li>
+</ul>
+</li>
+<li><p>效果：Based on our analysis, we show that our full-blown HBM-based designs of <strong>SneakySnake</strong>, vadvc,and hdiff provide 1) 27:4 ,5:3 ,and 12:7 higher <strong>speedup</strong>; and 2) 133 , 12 ,and 35 higher <strong>energy efficiency</strong>, respectively, compared to a <strong>16-core IBMPOWER9 system</strong>.</p>
+</li>
+</ul>
+<p>三、应用</p>
+<ul>
+<li><p>【SneakySnake<a href="%E4%B9%A6%E6%9C%AC%E5%BC%95%E7%94%A812">^1</a>】 </p>
+<p>a pre-alignment filter；reduce the <strong>ASM</strong> problem to the <strong>single net routing(SNR)</strong> problem.（ find the shortest routing path that interconnects two <em>terminals</em> on the boundaries of the VLSI chip layout while passing through the minimum number of <em>obstacles</em>（<strong>checkpoint</strong>）—&gt;<em>solving many SNR subproblems in parallel</em>）</p>
+<img src="基因分析课题/Example of the SneakySnake chip maze.png" alt="Example of the SneakySnake chip maze" style="zoom: 67%;" />
+
+<ul>
+<li><p>three main steps of SNR</p>
+<ul>
+<li><p>Building the <strong>chip maze</strong></p>
+<img src="基因分析课题/SneakySnake chip maze.png" alt="SneakySnake chip maze" style="zoom:50%;" />
+
+<p>where an entry of value “1” represents an <strong>obstacle</strong>, an entry of value “0” represents an <strong>available path</strong></p>
+</li>
+<li><p>Finding the longest available path in each row of the chip maze（arrows highlighted in orange in Figure 3）</p>
+</li>
+<li><p>Finding the estimated number of edits（the number of obstacles）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>加速器实现ACCELERATOR IMPLEMENTATION【 <a target="_blank" rel="noopener" href="https://github.com/CMU-SAFARI/SneakySnake/tree/master/SneakySnake-HLS-HBM">SneakySnake&#x2F;SneakySnake-HLS-HBM at master · CMU-SAFARI&#x2F;SneakySnake</a>】</p>
+<p>use a high-level synthesis ( HLS，use <strong>Vivado HLS C++</strong> template class hls::stream to implement **FIFO-based streaming interfaces **) design flow to implement and map our accelerator design.</p>
+<p>按数据流分5步实现加速器</p>
+<ul>
+<li><p>data in Host DRAM—&gt;OCAPI—&gt;FPGA AXI Register &amp; POWER9 Cache line</p>
+</li>
+<li><p>buffing—&gt;HBM memory（同时利用局部性原理将重要数据存入寄存器中）</p>
+</li>
+<li><p>HBM Memory—&gt;PE</p>
+</li>
+<li><p>PE performs computation（SneakySnake）</p>
+<p>PE设计优化：使用多个BRAM&#x2F;URAM而非一个大存储器；片上存储器重塑（ On-chip memory reshaping ）拓展位宽；划分输入数据（SRN subproblem）从而利用DLP</p>
+</li>
+<li><p>write back</p>
+</li>
+</ul>
+<p>![Data-transfer flow](基因分析课题&#x2F;Data-transfer flow.png)</p>
+</li>
+<li><p>性能评估Evaluation、功耗分析及资源使用情况</p>
+<p>xilinx平台UltraScala FPGA实现（HBM2&#x2F;DDR4），100dp_2 dataset<a href="%E4%B9%A6%E6%9C%AC%E5%BC%95%E7%94%A812">^1</a></p>
+<p>位宽导致性能曲线变化—&gt;利用<strong>multichannel</strong> setting (HBM_multi+OCAPI)—&gt;平衡两方面矛盾：1) enabling more HBM pseudo channels to provide <em>each PE with more bandwidth</em>; and 2) implementing <em>more PEs</em> in the available area. </p>
+<p>BRAM（use hls::streams——FIFOs）、FF &amp; LUT（computation）</p>
+</li>
+</ul>
+<p><a href="%E4%B9%A6%E6%9C%AC%E5%BC%95%E7%94%A812">^1</a>:M. Alser et al., “SneakySnake: A fast and accurate universal genome pre-alignment filter for CPUs, GPUs, and FPGAs,” Bioinformatics, vol. 36, no. 22&#x2F;23, pp. 5282– 5290, 2020.</p>
+<h2 id="5、Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><a href="#5、Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis" class="headerlink" title="5、Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis"></a>5、Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</h2><p>每步的最新算法和加速方法、以及实验对比方法</p>
+<p>We explain <strong>state-of-the-art algorithmic methods and hardware-based acceleration approaches</strong> for each step of the genome analysis pipeline and provide <strong>experimental evaluations</strong></p>
+<p>一、整体介绍</p>
+<ul>
+<li><p>全流程</p>
+<p>![Overview of a typical genome analysis pipeline](基因分析课题&#x2F;Overview of a typical genome analysis pipeline.png)</p>
+<ol>
+<li><p>Genomic sequencing data is first obtained through sequencing a new sample, downloading from publicly-available databases, or computer simulation. Sequencing starts with (A) extracting the DNA, (B) fragmenting it, (C) preparing its library, and (D) using sequencing machines for providing raw sequencing data. </p>
+</li>
+<li><p>Raw sequencing data needs to be converted into read sequences of A, C, G, T in the DNA alphabet using basecalling techniques. Basecalling techniques are sequencing technology dependent. </p>
+</li>
+<li><p>To ensure high quality sequencing reads, a quality control step is performed to <strong>filter</strong> out low quality subsequences of a read or an entire read sequence. </p>
+</li>
+<li><p>Read mapping step is performed to locate each read sequence in a reference genome. Read mapping is four steps: (A) <strong>indexing</strong> the reference genome, (B) extracting <strong>seeds</strong> from each read and locating common seeds with the index, (C) pre-alignment <strong>filtering</strong> dissimilar sequence pairs, and (D) performing sequence alignment for every sequence pair that passes the filtering. （DP）</p>
+</li>
+<li><p>Detecting and inferring genomic variations usually consists of three steps: (A) processing the read mapping data for increasing its quality, (B) classifying variations between mapped reads and a reference genome, and (C) identifying genomic variations.</p>
+</li>
+</ol>
+</li>
+<li><p>现状：产生数据速度和处理速度的不匹配、数据转移功耗大</p>
+</li>
+</ul>
+<p>二、获取基因序列数据</p>
+<p>Genomic sequencing data (reads) can be obtained by </p>
+<ul>
+<li><ol>
+<li>sequencing a DNA sample【测序机器】</li>
+</ol>
+<p>1)短读取(高达几百个bp)，2)超长读取(范围从数百到数百万个bp)，以及3)准确的长读取(高达几千个bp) </p>
+<p>【详细比对表格，lllumina、ONT、PacBio三大产品具体原理及链接】</p>
+<p>短读数具有低测序错误率和高测序吞吐量(碱基数目)的优点。短读取的另一个可被视为优势的属性是存储在同一FASTQ文件中的所有读取的长度相等，这有助于实现例如多个CPU线程之间的负载平衡。 </p>
+<p><strong>每种测序技术都有其独特的优缺点。由于其非常高的准确度和低成本，短读数将继续被广泛使用。</strong>【对比表格】 </p>
+</li>
+<li><ol start="2">
+<li>downloading real sequencing data from publicly available databases【数据库】</li>
+</ol>
+<ul>
+<li>基因测序序列FASTQ文件[^1][^2]</li>
+<li>基因参考序列FASTA文件[^3][^4]</li>
+</ul>
+</li>
+<li><ol start="3">
+<li>simulating sequencing data【模拟】, as we show in Figure 1.1</li>
+</ol>
+<p> 这三种类型的读取模拟器的例子包括用于短读取的ART[79]、Mason[77]和ReSeq[80]，用于超长读取的PBSIM2[75]和NanoSim[76]，以及用于精确长读取(称为HiFi读取)的PBSIM[81]。然而，读模拟的使用带来了一些限制，因为模拟数据概括了真实数据的重要特征，并<strong>过度简化&#x2F;偏向了被测试方法的挑战</strong>[19]。为了避免这种偏差，一种常见的、更全面的方法是用真实的实验数据来补充模拟数据。</p>
+</li>
+</ul>
+<p>三、basecalling</p>
+<p>【三大产品的】</p>
+<p>将原始数据转换为ATCG</p>
+<p>四、质量控制Quality Control</p>
+<p>The QC step evaluates the quality of the entire read sequence by (1) examining the intrinsic quality of the read sequence, that is the average quality score <strong>generated by the sequencing machine before or after basecalling</strong>【质量打分】, (2) assessing the length of the read【长度评估】, and (3) evaluating the number of ambiguous bases (N) in a read.【不确定个数】</p>
+<p>常用工具：【<strong>FastQC</strong>[137]、 <strong>LongQC</strong> [138], which uses expensive read mapping, minimap2 [130], for low coverage detection. <strong>RabbitQC</strong> [139] exploits modern <strong>multicore CPUs</strong> to parallelize the QC computations and provides an order of magnitude <strong>faster performance for the three prominent types of sequencing technologies</strong>. 】 </p>
+<p>我们观察到，目前有大量的软件工具用于QC，但我们仍然缺乏有效的硬件加速器来改进QC步骤。 </p>
+<p>五、read mapping</p>
+<p>【三种最先进read mapper对应三种长度read的性能 three state-of-the-art read mappers 】</p>
+<p>![three state-of-the-art read mappers](基因分析课题&#x2F;three state-of-the-art read mappers.png)</p>
+<p> 加速read mapping的四个步骤</p>
+<ul>
+<li>Accelerating Indexing and Seeding</li>
+</ul>
+<p>  <strong>采样、查询（简单匹配？）</strong></p>
+<p>  索引和播种基本上使用相同的算法来<strong>从参考基因组或读取序列中提取子序列</strong>。唯一的区别是，索引步骤将从参考基因组中提取的种子存储在索引数据库中，而播种步骤使用提取的种子来查询索引数据库。 </p>
+<p>  改进索引和种子步骤有三个主要方向：(1)更好的<strong>种子采样技术</strong>（seed sampling techniques），(2)更好的<strong>索引数据结构</strong>（indexing data structures），(3)通过专门的硬件加速任务并最大限度地减少其数据移动。 </p>
+<ul>
+<li><p><strong>Sampling</strong> Seed</p>
+<p>例如，选择长度为k的所有可能的重叠子序列(称为<strong>k-mer</strong>)作为种子会导致<strong>每个碱基出现在k个种子中</strong>，从而导致不必要的高内存占用和由于大量种子命中而导致的低效查询。 【minimap2减小k-mers种子集合】</p>
+<p>【<strong>最小化</strong>k-mers（Minimizer-based approach）：对每组w个重叠的k-mer强加排序(例如，按词典顺序或通过散列值)，并且仅选择具有最小顺序的k-mer作为种子】</p>
+<p>【<strong>同步器</strong>方法（syncmer approach）： 该同步器方法选择一个种子作为最小器，其子串位于固定位置处的顺序与其他种子的子串的顺序相比达到最小。 】</p>
+<p>【其他提高种子灵敏度方法：<strong>spaced</strong> [150] （间隔种子，如<strong>S-conLSH</strong>[153]）and <strong>strobemer</strong> [151] seeds（频闪种子， 根据选择标准动态地改变空间的大小。 ）】</p>
+<p>【 虽然<strong>MinHash</strong>方法在比较相似长度的序列时很有效，但它在比较不同长度的序列时使用了许多冗余的最小化器来确保高精度，这带来了很高的性能成本和内存开销[156]。 】</p>
+</li>
+<li><p>Improving Data Structures for <strong>Seed Lookups</strong></p>
+<p>查找种子匹配的直接数据结构是<strong>哈希表</strong>， 将每个种子的<strong>哈希值存储为关键字</strong>，并将每个种子的<strong>位置列表存储为值</strong>。 （重在选择哈希函数，【BLEND[144]】，高度相似的种子可以具有相同的散列值，而不相似的种子仍然被分配给具有低冲突率的不同散列值。）</p>
+<p>其他数据结构：【 <strong>FM-index</strong> (implemented by Langarita et al. [157])，<strong>压缩表示不解压查询</strong>。这种方法有两个主要优势。1)可以查询<strong>任意长度的种子</strong>，减少了查询种子的数量。2)与最小ap2的索引步骤[18]相比，它通常具有<strong>更少的内存占用</strong>(减少3.8MAP2[18]⨉)。 FM索引的一个主要瓶颈是通过查询FM索引来<strong>定位精确匹配的速度明显慢于经典索引</strong>[157,158]。  使用支持SIMD的CPU，FM索引可以加速至2⨉[159]】</p>
+<p>【 <strong>BWA-MEM2</strong> [158] proposes an uncompressed version of the FM-index that is at least <strong>10⨉ larger</strong> than the compressed FM-index to speed up the querying step by <strong>2⨉ faster</strong>. 】</p>
+<p>【<strong>learned indexes</strong> [161].—— use <strong>machine learning</strong> models ，reduced size of the index as it does not store the locations of the seeds. <strong>However</strong>, it is shown that a learned-index based read mapper has <strong>the same memory footprint</strong> as the hash-table based read mapper [162]. 】</p>
+</li>
+<li><p>Reducing Data Movement During Indexing </p>
+<p>【<strong>MEDAL</strong>[163]——加一个<strong>ASIC</strong> accelerators for seeding】</p>
+<p>【<strong>GenStore</strong>[53]——a seeding and filtering accelerator inside <strong>SSDs</strong>,——the index and reads do not have to be moved outside of the storage device for seeding】</p>
+<p>【<strong>RADAR</strong>[164]——基于ReRAM——The database can be directly queried <strong>without offloading it</strong>, <strong>leading to a small amount of data movement</strong> and highly energy efficient operation.】</p>
+</li>
+<li><p>Accelerating Pre-Alignment Filtering</p>
+</li>
+</ul>
+<p>  checks the <strong>similarity</strong> between each <strong>read</strong> and each <strong>segment</strong> extracted at these mapping locations in the reference genome</p>
+<p>  根据E edits过滤，减少DP-based alignment的使用</p>
+<ul>
+<li><p>Pigeonhole Principle</p>
+<p>Pigeonhole-based pre-alignment filtering can <strong>accelerate</strong> read mappers even <strong>without specialized hardware</strong>. </p>
+<p>【Adjacency Filter[147]】</p>
+<p>【Shifted Hamming Distance (<strong>SHD</strong>)——use SIMD-capable CPUs】</p>
+<p>【<strong>GateKeeper</strong>[166]——FPGA architectures to accelerate SHD】</p>
+<p>【<strong>MAGNET</strong>[168]——provides a comprehensive <strong>analysis</strong> of all sources of <strong>filtering inaccuracy</strong> of GateKeeper and SHD.】</p>
+<p>【<strong>Shouji</strong>[140]——improve the accuracy——using a new algorithm and a new FPGA architecture】</p>
+<p>【<strong>SneakySnake</strong>[51]——single net routing (SNR) problem——SneakySnake is the only pre-alignment filter that efficiently works on CPUs, GPUs,and FPGAs.—— 使用高带宽内存(HBM)重新设计[54] 】</p>
+<p>【<strong>GenCache</strong>[169]——highly-parallel pre-alignment filtering inside the CPU cache】</p>
+<p>其他：一块用更快using different existing pre-alignment filters together ；评估论文——Several pigeonhole principle based pre-alignment filters are <strong>evaluated</strong> for wide-range FPGA platforms [171].</p>
+</li>
+<li><p>Base Counting</p>
+</li>
+</ul>
+<pre><code>【**mrsFAST-Ultra** [172] and **GASSST** [170]】
+
+【A **PIM implementation** of base counting can improve filtering time by 100⨉ compared **to its CPU implementation** [173].】
+</code></pre>
+<ul>
+<li><p>q-gram Filtering Approach</p>
+<p>【<strong>GRIM-Filter</strong>[^7]】</p>
+</li>
+<li><p>Sparse Dynamic Programming</p>
+</li>
+</ul>
+<pre><code>利用读取段和参考段之间共享的精确匹配(种子)来减少执行时间 
+
+这些算法根据E edits将种子的部分对应位置排除，（这些位置在索引期间已经被检测为精确匹配）
+
+**chaining**—— 稀疏DP过滤技术通过将重叠的种子（overlapping seeds）连接起来构建更长的链（longer chains），并以计算链的总长度（total length）作为序列对的过滤指标，该方法用于加速预对齐过滤。
+
+【used in **minimap2** [130] and **rHAT** [176]】
+
+【**mm2-fast** [162]——accelerates minimap2’s chaining step by up to 3.1⨉ with **SIMD instructions**.】
+
+【**mm2-ax** [178]——accelerates mm2-fast’s chaining step by up to 12.6⨉ using a **GPU**.】
+
+【**Modular Aligner** [179]—— 提出了一种基于两种种子过滤技术的chaining替代方案，在准确性和运行时间方面均实现了优于minimap2的性能表现】
+</code></pre>
+<ul>
+<li><p>Accelerating Sequence Alignment </p>
+</li>
+<li><p>硬件加速<strong>最优仿射间隙得分</strong>（<strong>optimal affine gap scoring DP-based algorithms</strong>）</p>
+<p>算法：</p>
+<ul>
+<li><p>经典仿射间隙得分基于【Smith-Waterman-Gotoh algorithm [180]】</p>
+</li>
+<li><p>【 <strong>the fastest known edit distance algorithm</strong> [181] has a nearly quadratic running time,<strong>O(m2&#x2F;log2 m)</strong> 】</p>
+</li>
+<li><p>【带状算法<strong>Ukkonen’s banded algorithm</strong>[182]. ——only a subset of the entries of the DP table is computed, called <strong>diagonal vectors</strong>（对角向量）, as first proposed—— This reduces the runtime complexity to <strong>O(m*E).</strong> ——<strong>对短read有效</strong>】</p>
+</li>
+</ul>
+<p>硬件实现：</p>
+<ul>
+<li><p>(1) using <strong>SIMD</strong>-capable CPUs, </p>
+<p>【<strong>Parasail [183] and KSW2</strong> (used in minimap2 [130])——加速带状算法（<strong>Ukkonen’s banded algorithm</strong>）】</p>
+<p>【<strong>mm2-fast [162]</strong>——accelerates KSW2 by up to 2.2⨉ by matching its SIMD capability to recent CPU architectures 】</p>
+<p>【<strong>The wavefront algorithm (WFA) [184]</strong>——reformulates the classic <strong>Smith-Waterman-Gotoh</strong> recursion—— the runtime is reduced to O(m*s)】</p>
+<p>【<strong>LEAP [187]</strong> formulates what can be considered a more general version of WFA, which is applicable to any convex penalty scores（凸罚分函数）.】</p>
+</li>
+<li><p>(2) using <strong>multicore</strong> CPUs and GPUs, </p>
+<p>【<strong>GASAL2 [188]</strong>——transfers the bases to the GPU, <strong>without encoding them into binary format（不进行二进制编码）</strong>, hides the data transfer time by <strong>overlapping GPU and CPU execution（操作时间覆盖）</strong>——20⨉ faster than Parasail (executed with 56 CPU threads  】</p>
+<p>【<strong>BWA-MEM2 [158]</strong>——accelerates the banded sequence alignment of its predecessor (<strong>BWA-MEM [189]</strong>) by up to 11.6⨉, by leveraging <strong>multicore and SIMD parallelism</strong>.】</p>
+<p>【<strong>A GPU implementation [190] of the WFA</strong> algorithm improves <strong>the original CPU implementation</strong> by 1.5-7.7⨉ using long reads. 】</p>
+</li>
+<li><p>(3) using FPGAs, </p>
+<p>【<strong>FPGASW [191]</strong>——hardware execution units to form a <strong>linear systolic array [192]</strong>.——a <strong>similar execution time as its GPU implementation</strong>, but 4⨉ more <strong>power efficient</strong>.  】</p>
+<p>【<strong>SeedEx [193]</strong>—— similar to FPGASW——speculatively computing fewer than 2E+1 diagonal bands（推测性地计算条带）, and then applying <strong>optimality checking heuristics</strong>（最优性验证启发方法） to guarantee correct results.】</p>
+<p>【 <strong>An FPGA accelerator [194]</strong> can <strong>accelerate the WFA</strong> algorithm by up to 8.8⨉ and improve its energy efficiency by 9.7⨉ for only <strong>short reads</strong>. 】</p>
+</li>
+<li><p>(4) using ASICs（Specialized hardware accelerators）</p>
+<p>【<strong>GenAx [195]</strong>——<strong>SillaX</strong>（a sequence alignment accelerator）的组成部分—— GenAx is 31.7⨉ faster than <strong>BWA-MEM [189]</strong> for <strong>short reads</strong>. 】</p>
+</li>
+<li><p>(5) using processing-in-memory architectures. </p>
+<p>【<strong>RAPID</strong> [196]——<strong>calculating two DP matrices</strong> (similar to <strong>Smith-Waterman-Gotoh [180]</strong>): one for calculating substitutions and exact matches and another for calculating insertions and deletions.（计算两个DP矩阵：一个用于计算替换和精确匹配，另一个用于计算插入和删除）—— RAPID is on average 11.8⨉ faster and 212.7⨉ more power efficient than 384-GPU cluster implementation of sequence alignment, known as <strong>CUDAlign [197].</strong> —— A recent PIM architecture of <strong>WFA</strong> algorithm implemented in real hardware provides up to 4.87⨉ higher throughput than the 56-thread CPU implementation using <strong>short reads</strong> [198]. 】</p>
+</li>
+</ul>
+</li>
+<li><p>Alignment Accelerators with <strong>Limited Functionality</strong></p>
+</li>
+</ul>
+<pre><code>developing heuristics that sacrifice the optimality of the alignment score solution in order to reduce alignment time.——减少DP矩阵计算条目
+
+- limiting the **scoring function** (e.g. allowing only linear gap or unit scores)
+
+  calculating only the alignment score **without performing the backtracking step** [199].
+
+  【**Myers’ bit-vector algorithm [200]**—— the scoring function is limited to edit distance [165]】
+
+  【**BitPAl [201]**—— limiting the scoring function to linear gap scores and achieves speedups through bit-parallel execution（ 将评分函数限制为线性间隙得分，并行执行加速。 ）】
+
+  【 **ASAP [202]** ——accelerates edit distance calculation by up to 63.3⨉ using FPGAs compared to its CPU implementation. 】
+
+  【**Edlib [131]**——fixed scoring function——the state-of-the-art implementation of Myers’ bit-vector algorithm——outperform **Parasail** (uses a **flexible** scoring function) by 12–1000⨉. 】
+
+  缺点：may lead to the selection of a **suboptimal sequence alignment**（可能选到次优序列）
+
+- trading off accuracy（降低精确度）
+
+  【**Darwin** [36]—— by dividing the DP matrix into overlapping **submatrices** and greedily processing each submatrix using **systolic arrays**.—— 与**Edlib[131]**相比，快了三个数量级 】
+
+  【**GenASM** [35]——use **bit-vector-based ASM** and a similar strategy as **Darwin**（与Darwin类似结构——implemented inside 3D-stacked memory】
+
+- 其他
+
+  -  using sparse DP 
+
+  -  using a greedy approach to maintain a high alignment score. 
+
+    【**X-drop** [208]—— (1) avoids calculating entries (and their neighbors) whose alignment scores are **more than below the highest score** seen so far (where is a user-specified parameter), and (2) **stops early** when a high alignment score is not possible. ——【 **A recent GPU implementation [209]** of the X-drop—— 3.1–120.4⨉ faster than KSW2 】】
+
+    【Z-drop——makes **KSW2** at least 2.6⨉ faster than **Parasail** 】
+
+    【**adaptive banding [210]**（ its improved algorithm **Block aligner [211]** ）——根据最近计算的反对角线中的最高分，计算对角线带会向上或向下移动。】
+</code></pre>
+<p>六、Variant Calling</p>
+<p><strong>GATK’s best practices</strong> [212] and <strong>DeepVariant’s workflow</strong> [213]</p>
+<p> identify the variants such as <strong>SNPs</strong>, short <strong>INDELs</strong> and <strong>SVs</strong> </p>
+<p>…</p>
+<p><a href="%E4%B9%A6%E6%9C%AC%E5%BC%95%E7%94%A812">^1</a>:M. Alser, S. Waymost, R. Ayyala, B. Lawlor, R.J. Abdill, N. Rajkumar, N. LaPierre, J. Brito, A.M. Ribeiro-dos-Santos, C. Firtina, N. Almadhoun, V. Sarwal, E. Eskin, Q. Hu, D. Strong, Byoung-Do, Kim, M.S. Abedalthagafi, O. Mutlu, S. Mangul, Packaging, containerization, and virtualization of computational omics methods: Advances, challenges, and opportunities, arXiv [q-bio.GN]. (2022). <a target="_blank" rel="noopener" href="http://arxiv.org/abs/2203.16261">http://arxiv.org/abs/2203.16261</a>.
+[^2]:Home - SRA - NCBI, (n.d.). <a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/sra">https://www.ncbi.nlm.nih.gov/sra</a> (accessed March 27, 2022).
+[^3]:EMBL-EBI, ENA browser, (n.d.). <a target="_blank" rel="noopener" href="https://www.ebi.ac.uk/ena">https://www.ebi.ac.uk/ena</a> (accessed March 27, 2022).
+[^4]:RefSeq: NCBI Reference Sequence Database, (n.d.). <a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/refseq">https://www.ncbi.nlm.nih.gov/refseq</a> (accessed March 27, 2022).</p>
+<h2 id="6、Efficient-end‑to‑end-long‑read-sequence-mapping-using-minimap2‑fpga-integrated-with-hardware-accelerated-chaining"><a href="#6、Efficient-end‑to‑end-long‑read-sequence-mapping-using-minimap2‑fpga-integrated-with-hardware-accelerated-chaining" class="headerlink" title="6、Efficient end‑to‑end long‑read  sequence mapping using  minimap2‑fpga integrated  with hardware accelerated chaining"></a>6、Efficient end‑to‑end long‑read  sequence mapping using  minimap2‑fpga integrated  with hardware accelerated chaining</h2><img src="基因分析课题/Overall system architecture and the execution flow of minimap2-fpga.png" alt="1762761042171" style="zoom: 50%;" />
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">
+            <center><i>> --------------- THE END -------------- <</i></center>
+        </div>
+    
+</div>
+      </div>
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" rel="tag"># 高性能计算</a>
+              <a href="/tags/%E5%88%86%E5%AD%90%E7%94%9F%E7%89%A9%E5%AD%A6/" rel="tag"># 分子生物学</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/25/%E6%8C%81%E7%BB%AD%E8%AE%B0%E5%BD%95/%E6%AF%8F%E5%91%A8%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%B1%95/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/26/%E6%9C%AA%E5%AE%8C%E6%88%90/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%EF%BC%9A%E9%87%8F%E5%8C%96%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95%E3%80%8B/" rel="next" title="《计算机体系结构：量化研究方法》——大卫·帕特森">
+      《计算机体系结构：量化研究方法》——大卫·帕特森 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%80%BB%E4%BD%93%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">一、总体分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%89%8D%E6%9C%9F%E6%80%9D%E8%80%83"><span class="nav-number">1.1.</span> <span class="nav-text">1、前期思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%8F%91%E5%B1%95%E7%8E%B0%E7%8A%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2、发展现状</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%85%B7%E4%BD%93%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">3、具体原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E8%AF%BE%E9%A2%98%E5%86%85%E5%AE%B9%E5%8F%8A%E7%9B%AE%E6%A0%87"><span class="nav-number">1.4.</span> <span class="nav-text">4、课题内容及目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E7%A0%94%E7%A9%B6%E6%96%B9%E6%A1%88%E5%8F%8A%E5%8F%AF%E8%A1%8C%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">5、研究方案及可行性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E9%A1%B9%E7%9B%AE%E7%89%B9%E8%89%B2%E4%B8%8E%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84"><span class="nav-number">1.6.</span> <span class="nav-text">6、项目特色与创新之处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">二、相关资料</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E3%80%8A%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6%E5%AF%BC%E8%AE%BA%EF%BC%9A%E9%9D%A2%E5%90%91%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97%E7%9A%84%E7%AE%97%E6%B3%95%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1、《生物信息学导论：面向高性能计算的算法与应用》</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E5%AD%90%E7%94%9F%E7%89%A9%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.1.1.</span> <span class="nav-text">一、分子生物学基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E5%AD%A6%E5%8F%8A%E8%AE%A1%E7%AE%97%E7%A7%91%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.1.2.</span> <span class="nav-text">二、数学及计算科学基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BA%8F%E5%88%97%E5%AF%B9%E6%AF%94%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">三、序列对比的基本方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%BA%8F%E5%88%97%E7%9B%B8%E4%BC%BC%E6%80%A7%E4%B8%8E%E5%90%8C%E6%BA%90%E6%80%A7"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">1、序列相似性与同源性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E7%82%B9%E9%98%B5%E5%9B%BE"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">2、点阵图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E4%B8%A4%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.3.4.</span> <span class="nav-text">3、两序列比对概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E5%85%A8%E5%B1%80%E6%AF%94%E5%AF%B9%E7%9A%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.3.5.</span> <span class="nav-text">4、全局比对的动态规划方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94%E7%9A%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.3.6.</span> <span class="nav-text">5、局部对比的动态规划方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81%E9%87%8D%E5%8F%A0%E5%8C%BA%E5%9F%9F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%87%86%E5%85%A8%E5%B1%80%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.7.</span> <span class="nav-text">6、重叠区域匹配的准全局比对算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7%E3%80%81%E7%A9%BA%E4%BD%8D%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.3.8.</span> <span class="nav-text">7、空位罚分模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8%E3%80%81%E4%BB%BF%E5%B0%84%E7%A9%BA%E4%BD%8D%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E7%9A%84%E5%85%A8%E5%B1%80%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.9.</span> <span class="nav-text">8、仿射空位罚分模型下的全局比对算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9%E3%80%81-%E4%BB%BF%E5%B0%84%E7%A9%BA%E4%BD%8D%E7%BD%9A%E5%88%86%E6%A8%A1%E5%9E%8B%E4%B8%8B%E7%9A%84%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.10.</span> <span class="nav-text">9、 仿射空位罚分模型下的局部对比算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10%E3%80%81%E9%99%8D%E9%98%B6%E7%A9%BA%E9%97%B4%E5%AD%98%E5%82%A8%E7%9A%84%E4%B8%A4%E5%BA%8F%E5%88%97%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.11.</span> <span class="nav-text">10、降阶空间存储的两序列对比算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11%E3%80%81%E9%99%8D%E4%BD%8E%E6%97%B6%E9%97%B4%E5%BC%80%E9%94%80%E7%9A%84%E4%B8%A4%E5%BA%8F%E5%88%97%E5%AF%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.12.</span> <span class="nav-text">11、降低时间开销的两序列对比算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12%E3%80%81%E5%AF%B9%E6%AF%94%E5%BE%97%E5%88%86%E7%9A%84%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">2.1.3.13.</span> <span class="nav-text">12、对比得分的正则化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13%E3%80%81%E5%90%AF%E5%8F%91%E5%BC%8F%E7%9A%84%E8%BF%91%E4%BC%BC%E5%AF%BB%E4%BC%98%E6%AF%94%E5%AF%B9%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.3.14.</span> <span class="nav-text">13、启发式的近似寻优比对算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14%E3%80%81%E6%AF%94%E5%AF%B9%E5%BE%97%E5%88%86%E7%9A%84%E7%BB%9F%E8%AE%A1%E5%AD%A6%E6%98%BE%E8%91%97%E6%80%A7"><span class="nav-number">2.1.3.15.</span> <span class="nav-text">14、比对得分的统计学显著性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15%E3%80%81%E5%A4%9A%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9"><span class="nav-number">2.1.3.16.</span> <span class="nav-text">15、多序列比对</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E7%9A%84%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97"><span class="nav-number">2.1.4.</span> <span class="nav-text">四、序列比对的并行计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%9F%BA%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B2%BE%E7%A1%AE%E5%8C%B9%E9%85%8D%E7%9A%84%E5%BA%8F%E5%88%97%E6%AF%94%E8%BE%83"><span class="nav-number">2.1.5.</span> <span class="nav-text">五、基于字符串精确匹配的序列比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%9F%BA%E5%9B%A0%E8%AF%86%E5%88%AB"><span class="nav-number">2.1.6.</span> <span class="nav-text">六、基因识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%A9%AC%E6%B0%8F%E9%93%BE%E4%B8%8E%E9%9A%90%E9%A9%AC%E6%B0%8F%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.7.</span> <span class="nav-text">七、马氏链与隐马氏模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">2.1.8.</span> <span class="nav-text">参考文献</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81Accelerating-Genome-Analysis-A-Primer-on-an-Ongoing-Journey"><span class="nav-number">2.2.</span> <span class="nav-text">2、Accelerating Genome Analysis: A Primer on an Ongoing Journey</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81-Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><span class="nav-number">2.3.</span> <span class="nav-text">3、 Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81FPGA-Based-Near-Memory-Acceleration-of-Modern-Data-Intensive-Applications"><span class="nav-number">2.4.</span> <span class="nav-text">4、FPGA-Based Near-Memory Acceleration of Modern Data-Intensive Applications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81Going-From-Molecules-to-Genomic-Variations-to-Scientific-Discovery-Intelligent-Algorithms-and-Architectures-for-Intelligent-Genome-Analysis"><span class="nav-number">2.5.</span> <span class="nav-text">5、Going From Molecules to Genomic Variations to Scientific Discovery: Intelligent Algorithms and Architectures for Intelligent Genome Analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81Efficient-end%E2%80%91to%E2%80%91end-long%E2%80%91read-sequence-mapping-using-minimap2%E2%80%91fpga-integrated-with-hardware-accelerated-chaining"><span class="nav-number">2.6.</span> <span class="nav-text">6、Efficient end‑to‑end long‑read  sequence mapping using  minimap2‑fpga integrated  with hardware accelerated chaining</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SWQ"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SWQ</p>
+  <div class="site-description" itemprop="description">舟遥遥以轻扬，风飘飘而吹衣</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">233</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xidianswq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xidianswq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_32971095" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_32971095" rel="noopener" target="_blank"><i class="fa fa-link fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://qm.qq.com/q/fJkfzkochO" title="QQ → https:&#x2F;&#x2F;qm.qq.com&#x2F;q&#x2F;fJkfzkochO" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/3209507800@qq.com" title="E-Mail → 3209507800@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/348651384" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;348651384" rel="noopener" target="_blank"><i class="fa fa-tv fa-fw"></i>bilibili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/profiles/76561199188319035/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561199188319035&#x2F;" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw"></i>Steam</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://c6.y.qq.com/base/fcgi-bin/u?__=sZVdegbNTeC3" title="Music → https:&#x2F;&#x2F;c6.y.qq.com&#x2F;base&#x2F;fcgi-bin&#x2F;u?__&#x3D;sZVdegbNTeC3" rel="noopener" target="_blank"><i class="fa fa-music fa-fw"></i>Music</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1309889000&auto=1&height=66"></iframe>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021-8 ~ 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SWQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">23:47</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+<script src="/js/floating-history.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'H2FYHQwVGaUkawg5DkrA6d6M-gzGzoHsz',
+      appKey     : 'zndS0u9Qj7qj8CqnJINs2MGT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : 'https://h2fyhqwv.lc-cn-n1-shared.com'
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+<script>
+  (function() {
+    var guard = window.__SITE_PASSWORD_GUARD__;
+    var overlay = document.getElementById('password-protect');
+    var input = document.getElementById('site-password-input');
+    var submit = document.getElementById('site-password-submit');
+    var errorEl = document.getElementById('site-password-error');
+
+    if (!guard || guard.enabled === false || !guard.password) {
+      if (overlay) {
+        overlay.setAttribute('aria-hidden', 'true');
+        if (typeof overlay.remove === 'function') {
+          overlay.remove();
+        } else {
+          overlay.style.display = 'none';
+        }
+      }
+      return;
+    }
+
+    var PASSWORD = String(guard.password || '');
+    var storageKey = guard.storageKey;
+    var docEl = document.documentElement;
+
+    if (!overlay || !input || !submit || !errorEl) {
+      return;
+    }
+
+    var unlocked = docEl.classList.contains('content-unlocked');
+    overlay.setAttribute('aria-hidden', unlocked ? 'true' : 'false');
+
+    if (unlocked) {
+      return;
+    }
+
+    function showError(message) {
+      errorEl.textContent = message || '';
+    }
+
+    function unlockSite() {
+      docEl.classList.remove('content-locked');
+      docEl.classList.add('content-unlocked');
+      overlay.setAttribute('aria-hidden', 'true');
+      showError('');
+      try {
+        window.localStorage && localStorage.setItem(storageKey, '1');
+      } catch (err) {
+        // Ignore storage failures.
+      }
+      if (typeof overlay.remove === 'function') {
+        overlay.remove();
+      } else {
+        overlay.style.display = 'none';
+      }
+    }
+
+    function validatePassword() {
+      var value = (input.value || '').trim();
+      if (!value) {
+        showError('请输入密码');
+        input.focus();
+        return;
+      }
+      if (value.toLowerCase() === PASSWORD.toLowerCase()) {
+        unlockSite();
+      } else {
+        showError('密码错误，请重试');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    submit.addEventListener('click', validatePassword);
+    input.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        validatePassword();
+      }
+    });
+    input.addEventListener('input', function() {
+      if (errorEl.textContent) {
+        showError('');
+      }
+    });
+
+    setTimeout(function() {
+      input.focus();
+    }, 100);
+  })();
+</script>
+</body>
+</html>
